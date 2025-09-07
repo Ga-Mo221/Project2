@@ -81,6 +81,15 @@ public class SelectionBox : MonoBehaviour
         boxVisual.sizeDelta = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
     }
 
+    private void cleanListChosen()
+    {
+        foreach (var obj in chosen)
+        {
+            obj.GetComponent<PlayerAI>().isSetSelcted(false);
+        }
+        chosen = new List<GameObject>();
+    }
+
     // Lấy các object có tag và kiểm tra bằng WorldToScreenPoint
     private void SelectObjects(Vector2 screenStart, Vector2 screenEnd)
     {
@@ -89,7 +98,7 @@ public class SelectionBox : MonoBehaviour
         if (cam == null) { Debug.LogWarning("No Main Camera found for selection."); return; }
 
         GameObject[] selectable = GameObject.FindGameObjectsWithTag(selectableTag);
-        chosen = new List<GameObject>();
+        cleanListChosen();
 
         foreach (var go in selectable)
         {
@@ -98,10 +107,11 @@ public class SelectionBox : MonoBehaviour
             if (screenRect.Contains(new Vector2(sp.x, sp.y)))
             {
                 chosen.Add(go);
+                go.GetComponent<PlayerAI>().isSetSelcted(true);
             }
             else
             {
-                //
+                go.GetComponent<PlayerAI>().isSetSelcted(false);
             }
         }
 

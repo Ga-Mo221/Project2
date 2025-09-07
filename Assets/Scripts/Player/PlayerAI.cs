@@ -1,18 +1,26 @@
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.UI;
 
 public class PlayerAI : MonoBehaviour
 {
-    [SerializeField] Vector3 _target;
-    private Vector3 _targetPos;
-    [SerializeField] float _speed = 300f;
-    [SerializeField] float _nextWaypointDistance = 3f; // nhỏ hơn để chính xác hơn
-    [SerializeField] float _repathRate = 0.5f;
-    [SerializeField] float _maxSpeed = 6f; // units/sec - điều chỉnh theo game
+    [Header("Stats")]
+    [SerializeField] public float _helth = 100; // máu
+    [SerializeField] public float _damage = 10; // sát thương
+    [SerializeField] private float _maxSpeed = 6f; // tốc độ tối đa
+    [SerializeField] private float _range = 1.5f; // tầm đánh
 
+    [Header("AI")]
+    [SerializeField] private Image _hpBar;
+    [SerializeField] private GameObject _selet;
+    private Vector3 _target;
+    private Vector3 _targetPos;
+
+    private float _speed = 600f; // lực đẩy
+    private float _repathRate = 0.5f;
     private Path _path;
-    public int _currentWaypoint = 0;
-    public bool _reachedEndOfPath = false;
+    private int _currentWaypoint = 0;
+    private bool _reachedEndOfPath = false;
     private Seeker _seeker;
     private Rigidbody2D _rb;
 
@@ -33,10 +41,20 @@ public class PlayerAI : MonoBehaviour
                 _seeker.StartPath(_rb.position, _target, OnPathComplete);
     }
 
+
+    public void isSetSelcted(bool amount)
+    {
+        _selet.SetActive(amount);
+    }
+
     public void ChangeTarget(Vector3 pos)
     {
-        Debug.Log("doi thanh cong");
         _target = pos;
+    }
+
+    private void setHPBar()
+    {
+        _hpBar.fillAmount = _helth / 100;
     }
 
 
@@ -84,7 +102,7 @@ public class PlayerAI : MonoBehaviour
             _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
 
         float dist = Vector2.Distance(_rb.position, waypoint);
-        if (dist < _nextWaypointDistance)
+        if (dist < _range)
             _currentWaypoint++;
 
 
