@@ -18,7 +18,7 @@ public class GetMainCam : MonoBehaviour
             if (cam != null)
             {
                 canvas.worldCamera = cam;
-                canvas.sortingLayerName = "UI";
+                //canvas.sortingLayerName = "UI";
             }
             else
             {

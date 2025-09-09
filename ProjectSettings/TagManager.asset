@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Warrior
+  - House
+  - Item
+  - Item+
+  - Animal
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,9 +20,9 @@ TagManager:
   - Obstacle
   - Player
   - Player+
-  - 
-  - 
-  - 
+  - Tree
+  - MinimapIcon
+  - MoveToPoint
   - 
   - 
   - 
@@ -42,8 +47,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
+  - name: Water
+    uniqueID: 598445413
+    locked: 0
+  - name: Ground
+    uniqueID: 543206953
+    locked: 0
+  - name: Ground+
+    uniqueID: 2495322405
+    locked: 0
+  - name: Ground++
+    uniqueID: 899710533
+    locked: 0
+  - name: Character
+    uniqueID: 3352498237
+    locked: 0
+  - name: HP
     uniqueID: 2781753609
+    locked: 0
+  - name: Select
+    uniqueID: 1340047751
+    locked: 0
+  - name: UI
+    uniqueID: 33045327
     locked: 0
   m_RenderingLayers:
   - Default
