@@ -20,12 +20,12 @@ TagManager:
   - Obstacle
   - Player
   - Player+
-  - Tree
+  - 
   - MinimapIcon
   - MoveToPoint
-  - 
-  - 
-  - 
+  - Enemy
+  - Animal
+  - Farm
   - 
   - 
   - 
