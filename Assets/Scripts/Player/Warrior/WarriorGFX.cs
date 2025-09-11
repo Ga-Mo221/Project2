@@ -1,12 +1,37 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WarriorGFX : PlayerAI
 {
-    [SerializeField] private SpriteRenderer _sotingLayer;
+    [Header("Warrior GFX")]
+    [SerializeField] private SpriteRenderer _spriteRender;
+
+    protected override void Start()
+    {
+        base.Start();
+        if (!_spriteRender)
+            Debug.LogError("[WarriorGFX] Chưa gán 'SpriteRender'");
+    }
+
     protected override void Update()
     {
-        base.Update();
-        _sotingLayer.sortingOrder = -(int)(transform.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(transform.position.y * 100);
+        flip();
+        if (getIsAI())
+        {
+            setupFolow();
+            if (!checkFullInventory() && !getIsTarget())
+            {
+                if (!findTargetMoveTo())
+                    if (!getIsLock() && !getDetect())
+                        findItem();
+            }
+            farm();
+            attack();
+        }
     }
+
+    public void offCanAttack()
+        => _canAttack = false;
+    public void onCanAttack()
+        => _canAttack = true;
 }

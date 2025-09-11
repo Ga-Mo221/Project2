@@ -2,45 +2,80 @@ using UnityEngine;
 using Pathfinding;
 using UnityEngine.UI;
 using System.Collections;
+using NaughtyAttributes;
 
 public class PlayerAI : MonoBehaviour
 {
     #region Value
 
+    [Header("Class")]
+    [SerializeField] private UnitType _unitClass;
+    private bool IsHealer => _unitClass == UnitType.Healer;
+    private bool IsTNT => _unitClass == UnitType.TNT;
+    private bool IsHealerOrTNT => _unitClass == UnitType.Healer || _unitClass == UnitType.TNT;
+    //private bool IsHealerOrArcher => _unitClass == UnitType.Healer || _unitClass == UnitType.Archer;
+
     [Header("Stats")]
     [SerializeField] public float _helth = 100; // máu
+    [HideIf(nameof(IsHealer))]
     [SerializeField] public float _damage = 10; // sát thương
     [SerializeField] private float _maxSpeed = 6f; // tốc độ tối đa
+    [HideIf(nameof(IsTNT))]
     [SerializeField] private float _range = 1.5f; // tầm đánh
+    [HideIf(nameof(IsTNT))]
     [SerializeField] private float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
+    // [ShowIf(nameof(IsHealerOrArcher))]
+    // [SerializeField] private int _attack_count_SKILL = 10;
+    // [ShowIf(nameof(IsHealerOrArcher))]
+    // [SerializeField] private int _attackCount = 0;
 
     [Header("AI Find Items")]
     [SerializeField] private float _radius = 10f; // bán kính phát hiện Items, Enemys, Animals
+    [HideIf(nameof(IsHealerOrTNT))]
     [SerializeField] private float _radius_farm = 1.5f; // tầm farm
+    [HideIf(nameof(IsHealerOrTNT))]
     [SerializeField] private float _farmSpeed = 1f; // thời gian sau mỗi đòn farm
 
     [Header("Inventory")]
-    [SerializeField] public int _roock;
-    private int _maxRoock = 10;
+    [HideIf(nameof(IsHealerOrTNT))]
+    public bool ShowInventory = false;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _maxRock = 5;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _maxGold = 5;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _maxWood = 5;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _maxMeat = 5;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _rock = 0;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _gold = 0;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _wood = 0;
+    [ShowIf(nameof(ShowInventory))]
+    [SerializeField] public int _meat = 0;
 
     [Header("GFX")]
     [SerializeField] private Image _hpBar; // image thanh máu
     [SerializeField] private GameObject _selet; // phát hiện đã được chọn
 
     [Header("Component")]
-    [SerializeField] private Animator _anim; // animation của đối tượng
+    [SerializeField] public Animator _anim; // animation của đối tượng
 
     private Vector3 _target; // vị trí chỉ định
     private Vector3 _targetPos; // biến tạm để lưu vị trí chỉ định dùng để so sánh và cập nhật path mới
 
     // bool
     [Header("Status")]
-    [SerializeField] private bool _detectEnemy = false; // phát hiện kẻ địch
+    [HideIf(nameof(IsHealer))]
+    [SerializeField] private bool _detect = false; // phát hiện kẻ địch
     [SerializeField] private bool _reachedEndOfPath = false; // đã đến path chưa
     [SerializeField] private bool _isLock = false; // khóa lại không cho về và tìm item dựa vào thành chính.
     [SerializeField] private bool _isAI = true; // để đối tượng được lựa chọn mục tiêu nhắm đến
     [SerializeField] private bool _isTarget = false; // có đang hướng đến mục tiêu nào hay không
-
+    [HideIf(nameof(IsTNT))]
+    [SerializeField] public bool _canAttack = true;
     // float
     private float _speed = 600f; // lực đẩy
     private float _repathRate = 0.5f; // thời gian lặp lại tiềm đường
@@ -59,7 +94,7 @@ public class PlayerAI : MonoBehaviour
 
 
 
-    void Start()
+    protected virtual void Start()
     {
         if (!_anim)
             Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'Animator'");
@@ -75,40 +110,34 @@ public class PlayerAI : MonoBehaviour
     #region Update
     protected virtual void Update()
     {
-        if (_isAI)
-        {
-            GameObject _nearest = GetNearestItem();
-            if (_nearest != null && _nearest.tag != "Item" && _isTarget)
-                _target = _nearest.transform.position;
-            if (_nearest == null || _nearest.tag == "Item")
-                setDetectEnemy(false);
+    }
+    #endregion
 
 
-            if (_roock < _maxRoock && !_isTarget)
-            {
-                if (_nearest != null)
-                {
-                    switch (_nearest.tag)
-                    {
-                        case "Item":
-                            var _scrip = _nearest.GetComponent<Item>();
-                            _scrip._seleted = true;
-                            _itemScript = _scrip;
-                            break;
-                    }
-                    _target = _nearest.transform.position;
-                    Castle.Instance._canFind = true;
-                    setIsTarget(true);
-                }
-                else
-                {
-                    if (!_isLock && !_detectEnemy)
-                        findItem();
-                }
-            }
-            farm();
-            Attack();
-        }
+    #region SetUp Folow
+    /*
+    Dành cho tất cả các UnitType.
+    Dùng để reset Detect hoặc folow theo các mục tiêu có thể chuyển động.
+    */
+    public void setupFolow()
+    {
+        GameObject _nearest = getGameObject();
+        if (_nearest != null && _nearest.tag != "Item" && _isTarget)
+            setTarget(_nearest.transform.position, false);
+        if (_nearest == null || _nearest.tag == "Item")
+            setDetect(false);
+    }
+    #endregion
+
+
+    #region Check Inventory full
+    public bool checkFullInventory()
+    {
+        if (_rock < _maxRock) return false;
+        if (_gold < _maxGold) return false;
+        if (_wood < _maxWood) return false;
+        if (_meat < _maxMeat) return false;
+        return true;
     }
     #endregion
 
@@ -123,27 +152,54 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
-    #region Set Selected
-    public void isSetSelected(bool amount)
-    {
-        _selet.SetActive(amount);
-    }
-    #endregion
-
-
     #region Set Target
-    public void setTarget(Vector3 pos)
+    /*
+    Dành cho tất cả các UnitType
+    Dùng để gán cho mục tiêu một tọa độ để duy chuyển tới.
+    với 2 tham số là Vector3 là địa chỉ đến.
+    bool controller: 
+        + nếu bạn điều khiển thì là true.
+        + nếu do Ai điều khiển thì là false.
+    */
+    public void setTarget(Vector3 pos, bool controller)
     {
         if (_itemScript != null)
         {
             _itemScript._seleted = false;
             _itemScript = null;
         }
-        setIsAI(false);
-        _isTarget = true;
+        if (controller)
+        {
+            setIsAI(false);
+            setIsTarget(false);
+        }
+        else setIsTarget(true);
         _target = pos;
     }
     public Vector3 getTarget() => _target;
+    #endregion
+
+
+    #region Find Target Move To
+    public bool findTargetMoveTo()
+    {
+        GameObject _nearest = getGameObject();
+        if (_nearest != null)
+        {
+            setTarget(_nearest.transform.position, false);
+            switch (_nearest.tag)
+            {
+                case "Item":
+                    var _scrip = _nearest.GetComponent<Item>();
+                    _scrip._seleted = true;
+                    _itemScript = _scrip;
+                    break;
+            }
+            Castle.Instance._canFind = true;
+            return true;
+        }
+        else return false;
+    }
     #endregion
 
 
@@ -156,8 +212,12 @@ public class PlayerAI : MonoBehaviour
 
 
     #region Attack
+    /*
+    Dành cho UnitType không phải là TNT và Healer.
+    Đánh thú rừng, kẻ địch, thành của kẻ địch
+    */
     private Coroutine _attackSpeed;
-    private void Attack()
+    public void attack()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _range);
         foreach (var hit in hits)
@@ -184,8 +244,12 @@ public class PlayerAI : MonoBehaviour
 
 
     #region Farm
+    /*
+    Dành Cho UnitType không phải là TNT và Healer.
+    dùng để farm các tài nguyên kế bên.
+    */
     private Coroutine _farmCoroutine;
-    private void farm()
+    public void farm()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius_farm);
         foreach (var hit in hits)
@@ -206,12 +270,12 @@ public class PlayerAI : MonoBehaviour
             if (type == ItemType.Tree || type == ItemType.Pumpkin)
             {
                 _anim.SetInteger("TypeFarm", 1);
-                _anim.SetTrigger("Farm");
+                _anim.SetTrigger("attack");
             }
             else if (type == ItemType.Iron || type == ItemType.Gold)
             {
                 _anim.SetInteger("TypeFarm", 2);
-                _anim.SetTrigger("Farm");
+                _anim.SetTrigger("attack");
             }
         }
         else if (_script._stack <= 0 && _script._seleted)
@@ -226,7 +290,12 @@ public class PlayerAI : MonoBehaviour
 
 
     #region AI Find Item
-    private GameObject GetNearestItem()
+    /*
+    Dùng cho tất cả các UnitType
+    Tìm tất cả các mục tiêu kể cả quái, thú, tường thành, đồng minh dựa trên UnitType
+    ưu tiên mục tiêu gần nhất.
+    */
+    private GameObject getGameObject()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
 
@@ -235,51 +304,93 @@ public class PlayerAI : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            if (hit.CompareTag("Item"))
+            if (_unitClass != UnitType.Healer)
             {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (!_script._seleted && _script._stack > 0)
+                if (hit.CompareTag("Animal"))
                 {
+                    if (_canAttack)
+                        setDetect(true);
+                    else
+                        setDetect(false);
+
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    var _script = hit.gameObject.GetComponent<Item>();
+                    // if (!_script._seleted && _script._stack > 0)
+                    // {
                     if (dist < minDist)
                     {
                         minDist = dist;
                         nearest = hit.gameObject;
                     }
+                    //}
+                }
+                else if (hit.CompareTag("Enemy"))
+                {
+                    if (_canAttack)
+                        setDetect(true);
+                    else
+                        setDetect(false);
+
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    var _script = hit.gameObject.GetComponent<Item>();
+                    // if (!_script._seleted && _script._stack > 0)
+                    // {
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
+                    //}
+                }
+                else if (_unitClass != UnitType.TNT)
+                {
+                    if (hit.CompareTag("Item"))
+                    {
+                        float dist = Vector3.Distance(transform.position, hit.transform.position);
+                        var _script = hit.gameObject.GetComponent<Item>();
+                        if (!_script._seleted && _script._stack > 0)
+                        {
+                            if (dist < minDist)
+                            {
+                                minDist = dist;
+                                nearest = hit.gameObject;
+                            }
+                        }
+                    }
                 }
             }
-            else if (hit.CompareTag("Animal"))
+            else
             {
-                setDetectEnemy(true);
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                // if (!_script._seleted && _script._stack > 0)
-                // {
-                if (dist < minDist)
+                if (hit.CompareTag("Warrior") || hit.CompareTag("Archer") || hit.CompareTag("Lancer"))
                 {
-                    minDist = dist;
-                    nearest = hit.gameObject;
+                    if (_canAttack)
+                        setDetect(true);
+                    else
+                        setDetect(false);
+                        
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    // var _script = hit.gameObject.GetComponent<Item>();
+                    // if (!_script._seleted && _script._stack > 0)
+                    // {
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
+                    //}
                 }
-                //}
-            }
-            else if (hit.CompareTag("Enemy"))
-            {
-                setDetectEnemy(true);
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                // if (!_script._seleted && _script._stack > 0)
-                // {
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    nearest = hit.gameObject;
-                }
-                //}
             }
         }
         return nearest; // null nếu không có item nào trong bán kính
     }
-    private void findItem()
+
+    /*
+    Dùng cho UnitType không phải là TNT và Healer.
+    Nếu xung quanh đối tượng không có tài nguyên
+    Sẻ Tìm tài nguyên bằng cách tham chiếu từ thành chính.
+    Sẻ tìm tai nguyên gần thành chính nhất.
+    */
+    public void findItem()
     {
         if (Castle.Instance._canFind)
         {
@@ -289,11 +400,10 @@ public class PlayerAI : MonoBehaviour
                 var _scrip = item.GetComponent<Item>();
                 if (!_scrip._seleted && _scrip._stack > 0)
                 {
+                    setTarget(_scrip.transform.position, false);
                     _scrip._seleted = true;
                     Castle.Instance._canFind = true;
-                    setIsTarget(true);
                     _itemScript = _scrip;
-                    _target = _scrip.transform.position;
                     return;
                 }
             }
@@ -356,22 +466,47 @@ public class PlayerAI : MonoBehaviour
             _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
 
         float dist = Vector2.Distance(_rb.position, waypoint);
-        if (dist < (_range - 0.8f))
-            _currentWaypoint++;
+        float edg = _detect ? _range - 0.8f : 1.5f;
+        if (dist < edg)
+                _currentWaypoint++;
+    }
+    #endregion
 
 
-        // Lật sprite theo hướng di chuyển
-        if (Mathf.Abs(_rb.linearVelocity.x) > 0.01f)
+    #region Flip
+    /*
+    Dùng cho tất cả các Unit Class
+    để lật đối tượng theo hướng di chuyển hoặc theo hướng mục tiêu được chọn.
+    */
+    public GameObject flip()
+    {
+        GameObject _nearest = getGameObject();
+        if (_nearest != null)
         {
-            float sx = _rb.linearVelocity.x > 0 ? 1f : -1f;
-            transform.localScale = new Vector3(sx, 1f, 1f);
+            // lật theo hướng của nearest
+            float _nearestX = _nearest.transform.position.x;
+            float _X = transform.position.x;
+            if (_nearestX > _X)
+                transform.localScale = new Vector3(1, 1, 1);
+            else if (_nearestX < _X)
+                transform.localScale = new Vector3(-1, 1, 1);
         }
+        else
+        {
+            // Lật sprite theo hướng di chuyển
+            if (Mathf.Abs(_rb.linearVelocity.x) > 0.01f)
+            {
+                float sx = _rb.linearVelocity.x > 0 ? 1f : -1f;
+                transform.localScale = new Vector3(sx, 1f, 1f);
+            }
+        }
+        return _nearest;
     }
     #endregion
 
 
     #region Draw
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         // find
         Gizmos.color = Color.yellow;
@@ -390,7 +525,10 @@ public class PlayerAI : MonoBehaviour
 
     #region Set funsiton
     // Target
-    public void setIsTarget(bool amount) => _isTarget = amount;
+    public void setIsTarget(bool amount)
+    {
+        _isTarget = amount;
+    }
     public bool getIsTarget() => _isTarget;
 
     // AI
@@ -402,11 +540,24 @@ public class PlayerAI : MonoBehaviour
     public bool getIsLock() => _isLock;
 
     // Dectec Enemy
-    public void setDetectEnemy(bool amount)
+    public void setDetect(bool amount)
     {
-        _detectEnemy = amount;
+        _detect = amount;
         _anim.SetBool("Detectenemy", amount);
     }
-    public bool getDetectEnemy() => _detectEnemy;
+    public bool getDetect() => _detect;
+
+    // Selected
+    public void isSetSelected(bool amount)
+        => _selet.SetActive(amount);
     #endregion
+}
+
+public enum UnitType
+{
+    Warrior,
+    Archer,
+    Lancer,
+    Healer,
+    TNT
 }

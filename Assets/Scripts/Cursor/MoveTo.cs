@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,17 +6,26 @@ public class MoveTo : MonoBehaviour
 {
     [SerializeField] private float _bankinh = 5f;
     private List<GameObject> chosen;
+    private Coroutine _destroy;
 
     void Update()
     {
         if (!checkMoveTo())
         {
-            Destroy(gameObject);
+            if (_destroy == null)
+                _destroy = StartCoroutine(destroy());
         }
         if (checkDistance())
         {
-            Destroy(gameObject);
+            if (_destroy == null)
+                _destroy = StartCoroutine(destroy());
         }
+    }
+
+    private IEnumerator destroy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
     }
 
     public void SetChosen(List<GameObject> _chonsen)
@@ -54,11 +64,16 @@ public class MoveTo : MonoBehaviour
         return false;
     }
 
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision != null)
         {
-            if (collision.CompareTag("Warrior"))
+            if (collision.CompareTag("Warrior")
+            || collision.CompareTag("Archer")
+            || collision.CompareTag("Lancer")
+            || collision.CompareTag("Healer")
+            || collision.CompareTag("TNT"))
             {
                 if (chosen.Contains(collision.gameObject))
                 {

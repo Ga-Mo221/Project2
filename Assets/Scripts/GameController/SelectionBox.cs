@@ -62,7 +62,7 @@ public class SelectionBox : MonoBehaviour
                 _co.GetComponent<MoveTo>().SetChosen(chosen);
                 foreach (var obj in chosen)
                 {
-                    obj.GetComponent<PlayerAI>().setTarget(worldPos);
+                    obj.GetComponent<PlayerAI>().setTarget(worldPos, true);
                 }
             }
         }
@@ -126,17 +126,24 @@ public class SelectionBox : MonoBehaviour
             }
         }
 
-        Debug.Log($"[{transform.name}] [SelectionBox] Selected {chosen.Count} objects");
+        //Debug.Log($"[{transform.name}] [SelectionBox] Selected {chosen.Count} objects");
     }
 
     private void SelectObject()
     {
         GameObject _obj = CursorManager.Instance._hoverGameobject;
-        if (_obj != null && _obj.tag == "Warrior")
+        if (_obj != null)
         {
-            _singleSelected = true;
-            chosen.Add(_obj);
-            _obj.GetComponent<PlayerAI>().isSetSelected(true);
+            if (_obj.tag == "Warrior"
+            || _obj.tag == "Archer"
+            || _obj.tag == "Lancer"
+            || _obj.tag == "Healer"
+            || _obj.tag == "TNT" )
+            {
+                _singleSelected = true;
+                chosen.Add(_obj);
+                _obj.GetComponent<PlayerAI>().isSetSelected(true);    
+            }
         }
     }
 

@@ -10,6 +10,10 @@ TagManager:
   - Item+
   - Animal
   - Enemy
+  - Archer
+  - Healer
+  - Lancer
+  - TNT
   layers:
   - Default
   - TransparentFX
@@ -20,7 +24,7 @@ TagManager:
   - Obstacle
   - Player
   - Player+
-  - 
+  - Item
   - MinimapIcon
   - MoveToPoint
   - Enemy

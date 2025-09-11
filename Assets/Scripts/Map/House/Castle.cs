@@ -8,6 +8,7 @@ public class Castle : MonoBehaviour
     [SerializeField] private Transform _point;
 
     public GameObject[] _allItems;
+    public GameObject _inventory;
 
     public bool _canFind = true;
 

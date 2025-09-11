@@ -113,7 +113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -2.36715, y: 2.2344902}
+  m_AnchoredPosition: {x: -2.3671265, y: 2.234497}
   m_SizeDelta: {x: 602, y: 338.59998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8210208794616260288
@@ -136,7 +136,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1513213687
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &6496454969966702490
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6161422697112141018
 MonoBehaviour:
   m_ObjectHideFlags: 0

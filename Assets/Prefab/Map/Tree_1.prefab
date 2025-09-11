@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 5345547186033475264}
   - component: {fileID: 6027149094595344050}
   - component: {fileID: 4064191552021446691}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Goc
   m_TagString: Item
   m_Icon: {fileID: 0}
