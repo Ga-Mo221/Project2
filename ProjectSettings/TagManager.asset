@@ -18,7 +18,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Arrow
   - Water
   - UI
   - Obstacle
@@ -30,7 +30,7 @@ TagManager:
   - Enemy
   - Animal
   - Farm
-  - 
+  - HealthAOE
   - 
   - 
   - 

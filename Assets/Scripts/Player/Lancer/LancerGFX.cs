@@ -20,6 +20,7 @@ public class LancerGFX : PlayerAI
 
     protected override void Update()
     {
+        base.Update();
         _spriteRender.sortingOrder = -(int)(_pos.position.y * 100);
         _nearest = flip();
         enemyDirection();

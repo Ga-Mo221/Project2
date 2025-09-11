@@ -14,6 +14,7 @@ public class TNTGFX : PlayerAI
 
     protected override void Update()
     {
+        base.Update();
         _spriteRender.sortingOrder = -(int)(transform.position.y * 100);
         flip();
         if (getIsAI())

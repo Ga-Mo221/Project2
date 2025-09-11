@@ -13,21 +13,17 @@ public class PlayerAI : MonoBehaviour
     private bool IsHealer => _unitClass == UnitType.Healer;
     private bool IsTNT => _unitClass == UnitType.TNT;
     private bool IsHealerOrTNT => _unitClass == UnitType.Healer || _unitClass == UnitType.TNT;
-    //private bool IsHealerOrArcher => _unitClass == UnitType.Healer || _unitClass == UnitType.Archer;
 
     [Header("Stats")]
-    [SerializeField] public float _helth = 100; // máu
+    [SerializeField] public float _maxHealth = 100;
+    [SerializeField] public float _health; // máu
     [HideIf(nameof(IsHealer))]
     [SerializeField] public float _damage = 10; // sát thương
     [SerializeField] private float _maxSpeed = 6f; // tốc độ tối đa
     [HideIf(nameof(IsTNT))]
     [SerializeField] private float _range = 1.5f; // tầm đánh
     [HideIf(nameof(IsTNT))]
-    [SerializeField] private float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
-    // [ShowIf(nameof(IsHealerOrArcher))]
-    // [SerializeField] private int _attack_count_SKILL = 10;
-    // [ShowIf(nameof(IsHealerOrArcher))]
-    // [SerializeField] private int _attackCount = 0;
+    [SerializeField] public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
 
     [Header("AI Find Items")]
     [SerializeField] private float _radius = 10f; // bán kính phát hiện Items, Enemys, Animals
@@ -63,19 +59,29 @@ public class PlayerAI : MonoBehaviour
     [Header("Component")]
     [SerializeField] public Animator _anim; // animation của đối tượng
 
+    [Header("Effect")]
+    [HideIf(nameof(IsHealerOrTNT))]
+    [SerializeField] public GameObject _healEffect;
+
     private Vector3 _target; // vị trí chỉ định
     private Vector3 _targetPos; // biến tạm để lưu vị trí chỉ định dùng để so sánh và cập nhật path mới
 
     // bool
     [Header("Status")]
-    [HideIf(nameof(IsHealer))]
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
     [SerializeField] private bool _reachedEndOfPath = false; // đã đến path chưa
     [SerializeField] private bool _isLock = false; // khóa lại không cho về và tìm item dựa vào thành chính.
     [SerializeField] private bool _isAI = true; // để đối tượng được lựa chọn mục tiêu nhắm đến
     [SerializeField] private bool _isTarget = false; // có đang hướng đến mục tiêu nào hay không
+    [ShowIf(nameof(IsHealer))]
+    [SerializeField] bool foundLowHealth = false;
     [HideIf(nameof(IsTNT))]
     [SerializeField] public bool _canAttack = true;
+    [SerializeField] public int _attackCount = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [SerializeField] public float _healPlus = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [SerializeField] public bool _AOEHeal = false;
     // float
     private float _speed = 600f; // lực đẩy
     private float _repathRate = 0.5f; // thời gian lặp lại tiềm đường
@@ -96,6 +102,7 @@ public class PlayerAI : MonoBehaviour
 
     protected virtual void Start()
     {
+        _health = _maxHealth;
         if (!_anim)
             Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'Animator'");
 
@@ -110,6 +117,7 @@ public class PlayerAI : MonoBehaviour
     #region Update
     protected virtual void Update()
     {
+        setHPBar();
     }
     #endregion
 
@@ -206,7 +214,7 @@ public class PlayerAI : MonoBehaviour
     #region HP Bar Sprite
     private void setHPBar()
     {
-        _hpBar.fillAmount = _helth / 100;
+        _hpBar.fillAmount = _health / _maxHealth;
     }
     #endregion
 
@@ -217,7 +225,7 @@ public class PlayerAI : MonoBehaviour
     Đánh thú rừng, kẻ địch, thành của kẻ địch
     */
     private Coroutine _attackSpeed;
-    public void attack()
+    protected virtual PlayerAI attack()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _range);
         foreach (var hit in hits)
@@ -233,6 +241,7 @@ public class PlayerAI : MonoBehaviour
                     _attackSpeed = StartCoroutine(attackSpeed());
             }
         }
+        return null;
     }
     private IEnumerator attackSpeed()
     {
@@ -295,7 +304,7 @@ public class PlayerAI : MonoBehaviour
     Tìm tất cả các mục tiêu kể cả quái, thú, tường thành, đồng minh dựa trên UnitType
     ưu tiên mục tiêu gần nhất.
     */
-    private GameObject getGameObject()
+    public GameObject getGameObject()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
 
@@ -367,17 +376,30 @@ public class PlayerAI : MonoBehaviour
                         setDetect(true);
                     else
                         setDetect(false);
-                        
+
+                    var playerAI = hit.GetComponent<PlayerAI>();
+                    float health = playerAI._health;
+                    float maxhealth = playerAI._maxHealth;
                     float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    // var _script = hit.gameObject.GetComponent<Item>();
-                    // if (!_script._seleted && _script._stack > 0)
-                    // {
-                    if (dist < minDist)
+
+                     // Nếu tìm thấy người máu thấp
+                    if (health < maxhealth)
                     {
-                        minDist = dist;
-                        nearest = hit.gameObject;
+                        if (!foundLowHealth || dist < minDist) // lần đầu thấy hoặc gần hơn
+                        {
+                            foundLowHealth = true;
+                            minDist = dist;
+                            nearest = hit.gameObject;
+                        }
                     }
-                    //}
+                    else if (!foundLowHealth) // chỉ xét máu đầy khi chưa tìm thấy ai máu thấp
+                    {
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            nearest = hit.gameObject;
+                        }
+                    }
                 }
             }
         }
