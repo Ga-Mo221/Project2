@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 517923565976439992}
   - component: {fileID: 3035448137790604362}
   - component: {fileID: 3770576610520657101}
+  - component: {fileID: 8420489512779424741}
   m_Layer: 7
   m_Name: P_Healer
   m_TagString: Healer
@@ -287,10 +288,16 @@ MonoBehaviour:
   _gold: 0
   _wood: 0
   _meat: 0
+  _HPCanvas: {fileID: 2972448807784003465}
+  _OutLine: {fileID: 2140025622926055285}
   _hpBar: {fileID: 1661229434920987843}
   _selet: {fileID: 9129405917674167311}
+  _GFX: {fileID: 463797464778259141}
+  _MiniMapIcon: {fileID: 7717036042490857818}
   _anim: {fileID: 3382717312857043231}
   _healEffect: {fileID: 0}
+  _Die: 0
+  _canRespawn: 0
   _detect: 0
   _reachedEndOfPath: 0
   _isLock: 0
@@ -303,6 +310,20 @@ MonoBehaviour:
   _AOEHeal: 0
   _spriteRender: {fileID: 1517296898663192203}
   _heal_count_SKILL: 10
+--- !u!114 &8420489512779424741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3954200698115897747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e4afdb1aaff9d4d829f887deb784f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 3
+  _playerAI: {fileID: 0}
 --- !u!1 &7717036042490857818
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +619,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+--- !u!1 &2140025622926055285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 339716946035954728}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8724827007937209830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
@@ -730,5 +756,10 @@ MonoBehaviour:
 --- !u!224 &2518765130218529885 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+  m_PrefabInstance: {fileID: 4807306874501877408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2972448807784003465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7779614661162694953, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
   m_PrefabInstance: {fileID: 4807306874501877408}
   m_PrefabAsset: {fileID: 0}

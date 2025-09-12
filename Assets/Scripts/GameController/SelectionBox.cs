@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 //using UnityEditor.Experimental.GraphView;
 
 public class SelectionBox : MonoBehaviour
@@ -8,7 +9,6 @@ public class SelectionBox : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Canvas canvas;                // Canvas chứa boxVisual
     [SerializeField] private RectTransform boxVisual;      // UI Image (RectTransform) làm box
-    [SerializeField] private string selectableTag = "Selectable"; // tag các object có thể chọn
     [SerializeField] private GameObject _moveTo;
     private bool _singleSelected = false;
 
@@ -108,7 +108,7 @@ public class SelectionBox : MonoBehaviour
         Camera cam = Camera.main;
         if (cam == null) { Debug.LogWarning("No Main Camera found for selection."); return; }
 
-        GameObject[] selectable = GameObject.FindGameObjectsWithTag(selectableTag);
+        GameObject[] selectable = getUnitClass();
         cleanListChosen();
 
         foreach (var go in selectable)
@@ -129,6 +129,34 @@ public class SelectionBox : MonoBehaviour
         //Debug.Log($"[{transform.name}] [SelectionBox] Selected {chosen.Count} objects");
     }
 
+    private GameObject[] getUnitClass()
+    {
+        List<GameObject> selectable = new List<GameObject>();
+
+        if (Castle.Instance._Q)
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Warrior"));
+        if (Castle.Instance._W)
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Archer"));
+        if (Castle.Instance._E)
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Lancer"));
+        if (Castle.Instance._A)
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Healer"));
+        if (Castle.Instance._S)
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("TNT"));
+
+        // Nếu không bấm phím nào thì lấy tất cả
+        if (selectable.Count == 0)
+        {
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Warrior"));
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Archer"));
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Lancer"));
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("Healer"));
+            selectable.AddRange(GameObject.FindGameObjectsWithTag("TNT"));
+        }
+
+        return selectable.ToArray();
+    }
+
     private void SelectObject()
     {
         GameObject _obj = CursorManager.Instance._hoverGameobject;
@@ -138,11 +166,11 @@ public class SelectionBox : MonoBehaviour
             || _obj.tag == "Archer"
             || _obj.tag == "Lancer"
             || _obj.tag == "Healer"
-            || _obj.tag == "TNT" )
+            || _obj.tag == "TNT")
             {
                 _singleSelected = true;
                 chosen.Add(_obj);
-                _obj.GetComponent<PlayerAI>().isSetSelected(true);    
+                _obj.GetComponent<PlayerAI>().isSetSelected(true);
             }
         }
     }

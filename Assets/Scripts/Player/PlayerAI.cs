@@ -53,8 +53,12 @@ public class PlayerAI : MonoBehaviour
     [SerializeField] public int _meat = 0;
 
     [Header("GFX")]
+    [SerializeField] private GameObject _HPCanvas;
+    [SerializeField] private GameObject _OutLine;
     [SerializeField] private Image _hpBar; // image thanh máu
     [SerializeField] private GameObject _selet; // phát hiện đã được chọn
+    [SerializeField] private GameObject _GFX; // hình ảnh nhân vật
+    [SerializeField] public GameObject _MiniMapIcon;
 
     [Header("Component")]
     [SerializeField] public Animator _anim; // animation của đối tượng
@@ -68,6 +72,8 @@ public class PlayerAI : MonoBehaviour
 
     // bool
     [Header("Status")]
+    [SerializeField] private bool _Die = false;
+    [SerializeField] private bool _canRespawn = false;
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
     [SerializeField] private bool _reachedEndOfPath = false; // đã đến path chưa
     [SerializeField] private bool _isLock = false; // khóa lại không cho về và tìm item dựa vào thành chính.
@@ -105,6 +111,10 @@ public class PlayerAI : MonoBehaviour
         _health = _maxHealth;
         if (!_anim)
             Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'Animator'");
+        if (!_MiniMapIcon)
+            Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'GFX'");
+        if (!_GFX)
+            Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'MinimapIcon'");
 
         _targetPos = _target;
         _seeker = GetComponent<Seeker>();
@@ -117,7 +127,66 @@ public class PlayerAI : MonoBehaviour
     #region Update
     protected virtual void Update()
     {
+        if (_Die) return;
         setHPBar();
+    }
+    #endregion
+
+
+    #region New Status
+    private void newStatus()
+    {
+        _health = _maxHealth;
+        _rock = 0;
+        _gold = 0;
+        _meat = 0;
+        _wood = 0;
+        _reachedEndOfPath = false;
+        _detect = false;
+        _isLock = false;
+        _isAI = true;
+        _isTarget = false;
+        foundLowHealth = false;
+        _canAttack = true;
+        _attackCount = 0;
+        _healPlus = 0;
+        _AOEHeal = false;
+        _currentWaypoint = 0;
+    }
+    #endregion
+
+
+    #region Respawn 
+    /*
+    Dùng để respawn lại đối tượng
+    */
+    public void respawn(Transform pos)
+    {
+        newStatus();
+        transform.position = pos.position;
+        _MiniMapIcon.SetActive(true);
+        _OutLine.SetActive(true);
+        _GFX.SetActive(true);
+        _HPCanvas.SetActive(true);
+        if (!IsHealerOrTNT)
+            _healEffect.SetActive(false);
+        _selet.SetActive(false);
+        _canRespawn = false;
+        setDie(false);
+    }
+    #endregion
+
+
+    #region Dead
+    public void Dead()
+    {
+        _MiniMapIcon.SetActive(false);
+        _OutLine.SetActive(false);
+        _HPCanvas.SetActive(false);
+        if (!IsHealerOrTNT)
+            _healEffect.SetActive(false);
+        _selet.SetActive(false);
+        setDie(true);
     }
     #endregion
 
@@ -153,6 +222,7 @@ public class PlayerAI : MonoBehaviour
     #region Create Path
     private void UpdatePath()
     {
+        if (_Die) return;
         if (_seeker.IsDone())
             if (!_reachedEndOfPath || _targetPos != _target)
                 _seeker.StartPath(_rb.position, _target, OnPathComplete);
@@ -227,6 +297,7 @@ public class PlayerAI : MonoBehaviour
     private Coroutine _attackSpeed;
     protected virtual PlayerAI attack()
     {
+        if (_canAttack == false) return null;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _range);
         foreach (var hit in hits)
         {
@@ -276,12 +347,12 @@ public class PlayerAI : MonoBehaviour
         ItemType type = _script._type;
         if (_script._stack > 0 && _script._seleted)
         {
-            if (type == ItemType.Tree || type == ItemType.Pumpkin)
+            if (type == ItemType.Tree)
             {
                 _anim.SetInteger("TypeFarm", 1);
                 _anim.SetTrigger("attack");
             }
-            else if (type == ItemType.Iron || type == ItemType.Gold)
+            else if (type == ItemType.Rock || type == ItemType.Gold)
             {
                 _anim.SetInteger("TypeFarm", 2);
                 _anim.SetTrigger("attack");
@@ -372,17 +443,18 @@ public class PlayerAI : MonoBehaviour
             {
                 if (hit.CompareTag("Warrior") || hit.CompareTag("Archer") || hit.CompareTag("Lancer"))
                 {
+                    var playerAI = hit.GetComponent<PlayerAI>();
+                    if (playerAI._Die == true) return null;
                     if (_canAttack)
                         setDetect(true);
                     else
                         setDetect(false);
 
-                    var playerAI = hit.GetComponent<PlayerAI>();
                     float health = playerAI._health;
                     float maxhealth = playerAI._maxHealth;
                     float dist = Vector3.Distance(transform.position, hit.transform.position);
 
-                     // Nếu tìm thấy người máu thấp
+                    // Nếu tìm thấy người máu thấp
                     if (health < maxhealth)
                     {
                         if (!foundLowHealth || dist < minDist) // lần đầu thấy hoặc gần hơn
@@ -490,7 +562,7 @@ public class PlayerAI : MonoBehaviour
         float dist = Vector2.Distance(_rb.position, waypoint);
         float edg = _detect ? _range - 0.8f : 1.5f;
         if (dist < edg)
-                _currentWaypoint++;
+            _currentWaypoint++;
     }
     #endregion
 
@@ -572,6 +644,19 @@ public class PlayerAI : MonoBehaviour
     // Selected
     public void isSetSelected(bool amount)
         => _selet.SetActive(amount);
+
+    // Die
+    public void setDie(bool amount)
+    {
+        _Die = amount;
+        _anim.SetBool("Die", amount);
+    }
+    public bool getDie() => _Die;
+
+    // Can respawn
+    public void setCanRespawn(bool amount)
+        => _canRespawn = amount;
+    public bool getCanRespawn() => _canRespawn;
     #endregion
 }
 

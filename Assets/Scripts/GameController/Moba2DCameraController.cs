@@ -9,10 +9,7 @@ public class Moba2DCameraController : MonoBehaviour
     {
         Vector3 pos = transform.position;
 
-        // --- Di chuyển bằng phím WASD / mũi tên ---
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        pos += new Vector3(h, v, 0) * moveSpeed * Time.deltaTime;
+        pos += new Vector3(0, 0, 0) * moveSpeed * Time.deltaTime;
 
         // --- Di chuyển bằng mép màn hình ---
         if (Input.mousePosition.x >= Screen.width - edgeSize) // mép phải

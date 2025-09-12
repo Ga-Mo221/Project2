@@ -4,9 +4,8 @@ using UnityEngine;
 public enum ItemType
 {
     Tree,
-    Iron,
-    Gold,
-    Pumpkin
+    Rock,
+    Gold
 }
 
 public class Item : MonoBehaviour
@@ -16,6 +15,7 @@ public class Item : MonoBehaviour
     [SerializeField] private float _spawnTime = 60;
     [SerializeField] public int _maxStack = 3;
     [SerializeField] public bool _seleted = false;
+    [SerializeField] public bool _detec = false;
 
     [SerializeField] private SpriteRenderer _sottingLayer;
     [SerializeField] private Transform _treePoint;

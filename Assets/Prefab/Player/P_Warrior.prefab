@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 3729840782053474631}
   - component: {fileID: 5670761250453613276}
   - component: {fileID: 6362947074359857873}
+  - component: {fileID: 1293021993264468765}
   m_Layer: 7
   m_Name: P_Warrior
   m_TagString: Warrior
@@ -289,10 +290,16 @@ MonoBehaviour:
   _gold: 0
   _wood: 0
   _meat: 0
+  _HPCanvas: {fileID: 4352966296300642256}
+  _OutLine: {fileID: 6915786969079094675}
   _hpBar: {fileID: 154612118751249562}
   _selet: {fileID: 2577642076283397288}
+  _GFX: {fileID: 109896237691892845}
+  _MiniMapIcon: {fileID: 1627387284613245235}
   _anim: {fileID: 7255897152711031789}
   _healEffect: {fileID: 1103703179019586960}
+  _Die: 0
+  _canRespawn: 0
   _detect: 0
   _reachedEndOfPath: 0
   _isLock: 0
@@ -304,6 +311,20 @@ MonoBehaviour:
   _healPlus: 0
   _AOEHeal: 0
   _spriteRender: {fileID: 4112465308621576123}
+--- !u!114 &1293021993264468765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e4afdb1aaff9d4d829f887deb784f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 0
+  _playerAI: {fileID: 0}
 --- !u!1 &1627387284613245235
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,6 +760,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 5115456611462586062}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6915786969079094675 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 5115456611462586062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5391064098314814198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -945,5 +971,10 @@ MonoBehaviour:
 --- !u!224 &4025345277128870916 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+  m_PrefabInstance: {fileID: 6313599830823970553}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4352966296300642256 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7779614661162694953, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
   m_PrefabInstance: {fileID: 6313599830823970553}
   m_PrefabAsset: {fileID: 0}
