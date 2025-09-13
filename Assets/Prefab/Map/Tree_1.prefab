@@ -250,7 +250,8 @@ MonoBehaviour:
   _maxStack: 3
   _seleted: 0
   _detec: 0
-  _sottingLayer: {fileID: 3011937549612326989}
+  _spriteRender: {fileID: 3011937549612326989}
+  _anim: {fileID: 1949781250313450411}
   _treePoint: {fileID: 5345547186033475264}
   _treeDie: {fileID: 7134273855151293222}
   _stack: 3
@@ -387,11 +388,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 736918039964912931, guid: 7041be16e64ff1e48956677108ee5acd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 736918039964912931, guid: 7041be16e64ff1e48956677108ee5acd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.28
+      value: -3.48
       objectReference: {fileID: 0}
     - target: {fileID: 736918039964912931, guid: 7041be16e64ff1e48956677108ee5acd, type: 3}
       propertyPath: m_LocalPosition.z

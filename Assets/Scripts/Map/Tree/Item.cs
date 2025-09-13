@@ -17,7 +17,8 @@ public class Item : MonoBehaviour
     [SerializeField] public bool _seleted = false;
     [SerializeField] public bool _detec = false;
 
-    [SerializeField] private SpriteRenderer _sottingLayer;
+    [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private Animator _anim;
     [SerializeField] private Transform _treePoint;
     [SerializeField] private GameObject _treeDie;
     private Collider2D _collider;
@@ -27,29 +28,24 @@ public class Item : MonoBehaviour
     void Start()
     {
         _stack = _maxStack;
-        _sottingLayer.sortingOrder = -(int)(_treePoint.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_treePoint.position.y * 100);
         _collider = GetComponent<Collider2D>();
     }
 
     public void farm()
     {
         _stack--;
+        _anim.SetTrigger("Farm");
         if (_stack <= 0)
         {
-            StartCoroutine(colliderEnable());
-            _sottingLayer.enabled = false;
+            StartCoroutine(resPawn());
             _treeDie.SetActive(true);
-            Animator _anim = _treeDie.GetComponent<Animator>();
+            Animator _animDie = _treeDie.GetComponent<Animator>();
             SpriteRenderer _sprite = _treeDie.GetComponent<SpriteRenderer>();
             _sprite.sortingOrder = -(int)(_treePoint.position.y * 100);
+            _animDie.SetBool("Die", true);
             _anim.SetBool("Die", true);
         }
-    }
-    private IEnumerator colliderEnable()
-    {
-        yield return new WaitForSeconds(1.3f);
-        _collider.enabled = false;
-        StartCoroutine(resPawn());
     }
 
     private IEnumerator resPawn()
@@ -58,9 +54,10 @@ public class Item : MonoBehaviour
         _stack = _maxStack;
         _seleted = false;
         _collider.enabled = true;
-        _sottingLayer.enabled = true;
+        _spriteRender.enabled = true;
         _treeDie.SetActive(false);
-        Animator _anim = _treeDie.GetComponent<Animator>();
+        Animator _animDie = _treeDie.GetComponent<Animator>();
+        _animDie.SetBool("Die", false);
         _anim.SetBool("Die", false);
     }
 }
