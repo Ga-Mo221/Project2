@@ -34,6 +34,20 @@ AnimationClip:
       value: {fileID: -4229310860450682457, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
     - time: 0.33333334
       value: {fileID: -718658282037140498, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.5
+      value: {fileID: -718658282037140498, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.55
+      value: {fileID: -4229310860450682457, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.6
+      value: {fileID: -5752948877553487394, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.6666666
+      value: {fileID: -7542521601097302501, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.7
+      value: {fileID: 8919987342377123801, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.75
+      value: {fileID: 9100265939887264376, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - time: 1.8
+      value: {fileID: -3250757501160694036, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -63,12 +77,19 @@ AnimationClip:
     - {fileID: -5752948877553487394, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
     - {fileID: -4229310860450682457, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
     - {fileID: -718658282037140498, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: -718658282037140498, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: -4229310860450682457, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: -5752948877553487394, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: -7542521601097302501, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: 8919987342377123801, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: 9100265939887264376, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
+    - {fileID: -3250757501160694036, guid: 0cfa2cf34a78eca4883c9406dbac9a7c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.35000002
+    m_StopTime: 1.8166666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -88,8 +109,15 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.31666666
+  - time: 0
     functionName: addScore
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.8
+    functionName: setAtive
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

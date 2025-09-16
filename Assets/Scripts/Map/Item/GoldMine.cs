@@ -22,8 +22,8 @@ public class GoldMine : Item
                 {
                     i = Random.Range(0, 5);
                 } while (_goldList[i].activeSelf);
-                _goldList[i].SetActive(true);
                 var script = _goldList[i].GetComponent<PickUp>();
+                _goldList[i].SetActive(true);
                 script._anim.SetBool("Die", true);
                 if (_value >= _valueOneDrop)
                 {
@@ -36,6 +36,11 @@ public class GoldMine : Item
                     _playerAI.target = null;
                     _playerAI._canAction = false;
                     _value = 0;
+                    foreach (var hit in _Farmlist)
+                    {
+                        hit.resetItemSelect();
+                        hit.target = null;
+                    }
                     _anim.SetBool("Die", true);
                 }
             }

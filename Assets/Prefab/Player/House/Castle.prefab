@@ -537,6 +537,14 @@ MonoBehaviour:
   _In_Castle_Pos: {fileID: 7281954126970470205}
   _allItems: []
   _inventory: {fileID: 0}
+  _maxRock: 50
+  _maxWood: 50
+  _maxGold: 50
+  _maxMeat: 50
+  _rock: 0
+  _wood: 0
+  _gold: 0
+  _meat: 0
   _archer_Right: {fileID: 0}
   _archer_Center: {fileID: 0}
   _archer_Left: {fileID: 0}
@@ -563,6 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 30
+  hits: []
 --- !u!95 &3518819065691153349
 Animator:
   serializedVersion: 7
@@ -795,6 +804,7 @@ GameObject:
   - component: {fileID: 7281954126970470205}
   - component: {fileID: 7363187027790678078}
   - component: {fileID: 1599324780184899269}
+  - component: {fileID: 7083402862170406111}
   m_Layer: 6
   m_Name: In_Castle_Pos
   m_TagString: Untagged
@@ -868,6 +878,18 @@ MonoBehaviour:
   _button_Right: {fileID: 9099152136010474031}
   _button_Center: {fileID: 3206731909202821406}
   _button_Left: {fileID: 19353518038162544}
+--- !u!114 &7083402862170406111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5691160365042358918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38f60e8c97094f49b9abd486724da09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7460513832887574202
 GameObject:
   m_ObjectHideFlags: 0

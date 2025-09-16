@@ -101,17 +101,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _maxValue: 5
+  _valueOneDrop: 5
   _spawnTime: 120
   _maxStack: 3
+  _maxFarmer: 0
   _seleted: 0
   _detec: 0
-  _Farmer:
-  - {fileID: 0}
-  - {fileID: 0}
   _spriteRender: {fileID: 1777536112420729566}
   _anim: {fileID: 0}
   _OderPoin: {fileID: 6595547443937252300}
   _DiePrefab: {fileID: 7647782840851476349}
+  _value: 0
+  _Farmer: 0
   _stack: 0
 --- !u!1 &5156852707756282127
 GameObject:
@@ -311,6 +313,7 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 0}
   _Die: {fileID: 7647782840851476349}
   _item: {fileID: 8192216039845590812}
+  _seemer: []
   _Detec: 0
 --- !u!58 &2968925384716923918
 CircleCollider2D:
@@ -399,6 +402,10 @@ PrefabInstance:
     - target: {fileID: 5397378991632266765, guid: 3f0d72a250681894f82f20b3aa302f81, type: 3}
       propertyPath: m_Name
       value: Rock_Dead
+      objectReference: {fileID: 0}
+    - target: {fileID: 5397378991632266765, guid: 3f0d72a250681894f82f20b3aa302f81, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

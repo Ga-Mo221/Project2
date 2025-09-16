@@ -11,8 +11,19 @@ public class Castle : MonoBehaviour
     [SerializeField] private Transform _point;
     [SerializeField] public Transform _In_Castle_Pos;
 
+    [Header("All Item")]
     public GameObject[] _allItems;
+
+    [Header("Inventory")]
     public GameObject _inventory;
+    public int _maxRock = 50;
+    public int _maxWood = 50;
+    public int _maxGold = 50;
+    public int _maxMeat = 50;
+    public int _rock = 0;
+    public int _wood = 0;
+    public int _gold = 0;
+    public int _meat = 0;
 
     [Header("Archer_Up")]
     public GameObject _archer_Right;

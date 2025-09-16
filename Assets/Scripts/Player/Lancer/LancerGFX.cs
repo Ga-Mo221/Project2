@@ -53,8 +53,15 @@ public class LancerGFX : PlayerAI
                     _itemScript._seleted = true;
                 else
                 {
-                    if (_itemScript._Farmer < _itemScript._maxFarmer)
-                    _itemScript._Farmer++;
+                    if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
+                    {
+                        bool see = false;
+                        foreach (var hit in _itemScript._Farmlist)
+                            if (hit == this)
+                                see = true;
+                        if (see)
+                            _itemScript._Farmlist.Add(this);
+                    }
                 }
             }
         }

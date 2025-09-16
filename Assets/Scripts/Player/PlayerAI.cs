@@ -205,18 +205,6 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
-    #region Check Inventory full
-    public bool checkFullInventory()
-    {
-        if (_rock < _maxRock) return false;
-        if (_gold < _maxGold) return false;
-        if (_wood < _maxWood) return false;
-        if (_meat < _maxMeat) return false;
-        return true;
-    }
-    #endregion
-
-
     #region Create Path
     private void UpdatePath()
     {
@@ -265,8 +253,14 @@ public class PlayerAI : MonoBehaviour
             }
             else
             {
-                if (_itemScript._Farmer > 0)
-                    _itemScript._Farmer--;
+                bool see = false;
+                foreach (var hit in _itemScript._Farmlist)
+                {
+                    if (hit == this)
+                        see = true;
+                }
+                if (see)
+                    _itemScript._Farmlist.Remove(this);
             }
             _itemScript = null;
         }
@@ -448,7 +442,7 @@ public class PlayerAI : MonoBehaviour
                     {
                         if (_script._detec && _script._value > 0 && _gold < _maxGold)
                         {
-                            if (_script._Farmer < _script._maxFarmer)
+                            if (_script._Farmlist.Count < _script._maxFarmers)
                             {
                                 if (dist < minDist) // chỉ chọn nếu gần hơn
                                 {
@@ -463,7 +457,7 @@ public class PlayerAI : MonoBehaviour
             }
         }
         if (nearest != null)
-            Debug.Log(nearest.transform.parent.name + "||" + Vector3.Distance(transform.position, nearest.transform.position));
+            Debug.Log(transform.name +" || "+ nearest.transform.parent.name + " || " + Vector3.Distance(transform.position, nearest.transform.position));
         Castle.Instance._canFind = true;
         return nearest;
     }
@@ -574,7 +568,7 @@ public class PlayerAI : MonoBehaviour
                 _pos = Castle.Instance._inventory.transform.position;
             else
                 _pos = Castle.Instance._In_Castle_Pos.position;
-                setTarget(_pos, true);
+                setTarget(_pos, false);
         }
     }
     #endregion

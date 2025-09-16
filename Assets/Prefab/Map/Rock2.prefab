@@ -56,6 +56,7 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 0}
   _Die: {fileID: 3274550444517328863}
   _item: {fileID: 5424085374242663375}
+  _seemer: []
   _Detec: 0
 --- !u!58 &335932139889422512
 CircleCollider2D:
@@ -227,15 +228,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.17421982, y: 0.120620504}
-      - {x: -0.37583327, y: -0.016312122}
-      - {x: -0.13796085, y: -0.31108165}
-      - {x: 0.022837073, y: -0.30556735}
-      - {x: 0.22285461, y: -0.18205665}
-      - {x: 0.41929066, y: -0.16634753}
-      - {x: 0.40785465, y: -0.09315597}
-      - {x: 0.31407812, y: 0.0045744576}
-      - {x: 0.09381208, y: 0.16179077}
+    - - {x: -0.14155075, y: 0.08201132}
+      - {x: -0.17090774, y: -0.0074022617}
+      - {x: -0.102321416, y: -0.1714949}
+      - {x: 0.02580745, y: -0.17192073}
+      - {x: 0.13672702, y: -0.10186854}
+      - {x: 0.13714677, y: -0.059430473}
+      - {x: 0.15243967, y: 0.004851857}
+      - {x: 0.115092725, y: 0.04615402}
+      - {x: 0.034413435, y: 0.10833225}
   m_UseDelaunayMesh: 0
 --- !u!1 &8055385131801396274
 GameObject:
@@ -338,17 +339,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _maxValue: 5
+  _valueOneDrop: 5
   _spawnTime: 120
   _maxStack: 3
+  _maxFarmer: 0
   _seleted: 0
   _detec: 0
-  _Farmer:
-  - {fileID: 0}
-  - {fileID: 0}
   _spriteRender: {fileID: 3751358352210878373}
   _anim: {fileID: 0}
   _OderPoin: {fileID: 6407582959383233683}
   _DiePrefab: {fileID: 3274550444517328863}
+  _value: 0
+  _Farmer: 0
   _stack: 0
 --- !u!1001 &4444869478023065020
 PrefabInstance:
