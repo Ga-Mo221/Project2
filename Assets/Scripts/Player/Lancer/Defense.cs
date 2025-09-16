@@ -3,6 +3,7 @@ using UnityEngine;
 public class Defense : MonoBehaviour
 {
     [SerializeField] private LancerGFX _lancer;
+    private GameObject target;
 
     void Start()
     {
@@ -11,13 +12,16 @@ public class Defense : MonoBehaviour
     }
 
 
-    public void off()
+    public void farm()
     {
-        _lancer.offCanAttack();
+        target = _lancer.target;
+        if (target == null) return; 
+        if (target.CompareTag("Item"))
+            target.GetComponent<Item>().farm(_lancer);
     }
 
-    public void on()
-    {
-        _lancer.onCanAttack();
-    }
+
+    public void off() => _lancer.offDetec();
+
+    public void on() => _lancer.onDetec();
 }

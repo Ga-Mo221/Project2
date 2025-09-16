@@ -8,7 +8,7 @@ public class CursorManager : MonoBehaviour
     [SerializeField] private Texture2D _select;
     public Vector2 _hotPot = new Vector2(32,32);
 
-    public bool ChoseMiniMap = false;
+    public bool ChoseUI = false;
     public bool Select = false;
 
     public GameObject _hoverGameobject;

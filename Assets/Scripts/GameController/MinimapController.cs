@@ -88,35 +88,13 @@ public class MinimapController : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     [SerializeField] private Collider2D _collider;
 
-    private bool _isHovering = false;
+    //private bool _isHovering = false;
     private bool _isDragging = false;
 
     void Start()
     {
         GameObject mainCamObj = Camera.main?.gameObject;
         mainCamera = mainCamObj.GetComponent<Camera>();
-    }
-
-    void Update()
-    {
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (_collider.OverlapPoint(mouseWorldPos))
-        {
-            if (!_isHovering) 
-            {
-                CursorManager.Instance.ChoseMiniMap = true;
-                _isHovering = true;
-            }
-        }
-        else
-        {
-            if (_isHovering) 
-            {
-                CursorManager.Instance.ChoseMiniMap = false;
-                _isHovering = false;
-            }
-        }
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -138,6 +138,8 @@ GameObject:
   - component: {fileID: 3035448137790604362}
   - component: {fileID: 3770576610520657101}
   - component: {fileID: 8420489512779424741}
+  - component: {fileID: 8824718435927559711}
+  - component: {fileID: 1938350544207451368}
   m_Layer: 7
   m_Name: P_Healer
   m_TagString: Healer
@@ -296,19 +298,22 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 7717036042490857818}
   _anim: {fileID: 3382717312857043231}
   _healEffect: {fileID: 0}
+  path: {fileID: 1938350544207451368}
+  target: {fileID: 0}
   _Die: 0
   _canRespawn: 0
   _detect: 0
-  _reachedEndOfPath: 0
   _isLock: 0
   _isAI: 1
   _isTarget: 0
   foundLowHealth: 0
-  _canAttack: 1
   _attackCount: 0
   _healPlus: 0
   _AOEHeal: 0
+  _canAction: 0
+  _itemScript: {fileID: 0}
   _spriteRender: {fileID: 1517296898663192203}
+  _oderSpriterPoint: {fileID: 2518765130218529885}
   _heal_count_SKILL: 10
 --- !u!114 &8420489512779424741
 MonoBehaviour:
@@ -323,7 +328,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitClass: 3
-  _playerAI: {fileID: 0}
+  Armor: 2
+--- !u!114 &8824718435927559711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3954200698115897747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7549e9945fabe6c44b89c04b609c7e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 20
+  hits: []
+--- !u!114 &1938350544207451368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3954200698115897747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc3a712b194d5e48ad884da6faf78c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSpeed: 0
+  _range: 0
+  _detect: 0
+  _target: {x: 0, y: 0, z: 0}
+  _targetPos: {x: 0, y: 0, z: 0}
+  _reachedEndOfPath: 0
+  _anim: {fileID: 3382717312857043231}
 --- !u!1 &7717036042490857818
 GameObject:
   m_ObjectHideFlags: 0

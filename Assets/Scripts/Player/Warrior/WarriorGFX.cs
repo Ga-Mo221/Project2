@@ -4,35 +4,67 @@ public class WarriorGFX : PlayerAI
 {
     [Header("Warrior GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private Transform _oderSpriterPoint;
 
     protected override void Start()
     {
         base.Start();
         if (!_spriteRender)
             Debug.LogError("[WarriorGFX] Chưa gán 'SpriteRender'");
+        if (!_oderSpriterPoint)
+            Debug.LogError("[WarriorGFX] Chưa gán '_oderSpriterPoint'");
     }
 
     protected override void Update()
     {
+        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100);
         base.Update();
-        _spriteRender.sortingOrder = -(int)(transform.position.y * 100);
-        flip();
-        if (getIsAI())
+
+        if (!getIsAI()) return;
+        if (target == null)
         {
-            setupFolow();
-            if (!checkFullInventory() && !getIsTarget())
+            target = findEnemys();
+            if (target != null)
             {
-                if (!findTargetMoveTo())
-                    if (!getIsLock() && !getDetect())
-                        findItem();
+                setDetect(true);
+                moveToTarget(target);
             }
-            farm();
-            attack();
         }
+        if (target == null)
+        {
+            target = findAnimals();
+            if (target != null)
+            {
+                setDetect(true);
+                moveToTarget(target);
+            }
+        }
+        if (target == null)
+        {
+            target = findItems();
+            if (target != null)
+            {
+                setDetect(false);
+                moveToTarget(target);
+                _itemScript = target.GetComponent<Item>();
+                if (_itemScript._type != ItemType.Gold)
+                    _itemScript._seleted = true;
+                else
+                {
+                    if (_itemScript._Farmer < _itemScript._maxFarmer)
+                    _itemScript._Farmer++;
+                }
+            }
+        }
+
+        goToHome(target);
+        if (target == null) return;
+        farm(target);
+        attack(target);
     }
 
-    public void offCanAttack()
-        => _canAttack = false;
-    public void onCanAttack()
-        => _canAttack = true;
+    public void offDetec()
+        => setDetect(false);
+    public void onDetec()
+        => setDetect(true);
 }

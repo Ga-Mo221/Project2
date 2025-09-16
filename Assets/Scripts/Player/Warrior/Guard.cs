@@ -3,9 +3,18 @@ using UnityEngine;
 public class Guard : MonoBehaviour
 {
     [SerializeField] private WarriorGFX _script;
+    private GameObject target;
 
-    public void offCanAttack()
-        => _script.offCanAttack();
-    public void onCanAttack()
-        => _script.onCanAttack();
+    public void farm()
+    {
+        target = _script.target;
+        if (target == null) return; 
+        if (target.CompareTag("Item"))
+            target.GetComponent<Item>().farm(_script);
+    }
+
+    public void offDetec()
+        => _script.offDetec();
+    public void onDetec()
+        => _script.onDetec();
 }

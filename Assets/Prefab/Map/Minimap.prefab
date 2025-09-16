@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 2797534452276902614}
   - component: {fileID: 1350954925191281948}
   - component: {fileID: 8629899519595883719}
+  - component: {fileID: 4193466341035777805}
   m_Layer: 5
   m_Name: MiniMap
   m_TagString: Untagged
@@ -536,3 +537,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.6365179}
   m_Radius: 125.31642
+--- !u!114 &4193466341035777805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753649918356468831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6020ed2ca97f4f548bc5c8027f59497e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

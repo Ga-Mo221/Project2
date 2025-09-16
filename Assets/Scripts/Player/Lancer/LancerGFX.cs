@@ -5,7 +5,6 @@ public class LancerGFX : PlayerAI
 {
     [Header("Lance GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
-    private GameObject _nearest;
     [SerializeField] private Transform _pos;
     [SerializeField] private Vector3 _DirectionCheck;
 
@@ -20,30 +19,59 @@ public class LancerGFX : PlayerAI
 
     protected override void Update()
     {
-        base.Update();
         _spriteRender.sortingOrder = -(int)(_pos.position.y * 100);
-        _nearest = flip();
-        enemyDirection();
-        if (getIsAI())
+        base.Update();
+        
+        if (!getIsAI()) return;
+        if (target == null)
         {
-            setupFolow();
-            if (!checkFullInventory() && !getIsTarget())
+            target = findEnemys();
+            if (target != null)
             {
-                if (!findTargetMoveTo())
-                    if (!getIsLock() && !getDetect())
-                        findItem();
+                setDetect(true);
+                moveToTarget(target);
             }
-            farm();
-            attack();
         }
+        if (target == null)
+        {
+            target = findAnimals();
+            if (target != null)
+            {
+                setDetect(true);
+                moveToTarget(target);
+            }
+        }
+        if (target == null)
+        {
+            target = findItems();
+            if (target != null)
+            {
+                setDetect(false);
+                moveToTarget(target);
+                _itemScript = target.GetComponent<Item>();
+                if (_itemScript._type != ItemType.Gold)
+                    _itemScript._seleted = true;
+                else
+                {
+                    if (_itemScript._Farmer < _itemScript._maxFarmer)
+                    _itemScript._Farmer++;
+                }
+            }
+        }
+
+        goToHome(target);
+        if (target == null) return;
+        farm(target);
+        enemyDirection();
+        attack(target);
     }
 
     private void enemyDirection()
     {
-        if (_nearest != null)
+        if (target != null)
         {
-            float _neX = _nearest.transform.position.x;
-            float _neY = _nearest.transform.position.y;
+            float _neX = target.transform.position.x;
+            float _neY = target.transform.position.y;
             float _X = _pos.position.x;
             float _Y = _pos.position.y;
             float _xdis = math.abs(math.abs(_neX) - math.abs(_X));
@@ -77,8 +105,8 @@ public class LancerGFX : PlayerAI
         Gizmos.DrawWireCube(transform.position, _DirectionCheck);
     }
 
-    public void offCanAttack()
-        => _canAttack = false;
-    public void onCanAttack()
-        => _canAttack = true;
+    public void offDetec()
+        => setDetect(false);
+    public void onDetec()
+        => setDetect(true);
 }

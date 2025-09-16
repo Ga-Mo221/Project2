@@ -5,6 +5,7 @@ public class HealerGFX : PlayerAI
 {
     [Header("Healer GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private Transform _oderSpriterPoint;
     private PlayerAI _scripTarget;
 
     [Header("SKILL")]
@@ -15,26 +16,33 @@ public class HealerGFX : PlayerAI
         base.Start();
         if (!_spriteRender)
             Debug.LogError("[HealerGFX] Chưa gán 'SpriteRender'");
+        if (!_oderSpriterPoint)
+            Debug.LogError("[HealerGFX] Chưa gán '_oderSpriterPoint'");
     }
 
     protected override void Update()
     {
         base.Update();
-        _spriteRender.sortingOrder = -(int)(transform.position.y * 100);
-        flip();
-        if (getIsAI())
+        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100);
+
+        if (!getIsAI()) return;
+        if (target == null)
         {
-            setupFolow();
-            findTargetMoveTo();
-            _scripTarget = attack();
+            target = findPlayers();
+            if (target != null)
+            {
+                setDetect(true);
+                moveToTarget(target);
+            }
         }
+
+        attack(target);
     }
 
 
     private Coroutine _healspeed;
-    protected override PlayerAI attack()
+    protected override PlayerAI attack(GameObject _nearest)
     {
-        GameObject _nearest = getGameObject();
         if (_nearest == null) return null;
         var script = _nearest.GetComponent<PlayerAI>();
 
@@ -56,7 +64,8 @@ public class HealerGFX : PlayerAI
 
     public void heals()
     {
-        if (_scripTarget == null) return;
+        if (target == null) return;
+        _scripTarget = target.GetComponent<PlayerAI>();
         _scripTarget._healPlus = _damage;
         if (_attackCount == _heal_count_SKILL)
         {
@@ -64,5 +73,7 @@ public class HealerGFX : PlayerAI
             _attackCount = 0;
         }
         _scripTarget._healEffect.SetActive(true);
+        var _sprite = _scripTarget._healEffect.GetComponent<SpriteRenderer>();
+        _sprite.sortingOrder = -(int)(_scripTarget.transform.position.y * 100);
     }
 }

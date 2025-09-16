@@ -1,5 +1,4 @@
 using UnityEngine;
-using Pathfinding;
 using UnityEngine.UI;
 using System.Collections;
 using NaughtyAttributes;
@@ -67,40 +66,37 @@ public class PlayerAI : MonoBehaviour
     [HideIf(nameof(IsHealerOrTNT))]
     [SerializeField] public GameObject _healEffect;
 
-    private Vector3 _target; // vị trí chỉ định
-    private Vector3 _targetPos; // biến tạm để lưu vị trí chỉ định dùng để so sánh và cập nhật path mới
+    [Header("Target")]
+    [SerializeField] private FindPath path;
+    public GameObject target;
 
     // bool
     [Header("Status")]
     [SerializeField] private bool _Die = false;
     [SerializeField] private bool _canRespawn = false;
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
-    [SerializeField] private bool _reachedEndOfPath = false; // đã đến path chưa
     [SerializeField] private bool _isLock = false; // khóa lại không cho về và tìm item dựa vào thành chính.
     [SerializeField] private bool _isAI = true; // để đối tượng được lựa chọn mục tiêu nhắm đến
     [SerializeField] private bool _isTarget = false; // có đang hướng đến mục tiêu nào hay không
     [ShowIf(nameof(IsHealer))]
     [SerializeField] bool foundLowHealth = false;
     [HideIf(nameof(IsTNT))]
-    [SerializeField] public bool _canAttack = true;
     [SerializeField] public int _attackCount = 0;
     [HideIf(nameof(IsHealerOrTNT))]
     [SerializeField] public float _healPlus = 0;
     [HideIf(nameof(IsHealerOrTNT))]
     [SerializeField] public bool _AOEHeal = false;
+    public bool _canAction = false;
+
+
     // float
-    private float _speed = 600f; // lực đẩy
     private float _repathRate = 0.5f; // thời gian lặp lại tiềm đường
 
-    // int
-    private int _currentWaypoint = 0;
-
     // scrip
-    private Item _itemScript; // dùng để tắt chọn đối với item.
-
-    private Path _path; // đường
-    private Seeker _seeker;
+    public Item _itemScript; // dùng để tắt chọn đối với item.
     private Rigidbody2D _rb;
+
+    private Collider2D[] hits;
 
     #endregion
 
@@ -116,8 +112,8 @@ public class PlayerAI : MonoBehaviour
         if (!_GFX)
             Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'MinimapIcon'");
 
-        _targetPos = _target;
-        _seeker = GetComponent<Seeker>();
+        path.setPropety(_maxSpeed, _range);
+
         _rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("UpdatePath", 0f, _repathRate);
@@ -128,7 +124,10 @@ public class PlayerAI : MonoBehaviour
     protected virtual void Update()
     {
         if (_Die) return;
+        hits = null;
+        hits = Physics2D.OverlapCircleAll(transform.position, _radius);
         setHPBar();
+        flip(target, _canAction);
     }
     #endregion
 
@@ -141,17 +140,17 @@ public class PlayerAI : MonoBehaviour
         _gold = 0;
         _meat = 0;
         _wood = 0;
-        _reachedEndOfPath = false;
+        path.setReachedEndOfPath(false);
         _detect = false;
         _isLock = false;
         _isAI = true;
         _isTarget = false;
         foundLowHealth = false;
-        _canAttack = true;
         _attackCount = 0;
+        target = null;
         _healPlus = 0;
         _AOEHeal = false;
-        _currentWaypoint = 0;
+        path.setCurrentWaypoint(0);
     }
     #endregion
 
@@ -196,9 +195,8 @@ public class PlayerAI : MonoBehaviour
     Dành cho tất cả các UnitType.
     Dùng để reset Detect hoặc folow theo các mục tiêu có thể chuyển động.
     */
-    public void setupFolow()
+    public void setupFolow(GameObject _nearest)
     {
-        GameObject _nearest = getGameObject();
         if (_nearest != null && _nearest.tag != "Item" && _isTarget)
             setTarget(_nearest.transform.position, false);
         if (_nearest == null || _nearest.tag == "Item")
@@ -223,9 +221,14 @@ public class PlayerAI : MonoBehaviour
     private void UpdatePath()
     {
         if (_Die) return;
-        if (_seeker.IsDone())
-            if (!_reachedEndOfPath || _targetPos != _target)
-                _seeker.StartPath(_rb.position, _target, OnPathComplete);
+        if (path._seeker.IsDone())
+        {
+            if (target != null)
+                path.setTarget(target.transform.position);
+            else
+                setDetect(false);
+            path.UpdatePath();
+        }
     }
     #endregion
 
@@ -239,41 +242,44 @@ public class PlayerAI : MonoBehaviour
         + nếu bạn điều khiển thì là true.
         + nếu do Ai điều khiển thì là false.
     */
-    public void setTarget(Vector3 pos, bool controller)
+    public virtual void setTarget(Vector3 pos, bool controller)
     {
-        if (_itemScript != null)
-        {
-            _itemScript._seleted = false;
-            _itemScript = null;
-        }
+        resetItemSelect();
         if (controller)
         {
             setIsAI(false);
             setIsTarget(false);
+            target = null;
         }
         else setIsTarget(true);
-        _target = pos;
+        path.setTarget(pos);
     }
-    public Vector3 getTarget() => _target;
+    public Vector3 getTarget() => path.getTarget();
+    public void resetItemSelect()
+    {
+        if (_itemScript != null)
+        {
+            if (_itemScript._type != ItemType.Gold)
+            {
+                _itemScript._seleted = false;
+            }
+            else
+            {
+                if (_itemScript._Farmer > 0)
+                    _itemScript._Farmer--;
+            }
+            _itemScript = null;
+        }
+    }
     #endregion
 
 
-    #region Find Target Move To
-    public bool findTargetMoveTo()
+    #region Move To Target
+    public bool moveToTarget(GameObject _nearest)
     {
-        GameObject _nearest = getGameObject();
         if (_nearest != null)
         {
             setTarget(_nearest.transform.position, false);
-            switch (_nearest.tag)
-            {
-                case "Item":
-                    var _scrip = _nearest.GetComponent<Item>();
-                    _scrip._seleted = true;
-                    _itemScript = _scrip;
-                    break;
-            }
-            Castle.Instance._canFind = true;
             return true;
         }
         else return false;
@@ -295,22 +301,32 @@ public class PlayerAI : MonoBehaviour
     Đánh thú rừng, kẻ địch, thành của kẻ địch
     */
     private Coroutine _attackSpeed;
-    protected virtual PlayerAI attack()
+    protected virtual PlayerAI attack(GameObject _nearest)
     {
-        if (_canAttack == false) return null;
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _range);
-        foreach (var hit in hits)
+        // Kiểm tra _nearest có null không, có tag "Item" không, và có nằm trong vùng farm không
+        if (_nearest != null && _nearest.CompareTag("Enemy"))
         {
-            if (hit.CompareTag("Animal"))
+            float dist = Vector2.Distance(transform.position, _nearest.transform.position);
+            if (dist <= _range)
             {
+                _canAction = true;
                 if (_attackSpeed == null)
                     _attackSpeed = StartCoroutine(attackSpeed());
             }
-            else if (hit.CompareTag("Enemy"))
+            else
+                _canAction = false;
+        }
+        if (_nearest != null && _nearest.CompareTag("Animal"))
+        {
+            float dist = Vector2.Distance(transform.position, _nearest.transform.position);
+            if (dist <= _range)
             {
+                _canAction = true;
                 if (_attackSpeed == null)
                     _attackSpeed = StartCoroutine(attackSpeed());
             }
+            else
+                _canAction = false;
         }
         return null;
     }
@@ -329,39 +345,60 @@ public class PlayerAI : MonoBehaviour
     dùng để farm các tài nguyên kế bên.
     */
     private Coroutine _farmCoroutine;
-    public void farm()
+    public void farm(GameObject _nearest)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius_farm);
-        foreach (var hit in hits)
+        // Kiểm tra _nearest có null không, có tag "Item" không, và có nằm trong vùng farm không
+        if (_nearest != null && _nearest.CompareTag("Item"))
         {
-            if (hit.CompareTag("Item"))
+            float dist = Vector2.Distance(transform.position, _nearest.transform.position);
+            if (dist <= _radius_farm)
             {
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (_farmCoroutine == null)
+                _canAction = true;
+                var _script = _nearest.GetComponent<Item>();
+                if (_script != null && _farmCoroutine == null)
+                {
                     _farmCoroutine = StartCoroutine(farmTrigger(_script));
+                }
             }
+            else
+                _canAction = false;
         }
     }
     private IEnumerator farmTrigger(Item _script)
     {
         ItemType type = _script._type;
-        if (_script._stack > 0 && _script._seleted)
+        if (_script._stack > 0)
         {
-            if (type == ItemType.Tree)
+            if (type == ItemType.Tree && _script._seleted)
             {
-                _anim.SetInteger("TypeFarm", 1);
-                _anim.SetTrigger("attack");
+                if (_wood < _maxWood)
+                {
+                    _anim.SetInteger("TypeFarm", 1);
+                    _anim.SetTrigger("attack");
+                }
             }
-            else if (type == ItemType.Rock || type == ItemType.Gold)
+            else if (type == ItemType.Rock && _script._seleted)
             {
-                _anim.SetInteger("TypeFarm", 2);
-                _anim.SetTrigger("attack");
+                if (_rock < _maxRock)
+                {
+                    _anim.SetInteger("TypeFarm", 2);
+                    _anim.SetTrigger("attack");
+                }
+            }
+            else if (type == ItemType.Gold && _script._value > 0)
+            {
+                if (_gold < _maxGold)
+                {
+                    _anim.SetInteger("TypeFarm", 2);
+                    _anim.SetTrigger("attack");
+                }
             }
         }
         else if (_script._stack <= 0 && _script._seleted)
         {
             setIsTarget(false);
-            _script._seleted = false;
+            if (_script._type != ItemType.Gold)
+                _script._seleted = false;
         }
         yield return new WaitForSeconds(_farmSpeed);
         _farmCoroutine = null;
@@ -369,200 +406,176 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
-    #region AI Find Item
-    /*
-    Dùng cho tất cả các UnitType
-    Tìm tất cả các mục tiêu kể cả quái, thú, tường thành, đồng minh dựa trên UnitType
-    ưu tiên mục tiêu gần nhất.
-    */
-    public GameObject getGameObject()
+    #region Find Item
+    public GameObject findItems()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
-
         GameObject nearest = null;
-        float minDist = Mathf.Infinity;
-
-        foreach (var hit in hits)
+        if (Castle.Instance._canFind)
         {
-            if (_unitClass != UnitType.Healer)
+            float minDist = Mathf.Infinity;
+            if (hits == null) return null;
+            Castle.Instance._canFind = false;
+            foreach (var hit in Castle.Instance._allItems)
             {
-                if (hit.CompareTag("Animal"))
+                if (hit == null) continue;
+                if (hit.CompareTag("Item"))
                 {
-                    if (_canAttack)
-                        setDetect(true);
-                    else
-                        setDetect(false);
-
                     float dist = Vector3.Distance(transform.position, hit.transform.position);
                     var _script = hit.gameObject.GetComponent<Item>();
-                    // if (!_script._seleted && _script._stack > 0)
-                    // {
-                    if (dist < minDist)
+                    if (_script._type != ItemType.Gold)
                     {
-                        minDist = dist;
-                        nearest = hit.gameObject;
-                    }
-                    //}
-                }
-                else if (hit.CompareTag("Enemy"))
-                {
-                    if (_canAttack)
-                        setDetect(true);
-                    else
-                        setDetect(false);
-
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    var _script = hit.gameObject.GetComponent<Item>();
-                    // if (!_script._seleted && _script._stack > 0)
-                    // {
-                    if (dist < minDist)
-                    {
-                        minDist = dist;
-                        nearest = hit.gameObject;
-                    }
-                    //}
-                }
-                else if (_unitClass != UnitType.TNT)
-                {
-                    if (hit.CompareTag("Item"))
-                    {
-                        float dist = Vector3.Distance(transform.position, hit.transform.position);
-                        var _script = hit.gameObject.GetComponent<Item>();
-                        if (!_script._seleted && _script._stack > 0)
+                        if (!_script._seleted && _script._stack > 0 && _script._detec)
                         {
-                            if (dist < minDist)
+                            if (_script._type == ItemType.Tree && _wood < _maxWood)
                             {
-                                minDist = dist;
-                                nearest = hit.gameObject;
+                                if (dist < minDist)
+                                {
+                                    minDist = dist;
+                                    nearest = hit.gameObject;
+                                }
+                            }
+                            else if (_script._type == ItemType.Rock && _rock < _maxRock)
+                            {
+                                if (dist < minDist)
+                                {
+                                    minDist = dist;
+                                    nearest = hit.gameObject;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (_script._detec && _script._value > 0 && _gold < _maxGold)
+                        {
+                            if (_script._Farmer < _script._maxFarmer)
+                            {
+                                if (dist < minDist) // chỉ chọn nếu gần hơn
+                                {
+                                    minDist = dist;
+                                    nearest = hit.gameObject;
+                                }
+                                break;
                             }
                         }
                     }
                 }
             }
+        }
+        if (nearest != null)
+            Debug.Log(nearest.transform.parent.name + "||" + Vector3.Distance(transform.position, nearest.transform.position));
+        Castle.Instance._canFind = true;
+        return nearest;
+    }
+    #endregion
+
+
+    #region Find Animal
+    public GameObject findAnimals()
+    {
+        GameObject nearest = null;
+        float minDist = Mathf.Infinity;
+        if (hits == null) return null;
+        foreach (var hit in hits)
+        {
+            if (hit == null) continue;
+            if (hit.CompareTag("Animal"))
+            {
+                float dist = Vector3.Distance(transform.position, hit.transform.position);
+                var _script = hit.gameObject.GetComponent<Item>();
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nearest = hit.gameObject;
+                }
+            }
+        }
+        return nearest;
+    }
+    #endregion
+
+
+    #region Find Enemy
+    public GameObject findEnemys()
+    {
+        GameObject nearest = null;
+        float minDist = Mathf.Infinity;
+        if (hits == null) return null;
+        foreach (var hit in hits)
+        {
+            if (hit == null) continue;
+            if (hit.CompareTag("Enemy"))
+            {
+                float dist = Vector3.Distance(transform.position, hit.transform.position);
+                var _script = hit.gameObject.GetComponent<Item>();
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nearest = hit.gameObject;
+                }
+            }
+        }
+        return nearest;
+    }
+    #endregion
+
+
+    #region Find Players
+    public GameObject findPlayers()
+    {
+        GameObject nearest = null;
+        float minDist = Mathf.Infinity;
+        if (hits == null) return null;
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Warrior") || hit.CompareTag("Archer") || hit.CompareTag("Lancer"))
+            {
+                var playerAI = hit.GetComponent<PlayerAI>();
+                if (playerAI._Die == true) return null;
+
+                float health = playerAI._health;
+                float maxhealth = playerAI._maxHealth;
+                float dist = Vector3.Distance(transform.position, hit.transform.position);
+
+                // Nếu tìm thấy người máu thấp
+                if (health < maxhealth)
+                {
+                    if (!foundLowHealth || dist < minDist) // lần đầu thấy hoặc gần hơn
+                    {
+                        foundLowHealth = true;
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
+                }
+                else if (!foundLowHealth) // chỉ xét máu đầy khi chưa tìm thấy ai máu thấp
+                {
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
+                }
+            }
+        }
+        return nearest;
+    }
+    #endregion
+
+
+    #region Go To Home
+    public void goToHome(GameObject nearest)
+    {
+        if (nearest == null)
+        {
+            target = null;
+            setIsTarget(false);
+            Vector3 _pos = Vector3.zero;
+            if (Castle.Instance._inventory != null)
+                _pos = Castle.Instance._inventory.transform.position;
             else
-            {
-                if (hit.CompareTag("Warrior") || hit.CompareTag("Archer") || hit.CompareTag("Lancer"))
-                {
-                    var playerAI = hit.GetComponent<PlayerAI>();
-                    if (playerAI._Die == true) return null;
-                    if (_canAttack)
-                        setDetect(true);
-                    else
-                        setDetect(false);
-
-                    float health = playerAI._health;
-                    float maxhealth = playerAI._maxHealth;
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
-
-                    // Nếu tìm thấy người máu thấp
-                    if (health < maxhealth)
-                    {
-                        if (!foundLowHealth || dist < minDist) // lần đầu thấy hoặc gần hơn
-                        {
-                            foundLowHealth = true;
-                            minDist = dist;
-                            nearest = hit.gameObject;
-                        }
-                    }
-                    else if (!foundLowHealth) // chỉ xét máu đầy khi chưa tìm thấy ai máu thấp
-                    {
-                        if (dist < minDist)
-                        {
-                            minDist = dist;
-                            nearest = hit.gameObject;
-                        }
-                    }
-                }
-            }
+                _pos = Castle.Instance._In_Castle_Pos.position;
+                setTarget(_pos, true);
         }
-        return nearest; // null nếu không có item nào trong bán kính
-    }
-
-    /*
-    Dùng cho UnitType không phải là TNT và Healer.
-    Nếu xung quanh đối tượng không có tài nguyên
-    Sẻ Tìm tài nguyên bằng cách tham chiếu từ thành chính.
-    Sẻ tìm tai nguyên gần thành chính nhất.
-    */
-    public void findItem()
-    {
-        if (Castle.Instance._canFind)
-        {
-            Castle.Instance._canFind = false;
-            foreach (var item in Castle.Instance._allItems)
-            {
-                var _scrip = item.GetComponent<Item>();
-                if (!_scrip._seleted && _scrip._stack > 0)
-                {
-                    setTarget(_scrip.transform.position, false);
-                    _scrip._seleted = true;
-                    Castle.Instance._canFind = true;
-                    _itemScript = _scrip;
-                    return;
-                }
-            }
-            Castle.Instance._canFind = true;
-        }
-    }
-    #endregion
-
-
-    #region Reset Way Value
-    private void OnPathComplete(Path p)
-    {
-        if (p == null) return;
-        if (!p.error)
-        {
-            _path = p;
-            _currentWaypoint = 0;
-        }
-        else
-            Debug.LogWarning("Path error: " + p.error);
-    }
-    #endregion
-
-
-    #region Find the way
-    void FixedUpdate()
-    {
-        if (_path == null) return;
-
-        if (_reachedEndOfPath)
-        {
-            _rb.linearVelocity = Vector2.zero; // dừng máy
-            _anim.SetBool("Moving", !_reachedEndOfPath);
-        }
-        else
-            _anim.SetBool("Moving", !_reachedEndOfPath);
-
-        if (_currentWaypoint >= _path.vectorPath.Count)
-        {
-            if (!_reachedEndOfPath)
-            {
-                _reachedEndOfPath = true;
-                _rb.linearVelocity = Vector2.zero; // dừng máy
-                _targetPos = _target;
-            }
-            return;
-        }
-
-        _reachedEndOfPath = false;
-
-        Vector2 waypoint = (Vector2)_path.vectorPath[_currentWaypoint];
-        Vector2 dir = (waypoint - _rb.position).normalized;
-
-        // Dùng fixedDeltaTime trong FixedUpdate
-        Vector2 force = dir * _speed * Time.fixedDeltaTime;
-        _rb.AddForce(force, ForceMode2D.Force);
-
-        // Giới hạn tốc độ (nếu dùng AddForce)
-        if (_rb.linearVelocity.magnitude > _maxSpeed)
-            _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
-
-        float dist = Vector2.Distance(_rb.position, waypoint);
-        float edg = _detect ? _range - 0.8f : 1.5f;
-        if (dist < edg)
-            _currentWaypoint++;
     }
     #endregion
 
@@ -572,18 +585,20 @@ public class PlayerAI : MonoBehaviour
     Dùng cho tất cả các Unit Class
     để lật đối tượng theo hướng di chuyển hoặc theo hướng mục tiêu được chọn.
     */
-    public GameObject flip()
+    public GameObject flip(GameObject _nearest, bool canAction)
     {
-        GameObject _nearest = getGameObject();
-        if (_nearest != null)
+        if (canAction)
         {
-            // lật theo hướng của nearest
-            float _nearestX = _nearest.transform.position.x;
-            float _X = transform.position.x;
-            if (_nearestX > _X)
-                transform.localScale = new Vector3(1, 1, 1);
-            else if (_nearestX < _X)
-                transform.localScale = new Vector3(-1, 1, 1);
+            if (_nearest != null)
+            {
+                // lật theo hướng của nearest
+                float _nearestX = _nearest.transform.position.x;
+                float _X = transform.position.x;
+                if (_nearestX > _X)
+                    _GFX.transform.localScale = new Vector3(1, 1, 1);
+                else if (_nearestX < _X)
+                    _GFX.transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
         else
         {
@@ -591,7 +606,7 @@ public class PlayerAI : MonoBehaviour
             if (Mathf.Abs(_rb.linearVelocity.x) > 0.01f)
             {
                 float sx = _rb.linearVelocity.x > 0 ? 1f : -1f;
-                transform.localScale = new Vector3(sx, 1f, 1f);
+                _GFX.transform.localScale = new Vector3(sx, 1f, 1f);
             }
         }
         return _nearest;
@@ -637,6 +652,7 @@ public class PlayerAI : MonoBehaviour
     public void setDetect(bool amount)
     {
         _detect = amount;
+        path.setDetec(amount);
         _anim.SetBool("Detectenemy", amount);
     }
     public bool getDetect() => _detect;

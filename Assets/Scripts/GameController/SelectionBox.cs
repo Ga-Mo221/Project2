@@ -6,6 +6,9 @@ using System.Linq;
 
 public class SelectionBox : MonoBehaviour
 {
+    public static SelectionBox Instance { get; private set; }
+
+
     [Header("Setup")]
     [SerializeField] private Canvas canvas;                // Canvas chứa boxVisual
     [SerializeField] private RectTransform boxVisual;      // UI Image (RectTransform) làm box
@@ -18,13 +21,20 @@ public class SelectionBox : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         if (canvas == null) canvas = GetComponentInParent<Canvas>();
         if (boxVisual) boxVisual.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !CursorManager.Instance.ChoseUI)
         {
             _singleSelected = false;
             startScreenPos = Input.mousePosition;
@@ -37,13 +47,13 @@ public class SelectionBox : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !CursorManager.Instance.ChoseUI)
         {
             endScreenPos = Input.mousePosition;
             UpdateVisual(startScreenPos, endScreenPos);
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !CursorManager.Instance.ChoseUI)
         {
             if (boxVisual) boxVisual.gameObject.SetActive(false);
             endScreenPos = Input.mousePosition;
@@ -103,7 +113,7 @@ public class SelectionBox : MonoBehaviour
     // Lấy các object có tag và kiểm tra bằng WorldToScreenPoint
     private void SelectObjects(Vector2 screenStart, Vector2 screenEnd)
     {
-        if (CursorManager.Instance.ChoseMiniMap) return;
+        if (CursorManager.Instance.ChoseUI) return;
         Rect screenRect = GetScreenRect(screenStart, screenEnd);
         Camera cam = Camera.main;
         if (cam == null) { Debug.LogWarning("No Main Camera found for selection."); return; }
