@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tree : Item
+public class Trees : Item
 {
     protected override void Start()
     {

@@ -19,7 +19,7 @@ public class LancerGFX : PlayerAI
 
     protected override void Update()
     {
-        _spriteRender.sortingOrder = -(int)(_pos.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_pos.position.y * 100) + 10000;
         base.Update();
         
         if (!getIsAI()) return;

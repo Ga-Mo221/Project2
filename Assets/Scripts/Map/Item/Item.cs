@@ -49,7 +49,7 @@ public class Item : MonoBehaviour
     {
         _value = _maxValue;
         _stack = _maxStack;
-        _spriteRender.sortingOrder = -(int)(_OderPoin.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_OderPoin.position.y * 100) + 10000;
     }
 
     public virtual void farm(PlayerAI _playerAI)

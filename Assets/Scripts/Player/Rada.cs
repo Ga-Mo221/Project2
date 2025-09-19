@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class Rada : MonoBehaviour
@@ -46,6 +45,7 @@ public class Rada : MonoBehaviour
 
                     if (script._Detec && script._seemer.Count == 0)
                     {
+                        if (script._IsTree) script.offDisplayTree();
                         if (script._IsRock) script.offDisplayRock();
                         if (script._IsAnimal) script.offDisplayAnimal();
                         if (script._IsGold) script.offDisplayGoldMine();

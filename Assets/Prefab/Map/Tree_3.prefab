@@ -50,12 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _GFX: {fileID: 3953546540561474370}
-  _outLine: {fileID: 3297104714365249867}
-  _HPBar: {fileID: 0}
   _MiniMapIcon: {fileID: 0}
-  _Die: {fileID: 977759521818629307}
   _item: {fileID: 1309633963476520526}
+  _seemer: []
   _Detec: 0
 --- !u!58 &6087972526871615074
 CircleCollider2D:
@@ -179,7 +176,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!95 &2578942861528010811
 Animator:
@@ -290,7 +287,8 @@ MonoBehaviour:
   _valueOneDrop: 5
   _spawnTime: 60
   _maxStack: 3
-  _maxFarmer: 0
+  _Farmlist: []
+  _maxFarmers: 2
   _seleted: 0
   _detec: 0
   _spriteRender: {fileID: 3215228910807597386}
@@ -298,7 +296,6 @@ MonoBehaviour:
   _OderPoin: {fileID: 553791211117434666}
   _DiePrefab: {fileID: 977759521818629307}
   _value: 0
-  _Farmer: 0
   _stack: 0
 --- !u!1001 &3802626265003534870
 PrefabInstance:
@@ -441,11 +438,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
---- !u!1 &3297104714365249867 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
-  m_PrefabInstance: {fileID: 3802626265003534870}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5289338416048675800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

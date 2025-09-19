@@ -11,7 +11,7 @@ public class PickUp : MonoBehaviour
  
     void Start()
     {
-        _sprite.sortingOrder = -(int)(_OderPoin.position.y * 100);
+        _sprite.sortingOrder = -(int)(_OderPoin.position.y * 100) + 10000;
     }
 
     public void setDropItem(ItemType type, int value, PlayerAI playerAI)

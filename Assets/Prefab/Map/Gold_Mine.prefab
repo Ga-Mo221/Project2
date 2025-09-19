@@ -137,7 +137,8 @@ MonoBehaviour:
   _valueOneDrop: 5
   _spawnTime: 60
   _maxStack: 10
-  _maxFarmer: 2
+  _Farmlist: []
+  _maxFarmers: 2
   _seleted: 0
   _detec: 0
   _spriteRender: {fileID: 3791499043775884485}
@@ -145,7 +146,6 @@ MonoBehaviour:
   _OderPoin: {fileID: 1440442551158257980}
   _DiePrefab: {fileID: 0}
   _value: 0
-  _Farmer: 0
   _stack: 0
   _goldList:
   - {fileID: 6986304125591459757}
@@ -203,11 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
-  _GFX: {fileID: 8429203360484389928}
-  _outLine: {fileID: 2991709533211408206}
-  _HPBar: {fileID: 0}
   _MiniMapIcon: {fileID: 0}
-  _Die: {fileID: 0}
   _item: {fileID: 4571797421337770883}
   _seemer: []
   _Detec: 0
@@ -334,7 +330,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!95 &5828999588693371778
 Animator:
@@ -540,7 +536,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6460918803164242162, guid: 64e8c0d75049ea9478c31c3018154c99, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -787,11 +784,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
---- !u!1 &2991709533211408206 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
-  m_PrefabInstance: {fileID: 3494970109715133459}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5558152220397929949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

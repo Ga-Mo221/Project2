@@ -33,8 +33,8 @@ TagManager:
   - HealthAOE
   - EnemyRada
   - PlayerHouse
-  - 
-  - 
+  - FogOfWar
+  - Create
   - 
   - 
   - 
@@ -72,8 +72,14 @@ TagManager:
   - name: Select
     uniqueID: 1340047751
     locked: 0
+  - name: FogOfWar
+    uniqueID: 2470092383
+    locked: 0
   - name: UI
     uniqueID: 33045327
+    locked: 0
+  - name: UIGamePlay
+    uniqueID: 3268054883
     locked: 0
   m_RenderingLayers:
   - Default

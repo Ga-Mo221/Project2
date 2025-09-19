@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 33045327
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d5ab2006a1b469a4a941fa15147ec5de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -250,6 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 944833745178596130}
   - component: {fileID: 255901079496053098}
+  - component: {fileID: 6848885399969856746}
   m_Layer: 0
   m_Name: Global Light 2D
   m_TagString: Untagged
@@ -324,6 +325,20 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &6848885399969856746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4541499480204502736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3b8737faa9699418a9281984bd7b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nightColor: {r: 0.062299743, g: 0.10213789, b: 0.3773585, a: 0}
+  _defaultColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &7734723821243692775
 GameObject:
   m_ObjectHideFlags: 0

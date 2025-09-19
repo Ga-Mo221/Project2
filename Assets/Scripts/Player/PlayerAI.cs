@@ -8,92 +8,125 @@ public class PlayerAI : MonoBehaviour
     #region Value
 
     [Header("Class")]
-    [SerializeField] private UnitType _unitClass;
+    public UnitType _unitClass;
     private bool IsHealer => _unitClass == UnitType.Healer;
     private bool IsTNT => _unitClass == UnitType.TNT;
     private bool IsHealerOrTNT => _unitClass == UnitType.Healer || _unitClass == UnitType.TNT;
 
-    [Header("Stats")]
-    [SerializeField] public float _maxHealth = 100;
-    [SerializeField] public float _health; // máu
+    [Foldout("Stats")]
+    public float _maxHealth = 100;
+    [Foldout("Stats")]
+    public float _health; // máu
     [HideIf(nameof(IsHealer))]
-    [SerializeField] public float _damage = 10; // sát thương
+    [Foldout("Stats")]
+    public float _damage = 10; // sát thương
+    [Foldout("Stats")]
     [SerializeField] private float _maxSpeed = 6f; // tốc độ tối đa
     [HideIf(nameof(IsTNT))]
+    [Foldout("Stats")]
     [SerializeField] private float _range = 1.5f; // tầm đánh
     [HideIf(nameof(IsTNT))]
-    [SerializeField] public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
+    [Foldout("Stats")]
+    public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
+    [Foldout("Stats")]
+    public int _slot = 1;
+    [Foldout("Stats")]
+    public int _createTime_sec = 5;
 
-    [Header("AI Find Items")]
+    [Foldout("AI Find")]
     [SerializeField] private float _radius = 10f; // bán kính phát hiện Items, Enemys, Animals
     [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("AI Find")]
     [SerializeField] private float _radius_farm = 1.5f; // tầm farm
     [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("AI Find")]
     [SerializeField] private float _farmSpeed = 1f; // thời gian sau mỗi đòn farm
+    [Foldout("AI Find")]
+    public Item _itemScript; // dùng để tắt chọn đối với item.
 
-    [Header("Inventory")]
     [HideIf(nameof(IsHealerOrTNT))]
-    public bool ShowInventory = false;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxRock = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxGold = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxWood = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxMeat = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _rock = 0;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _gold = 0;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _wood = 0;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _meat = 0;
+    [Foldout("Inventory")]
+    public int _maxRock = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _maxGold = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _maxWood = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _maxMeat = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _rock = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _gold = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _wood = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _meat = 0;
 
-    [Header("GFX")]
+    [Foldout("GFX")]
     [SerializeField] private GameObject _HPCanvas;
+    [Foldout("GFX")]
     [SerializeField] private GameObject _OutLine;
+    [Foldout("GFX")]
     [SerializeField] private Image _hpBar; // image thanh máu
+    [Foldout("GFX")]
     [SerializeField] private GameObject _selet; // phát hiện đã được chọn
+    [Foldout("GFX")]
     [SerializeField] private GameObject _GFX; // hình ảnh nhân vật
-    [SerializeField] public GameObject _MiniMapIcon;
+    [Foldout("GFX")]
+    public GameObject _MiniMapIcon;
 
+    [Foldout("Other")]
     [Header("Component")]
-    [SerializeField] public Animator _anim; // animation của đối tượng
+    public Animator _anim; // animation của đối tượng
 
+    [Foldout("Other")]
     [Header("Effect")]
     [HideIf(nameof(IsHealerOrTNT))]
-    [SerializeField] public GameObject _healEffect;
+    public GameObject _healEffect;
 
     [Header("Target")]
     [SerializeField] private FindPath path;
     public GameObject target;
 
     // bool
-    [Header("Status")]
+    [Foldout("Status")]
     [SerializeField] private bool _Die = false;
+    [Foldout("Status")]
     [SerializeField] private bool _canRespawn = false;
+    [Foldout("Status")]
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
+    [Foldout("Status")]
     [SerializeField] private bool _isLock = false; // khóa lại không cho về và tìm item dựa vào thành chính.
+    [Foldout("Status")]
     [SerializeField] private bool _isAI = true; // để đối tượng được lựa chọn mục tiêu nhắm đến
+    [Foldout("Status")]
     [SerializeField] private bool _isTarget = false; // có đang hướng đến mục tiêu nào hay không
     [ShowIf(nameof(IsHealer))]
-    [SerializeField] bool foundLowHealth = false;
+    [Foldout("Status")]
+    [SerializeField] private bool foundLowHealth = false;
     [HideIf(nameof(IsTNT))]
-    [SerializeField] public int _attackCount = 0;
+    [Foldout("Status")]
+    public int _attackCount = 0;
     [HideIf(nameof(IsHealerOrTNT))]
-    [SerializeField] public float _healPlus = 0;
+    [Foldout("Status")]
+    public float _healPlus = 0;
     [HideIf(nameof(IsHealerOrTNT))]
-    [SerializeField] public bool _AOEHeal = false;
+    [Foldout("Status")]
+    public bool _AOEHeal = false;
+    [Foldout("Status")]
     public bool _canAction = false;
 
 
     // float
     private float _repathRate = 0.5f; // thời gian lặp lại tiềm đường
 
-    // scrip
-    public Item _itemScript; // dùng để tắt chọn đối với item.
     private Rigidbody2D _rb;
 
     private Collider2D[] hits;
@@ -212,7 +245,9 @@ public class PlayerAI : MonoBehaviour
         if (path._seeker.IsDone())
         {
             if (target != null)
+            {
                 path.setTarget(target.transform.position);
+            }
             else
                 setDetect(false);
             path.UpdatePath();
@@ -230,6 +265,10 @@ public class PlayerAI : MonoBehaviour
         + nếu bạn điều khiển thì là true.
         + nếu do Ai điều khiển thì là false.
     */
+    public void setTargetPos(Transform targetPos)
+    {
+        path.setTargetPos(targetPos.position);
+    }
     public virtual void setTarget(Vector3 pos, bool controller)
     {
         resetItemSelect();
@@ -241,6 +280,7 @@ public class PlayerAI : MonoBehaviour
         }
         else setIsTarget(true);
         path.setTarget(pos);
+        _canAction = false;
     }
     public Vector3 getTarget() => path.getTarget();
     public void resetItemSelect()
