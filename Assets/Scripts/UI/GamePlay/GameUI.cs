@@ -112,6 +112,9 @@ public class GameUI : MonoBehaviour
     [Foldout("Shop")]
     [SerializeField] private TextMeshProUGUI _healerSlot;
 
+    [Foldout("Buiding")]
+    [SerializeField] private HideUI _buiding_hide;
+
 
     [SerializeField] private List<GameObject> _createList = new List<GameObject>();
     [SerializeField] private List<GameObject> _PlayerCreate = new List<GameObject>();
@@ -631,7 +634,7 @@ public class GameUI : MonoBehaviour
             {
                 if (!hit.activeSelf)
                 {
-                    if (Castle.Instance._ListWarrior.Count>0)
+                    if (Castle.Instance._ListWarrior.Count > 0)
                         hit.SetActive(true);
                     scripW = hit.GetComponent<LoadCreate>();
                     foundW = true;
@@ -645,7 +648,7 @@ public class GameUI : MonoBehaviour
             {
                 if (!hit.activeSelf)
                 {
-                    if (Castle.Instance._ListArcher.Count>0)
+                    if (Castle.Instance._ListArcher.Count > 0)
                         hit.SetActive(true);
                     scripA = hit.GetComponent<LoadCreate>();
                     foundA = true;
@@ -659,7 +662,7 @@ public class GameUI : MonoBehaviour
             {
                 if (!hit.activeSelf)
                 {
-                    if (Castle.Instance._ListLancer.Count>0)
+                    if (Castle.Instance._ListLancer.Count > 0)
                         hit.SetActive(true);
                     scripL = hit.GetComponent<LoadCreate>();
                     foundL = true;
@@ -673,7 +676,7 @@ public class GameUI : MonoBehaviour
             {
                 if (!hit.activeSelf)
                 {
-                    if (Castle.Instance._ListTNT.Count>0)
+                    if (Castle.Instance._ListTNT.Count > 0)
                         hit.SetActive(true);
                     scripT = hit.GetComponent<LoadCreate>();
                     foundT = true;
@@ -687,7 +690,7 @@ public class GameUI : MonoBehaviour
             {
                 if (!hit.activeSelf)
                 {
-                    if (Castle.Instance._ListHealer.Count>0)
+                    if (Castle.Instance._ListHealer.Count > 0)
                         hit.SetActive(true);
                     scripH = hit.GetComponent<LoadCreate>();
                     foundH = true;
@@ -742,6 +745,35 @@ public class GameUI : MonoBehaviour
                     scripH.addValue(obj.gameObject);
             }
         }
+    }
+    #endregion
+
+
+    #region Buy Tower
+    public void CreateTower()
+    {
+        Instantiate(GameManager.Instance._TowerPrefab, wordSpace(), Quaternion.identity);
+        _buiding_hide.move();
+    }
+    #endregion
+
+
+    private Vector3 wordSpace()
+    {
+        // Lấy vị trí giữa màn hình
+        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
+        // Vì ScreenToWorldPoint cần z theo khoảng cách tới camera
+        // nên phải truyền vào giá trị z (thường là khoảng cách từ camera đến mặt phẳng bạn muốn tính)
+        screenCenter.z = Mathf.Abs(Camera.main.transform.position.z);
+        // Chuyển sang tọa độ world
+        return Camera.main.ScreenToWorldPoint(screenCenter);
+    }
+
+
+    #region Buy Storage
+    public void CreateStorage()
+    {
+
     }
     #endregion
 }

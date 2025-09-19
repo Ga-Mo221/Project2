@@ -29,7 +29,6 @@ public class HideUI : MonoBehaviour
 
     private IEnumerator MoveTo(Vector3 target)
     {
-        Debug.Log("move");
         Vector3 start = transform.position;
         float elapsed = 0f;
 

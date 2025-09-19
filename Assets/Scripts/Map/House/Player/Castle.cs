@@ -18,7 +18,7 @@ public class Castle : MonoBehaviour
     public GameObject[] _allItems;
 
     [Header("Storage")]
-    public GameObject _inventory;
+    public List<GameObject> _storageList;
 
     [Foldout("Inventory")]
     public int _maxRock = 50;

@@ -603,9 +603,21 @@ public class PlayerAI : MonoBehaviour
         {
             target = null;
             setIsTarget(false);
+            float minDist = Mathf.Infinity;
             Vector3 _pos = Vector3.zero;
-            if (Castle.Instance._inventory != null)
-                _pos = Castle.Instance._inventory.transform.position;
+
+            if (Castle.Instance._storageList.Count > 0)
+            {
+                foreach (var i in Castle.Instance._storageList)
+                {
+                    float dist = Vector3.Distance(transform.position, i.transform.position);
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        _pos = i.transform.position;
+                    }
+                }
+            }
             else
                 _pos = Castle.Instance._In_Castle_Pos.position;
                 setTarget(_pos, false);

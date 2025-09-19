@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
     public GameObject _HealerPrefab;
     [Foldout("Prefab")]
     public GameObject _createPrefab;
+    [Foldout("Prefab")]
+    public GameObject _TowerPrefab;
 
     void Awake()
     {

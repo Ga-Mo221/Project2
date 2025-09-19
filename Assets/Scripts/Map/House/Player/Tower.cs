@@ -2,16 +2,11 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer _TowerGFX;
     [SerializeField] private GameObject _ArcherUp;
     [SerializeField] private GameObject _ArcherUp_Obj;
 
     void Start()
     {
-        int _yOder = -(int)(transform.position.y * 100) + 10000;
-        _ArcherUp_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;
-        _TowerGFX.sortingOrder = _yOder;
-
         _ArcherUp_Obj.SetActive(false);
     }
 
