@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 1746048108064367565}
   - component: {fileID: 1777536112420729566}
   - component: {fileID: 7859509103773972103}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _MiniMapIcon: {fileID: 0}
+  _HpBar: {fileID: 0}
   _item: {fileID: 8192216039845590812}
   _seemer: []
   _Detec: 0

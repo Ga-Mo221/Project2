@@ -78,7 +78,8 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Center;
-        }else if (Castle.Instance._archer_Center != null)
+        }
+        else if (Castle.Instance._archer_Center != null)
         {
             Castle.Instance._archer_Center_Obj.SetActive(false);
             var _scrip = Castle.Instance._archer_Center.GetComponent<ArcherGFX>();
@@ -102,7 +103,8 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Left;
-        }else if (Castle.Instance._archer_Left != null)
+        }
+        else if (Castle.Instance._archer_Left != null)
         {
             Castle.Instance._archer_Left_Obj.SetActive(false);
             var _scrip = Castle.Instance._archer_Left.GetComponent<ArcherGFX>();
@@ -116,6 +118,11 @@ public class SelectArcherUp : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision)
+    {
+        Aply(collision);
+    }
+
+    private void Aply(Collider2D collision)
     {
         if (collision == null) return;
         if (collision.CompareTag("Archer"))

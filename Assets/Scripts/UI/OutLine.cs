@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class OutLine : MonoBehaviour
 {
+    [SerializeField] private NodeType _type;
     [SerializeField] private Material _normalMaterial;
     [SerializeField] private Material _outLineMateral;
     [SerializeField] private Collider2D _collider;
@@ -9,6 +10,7 @@ public class OutLine : MonoBehaviour
 
     private bool _isHovering = false;
 
+    #region Start
     void Start()
     {
         if (!_spriteRender || _spriteRender == null)
@@ -16,7 +18,10 @@ public class OutLine : MonoBehaviour
         if (!_spriteRender || _spriteRender == null)
             Debug.LogError($"[{transform.parent.name}] [OutLine] Chưa gán 'SpriteRender'");
     }
+    #endregion
 
+
+    #region Update
     void Update()
     {
         Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -37,8 +42,14 @@ public class OutLine : MonoBehaviour
                 _isHovering = false;
             }
         }
-    }
 
+        if (!_isHovering) return;
+        CastleClick();
+    }
+    #endregion
+
+
+    #region Change Material
     private void ChangeMaterial()
     {
         if (_spriteRender.enabled == false) return;
@@ -54,11 +65,41 @@ public class OutLine : MonoBehaviour
         _spriteRender.material = _outLineMateral;
         CursorManager.Instance.SetSelectCursor(transform.parent.gameObject);
     }
+    #endregion
 
+
+    #region  Reset Material
     private void ResetMaterial()
     {
         if (_spriteRender.enabled == false) return;
         _spriteRender.material = _normalMaterial;
         CursorManager.Instance.SetNormalCursor();
     }
+    #endregion
+
+
+    #region  Castle Click
+    private void CastleClick()
+    {
+        if (Input.GetMouseButtonDown(0) && _type == NodeType.Castle)
+            GameManager.Instance.UIsetActiveButtonUpgrade(true);
+    }
+    #endregion
+}
+
+public enum NodeType
+{
+    Other,
+    Castle,
+    Tower,
+    Storage,
+    Warrior,
+    Archer,
+    Lancer,
+    Healer,
+    TNT,
+    Tree,
+    Rock,
+    GoldMine,
+    Bear
 }

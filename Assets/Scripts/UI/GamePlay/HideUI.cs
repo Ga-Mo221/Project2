@@ -17,6 +17,8 @@ public class HideUI : MonoBehaviour
 
     public void move()
     {
+        if (!GameManager.Instance.getCanBuy()) return;
+        GameManager.Instance.UIcheckButtonBuyBuiding();
         if (_moveCoroutine != null) StopCoroutine(_moveCoroutine);
 
         if (!isOut)

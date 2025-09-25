@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _MiniMapIcon: {fileID: 0}
+  _HpBar: {fileID: 0}
   _item: {fileID: 5424085374242663375}
   _seemer: []
   _Detec: 0
@@ -101,7 +102,7 @@ GameObject:
   - component: {fileID: 7423765212627518464}
   - component: {fileID: 3751358352210878373}
   - component: {fileID: 7779357103634365867}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

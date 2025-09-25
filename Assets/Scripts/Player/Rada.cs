@@ -4,6 +4,7 @@ public class Rada : MonoBehaviour
 {
     [SerializeField] private float _radius = 20f;
     [SerializeField] private Collider2D[] hits;
+    [SerializeField] private bool _on = true;
 
     void Update()
     {
@@ -12,6 +13,7 @@ public class Rada : MonoBehaviour
 
     private void display()
     {
+        if (!_on) return;
         hits = Physics2D.OverlapCircleAll(transform.position, _radius + 3);
 
         foreach (var hit in hits)
@@ -35,6 +37,7 @@ public class Rada : MonoBehaviour
                     if (script._IsRock) script.onDisplayRock();
                     if (script._IsGold) script.onDisplayGoldMine();
                     if (script._IsAnimal) script.onDisplayAnimal();
+                    if (script._IsBuiding) script.onCanCreate();
                 }
             }
             else
@@ -49,6 +52,7 @@ public class Rada : MonoBehaviour
                         if (script._IsRock) script.offDisplayRock();
                         if (script._IsAnimal) script.offDisplayAnimal();
                         if (script._IsGold) script.offDisplayGoldMine();
+                        if (script._IsBuiding) script.offCanCreate();
                     }
                 }
             }
@@ -57,7 +61,7 @@ public class Rada : MonoBehaviour
 
     private bool checkTag(Collider2D hit)
     {
-        return hit.CompareTag("Item+") || hit.CompareTag("Animal") || hit.CompareTag("Enemy");
+        return hit.CompareTag("Item+") || hit.CompareTag("Animal") || hit.CompareTag("Enemy") || hit.CompareTag("Buiding");
     }
 
     void OnDrawGizmosSelected()
@@ -65,4 +69,6 @@ public class Rada : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _radius);
     }
+
+    public void setOn(bool amount) => _on = amount;
 }

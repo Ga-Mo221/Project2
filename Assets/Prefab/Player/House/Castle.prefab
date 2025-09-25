@@ -317,6 +317,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdf053949ce5e74da3e020ef3d02e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2366090124771467289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7406022191331694078}
+  m_Layer: 6
+  m_Name: Storage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7406022191331694078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2366090124771467289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3005769909565464554}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2397376611872508359
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +462,7 @@ GameObject:
   - component: {fileID: 117104144660200849}
   - component: {fileID: 4521692480515485213}
   - component: {fileID: 3518819065691153349}
+  - component: {fileID: 5273546539947309283}
   m_Layer: 6
   m_Name: Castle
   m_TagString: House
@@ -458,6 +490,8 @@ Transform:
   - {fileID: 3064078384185894973}
   - {fileID: 2119029021896410447}
   - {fileID: 3629197539312148724}
+  - {fileID: 7406022191331694078}
+  - {fileID: 4979919128880334056}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7335068734501572395
@@ -565,12 +599,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _level: 1
+  _maxHealth: 500
+  _currentHealth: 0
+  _maxSlot: 50
+  _currentSlot: 0
   _sottingLayer: {fileID: 7335068734501572395}
   _point: {fileID: 7649450949825743490}
   _In_Castle_Pos: {fileID: 7281954126970470205}
   _canFind: 1
   _allItems: []
-  _inventory: {fileID: 0}
+  _StorgeFolder: {fileID: 0}
+  _storageList: []
+  _TowerFolder: {fileID: 0}
+  _towerList: []
   _maxRock: 50
   _maxWood: 50
   _maxGold: 50
@@ -597,6 +638,26 @@ MonoBehaviour:
   _ListLancer: []
   _ListHealer: []
   _ListTNT: []
+  _lv2_Wood: 100
+  _lv2_Rock: 100
+  _lv2_Gold: 100
+  _lv2_MaxHealth: 600
+  _lv2_MaxSlot: 10
+  _lv3_Wood: 100
+  _lv3_Rock: 100
+  _lv3_Gold: 100
+  _lv3_MaxHealth: 600
+  _lv3_MaxSlot: 10
+  _lv4_Wood: 100
+  _lv4_Rock: 100
+  _lv4_Gold: 100
+  _lv4_MaxHealth: 600
+  _lv4_MaxSlot: 10
+  _lv5_Wood: 100
+  _lv5_Rock: 100
+  _lv5_Gold: 100
+  _lv5_MaxHealth: 600
+  _lv5_MaxSlot: 10
 --- !u!114 &4521692480515485213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,6 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 30
   hits: []
+  _on: 1
 --- !u!95 &3518819065691153349
 Animator:
   serializedVersion: 7
@@ -633,6 +695,61 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5273546539947309283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2778568721248223878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381e3c8c71a494f48adb0b8cd8d440bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  _canDetec: 0
+  _ButtonArcherUP: {fileID: 0}
+  _imgLoad: {fileID: 0}
+  _inPos: {fileID: 0}
+  _inPos1: {fileID: 0}
+  _inPos2: {fileID: 0}
+  _inPos3: {fileID: 0}
+  _light: {fileID: 0}
+  _canvas: {fileID: 0}
+  _rada: {fileID: 0}
+  _createTimeSec: 10
+--- !u!1 &2948096291462823961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4979919128880334056}
+  m_Layer: 6
+  m_Name: Tower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4979919128880334056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2948096291462823961}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3005769909565464554}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3206731909202821406
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,6 +1579,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3005769909565464554}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _collider
       value: 

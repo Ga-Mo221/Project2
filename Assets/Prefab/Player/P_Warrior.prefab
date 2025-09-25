@@ -361,16 +361,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitClass: 0
+  _level: 1
   _maxHealth: 100
   _health: 0
   _damage: 10
   _maxSpeed: 6
   _range: 2
   _attackSpeedd: 2.5
+  _slot: 1
+  _createTime_sec: 5
   _radius: 10
   _radius_farm: 2.3
   _farmSpeed: 1
-  ShowInventory: 0
+  _itemScript: {fileID: 0}
   _maxRock: 5
   _maxGold: 5
   _maxWood: 5
@@ -389,6 +392,7 @@ MonoBehaviour:
   _healEffect: {fileID: 1103703179019586960}
   path: {fileID: 8115716074318572522}
   target: {fileID: 0}
+  _creating: 0
   _Die: 0
   _canRespawn: 0
   _detect: 0
@@ -400,7 +404,6 @@ MonoBehaviour:
   _healPlus: 0
   _AOEHeal: 0
   _canAction: 0
-  _itemScript: {fileID: 0}
   _spriteRender: {fileID: 4112465308621576123}
   _oderSpriterPoint: {fileID: 4025345277128870916}
 --- !u!114 &1293021993264468765
@@ -431,6 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 20
   hits: []
+  _on: 1
 --- !u!114 &8115716074318572522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -849,6 +853,10 @@ PrefabInstance:
     - target: {fileID: 4531822266390242258, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2.1699998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496454969966702490, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_Pivot.x

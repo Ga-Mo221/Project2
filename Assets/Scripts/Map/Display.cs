@@ -9,7 +9,8 @@ public enum ModelType
     Gold,
     Deco,
     Animal,
-    Enemy
+    Enemy,
+    Buiding
 }
 
 public class Display : MonoBehaviour
@@ -23,6 +24,7 @@ public class Display : MonoBehaviour
     public bool _IsDeco => _type == ModelType.Deco;
     public bool _IsAnimal => _type == ModelType.Animal;
     public bool _IsEnemy => _type == ModelType.Enemy;
+    public bool _IsBuiding => _type == ModelType.Buiding;
 
     [ShowIf(nameof(_IsAnimalOrEnemy))]
     [SerializeField] private GameObject _MiniMapIcon;
@@ -31,6 +33,9 @@ public class Display : MonoBehaviour
 
     [ShowIf(nameof(_IsItem))]
     [SerializeField] private Item _item;
+
+    [ShowIf(nameof(_IsBuiding))]
+    [SerializeField] private CheckGroundCreate _check;
 
     [SerializeField] public List<Rada> _seemer;
 
@@ -112,5 +117,18 @@ public class Display : MonoBehaviour
         _Detec = false;
         _HpBar.SetActive(false);
         _MiniMapIcon.SetActive(false);
+    }
+
+    public void onCanCreate()
+    {
+        _check._see = true;
+        _Detec = true;
+        _check._anim.SetBool("Red", false);
+    }
+    public void offCanCreate()
+    {
+        _check._see = false;
+        _Detec = false;
+        _check._anim.SetBool("Red", true);
     }
 }

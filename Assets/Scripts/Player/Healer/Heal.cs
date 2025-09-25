@@ -10,6 +10,8 @@ public class Heal : MonoBehaviour
             Debug.LogError($"[{transform.parent.name}] [Heal] Chua gan 'HealGFX'");
     }
 
+    public void setActive() => _heal.setActive();
+    
     public void heal()
     {
         _heal.heals();

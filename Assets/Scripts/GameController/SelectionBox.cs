@@ -36,6 +36,7 @@ public class SelectionBox : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !CursorManager.Instance.ChoseUI)
         {
+            GameManager.Instance.UIsetActiveButtonUpgrade(false);
             _singleSelected = false;
             startScreenPos = Input.mousePosition;
             endScreenPos = startScreenPos;

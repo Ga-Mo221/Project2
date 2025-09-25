@@ -13,6 +13,8 @@ public class Guard : MonoBehaviour
             target.GetComponent<Item>().farm(_script);
     }
 
+    public void setActive() => _script.setActive();
+
     public void offDetec()
         => _script.offDetec();
     public void onDetec()

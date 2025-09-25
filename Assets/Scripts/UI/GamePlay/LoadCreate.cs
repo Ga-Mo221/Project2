@@ -61,6 +61,7 @@ public class LoadCreate : MonoBehaviour
             if (_load <= 0)
             {
                 _listCreate[0].SetActive(true);
+                _listCreate[0].GetComponent<PlayerAI>().setCreating(false);
                 GameManager.Instance.UIloadPlayer();
                 _load = 1;
                 _listCreate.RemoveAt(0);

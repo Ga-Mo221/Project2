@@ -14,6 +14,8 @@ public class PlayerAI : MonoBehaviour
     private bool IsHealerOrTNT => _unitClass == UnitType.Healer || _unitClass == UnitType.TNT;
 
     [Foldout("Stats")]
+    public int _level = 1;
+    [Foldout("Stats")]
     public float _maxHealth = 100;
     [Foldout("Stats")]
     public float _health; // máu
@@ -97,9 +99,9 @@ public class PlayerAI : MonoBehaviour
 
     // bool
     [Foldout("Status")]
-    [SerializeField] private bool _Die = false;
+    [SerializeField] private bool _creating = false;
     [Foldout("Status")]
-    [SerializeField] private bool _canRespawn = false;
+    [SerializeField] private bool _Die = false;
     [Foldout("Status")]
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
     [Foldout("Status")]
@@ -165,9 +167,34 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
+    #region Up Level
+    public void upLevel(int leve)
+    {
+        int level = 0;
+        for (int i = _level; i < leve; i++)
+        {
+            level++;
+            if (!IsTNT)
+            {
+                _health += GameManager.Instance.Info._playerHealthBounus;
+                _maxHealth += GameManager.Instance.Info._playerHealthBounus;
+            }
+            else
+            {
+                _health -= GameManager.Instance.Info._playerHealthBounus;
+                _maxHealth -= GameManager.Instance.Info._playerHealthBounus;
+                _damage += 47;
+            }
+            _damage += GameManager.Instance.Info._damageBounus;
+        }
+    }
+    #endregion
+
+
     #region New Status
     private void newStatus()
     {
+        _level = 1;
         _health = _maxHealth;
         _rock = 0;
         _gold = 0;
@@ -183,6 +210,8 @@ public class PlayerAI : MonoBehaviour
         target = null;
         _healPlus = 0;
         _AOEHeal = false;
+        setDie(false);
+        setIsTarget(false);
         path.setCurrentWaypoint(0);
     }
     #endregion
@@ -203,7 +232,6 @@ public class PlayerAI : MonoBehaviour
         if (!IsHealerOrTNT)
             _healEffect.SetActive(false);
         _selet.SetActive(false);
-        _canRespawn = false;
         setDie(false);
     }
     #endregion
@@ -212,6 +240,8 @@ public class PlayerAI : MonoBehaviour
     #region Dead
     public void Dead()
     {
+        setTarget(transform.position, true);
+        resetItemSelect();
         _MiniMapIcon.SetActive(false);
         _OutLine.SetActive(false);
         _HPCanvas.SetActive(false);
@@ -219,7 +249,10 @@ public class PlayerAI : MonoBehaviour
             _healEffect.SetActive(false);
         _selet.SetActive(false);
         setDie(true);
+        _farmCoroutine = null;
+        _anim.SetTrigger("Die");
     }
+    public virtual void setActive() => gameObject.SetActive(false);
     #endregion
 
 
@@ -241,7 +274,7 @@ public class PlayerAI : MonoBehaviour
     #region Create Path
     private void UpdatePath()
     {
-        if (_Die) return;
+        //if (_Die) return;
         if (path._seeker.IsDone())
         {
             if (target != null)
@@ -382,7 +415,7 @@ public class PlayerAI : MonoBehaviour
     public void farm(GameObject _nearest)
     {
         // Kiểm tra _nearest có null không, có tag "Item" không, và có nằm trong vùng farm không
-        if (_nearest != null && _nearest.CompareTag("Item"))
+        if (_nearest != null && _nearest.CompareTag("Item") && !_Die)
         {
             float dist = Vector2.Distance(transform.position, _nearest.transform.position);
             if (dist <= _radius_farm)
@@ -496,8 +529,8 @@ public class PlayerAI : MonoBehaviour
                 }
             }
         }
-        if (nearest != null)
-            Debug.Log(transform.name +" || "+ nearest.transform.parent.name + " || " + Vector3.Distance(transform.position, nearest.transform.position));
+        // if (nearest != null)
+        //     Debug.Log(transform.name + " || " + nearest.transform.parent.name + " || " + Vector3.Distance(transform.position, nearest.transform.position));
         Castle.Instance._canFind = true;
         return nearest;
     }
@@ -599,31 +632,42 @@ public class PlayerAI : MonoBehaviour
     #region Go To Home
     public void goToHome(GameObject nearest)
     {
-        if (nearest == null)
+        if (nearest == null && checkInventory())
         {
             target = null;
             setIsTarget(false);
-            float minDist = Mathf.Infinity;
-            Vector3 _pos = Vector3.zero;
-
+            float minDist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+            Vector3 _pos = Castle.Instance._In_Castle_Pos.position;
             if (Castle.Instance._storageList.Count > 0)
             {
                 foreach (var i in Castle.Instance._storageList)
                 {
-                    float dist = Vector3.Distance(transform.position, i.transform.position);
-                    if (dist < minDist)
+                    var _storage = i.GetComponent<Storage>();
+                    if (_storage.getActive())
                     {
-                        minDist = dist;
-                        _pos = i.transform.position;
+                        float dist = Vector3.Distance(transform.position, i.transform.position);
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            _pos = _storage.getInPos();
+                        }
                     }
                 }
             }
-            else
-                _pos = Castle.Instance._In_Castle_Pos.position;
-                setTarget(_pos, false);
+            setTarget(_pos, false);
         }
     }
     #endregion
+
+
+    private bool checkInventory()
+    {
+        if (_wood > 0) return true;
+        if (_rock > 0) return true;
+        if (_meat > 0) return true;
+        if (_gold > 0) return true;
+        return false;
+    }
 
 
     #region Flip
@@ -711,14 +755,13 @@ public class PlayerAI : MonoBehaviour
     public void setDie(bool amount)
     {
         _Die = amount;
-        _anim.SetBool("Die", amount);
     }
     public bool getDie() => _Die;
 
-    // Can respawn
-    public void setCanRespawn(bool amount)
-        => _canRespawn = amount;
-    public bool getCanRespawn() => _canRespawn;
+    // Creating
+    public void setCreating(bool amount)
+        => _creating = amount;
+    public bool getCreating() => _creating;
     #endregion
 }
 

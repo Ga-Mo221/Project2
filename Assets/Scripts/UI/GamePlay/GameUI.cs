@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+    #region TakBar
     [Foldout("TakBar")]
     // Time
     [SerializeField] private TextMeshProUGUI _Time;
@@ -27,14 +28,24 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentgold;
     [Foldout("TakBar")]
     [SerializeField] private TextMeshProUGUI _maxGold;
+    #endregion
 
+
+    #region Mini Map
     [Foldout("Mini Map")]
     [SerializeField] private TextMeshProUGUI _Day;
     [Foldout("Mini Map")]
     [SerializeField] private TextMeshProUGUI _Time_RTS;
+    [Foldout("Mini Map")]
+    [SerializeField] private GameObject _Sun;
+    [Foldout("Mini Map")]
+    [SerializeField] private GameObject _Night;
     private float _timeAccumulator = 0f; // tích lũy thời gian để tăng giờ RTS
     private int _hours = 8; // bắt đầu 8h sáng
+    #endregion
 
+
+    #region HP Bar
     [Foldout("HP Bar")]
     [SerializeField] private Image _HPBar;
     [Foldout("HP Bar")]
@@ -47,7 +58,10 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _HP_Healer_Value;
     [Foldout("HP Bar")]
     [SerializeField] private TextMeshProUGUI _HP_TNT_Value;
+    #endregion
 
+
+    #region Shop
     [Foldout("Shop")]
     [SerializeField] private CanvasGroup _gr;
     [Foldout("Shop")]
@@ -109,9 +123,57 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _tntSlot;
     [Foldout("Shop")]
     [SerializeField] private TextMeshProUGUI _healerSlot;
+    #endregion
 
+
+    #region Buiding
     [Foldout("Buiding")]
     [SerializeField] private HideUI _buiding_hide;
+    [Foldout("Buiding")]
+    [SerializeField] private Button _buttonTower;
+    [Foldout("Buiding")]
+    [SerializeField] private TextMeshProUGUI _wood_Tower;
+    [Foldout("Buiding")]
+    [SerializeField] private TextMeshProUGUI _rock_Tower;
+    [Foldout("Buiding")]
+    [SerializeField] private TextMeshProUGUI _gold_Tower;
+    [Foldout("Buiding")]
+    [SerializeField] private Button _buttonStorage;
+    [Foldout("Buiding")]
+    [SerializeField] private TextMeshProUGUI _wood_Storage;
+    [Foldout("Buiding")]
+    [SerializeField] private TextMeshProUGUI _rock_Storage;
+    [Foldout("Buiding")]
+    [SerializeField] private TextMeshProUGUI _gold_Storage;
+    #endregion
+
+
+    #region Upgrade
+    [Foldout("Upgrade")]
+    [SerializeField] private GameObject _ButtonUpgrade;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _buttonUpgrade_Wood;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _buttonUpgrade_Rock;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _buttonUpgrade_Gold;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_Level;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_LevelUpgrade;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_Slot;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_Health;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_Wood;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_Rock;
+    [Foldout("Upgrade")]
+    [SerializeField] private TextMeshProUGUI _PanelUpgrade_Gold;
+    [Foldout("Upgrade")]
+    [SerializeField] private Button _PanelButtonUpgrade;
+    #endregion
 
 
     [SerializeField] private List<GameObject> _createList = new List<GameObject>();
@@ -129,6 +191,11 @@ public class GameUI : MonoBehaviour
             { "TNT", _TNTButton },
             { "Healer", _HealerButton },
         };
+    }
+
+    void Start()
+    {
+        updateBuidingReference();
     }
 
 
@@ -160,6 +227,16 @@ public class GameUI : MonoBehaviour
             GameManager.Instance._currentDay++;
         }
         GameManager.Instance._timeRTS = _hours;
+        if (_hours == 20)
+        {
+            _Night.SetActive(true);
+            _Sun.SetActive(false);
+        }
+        if (_hours == 8)
+        {
+            _Night.SetActive(false);
+            _Sun.SetActive(true);
+        }
 
         // Kiểm tra Night
         if (_hours >= 0 && _hours < 8)
@@ -212,20 +289,35 @@ public class GameUI : MonoBehaviour
     #region Update Slot
     private void updateSlot()
     {
-        GameManager.Instance._currentSlot = 0;
+        Castle.Instance._currentSlot = 0;
         foreach (var p in Castle.Instance._ListWarrior)
-            GameManager.Instance._currentSlot += p._slot;
+        {
+            if (p.gameObject.activeSelf || p.getCreating())
+                Castle.Instance._currentSlot += p._slot;
+        }
         foreach (var p in Castle.Instance._ListArcher)
-            GameManager.Instance._currentSlot += p._slot;
+        {
+            if (p.gameObject.activeSelf || p.getCreating())
+                Castle.Instance._currentSlot += p._slot;
+        }
         foreach (var p in Castle.Instance._ListLancer)
-            GameManager.Instance._currentSlot += p._slot;
+        {
+            if (p.gameObject.activeSelf || p.getCreating())
+                Castle.Instance._currentSlot += p._slot;
+        }
         foreach (var p in Castle.Instance._ListHealer)
-            GameManager.Instance._currentSlot += p._slot;
+        {
+            if (p.gameObject.activeSelf || p.getCreating())
+                Castle.Instance._currentSlot += p._slot;
+        }
         foreach (var p in Castle.Instance._ListTNT)
-            GameManager.Instance._currentSlot += p._slot;
+        {
+            if (p.gameObject.activeSelf || p.getCreating())
+                Castle.Instance._currentSlot += p._slot;
+        }
 
-        _currentslot.text = GameManager.Instance._currentSlot.ToString();
-        _maxSlot.text = GameManager.Instance._maxSlot.ToString();
+        _currentslot.text = Castle.Instance._currentSlot.ToString();
+        _maxSlot.text = Castle.Instance._maxSlot.ToString();
     }
     #endregion
 
@@ -238,23 +330,23 @@ public class GameUI : MonoBehaviour
         _gr.blocksRaycasts = true;
 
         // warrior
-        _wood_New_Create_W.text = GameManager.Instance._wood_Warrior.ToString();
+        _wood_New_Create_W.text = GameManager.Instance.Info._wood_Warrior.ToString();
         // Archer
-        _wood_New_Create_A.text = GameManager.Instance._wood_Archer.ToString();
-        _rock_New_Create_A.text = GameManager.Instance._rock_Archer.ToString();
+        _wood_New_Create_A.text = GameManager.Instance.Info._wood_Archer.ToString();
+        _rock_New_Create_A.text = GameManager.Instance.Info._rock_Archer.ToString();
         // Lancer
-        _wood_New_Create_L.text = GameManager.Instance._wood_Lancer.ToString();
-        _rock_New_Create_L.text = GameManager.Instance._rock_Lancer.ToString();
-        _meat_New_Create_L.text = GameManager.Instance._meat_Lancer.ToString();
+        _wood_New_Create_L.text = GameManager.Instance.Info._wood_Lancer.ToString();
+        _rock_New_Create_L.text = GameManager.Instance.Info._rock_Lancer.ToString();
+        _meat_New_Create_L.text = GameManager.Instance.Info._meat_Lancer.ToString();
         // TNT
-        _rock_New_Create_T.text = GameManager.Instance._rock_TNT.ToString();
-        _meat_New_Create_T.text = GameManager.Instance._meat_TNT.ToString();
-        _gold_New_Create_T.text = GameManager.Instance._gold_TNT.ToString();
+        _rock_New_Create_T.text = GameManager.Instance.Info._rock_TNT.ToString();
+        _meat_New_Create_T.text = GameManager.Instance.Info._meat_TNT.ToString();
+        _gold_New_Create_T.text = GameManager.Instance.Info._gold_TNT.ToString();
         // Healer
-        _wood_New_Create_H.text = GameManager.Instance._wood_Healer.ToString();
-        _rock_New_Create_H.text = GameManager.Instance._rock_Healer.ToString();
-        _meat_New_Create_H.text = GameManager.Instance._meat_Healer.ToString();
-        _gold_New_Create_H.text = GameManager.Instance._gold_Healer.ToString();
+        _wood_New_Create_H.text = GameManager.Instance.Info._wood_Healer.ToString();
+        _rock_New_Create_H.text = GameManager.Instance.Info._rock_Healer.ToString();
+        _meat_New_Create_H.text = GameManager.Instance.Info._meat_Healer.ToString();
+        _gold_New_Create_H.text = GameManager.Instance.Info._gold_Healer.ToString();
 
         updateSlot();
         CheckLevel();
@@ -285,17 +377,17 @@ public class GameUI : MonoBehaviour
         // Luôn mở cho Warrior
         int slot = GameManager.Instance._warriorPrefab.GetComponent<PlayerAI>()._slot;
         _warriorSlot.text = slot.ToString();
-        _unitButtons["Warrior"].interactable = CanCreate(GameManager.Instance._wood_Warrior, Castle.Instance._wood)
-            && GameManager.Instance._maxSlot - GameManager.Instance._currentSlot >= slot;
+        _unitButtons["Warrior"].interactable = CanCreate(GameManager.Instance.Info._wood_Warrior, Castle.Instance._wood)
+            && Castle.Instance._maxSlot - Castle.Instance._currentSlot >= slot;
 
         if (level >= 2)
         {
             int sl = GameManager.Instance._ArcherPrefab.GetComponent<PlayerAI>()._slot;
             _archerSlot.text = sl.ToString();
             _unitButtons["Archer"].interactable =
-                CanCreate(GameManager.Instance._wood_Archer, Castle.Instance._wood) &&
-                CanCreate(GameManager.Instance._rock_Archer, Castle.Instance._rock) &&
-                GameManager.Instance._maxSlot - GameManager.Instance._currentSlot >= sl;
+                CanCreate(GameManager.Instance.Info._wood_Archer, Castle.Instance._wood) &&
+                CanCreate(GameManager.Instance.Info._rock_Archer, Castle.Instance._rock) &&
+                Castle.Instance._maxSlot - Castle.Instance._currentSlot >= sl;
         }
 
         if (level >= 3)
@@ -303,10 +395,10 @@ public class GameUI : MonoBehaviour
             int sl = GameManager.Instance._LancerPrefab.GetComponent<PlayerAI>()._slot;
             _lancerSlot.text = sl.ToString();
             _unitButtons["Lancer"].interactable =
-                CanCreate(GameManager.Instance._wood_Lancer, Castle.Instance._wood) &&
-                CanCreate(GameManager.Instance._rock_Lancer, Castle.Instance._rock) &&
-                CanCreate(GameManager.Instance._meat_Lancer, Castle.Instance._meat) &&
-                GameManager.Instance._maxSlot - GameManager.Instance._currentSlot >= sl;
+                CanCreate(GameManager.Instance.Info._wood_Lancer, Castle.Instance._wood) &&
+                CanCreate(GameManager.Instance.Info._rock_Lancer, Castle.Instance._rock) &&
+                CanCreate(GameManager.Instance.Info._meat_Lancer, Castle.Instance._meat) &&
+                Castle.Instance._maxSlot - Castle.Instance._currentSlot >= sl;
         }
 
         if (level >= 4)
@@ -314,10 +406,10 @@ public class GameUI : MonoBehaviour
             int sl = GameManager.Instance._TNTPrefab.GetComponent<PlayerAI>()._slot;
             _tntSlot.text = sl.ToString();
             _unitButtons["TNT"].interactable =
-                CanCreate(GameManager.Instance._rock_TNT, Castle.Instance._rock) &&
-                CanCreate(GameManager.Instance._meat_TNT, Castle.Instance._meat) &&
-                CanCreate(GameManager.Instance._gold_TNT, Castle.Instance._gold) &&
-                GameManager.Instance._maxSlot - GameManager.Instance._currentSlot >= sl;
+                CanCreate(GameManager.Instance.Info._rock_TNT, Castle.Instance._rock) &&
+                CanCreate(GameManager.Instance.Info._meat_TNT, Castle.Instance._meat) &&
+                CanCreate(GameManager.Instance.Info._gold_TNT, Castle.Instance._gold) &&
+                Castle.Instance._maxSlot - Castle.Instance._currentSlot >= sl;
         }
 
         if (level >= 5)
@@ -325,11 +417,11 @@ public class GameUI : MonoBehaviour
             int sl = GameManager.Instance._HealerPrefab.GetComponent<PlayerAI>()._slot;
             _healerSlot.text = sl.ToString();
             _unitButtons["Healer"].interactable =
-                CanCreate(GameManager.Instance._wood_Healer, Castle.Instance._wood) &&
-                CanCreate(GameManager.Instance._rock_Healer, Castle.Instance._rock) &&
-                CanCreate(GameManager.Instance._meat_Healer, Castle.Instance._meat) &&
-                CanCreate(GameManager.Instance._gold_Healer, Castle.Instance._gold) &&
-                GameManager.Instance._maxSlot - GameManager.Instance._currentSlot >= sl;
+                CanCreate(GameManager.Instance.Info._wood_Healer, Castle.Instance._wood) &&
+                CanCreate(GameManager.Instance.Info._rock_Healer, Castle.Instance._rock) &&
+                CanCreate(GameManager.Instance.Info._meat_Healer, Castle.Instance._meat) &&
+                CanCreate(GameManager.Instance.Info._gold_Healer, Castle.Instance._gold) &&
+                Castle.Instance._maxSlot - Castle.Instance._currentSlot >= sl;
         }
     }
     private bool CanCreate(int cost, int currentValue)
@@ -342,13 +434,33 @@ public class GameUI : MonoBehaviour
     #region Warrior
     public void createWarrior()
     {
-        Castle.Instance._wood -= GameManager.Instance._wood_Warrior;
+        Castle.Instance._wood -= GameManager.Instance.Info._wood_Warrior;
         updateReferent();
         // tao player
-        GameObject _obj = Instantiate(GameManager.Instance._warriorPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
-        _obj.SetActive(false);
-        var _scripPlayer = _obj.GetComponent<PlayerAI>();
-        Castle.Instance._ListWarrior.Add(_scripPlayer);
+        GameObject _obj = null;
+        PlayerAI _scripPlayer = null;
+        bool _isHas = false;
+        foreach (var player in Castle.Instance._ListWarrior)
+        {
+            if (!player.getCreating() && !player.gameObject.activeSelf)
+            {
+                _obj = player.gameObject;
+                player.setCreating(true);
+                player.respawn(Castle.Instance._In_Castle_Pos);
+                _isHas = true;
+                break;
+            }
+        }
+        if (!_isHas)
+        {
+            _obj = Instantiate(GameManager.Instance._warriorPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
+            _obj.SetActive(false);
+            _scripPlayer = _obj.GetComponent<PlayerAI>();
+            _scripPlayer.setCreating(true);
+            Castle.Instance._ListWarrior.Add(_scripPlayer);
+        }
+        if (_scripPlayer != null)
+            _scripPlayer.upLevel(Castle.Instance._level);
 
         // check
         updatePlayerValue();
@@ -388,14 +500,32 @@ public class GameUI : MonoBehaviour
     #region Archer
     public void createArcher()
     {
-        Castle.Instance._wood -= GameManager.Instance._wood_Archer;
-        Castle.Instance._rock -= GameManager.Instance._rock_Archer;
+        Castle.Instance._wood -= GameManager.Instance.Info._wood_Archer;
+        Castle.Instance._rock -= GameManager.Instance.Info._rock_Archer;
         updateReferent();
         // tao player
-        GameObject _obj = Instantiate(GameManager.Instance._ArcherPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
-        _obj.SetActive(false);
-        var _scripPlayer = _obj.GetComponent<PlayerAI>();
-        Castle.Instance._ListArcher.Add(_scripPlayer);
+        GameObject _obj = null;
+        PlayerAI _scripPlayer = null;
+        bool _isHas = false;
+        foreach (var player in Castle.Instance._ListArcher)
+        {
+            if (!player.getCreating() && !player.gameObject.activeSelf)
+            {
+                _obj = player.gameObject;
+                player.setCreating(true);
+                _isHas = true;
+                break;
+            }
+        }
+        if (!_isHas)
+        {
+            _obj = Instantiate(GameManager.Instance._ArcherPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
+            _obj.SetActive(false);
+            _scripPlayer = _obj.GetComponent<PlayerAI>();
+            _scripPlayer.setCreating(true);
+            Castle.Instance._ListArcher.Add(_scripPlayer);
+        }
+        _scripPlayer.upLevel(Castle.Instance._level - 1);
         // check
         updatePlayerValue();
         CheckLevel();
@@ -434,15 +564,33 @@ public class GameUI : MonoBehaviour
     #region Lancer
     public void createLancer()
     {
-        Castle.Instance._wood -= GameManager.Instance._wood_Lancer;
-        Castle.Instance._rock -= GameManager.Instance._rock_Lancer;
-        Castle.Instance._meat -= GameManager.Instance._meat_Lancer;
+        Castle.Instance._wood -= GameManager.Instance.Info._wood_Lancer;
+        Castle.Instance._rock -= GameManager.Instance.Info._rock_Lancer;
+        Castle.Instance._meat -= GameManager.Instance.Info._meat_Lancer;
         updateReferent();
         // tao player
-        GameObject _obj = Instantiate(GameManager.Instance._LancerPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
-        _obj.SetActive(false);
-        var _scripPlayer = _obj.GetComponent<PlayerAI>();
-        Castle.Instance._ListLancer.Add(_scripPlayer);
+        GameObject _obj = null;
+        PlayerAI _scripPlayer = null;
+        bool _isHas = false;
+        foreach (var player in Castle.Instance._ListLancer)
+        {
+            if (!player.getCreating() && !player.gameObject.activeSelf)
+            {
+                _obj = player.gameObject;
+                player.setCreating(true);
+                _isHas = true;
+                break;
+            }
+        }
+        if (!_isHas)
+        {
+            _obj = Instantiate(GameManager.Instance._LancerPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
+            _obj.SetActive(false);
+            _scripPlayer = _obj.GetComponent<PlayerAI>();
+            _scripPlayer.setCreating(true);
+            Castle.Instance._ListLancer.Add(_scripPlayer);
+        }
+        _scripPlayer.upLevel(Castle.Instance._level - 2);
 
         // check
         updatePlayerValue();
@@ -482,15 +630,33 @@ public class GameUI : MonoBehaviour
     #region TNT
     public void createTNT()
     {
-        Castle.Instance._rock -= GameManager.Instance._rock_TNT;
-        Castle.Instance._meat -= GameManager.Instance._meat_TNT;
-        Castle.Instance._gold -= GameManager.Instance._gold_TNT;
+        Castle.Instance._rock -= GameManager.Instance.Info._rock_TNT;
+        Castle.Instance._meat -= GameManager.Instance.Info._meat_TNT;
+        Castle.Instance._gold -= GameManager.Instance.Info._gold_TNT;
         updateReferent();
         // tao player
-        GameObject _obj = Instantiate(GameManager.Instance._TNTPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
-        _obj.SetActive(false);
-        var _scripPlayer = _obj.GetComponent<PlayerAI>();
-        Castle.Instance._ListTNT.Add(_scripPlayer);
+        GameObject _obj = null;
+        PlayerAI _scripPlayer = null;
+        bool _isHas = false;
+        foreach (var player in Castle.Instance._ListTNT)
+        {
+            if (!player.getCreating() && !player.gameObject.activeSelf)
+            {
+                _obj = player.gameObject;
+                player.setCreating(true);
+                _isHas = true;
+                break;
+            }
+        }
+        if (!_isHas)
+        {
+            _obj = Instantiate(GameManager.Instance._TNTPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
+            _obj.SetActive(false);
+            _scripPlayer = _obj.GetComponent<PlayerAI>();
+            _scripPlayer.setCreating(true);
+            Castle.Instance._ListTNT.Add(_scripPlayer);
+        }
+        _scripPlayer.upLevel(Castle.Instance._level - 3);
 
         // check
         updatePlayerValue();
@@ -530,16 +696,33 @@ public class GameUI : MonoBehaviour
     #region Healer
     public void createHealer()
     {
-        Castle.Instance._wood -= GameManager.Instance._wood_Healer;
-        Castle.Instance._rock -= GameManager.Instance._rock_Healer;
-        Castle.Instance._meat -= GameManager.Instance._meat_Healer;
-        Castle.Instance._gold -= GameManager.Instance._gold_Healer;
+        Castle.Instance._wood -= GameManager.Instance.Info._wood_Healer;
+        Castle.Instance._rock -= GameManager.Instance.Info._rock_Healer;
+        Castle.Instance._meat -= GameManager.Instance.Info._meat_Healer;
+        Castle.Instance._gold -= GameManager.Instance.Info._gold_Healer;
         updateReferent();
         // tao player
-        GameObject _obj = Instantiate(GameManager.Instance._HealerPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
-        _obj.SetActive(false);
-        var _scripPlayer = _obj.GetComponent<PlayerAI>();
-        Castle.Instance._ListHealer.Add(_scripPlayer);
+        GameObject _obj = null;
+        PlayerAI _scripPlayer = null;
+        bool _isHas = false;
+        foreach (var player in Castle.Instance._ListHealer)
+        {
+            if (!player.getCreating() && !player.gameObject.activeSelf)
+            {
+                _obj = player.gameObject;
+                player.setCreating(true);
+                _isHas = true;
+                break;
+            }
+        }
+        if (!_isHas)
+        {
+            _obj = Instantiate(GameManager.Instance._HealerPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
+            _obj.SetActive(false);
+            _scripPlayer = _obj.GetComponent<PlayerAI>();
+            _scripPlayer.setCreating(true);
+            Castle.Instance._ListHealer.Add(_scripPlayer);
+        }
 
         // check
         updatePlayerValue();
@@ -750,8 +933,10 @@ public class GameUI : MonoBehaviour
     #region Buy Tower
     public void CreateTower()
     {
-        Instantiate(GameManager.Instance._TowerPrefab, wordSpace(), Quaternion.identity);
+        GameObject obj = Instantiate(GameManager.Instance._TowerPrefab, wordSpace(), Quaternion.identity, Castle.Instance._TowerFolder);
+        obj.GetComponent<House>().setLevel(Castle.Instance._level);
         _buiding_hide.move();
+        GameManager.Instance.setCanBuy(false);
     }
     #endregion
 
@@ -771,7 +956,257 @@ public class GameUI : MonoBehaviour
     #region Buy Storage
     public void CreateStorage()
     {
+        GameObject obj = Instantiate(GameManager.Instance._StoragePrefab, wordSpace(), Quaternion.identity, Castle.Instance._StorgeFolder);
+        obj.GetComponent<House>().setLevel(Castle.Instance._level);
+        _buiding_hide.move();
+        GameManager.Instance.setCanBuy(false);
+    }
+    #endregion
 
+
+    #region Set Active Button Upgrade
+    public void setActiveButtonUpgrade(bool amount)
+    {
+        if (Castle.Instance._level >= 5) return;
+        bool _on = _ButtonUpgrade.activeSelf;
+        if (!CursorManager.Instance.ChoseUI && _on && !amount)
+        {
+            _ButtonUpgrade.SetActive(amount);
+            return;
+        }
+
+        _ButtonUpgrade.SetActive(amount);
+        if (!amount) return;
+        // update value
+        updateInfoUpgrade();
+    }
+    #endregion
+
+
+    #region Update Reference Upgrade
+    private void updateInfoUpgrade()
+    {
+        switch (Castle.Instance._level)
+        {
+            case 1:
+                // OOkiButton
+                _buttonUpgrade_Wood.text = Castle.Instance._lv2_Wood.ToString();
+                _buttonUpgrade_Rock.text = Castle.Instance._lv2_Rock.ToString();
+                _buttonUpgrade_Gold.text = Castle.Instance._lv2_Gold.ToString();
+
+                // Panel
+                _PanelUpgrade_Wood.text = Castle.Instance._lv2_Wood.ToString();
+                _PanelUpgrade_Rock.text = Castle.Instance._lv2_Rock.ToString();
+                _PanelUpgrade_Gold.text = Castle.Instance._lv2_Gold.ToString();
+
+                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv2_MaxHealth;
+                _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv2_MaxSlot;
+
+                if (Castle.Instance._wood >= Castle.Instance._lv2_Wood)
+                    if (Castle.Instance._rock >= Castle.Instance._lv2_Rock)
+                        if (Castle.Instance._gold >= Castle.Instance._lv2_Gold)
+                            _PanelButtonUpgrade.interactable = true;
+                        else _PanelButtonUpgrade.interactable = false;
+                    else _PanelButtonUpgrade.interactable = false;
+                else _PanelButtonUpgrade.interactable = false;
+                break;
+            case 2:
+                // OOkiButton
+                _buttonUpgrade_Wood.text = Castle.Instance._lv3_Wood.ToString();
+                _buttonUpgrade_Rock.text = Castle.Instance._lv3_Rock.ToString();
+                _buttonUpgrade_Gold.text = Castle.Instance._lv3_Gold.ToString();
+
+                // Panel
+                _PanelUpgrade_Wood.text = Castle.Instance._lv3_Wood.ToString();
+                _PanelUpgrade_Rock.text = Castle.Instance._lv3_Rock.ToString();
+                _PanelUpgrade_Gold.text = Castle.Instance._lv3_Gold.ToString();
+
+                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv3_MaxHealth;
+                _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv3_MaxSlot;
+
+                if (Castle.Instance._wood >= Castle.Instance._lv3_Wood)
+                    if (Castle.Instance._rock >= Castle.Instance._lv3_Rock)
+                        if (Castle.Instance._gold >= Castle.Instance._lv3_Gold)
+                            _PanelButtonUpgrade.interactable = true;
+                        else _PanelButtonUpgrade.interactable = false;
+                    else _PanelButtonUpgrade.interactable = false;
+                else _PanelButtonUpgrade.interactable = false;
+                break;
+            case 3:
+                // OOkiButton
+                _buttonUpgrade_Wood.text = Castle.Instance._lv4_Wood.ToString();
+                _buttonUpgrade_Rock.text = Castle.Instance._lv4_Rock.ToString();
+                _buttonUpgrade_Gold.text = Castle.Instance._lv4_Gold.ToString();
+
+                // Panel
+                _PanelUpgrade_Wood.text = Castle.Instance._lv4_Wood.ToString();
+                _PanelUpgrade_Rock.text = Castle.Instance._lv4_Rock.ToString();
+                _PanelUpgrade_Gold.text = Castle.Instance._lv4_Gold.ToString();
+
+                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv4_MaxHealth;
+                _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv4_MaxSlot;
+
+                if (Castle.Instance._wood >= Castle.Instance._lv4_Wood)
+                    if (Castle.Instance._rock >= Castle.Instance._lv4_Rock)
+                        if (Castle.Instance._gold >= Castle.Instance._lv4_Gold)
+                            _PanelButtonUpgrade.interactable = true;
+                        else _PanelButtonUpgrade.interactable = false;
+                    else _PanelButtonUpgrade.interactable = false;
+                else _PanelButtonUpgrade.interactable = false;
+                break;
+            case 4:
+                // OOkiButton
+                _buttonUpgrade_Wood.text = Castle.Instance._lv5_Wood.ToString();
+                _buttonUpgrade_Rock.text = Castle.Instance._lv5_Rock.ToString();
+                _buttonUpgrade_Gold.text = Castle.Instance._lv5_Gold.ToString();
+
+                // Panel
+                _PanelUpgrade_Wood.text = Castle.Instance._lv5_Wood.ToString();
+                _PanelUpgrade_Rock.text = Castle.Instance._lv5_Rock.ToString();
+                _PanelUpgrade_Gold.text = Castle.Instance._lv5_Gold.ToString();
+
+                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv5_MaxHealth;
+                _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv5_MaxSlot;
+
+                if (Castle.Instance._wood >= Castle.Instance._lv5_Wood)
+                    if (Castle.Instance._rock >= Castle.Instance._lv5_Rock)
+                        if (Castle.Instance._gold >= Castle.Instance._lv5_Gold)
+                            _PanelButtonUpgrade.interactable = true;
+                        else _PanelButtonUpgrade.interactable = false;
+                    else _PanelButtonUpgrade.interactable = false;
+                else _PanelButtonUpgrade.interactable = false;
+                break;
+        }
+    }
+    #endregion
+
+
+    #region Button Upgrade Click
+    public void Upgrade()
+    {
+        // trừ tài nguyên
+        switch (Castle.Instance._level)
+        {
+            case 1:
+                Castle.Instance._wood -= Castle.Instance._lv2_Wood;
+                Castle.Instance._rock -= Castle.Instance._lv2_Rock;
+                Castle.Instance._gold -= Castle.Instance._lv2_Gold;
+                break;
+            case 2:
+                Castle.Instance._wood -= Castle.Instance._lv3_Wood;
+                Castle.Instance._rock -= Castle.Instance._lv3_Rock;
+                Castle.Instance._gold -= Castle.Instance._lv3_Gold;
+                break;
+            case 3:
+                Castle.Instance._wood -= Castle.Instance._lv4_Wood;
+                Castle.Instance._rock -= Castle.Instance._lv4_Rock;
+                Castle.Instance._gold -= Castle.Instance._lv4_Gold;
+                break;
+            case 4:
+                Castle.Instance._wood -= Castle.Instance._lv5_Wood;
+                Castle.Instance._rock -= Castle.Instance._lv5_Rock;
+                Castle.Instance._gold -= Castle.Instance._lv5_Gold;
+                break;
+        }
+
+        // upgrade
+        Castle.Instance.Upgrade();
+        updateInfoUpgrade();
+        // reference Srorage
+        GameManager.Instance.Info._wood_Storage += GameManager.Instance.Info._buidingReferenceBounus;
+        GameManager.Instance.Info._rock_Storage += GameManager.Instance.Info._buidingReferenceBounus;
+        GameManager.Instance.Info._gold_Storage += GameManager.Instance.Info._buidingReferenceBounus;
+        // reference Tower
+        GameManager.Instance.Info._wood_Tower += GameManager.Instance.Info._buidingReferenceBounus;
+        GameManager.Instance.Info._rock_Tower += GameManager.Instance.Info._buidingReferenceBounus;
+        GameManager.Instance.Info._gold_Tower += GameManager.Instance.Info._buidingReferenceBounus;
+
+        foreach (var tower in Castle.Instance._towerList)
+            tower.GetComponent<House>().setLevel(Castle.Instance._level);
+        foreach (var storage in Castle.Instance._storageList)
+            storage.GetComponent<House>().setLevel(Castle.Instance._level);
+        Castle.Instance._archer_Left_Obj.GetComponent<ArcherUP>().setDamage(GameManager.Instance.Info._damageBounus);
+        Castle.Instance._archer_Center_Obj.GetComponent<ArcherUP>().setDamage(GameManager.Instance.Info._damageBounus);
+        Castle.Instance._archer_Right_Obj.GetComponent<ArcherUP>().setDamage(GameManager.Instance.Info._damageBounus);
+
+        int level = Castle.Instance._level;
+        if (level > 1)
+        {
+            GameManager.Instance.Info.upgradeWarrior();
+            foreach (var player in Castle.Instance._ListWarrior)
+                player.upLevel(level);
+        }
+        if (level > 2)
+        {
+            GameManager.Instance.Info.upgradeArcher();
+            foreach (var player in Castle.Instance._ListArcher)
+                player.upLevel(level - 1);
+        }
+        if (level > 3)
+        {
+            GameManager.Instance.Info.upgradeLancer();
+            foreach (var player in Castle.Instance._ListLancer)
+                player.upLevel(level - 2);
+        }
+        if (level > 4)
+        {
+            GameManager.Instance.Info.upgradeTNT();
+            foreach (var player in Castle.Instance._ListTNT)
+                player.upLevel(level - 3);
+        }
+
+        updateReferent();
+        if (level == 5)
+        {
+            _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
+            _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level;
+            _PanelUpgrade_Health.text = Castle.Instance._lv5_MaxHealth.ToString();
+            _PanelUpgrade_Slot.text = Castle.Instance._lv5_MaxSlot.ToString();
+            _PanelButtonUpgrade.interactable = false;
+        }
+    }
+    #endregion
+
+
+    #region Update Buiding
+    private void updateBuidingReference()
+    {
+        _wood_Tower.text = GameManager.Instance.Info._wood_Tower.ToString();
+        _rock_Tower.text = GameManager.Instance.Info._rock_Tower.ToString();
+        _gold_Tower.text = GameManager.Instance.Info._gold_Tower.ToString();
+
+        _wood_Storage.text = GameManager.Instance.Info._wood_Storage.ToString();
+        _rock_Storage.text = GameManager.Instance.Info._rock_Storage.ToString();
+        _gold_Storage.text = GameManager.Instance.Info._gold_Storage.ToString();
+    }
+
+    public void checkButtonBuyTowerAndStorage()
+    {
+        updateBuidingReference();
+
+        if (GameManager.Instance.Info._wood_Tower <= Castle.Instance._wood)
+            if (GameManager.Instance.Info._rock_Tower <= Castle.Instance._rock)
+                if (GameManager.Instance.Info._gold_Tower <= Castle.Instance._gold)
+                    _buttonTower.interactable = true;
+                else _buttonTower.interactable = false;
+            else _buttonTower.interactable = false;
+        else _buttonTower.interactable = false;
+
+        if (GameManager.Instance.Info._wood_Storage <= Castle.Instance._wood)
+            if (GameManager.Instance.Info._rock_Storage <= Castle.Instance._rock)
+                if (GameManager.Instance.Info._gold_Storage <= Castle.Instance._gold)
+                    _buttonStorage.interactable = true;
+                else _buttonStorage.interactable = false;
+            else _buttonStorage.interactable = false;
+        else _buttonStorage.interactable = false;
     }
     #endregion
 }

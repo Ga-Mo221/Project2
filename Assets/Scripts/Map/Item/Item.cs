@@ -27,6 +27,7 @@ public class Item : MonoBehaviour
     public int _maxStack = 3;
     [ShowIf(nameof(_IsGold))]
     public List<PlayerAI> _Farmlist;
+    [ShowIf(nameof(_IsGold))]
     public int _maxFarmers = 2;
     [HideIf(nameof(_IsGold))]
     public bool _seleted = false;
@@ -42,7 +43,6 @@ public class Item : MonoBehaviour
 
     [Header("Value")]
     public int _value = 0;
-    [ShowIf(nameof(_IsGold))]
     public int _stack;
 
     protected virtual void Start()

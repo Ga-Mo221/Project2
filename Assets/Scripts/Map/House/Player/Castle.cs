@@ -7,18 +7,32 @@ public class Castle : MonoBehaviour
     public static Castle Instance { get; private set; }
 
     [Header("Propety")]
-    [SerializeField] public int _level = 1;
+    public int _level = 1;
+    public float _maxHealth = 500;
+    public float _currentHealth = 0;
+    public int _maxSlot = 50;
+    public int _currentSlot = 0;
 
+    [Foldout("Inport")]
     [SerializeField] private SpriteRenderer _sottingLayer;
+    [Foldout("Inport")]
     [SerializeField] private Transform _point;
+    [Foldout("Inport")]
     [SerializeField] public Transform _In_Castle_Pos;
 
     [Foldout("All Item")]
     public bool _canFind = true;
+    [Foldout("All Item")]
     public GameObject[] _allItems;
 
-    [Header("Storage")]
+    [Foldout("Storage")]
+    public Transform _StorgeFolder;
+    [Foldout("Storage")]
     public List<GameObject> _storageList;
+    [Foldout("Tower")]
+    public Transform _TowerFolder;
+    [Foldout("Tower")]
+    public List<GameObject> _towerList;
 
     [Foldout("Inventory")]
     public int _maxRock = 50;
@@ -78,6 +92,51 @@ public class Castle : MonoBehaviour
     public List<PlayerAI> _ListTNT;
 
 
+    [BoxGroup("LV2")]
+    public int _lv2_Wood = 100;
+    [BoxGroup("LV2")]
+    public int _lv2_Rock = 100;
+    [BoxGroup("LV2")]
+    public int _lv2_Gold = 100;
+    [BoxGroup("LV2")]
+    public float _lv2_MaxHealth = 600;
+    [BoxGroup("LV2")]
+    public int _lv2_MaxSlot = 10;
+
+    [BoxGroup("LV3")]
+    public int _lv3_Wood = 100;
+    [BoxGroup("LV3")]
+    public int _lv3_Rock = 100;
+    [BoxGroup("LV3")]
+    public int _lv3_Gold = 100;
+    [BoxGroup("LV3")]
+    public float _lv3_MaxHealth = 600;
+    [BoxGroup("LV3")]
+    public int _lv3_MaxSlot = 10;
+
+    [BoxGroup("LV4")]
+    public int _lv4_Wood = 100;
+    [BoxGroup("LV4")]
+    public int _lv4_Rock = 100;
+    [BoxGroup("LV4")]
+    public int _lv4_Gold = 100;
+    [BoxGroup("LV4")]
+    public float _lv4_MaxHealth = 600;
+    [BoxGroup("LV4")]
+    public int _lv4_MaxSlot = 10;
+
+    [BoxGroup("LV5")]
+    public int _lv5_Wood = 100;
+    [BoxGroup("LV5")]
+    public int _lv5_Rock = 100;
+    [BoxGroup("LV5")]
+    public int _lv5_Gold = 100;
+    [BoxGroup("LV5")]
+    public float _lv5_MaxHealth = 600;
+    [BoxGroup("LV5")]
+    public int _lv5_MaxSlot = 10;
+
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -115,7 +174,6 @@ public class Castle : MonoBehaviour
         _archer_Right_Obj.SetActive(false);
 
         _allItems = GameObject.FindGameObjectsWithTag("Item");
-        sort();
     }
 
     void Update()
@@ -123,15 +181,32 @@ public class Castle : MonoBehaviour
         buttonEnter();
     }
 
-    private void sort()
+    #region Upgrade
+    public void Upgrade()
     {
-        System.Array.Sort(_allItems, (a, b) =>
+        _level++;
+        switch (_level)
         {
-            float distA = Vector3.Distance(_point.position, a.transform.position);
-            float distB = Vector3.Distance(_point.position, b.transform.position);
-            return distA.CompareTo(distB); // nhỏ -> lớn
-        });
+            case 2:
+                _maxHealth = _lv2_MaxHealth;
+                _maxSlot = _lv2_MaxSlot;
+                break;
+            case 3:
+                _maxHealth = _lv3_MaxHealth;
+                _maxSlot = _lv3_MaxSlot;
+                break;
+            case 4:
+                _maxHealth = _lv4_MaxHealth;
+                _maxSlot = _lv4_MaxSlot;
+                break;
+            case 5:
+                _maxHealth = _lv5_MaxHealth;
+                _maxSlot = _lv5_MaxSlot;
+                break;
+        }
     }
+    #endregion
+
 
     private void buttonEnter()
     {

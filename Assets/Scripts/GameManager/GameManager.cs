@@ -11,43 +11,12 @@ public class GameManager : MonoBehaviour
     public int _timeRTS = 0;
     public Vector2 _playTime = Vector2.zero;
 
-    public int _maxSlot = 50;
-    public int _currentSlot = 0;
+    [SerializeField] private bool _canBuy = true;
 
     [SerializeField] private GameUI _ui;
+    [SerializeField] public Upgrade Info;
 
-    // Warrior
-    [Foldout("Warrior")]
-    public int _wood_Warrior = 10;
-    // Archer
-    [Foldout("Archer")]
-    public int _wood_Archer = 10;
-    [Foldout("Archer")]
-    public int _rock_Archer = 10;
-    // Lancer
-    [Foldout("Lancer")]
-    public int _wood_Lancer = 10;
-    [Foldout("Lancer")]
-    public int _rock_Lancer = 10;
-    [Foldout("Lancer")]
-    public int _meat_Lancer = 10;
-    // TNT
-    [Foldout("TNT")]
-    public int _rock_TNT = 10;
-    [Foldout("TNT")]
-    public int _meat_TNT = 10;
-    [Foldout("TNT")]
-    public int _gold_TNT = 10;
-    // Healer
-    [Foldout("Healer")]
-    public int _wood_Healer = 10;
-    [Foldout("Healer")]
-    public int _rock_Healer = 10;
-    [Foldout("Healer")]
-    public int _meat_Healer = 10;
-    [Foldout("Healer")]
-    public int _gold_Healer = 10;
-
+    
     [Foldout("Prefab")]
     public GameObject _warriorPrefab;
     [Foldout("Prefab")]
@@ -62,6 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject _createPrefab;
     [Foldout("Prefab")]
     public GameObject _TowerPrefab;
+    [Foldout("Prefab")]
+    public GameObject _StoragePrefab;
 
     void Awake()
     {
@@ -87,4 +58,13 @@ public class GameManager : MonoBehaviour
 
     public void UIloadPlayer()
         => _ui.loadPlayer();
+
+    public void UIsetActiveButtonUpgrade(bool amount)
+        => _ui.setActiveButtonUpgrade(amount);
+
+    public void setCanBuy(bool amount) => _canBuy = amount;
+    public bool getCanBuy() => _canBuy;
+
+    public void UIcheckButtonBuyBuiding()
+        => _ui.checkButtonBuyTowerAndStorage();
 }

@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6208604442879482577}
   - component: {fileID: 506576841911101734}
   - component: {fileID: 3755517668021824491}
+  - component: {fileID: 4963382198938151658}
   m_Layer: 8
   m_Name: TNTGFX
   m_TagString: Player
@@ -197,6 +198,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4963382198938151658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781899603472012374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468a416a771f8fb429c11309815d8959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TNT: {fileID: 0}
 --- !u!1 &6655809814181263543
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,16 +534,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitClass: 4
+  _level: 1
   _maxHealth: 100
   _health: 0
   _damage: 10
   _maxSpeed: 6
   _range: 1.5
   _attackSpeedd: 2.5
+  _slot: 1
+  _createTime_sec: 5
   _radius: 10
   _radius_farm: 1.5
   _farmSpeed: 1
-  ShowInventory: 0
+  _itemScript: {fileID: 0}
   _maxRock: 5
   _maxGold: 5
   _maxWood: 5
@@ -548,8 +565,8 @@ MonoBehaviour:
   _healEffect: {fileID: 0}
   path: {fileID: 6242303459415372960}
   target: {fileID: 0}
+  _creating: 0
   _Die: 0
-  _canRespawn: 0
   _detect: 0
   _isLock: 0
   _isAI: 1
@@ -559,7 +576,6 @@ MonoBehaviour:
   _healPlus: 0
   _AOEHeal: 0
   _canAction: 0
-  _itemScript: {fileID: 0}
   _spriteRender: {fileID: 506576841911101734}
   _oderSpriterPoint: {fileID: 6778218175167639651}
 --- !u!114 &1174447356486810554
@@ -590,6 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 20
   hits: []
+  _on: 1
 --- !u!114 &6242303459415372960
 MonoBehaviour:
   m_ObjectHideFlags: 0

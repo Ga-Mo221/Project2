@@ -5,6 +5,11 @@ public class ApplyItem : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Apply(collision);
+    }
+
+    private void Apply(Collider2D collision)
+    {
         if (collision == null) return;
         if (checkTag(collision))
         {
