@@ -39,6 +39,7 @@ public class FindPath : MonoBehaviour
 
     public void setTarget(Vector3 target) => _target = target;
     public void setTargetPos(Vector3 targetPos) => _targetPos = targetPos;
+    public Vector3 getTargetPos() => _targetPos;
     public Vector3 getTarget() => _target;
     public void setDetec(bool detec) => _detect = detec;
     public void setCurrentWaypoint(int currentWaypoint) => _currentWaypoint = currentWaypoint;

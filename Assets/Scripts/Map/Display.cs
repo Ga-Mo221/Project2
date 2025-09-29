@@ -25,6 +25,7 @@ public class Display : MonoBehaviour
     public bool _IsAnimal => _type == ModelType.Animal;
     public bool _IsEnemy => _type == ModelType.Enemy;
     public bool _IsBuiding => _type == ModelType.Buiding;
+    private bool _IsDecoOrGold => _type == ModelType.Deco || _type == ModelType.Gold;
 
     [ShowIf(nameof(_IsAnimalOrEnemy))]
     [SerializeField] private GameObject _MiniMapIcon;
@@ -36,6 +37,9 @@ public class Display : MonoBehaviour
 
     [ShowIf(nameof(_IsBuiding))]
     [SerializeField] private CheckGroundCreate _check;
+
+    [ShowIf(nameof(_IsDecoOrGold))]
+    [SerializeField] private GameObject _light;
 
     [SerializeField] public List<Rada> _seemer;
 
@@ -66,6 +70,8 @@ public class Display : MonoBehaviour
             if (_MiniMapIcon != null)
                 _MiniMapIcon.SetActive(false);
         }
+        if (_IsDecoOrGold)
+            _light.SetActive(false);
     }
 
 
@@ -97,12 +103,14 @@ public class Display : MonoBehaviour
     {
         _item._detec = true;
         _Detec = true;
+        _light.SetActive(true);
     }
 
     public void offDisplayGoldMine()
     {
         _item._detec = false;
         _Detec = false;
+        _light.SetActive(false);
     }
 
     public void onDisplayAnimal()
@@ -130,5 +138,31 @@ public class Display : MonoBehaviour
         _check._see = false;
         _Detec = false;
         _check._anim.SetBool("Red", true);
+    }
+
+    public void onDisplayEnemy()
+    {
+        _Detec = true;
+        _HpBar.SetActive(true);
+        _MiniMapIcon.SetActive(true);
+    }
+
+    public void offDisplayEnemy()
+    {
+        _Detec = false;
+        _HpBar.SetActive(false);
+        _MiniMapIcon.SetActive(false);
+    }
+
+    public void onDisplayDeco()
+    {
+        _Detec = true;
+        _light.SetActive(true);
+    }
+
+    public void offDisplayDeco()
+    {
+        _Detec = false;
+        _light.SetActive(false);
     }
 }

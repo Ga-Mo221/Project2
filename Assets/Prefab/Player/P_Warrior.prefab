@@ -223,10 +223,10 @@ GameObject:
   - component: {fileID: 6224926396799712632}
   - component: {fileID: 3729840782053474631}
   - component: {fileID: 5670761250453613276}
-  - component: {fileID: 6362947074359857873}
-  - component: {fileID: 1293021993264468765}
   - component: {fileID: 2939301152809590225}
   - component: {fileID: 8115716074318572522}
+  - component: {fileID: 6362947074359857873}
+  - component: {fileID: 1293021993264468765}
   m_Layer: 7
   m_Name: P_Warrior
   m_TagString: Warrior
@@ -348,78 +348,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &6362947074359857873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094120962555759500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c611b0ef65df4814e940135b89384a48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitClass: 0
-  _level: 1
-  _maxHealth: 100
-  _health: 0
-  _damage: 10
-  _maxSpeed: 6
-  _range: 2
-  _attackSpeedd: 2.5
-  _slot: 1
-  _createTime_sec: 5
-  _radius: 10
-  _radius_farm: 2.3
-  _farmSpeed: 1
-  _itemScript: {fileID: 0}
-  _maxRock: 5
-  _maxGold: 5
-  _maxWood: 5
-  _maxMeat: 5
-  _rock: 0
-  _gold: 0
-  _wood: 0
-  _meat: 0
-  _HPCanvas: {fileID: 4352966296300642256}
-  _OutLine: {fileID: 6915786969079094675}
-  _hpBar: {fileID: 154612118751249562}
-  _selet: {fileID: 2577642076283397288}
-  _GFX: {fileID: 109896237691892845}
-  _MiniMapIcon: {fileID: 1627387284613245235}
-  _anim: {fileID: 7255897152711031789}
-  _healEffect: {fileID: 1103703179019586960}
-  path: {fileID: 8115716074318572522}
-  target: {fileID: 0}
-  _creating: 0
-  _Die: 0
-  _canRespawn: 0
-  _detect: 0
-  _isLock: 0
-  _isAI: 1
-  _isTarget: 0
-  foundLowHealth: 0
-  _attackCount: 0
-  _healPlus: 0
-  _AOEHeal: 0
-  _canAction: 0
-  _spriteRender: {fileID: 4112465308621576123}
-  _oderSpriterPoint: {fileID: 4025345277128870916}
---- !u!114 &1293021993264468765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094120962555759500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e4afdb1aaff9d4d829f887deb784f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitClass: 0
-  Armor: 2
 --- !u!114 &2939301152809590225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,6 +382,77 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 7255897152711031789}
+--- !u!114 &6362947074359857873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c611b0ef65df4814e940135b89384a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 0
+  _level: 1
+  _maxHealth: 100
+  _health: 0
+  _damage: 20
+  _maxSpeed: 6
+  _range: 3.5
+  _attackSpeedd: 2.5
+  _slot: 1
+  _createTime_sec: 5
+  _radius: 13
+  _radius_farm: 2.3
+  _farmSpeed: 1
+  _itemScript: {fileID: 0}
+  _maxRock: 5
+  _maxGold: 5
+  _maxWood: 5
+  _maxMeat: 5
+  _rock: 0
+  _gold: 0
+  _wood: 0
+  _meat: 0
+  _HPCanvas: {fileID: 4352966296300642256}
+  _OutLine: {fileID: 6915786969079094675}
+  _hpBar: {fileID: 154612118751249562}
+  _selet: {fileID: 2577642076283397288}
+  _GFX: {fileID: 109896237691892845}
+  _MiniMapIcon: {fileID: 1627387284613245235}
+  _anim: {fileID: 7255897152711031789}
+  _healEffect: {fileID: 1103703179019586960}
+  path: {fileID: 8115716074318572522}
+  target: {fileID: 0}
+  _creating: 0
+  _Die: 0
+  _detect: 0
+  _isLock: 0
+  _isAI: 1
+  _isTarget: 0
+  foundLowHealth: 0
+  _attackCount: 0
+  _healPlus: 0
+  _AOEHeal: 0
+  _canAction: 0
+  _spriteRender: {fileID: 4112465308621576123}
+  _oderSpriterPoint: {fileID: 4025345277128870916}
+--- !u!114 &1293021993264468765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e4afdb1aaff9d4d829f887deb784f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 0
+  Armor: 2
 --- !u!1 &1627387284613245235
 GameObject:
   m_ObjectHideFlags: 0

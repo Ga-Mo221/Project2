@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameUI _ui;
     [SerializeField] public Upgrade Info;
 
-    
+
     [Foldout("Prefab")]
     public GameObject _warriorPrefab;
     [Foldout("Prefab")]
@@ -67,4 +67,7 @@ public class GameManager : MonoBehaviour
 
     public void UIcheckButtonBuyBuiding()
         => _ui.checkButtonBuyTowerAndStorage();
+
+    public void UIupdateHPCastle()
+        => _ui.updateHP();
 }

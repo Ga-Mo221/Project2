@@ -47,6 +47,8 @@ public class GameUI : MonoBehaviour
 
     #region HP Bar
     [Foldout("HP Bar")]
+    [SerializeField] private TextMeshProUGUI _HP_Text;
+    [Foldout("HP Bar")]
     [SerializeField] private Image _HPBar;
     [Foldout("HP Bar")]
     [SerializeField] private TextMeshProUGUI _HP_Warrior_Value;
@@ -247,6 +249,17 @@ public class GameUI : MonoBehaviour
         // Hiển thị Day và Time RTS
         _Day.text = "Day " + GameManager.Instance._currentDay;
         _Time_RTS.text = string.Format("{0:00}:{1:00}", _hours, 0);
+    }
+    #endregion
+
+
+    #region Update HP Castle
+    public void updateHP()
+    {
+        float currentHealt = Castle.Instance._currentHealth;
+        float maxHealth = Castle.Instance._maxHealth;
+        _HPBar.fillAmount = currentHealt / maxHealth;
+        _HP_Text.text = currentHealt + " / " + maxHealth;
     }
     #endregion
 

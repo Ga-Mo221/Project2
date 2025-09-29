@@ -17,8 +17,8 @@ public class HouseHealth : MonoBehaviour
     private bool IsCastle => _type == HouseType.Castle;
     private Animator _anim;
     [SerializeField] private bool _canDetec = false;
-    [ShowIf(nameof(IsTower))]
-    [SerializeField] private GameObject _ButtonArcherUP;
+    
+    [HideIf(nameof(IsCastle))]
     [SerializeField] private Image _imgLoad;
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _inPos;
@@ -28,23 +28,41 @@ public class HouseHealth : MonoBehaviour
     [SerializeField] private GameObject _inPos2;
     [ShowIf(nameof(IsStorage))]
     [SerializeField] private GameObject _inPos3;
-    [SerializeField] private GameObject _light;
-    [SerializeField] private GameObject _canvas;
+    [HideIf(nameof(IsCastle))]
     [SerializeField] private Rada _rada;
     [ShowIf(nameof(IsStorage))]
     private House _house;
 
+
+    [ShowIf(nameof(IsTower))]
+    [SerializeField] private GameObject _ButtonArcherUP; // canvas
+    [HideIf(nameof(IsCastle))]
+    [SerializeField] private GameObject _light;
+    [HideIf(nameof(IsCastle))]
+    [SerializeField] private GameObject _canvas; // button x and v
+    [HideIf(nameof(IsCastle))]
+    [SerializeField] private GameObject _canCreate;
+    [HideIf(nameof(IsCastle))]
+    [SerializeField] private GameObject _HPcanvas;
+
+
+
     public void setCanDetec(bool amount) => _canDetec = amount;
     public bool getCanDetec() => _canDetec;
 
+    [HideIf(nameof(IsCastle))]
     [SerializeField] private int _createTimeSec = 10;
     private int _time = 0;
 
     void Start()
     {
-        _house = GetComponent<House>();
-        _rada.setOn(false);
-        _time = _createTimeSec;
+        if (!IsCastle)
+        {
+            _house = GetComponent<House>();
+            _rada.setOn(false);
+            _time = _createTimeSec;
+        }
+        else _canDetec = true;
         _anim = GetComponent<Animator>();
     }
 
@@ -63,6 +81,7 @@ public class HouseHealth : MonoBehaviour
             _light.SetActive(true);
             _imgLoad.fillAmount = 0f; // chắc chắn thanh load về 0
             _canvas.SetActive(false);
+            _canCreate.SetActive(false);
             if (IsTower)
             {
                 _ButtonArcherUP.SetActive(true);
@@ -90,7 +109,7 @@ public class HouseHealth : MonoBehaviour
         }
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(float damage)
     {
         if (!IsCastle)
         {
@@ -107,7 +126,44 @@ public class HouseHealth : MonoBehaviour
                     {
                         _house._inTower.Out();
                     }
+                    _ButtonArcherUP.SetActive(false);
                 }
+                if (IsStorage)
+                {
+                    Castle.Instance._maxWood -= _house._wood;
+                    Castle.Instance._maxRock -= _house._rock;
+                    Castle.Instance._maxMeat -= _house._meat;
+                    Castle.Instance._maxGold -= _house._gold;
+
+                    int wood = Castle.Instance._wood / (Castle.Instance._storageList.Count + 1);
+                    int rock = Castle.Instance._rock / (Castle.Instance._storageList.Count + 1);
+                    int meat = Castle.Instance._meat / (Castle.Instance._storageList.Count + 1);
+                    int gold = Castle.Instance._gold / (Castle.Instance._storageList.Count + 1);
+
+                    if (wood > _house._wood) wood = _house._wood;
+                    if (rock > _house._rock) rock = _house._rock;
+                    if (meat > _house._meat) meat = _house._meat;
+                    if (gold > _house._gold) gold = _house._gold;
+                    
+                    Castle.Instance._wood -= wood;
+                    Castle.Instance._rock -= rock;
+                    Castle.Instance._meat -= meat;
+                    Castle.Instance._gold -= gold;
+
+                    GameManager.Instance.UIupdateReferences();
+                }
+                _light.SetActive(false);
+                _HPcanvas.SetActive(false);
+            }
+        }
+        else
+        {
+            Castle.Instance._currentHealth -= damage;
+            GameManager.Instance.UIupdateHPCastle();
+            if (Castle.Instance._currentHealth <= 0)
+            {
+                _anim.SetBool("Die", true);
+                setCanDetec(false);
             }
         }
     }

@@ -20,20 +20,8 @@ public class Castle : MonoBehaviour
     [Foldout("Inport")]
     [SerializeField] public Transform _In_Castle_Pos;
 
-    [Foldout("All Item")]
-    public bool _canFind = true;
-    [Foldout("All Item")]
-    public GameObject[] _allItems;
 
-    [Foldout("Storage")]
-    public Transform _StorgeFolder;
-    [Foldout("Storage")]
-    public List<GameObject> _storageList;
-    [Foldout("Tower")]
-    public Transform _TowerFolder;
-    [Foldout("Tower")]
-    public List<GameObject> _towerList;
-
+    #region Inventory
     [Foldout("Inventory")]
     public int _maxRock = 50;
     [Foldout("Inventory")]
@@ -50,7 +38,10 @@ public class Castle : MonoBehaviour
     public int _gold = 0;
     [Foldout("Inventory")]
     public int _meat = 0;
+    #endregion
 
+
+    #region Archer
     [Foldout("Archer_Up")]
     public GameObject _archer_Right;
     [Foldout("Archer_Up")]
@@ -63,8 +54,10 @@ public class Castle : MonoBehaviour
     public GameObject _archer_Center_Obj;
     [Foldout("Archer_Up")]
     public GameObject _archer_Left_Obj;
+    #endregion
 
 
+    #region Key
     [Foldout("Key Down")]
     public bool _Q = false;
     [Foldout("Key Down")]
@@ -77,6 +70,23 @@ public class Castle : MonoBehaviour
     public bool _S = false;
     [Foldout("Key Down")]
     public bool _V = false;
+    #endregion
+
+
+    #region List
+    [Foldout("All Item")]
+    public bool _canFind = true;
+    [Foldout("All Item")]
+    public GameObject[] _allItems;
+
+    [Foldout("Storage")]
+    public Transform _StorgeFolder;
+    [Foldout("Storage")]
+    public List<GameObject> _storageList;
+    [Foldout("Tower")]
+    public Transform _TowerFolder;
+    [Foldout("Tower")]
+    public List<GameObject> _towerList;
 
     [Foldout("Player List")]
     public Transform _PlayerFolder;
@@ -90,8 +100,10 @@ public class Castle : MonoBehaviour
     public List<PlayerAI> _ListHealer;
     [Foldout("Player List")]
     public List<PlayerAI> _ListTNT;
+    #endregion
 
 
+    #region Upgrade Reference
     [BoxGroup("LV2")]
     public int _lv2_Wood = 100;
     [BoxGroup("LV2")]
@@ -135,6 +147,7 @@ public class Castle : MonoBehaviour
     public float _lv5_MaxHealth = 600;
     [BoxGroup("LV5")]
     public int _lv5_MaxSlot = 10;
+    #endregion
 
 
     void Awake()
@@ -165,15 +178,17 @@ public class Castle : MonoBehaviour
 
         int _yOder = -(int)(_point.position.y * 100) + 10000;
         _sottingLayer.sortingOrder = _yOder;
-        _archer_Right_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder+1;
-        _archer_Center_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder+1;
-        _archer_Left_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder+1;
-        
+        _archer_Right_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;
+        _archer_Center_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;
+        _archer_Left_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;
+
         _archer_Center_Obj.SetActive(false);
         _archer_Left_Obj.SetActive(false);
         _archer_Right_Obj.SetActive(false);
 
         _allItems = GameObject.FindGameObjectsWithTag("Item");
+
+        _currentHealth = _maxHealth;
     }
 
     void Update()

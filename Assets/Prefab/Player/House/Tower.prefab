@@ -609,15 +609,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 0
   _canDetec: 0
-  _ButtonArcherUP: {fileID: 6914980141317710162}
   _imgLoad: {fileID: 8819435455824178060}
   _inPos: {fileID: 5233913819557827738}
   _inPos1: {fileID: 0}
   _inPos2: {fileID: 0}
   _inPos3: {fileID: 0}
+  _rada: {fileID: 2886844667331356717}
+  _ButtonArcherUP: {fileID: 6914980141317710162}
   _light: {fileID: 5476259088138348868}
   _canvas: {fileID: 7954586051342352286}
-  _rada: {fileID: 2886844667331356717}
+  _canCreate: {fileID: 9218680089185298883}
+  _HPcanvas: {fileID: 5294076326495381866}
   _createTimeSec: 10
 --- !u!114 &4511442007061942783
 MonoBehaviour:

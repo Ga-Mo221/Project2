@@ -39,5 +39,6 @@ public class TNTGFX : PlayerAI
                 moveToTarget(target);
             }
         }
+        setupFolow(target);
     }
 }

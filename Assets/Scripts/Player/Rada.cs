@@ -38,6 +38,8 @@ public class Rada : MonoBehaviour
                     if (script._IsGold) script.onDisplayGoldMine();
                     if (script._IsAnimal) script.onDisplayAnimal();
                     if (script._IsBuiding) script.onCanCreate();
+                    if (script._IsEnemy) script.onDisplayEnemy();
+                    if (script._IsDeco) script.onDisplayDeco();
                 }
             }
             else
@@ -53,6 +55,8 @@ public class Rada : MonoBehaviour
                         if (script._IsAnimal) script.offDisplayAnimal();
                         if (script._IsGold) script.offDisplayGoldMine();
                         if (script._IsBuiding) script.offCanCreate();
+                        if (script._IsEnemy) script.offDisplayEnemy();
+                        if (script._IsDeco) script.offDisplayDeco();
                     }
                 }
             }
@@ -61,7 +65,7 @@ public class Rada : MonoBehaviour
 
     private bool checkTag(Collider2D hit)
     {
-        return hit.CompareTag("Item+") || hit.CompareTag("Animal") || hit.CompareTag("Enemy") || hit.CompareTag("Buiding");
+        return hit.CompareTag("Item+") || hit.CompareTag("Animal") || hit.CompareTag("Enemy") || hit.CompareTag("Buiding") || hit.CompareTag("Deco");
     }
 
     void OnDrawGizmosSelected()

@@ -67,6 +67,7 @@ public class LancerGFX : PlayerAI
         }
 
         goToHome(target);
+        setupFolow(target);
         if (target == null) return;
         farm(target);
         enemyDirection();

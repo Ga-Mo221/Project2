@@ -196,15 +196,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _canDetec: 0
-  _ButtonArcherUP: {fileID: 0}
   _imgLoad: {fileID: 3192182290273527900}
   _inPos: {fileID: 0}
   _inPos1: {fileID: 5478221784368428117}
   _inPos2: {fileID: 5857663367465617345}
   _inPos3: {fileID: 4897590743678650161}
+  _rada: {fileID: 2198609719723138760}
+  _ButtonArcherUP: {fileID: 0}
   _light: {fileID: 6565106405307181410}
   _canvas: {fileID: 7623795245536797997}
-  _rada: {fileID: 2198609719723138760}
+  _canCreate: {fileID: 1205387266648903066}
+  _HPcanvas: {fileID: 9173508382521863227}
   _createTimeSec: 10
 --- !u!114 &7951098483681800556
 MonoBehaviour:
@@ -224,6 +226,7 @@ MonoBehaviour:
   _maxHealth: 100
   _currentHealth: 0
   _HpImg: {fileID: 4684663263585400689}
+  _inTower: {fileID: 0}
   _archer: {fileID: 0}
   _wood: 20
   _rock: 20

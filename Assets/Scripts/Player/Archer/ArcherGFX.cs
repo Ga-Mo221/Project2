@@ -88,6 +88,7 @@ public class ArcherGFX : PlayerAI
         }
         
         goToHome(target);
+        setupFolow(target);
         if (target == null) return;
         farm(target);
         attack(target);

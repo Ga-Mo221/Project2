@@ -263,8 +263,6 @@ public class PlayerAI : MonoBehaviour
     */
     public void setupFolow(GameObject _nearest)
     {
-        if (_nearest != null && _nearest.tag != "Item" && _isTarget)
-            setTarget(_nearest.transform.position, false);
         if (_nearest == null || _nearest.tag == "Item")
             setDetect(false);
     }
@@ -376,9 +374,13 @@ public class PlayerAI : MonoBehaviour
             float dist = Vector2.Distance(transform.position, _nearest.transform.position);
             if (dist <= _range)
             {
-                _canAction = true;
-                if (_attackSpeed == null)
-                    _attackSpeed = StartCoroutine(attackSpeed());
+                var enemy = _nearest.GetComponent<EnemyAI>();
+                if (!enemy.getDie())
+                {
+                    _canAction = true;
+                    if (_attackSpeed == null)
+                        _attackSpeed = StartCoroutine(attackSpeed());
+                }
             }
             else
                 _canAction = false;
@@ -399,8 +401,8 @@ public class PlayerAI : MonoBehaviour
     }
     private IEnumerator attackSpeed()
     {
-        _anim.SetTrigger("attack");
         yield return new WaitForSeconds(_attackSpeedd);
+        _anim.SetTrigger("attack");
         _attackSpeed = null;
     }
     #endregion
@@ -573,12 +575,16 @@ public class PlayerAI : MonoBehaviour
             if (hit == null) continue;
             if (hit.CompareTag("Enemy"))
             {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (dist < minDist)
+                var enemy = hit.GetComponent<EnemyAI>();
+                if (!enemy.getDie())
                 {
-                    minDist = dist;
-                    nearest = hit.gameObject;
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    var _script = hit.gameObject.GetComponent<Item>();
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
                 }
             }
         }
