@@ -325,6 +325,7 @@ public class PlayerAI : MonoBehaviour
                 if (_attackSpeed == null)
                     _attackSpeed = StartCoroutine(attackSpeed());
             }
+            
             else
                 _canAction = false;
         }

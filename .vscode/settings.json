@@ -66,5 +66,6 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
     },
-    "dotnet.defaultSolution": "Project2.sln"
+    "dotnet.defaultSolution": "Project2.sln",
+    "monokaiPro.fileIconsMonochrome": false
 }
