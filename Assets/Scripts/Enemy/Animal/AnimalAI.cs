@@ -3,12 +3,14 @@ using UnityEngine;
 using System.Collections;
 using NaughtyAttributes;
 using NUnit.Framework.Constraints;
+using System.Collections.Generic;
 
 public class AnimalAI : MonoBehaviour
 {
     #region Value
-    [SerializeField] private AnimalClass _animalAI;
+    public AnimalClass _animalAI;
     [SerializeField] private float _radius = 20f;
+    [SerializeField] private int _respawmTime = 10;
 
     public float _maxHealth = 100;
     public float _health;
@@ -56,7 +58,7 @@ public class AnimalAI : MonoBehaviour
 
     public bool _canAction = false;
 
-    private Rigidbody2D _rb;
+    public Rigidbody2D _rb;
     #endregion
 
     protected virtual void Start()
@@ -65,19 +67,22 @@ public class AnimalAI : MonoBehaviour
         path.setPropety(_speed, _range);
 
         InvokeRepeating("UpdatePath", 0f, _repathRate);
+        _health = _maxHealth;
+        
 
         //seeker = GetComponent<Seeker>();
 
         _rb = GetComponent<Rigidbody2D>();
         if (target == null && !_Die)
         {
-            SetNewPatrol();
+            SetNewPatrol(Vector2.zero);
         }
     }
 
     private bool _isDead = false;
     protected virtual void Update()
     {
+        _hpBar.fillAmount = _health / _maxHealth;
         flip(target, _canAction);
 
         if (_Die && !_isDead)
@@ -94,23 +99,24 @@ public class AnimalAI : MonoBehaviour
         if (_Die) return;
         if (path._seeker.IsDone())
         {
-            if (target != null)
+            if (target != null && !_Die)
+            {
+                // có enemy -> đuổi
+                path.setTarget(target.transform.position);
+            }
+            else if (_canPatrol && !_Die)
+            {
+                _canAction = false;
+                path.setTarget(_patrolTarget);
+                float dist = Vector3.Distance(transform.position, _patrolTarget);
+                //Debug.Log(dist);
+                if (dist < 1.5)
                 {
-                    // có enemy -> đuổi
-                    path.setTarget(target.transform.position);
-                }
-                else if (_canPatrol)
-                {
-                    path.setTarget(_patrolTarget);
-                    float dist = Vector3.Distance(transform.position, _patrolTarget);
-                    //Debug.Log(dist);
-                    if (dist < 1.5)
+                    if (_delay == null)
                     {
-                        if (_delay == null)
-                        {
-                            _delay = StartCoroutine(setDelayPatrol());
-                        }
-                    }               
+                        _delay = StartCoroutine(setDelayPatrol());
+                    }
+                }               
              }
             path.UpdatePath();
         }
@@ -121,6 +127,7 @@ public class AnimalAI : MonoBehaviour
     #region Find Enemy || Player
     public GameObject findEnemyorPlayer()
     {
+        if (_Die) return null;
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
         GameObject nearest = null;
         float minDist = Mathf.Infinity;
@@ -144,7 +151,7 @@ public class AnimalAI : MonoBehaviour
     #endregion
 
     #region Attack
-    [SerializeField] private string[] tagAnimalorEnrmy = { "Enemy", "Archer", "Warrior", "Lancer", "Healer", "TNT" };
+    [SerializeField] private string[] tagAnimalorEnrmy = { "Enemy", "Archer", "Warrior", "Lancer", "Healer", "TNT" , "Enemy" };
 
     private Coroutine _attackSpeed;
 
@@ -171,18 +178,23 @@ public class AnimalAI : MonoBehaviour
         yield return new WaitForSeconds(_speedAttack);
         _attackSpeed = null;
     }
-    
+
     #endregion
 
     public bool checkTag(Collider2D hit)
     {
-        bool check = hit.CompareTag("Enemy")
-        || hit.CompareTag("Archer")
-        || hit.CompareTag("Warrior")
-        || hit.CompareTag("Lancer")
-        || hit.CompareTag("Healer")
-        || hit.CompareTag("TNT");
-        return check;
+        List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
+        if (_tag.Contains(hit.tag))
+        {
+            var playerAI = hit.GetComponent<PlayerAI>();
+            if (!playerAI.getDie()) return true;
+        }
+        if (hit.CompareTag("Enemy"))
+        {
+            var enemyAi = hit.GetComponent<EnemyAI>();
+            if (!enemyAi.getDie()) return true;
+        }
+        return false;
     }
 
     #region Draw
@@ -235,107 +247,79 @@ public class AnimalAI : MonoBehaviour
     }
 
     #region Patrol
-    private void SetNewPatrol()
+    public void SetNewPatrol(Vector2 dir)
     {
         Vector2 randomPoint;
+        Vector2 newDir;
+        float angleLimit = 60f; // giới hạn góc lệch tối đa (độ)
+
         do
         {
+            // random 1 điểm trong phạm vi patrol
             randomPoint = (Random.insideUnitCircle * _PatrolRadius) + (Vector2)_centerTransform.position;
-        }
-        while (randomPoint.magnitude < 2f); // tránh điểm quá gần
+            if (dir != Vector2.zero)
+            {
+                // vector hướng từ vị trí hiện tại đến điểm random
+                newDir = (randomPoint - (Vector2)transform.position).normalized;
 
+                // kiểm tra góc giữa hướng random và hướng dir
+                if (Vector2.Angle(dir.normalized, newDir) > angleLimit)
+                    continue;
+            }
+        }
+        while ((randomPoint - (Vector2)transform.position).magnitude < 2f);
+
+        // gán target
         _patrolTarget = new Vector3(randomPoint.x, randomPoint.y, 0);
-        //  Debug.Log("New Patrol Target: " + _patrolTarget);
         path.setTarget(_patrolTarget);
     }
-
     private IEnumerator setDelayPatrol()
     {
         yield return new WaitForSeconds(_timeDelayPatrol);
-        SetNewPatrol();
+        SetNewPatrol(_rb.linearVelocity); // truyền hướng hiện tại vào
         _delay = null;
     }
     #endregion
-
-    #region TakeDame
-    public void TakeDamage()
-    {
-
-    }
-
-    #endregion
-
 
     #region Die
     public void Die()
     {
         _Die = true;
+        _anim.SetBool("Die", true);
+        path.setTarget(transform.position);
+
         //Debug.Log("die rr");
         _MiniMapIcon.SetActive(false);
         _HPCanvas.SetActive(false);
         _OutLine.SetActive(false);
 
-        StartCoroutine(Respawm(10f));
+        StartCoroutine(Respawm(_respawmTime));
+
        //Debug.Log("die r");
     }
     #endregion
 
     #region RunAway Sheep
-    private Coroutine _fleeRoutine;
+    
 
-    public void FleeFrom(GameObject attackr)
+    public virtual void FleeFrom(GameObject attackr)
     {
-        if (_animalAI != AnimalClass.Sheep) return;
-
-         if (_fleeRoutine != null)
-             StopCoroutine(_fleeRoutine);
-
-        _fleeRoutine = StartCoroutine(FleeRoutine(attackr));
-    }
-
-    private IEnumerator FleeRoutine(GameObject attackr)
-    {
-        float FleeTime = 2f; // nó sẽ tăng tốc chạy trong mấy giây
-        float FleeSpeed = _speed * 2;
-
-        float Timer = FleeTime;
-
-        while (Timer > 0 && attackr != null)
-        {
-            Vector2 FleeDir = (transform.position - attackr.transform.position).normalized;
-            _rb.linearVelocity = FleeDir * FleeSpeed;
-
-            Timer -= Time.deltaTime;
-            yield return null;
-        }
-
-        _rb.linearVelocity = Vector2.zero;
-        _fleeRoutine = null;
     }
     #endregion
 
     #region Respawm
-    private IEnumerator Respawm(float delay)
+    private IEnumerator Respawm(int delay)
     {
-
-        float timer = delay;
-        while (timer > 0)
-        {
-            Debug.Log("respawm" + timer);
-            yield return new WaitForSeconds(1f);
-            timer -= 1;
-        }
-
+        yield return new WaitForSeconds(delay);
 
         _Die = false;
-        _isDead = false;
+        _gfx.GetComponent<SpriteRenderer>().enabled = true;
         _health = _maxHealth;
+        _anim.SetBool("Die", false);
 
-        _MiniMapIcon.SetActive(true);
-        _HPCanvas.SetActive(true);
         _OutLine.SetActive(true);
 
-        SetNewPatrol();
+        SetNewPatrol(Vector2.zero);
     }
 
     #endregion

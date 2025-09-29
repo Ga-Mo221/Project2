@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Rock : Item
 {
     protected override void Start()

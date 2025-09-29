@@ -17,7 +17,7 @@ public class TNTGFX : PlayerAI
 
     protected override void Update()
     {
-        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
         base.Update();
 
         if (!getIsAI()) return;
@@ -39,5 +39,6 @@ public class TNTGFX : PlayerAI
                 moveToTarget(target);
             }
         }
+        setupFolow(target);
     }
 }

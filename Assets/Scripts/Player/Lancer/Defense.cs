@@ -20,6 +20,7 @@ public class Defense : MonoBehaviour
             target.GetComponent<Item>().farm(_lancer);
     }
 
+    public void setActive() => _lancer.setActive();
 
     public void off() => _lancer.offDetec();
 

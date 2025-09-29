@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -18,37 +19,37 @@ public class Item : MonoBehaviour
     private bool _IsGold => _type == ItemType.Gold;
 
     [Header("Propety")]
-    [SerializeField] public int _maxValue = 5;
+    public int _maxValue = 5;
     [ShowIf(nameof(_IsGold))]
-    [SerializeField] public int _valueOneDrop = 5;
+    public int _valueOneDrop = 5;
     [HideIf(nameof(_IsGold))]
-    [SerializeField] public float _spawnTime = 60;
-    [SerializeField] public int _maxStack = 3;
+    public float _spawnTime = 60;
+    public int _maxStack = 3;
     [ShowIf(nameof(_IsGold))]
-    [SerializeField] public int _maxFarmer = 0; 
+    public List<PlayerAI> _Farmlist;
+    [ShowIf(nameof(_IsGold))]
+    public int _maxFarmers = 2;
     [HideIf(nameof(_IsGold))]
-    [SerializeField] public bool _seleted = false;
-    [SerializeField] public bool _detec = false;
+    public bool _seleted = false;
+    public bool _detec = false;
 
     [Header("Reference")]
-    [SerializeField] public SpriteRenderer _spriteRender;
+    public SpriteRenderer _spriteRender;
     [HideIf(nameof(_IsRock))]
-    [SerializeField] public Animator _anim;
+    public Animator _anim;
     [SerializeField] private Transform _OderPoin;
     [HideIf(nameof(_IsGold))]
     [SerializeField] private GameObject _DiePrefab;
 
     [Header("Value")]
     public int _value = 0;
-    [ShowIf(nameof(_IsGold))]
-    public int _Farmer = 0; 
     public int _stack;
 
     protected virtual void Start()
     {
         _value = _maxValue;
         _stack = _maxStack;
-        _spriteRender.sortingOrder = -(int)(_OderPoin.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_OderPoin.position.y * 100) + 10000;
     }
 
     public virtual void farm(PlayerAI _playerAI)

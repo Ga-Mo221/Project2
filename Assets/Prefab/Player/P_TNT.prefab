@@ -1,5 +1,92 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4010041841662219973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1231248160537847310}
+  - component: {fileID: 3574236701602940699}
+  m_Layer: 18
+  m_Name: Circle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1231248160537847310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010041841662219973}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.00000047683716, z: 0}
+  m_LocalScale: {x: 197.371, y: 197.371, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1456639922367159675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!331 &3574236701602940699
+SpriteMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010041841662219973}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaskAlphaCutoff: 0.2
+  m_FrontSortingLayerID: -1824874913
+  m_BackSortingLayerID: 0
+  m_FrontSortingLayer: 8
+  m_BackSortingLayer: 0
+  m_FrontSortingOrder: 1
+  m_BackSortingOrder: 0
+  m_IsCustomRangeActive: 1
+  m_SpriteSortPoint: 0
+  m_MaskSource: 0
 --- !u!1 &4781899603472012374
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,6 +98,7 @@ GameObject:
   - component: {fileID: 6208604442879482577}
   - component: {fileID: 506576841911101734}
   - component: {fileID: 3755517668021824491}
+  - component: {fileID: 4963382198938151658}
   m_Layer: 8
   m_Name: TNTGFX
   m_TagString: Player
@@ -110,6 +198,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4963382198938151658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781899603472012374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468a416a771f8fb429c11309815d8959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TNT: {fileID: 0}
 --- !u!1 &6655809814181263543
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +426,7 @@ Transform:
   - {fileID: 6778218175167639651}
   - {fileID: 2898983197085919292}
   - {fileID: 885313842379303435}
+  - {fileID: 1231248160537847310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4546838257081189840
@@ -432,16 +534,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitClass: 4
+  _level: 1
   _maxHealth: 100
   _health: 0
   _damage: 10
   _maxSpeed: 6
   _range: 1.5
   _attackSpeedd: 2.5
+  _slot: 1
+  _createTime_sec: 5
   _radius: 10
   _radius_farm: 1.5
   _farmSpeed: 1
-  ShowInventory: 0
+  _itemScript: {fileID: 0}
   _maxRock: 5
   _maxGold: 5
   _maxWood: 5
@@ -460,8 +565,8 @@ MonoBehaviour:
   _healEffect: {fileID: 0}
   path: {fileID: 6242303459415372960}
   target: {fileID: 0}
+  _creating: 0
   _Die: 0
-  _canRespawn: 0
   _detect: 0
   _isLock: 0
   _isAI: 1
@@ -471,7 +576,6 @@ MonoBehaviour:
   _healPlus: 0
   _AOEHeal: 0
   _canAction: 0
-  _itemScript: {fileID: 0}
   _spriteRender: {fileID: 506576841911101734}
   _oderSpriterPoint: {fileID: 6778218175167639651}
 --- !u!114 &1174447356486810554
@@ -502,6 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 20
   hits: []
+  _on: 1
 --- !u!114 &6242303459415372960
 MonoBehaviour:
   m_ObjectHideFlags: 0

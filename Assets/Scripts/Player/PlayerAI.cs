@@ -8,92 +8,127 @@ public class PlayerAI : MonoBehaviour
     #region Value
 
     [Header("Class")]
-    [SerializeField] private UnitType _unitClass;
+    public UnitType _unitClass;
     private bool IsHealer => _unitClass == UnitType.Healer;
     private bool IsTNT => _unitClass == UnitType.TNT;
     private bool IsHealerOrTNT => _unitClass == UnitType.Healer || _unitClass == UnitType.TNT;
 
-    [Header("Stats")]
-    [SerializeField] public float _maxHealth = 100;
-    [SerializeField] public float _health; // máu
+    [Foldout("Stats")]
+    public int _level = 1;
+    [Foldout("Stats")]
+    public float _maxHealth = 100;
+    [Foldout("Stats")]
+    public float _health; // máu
     [HideIf(nameof(IsHealer))]
-    [SerializeField] public float _damage = 10; // sát thương
+    [Foldout("Stats")]
+    public float _damage = 10; // sát thương
+    [Foldout("Stats")]
     [SerializeField] private float _maxSpeed = 6f; // tốc độ tối đa
     [HideIf(nameof(IsTNT))]
+    [Foldout("Stats")]
     [SerializeField] private float _range = 1.5f; // tầm đánh
     [HideIf(nameof(IsTNT))]
-    [SerializeField] public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
+    [Foldout("Stats")]
+    public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
+    [Foldout("Stats")]
+    public int _slot = 1;
+    [Foldout("Stats")]
+    public int _createTime_sec = 5;
 
-    [Header("AI Find Items")]
+    [Foldout("AI Find")]
     [SerializeField] private float _radius = 10f; // bán kính phát hiện Items, Enemys, Animals
     [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("AI Find")]
     [SerializeField] private float _radius_farm = 1.5f; // tầm farm
     [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("AI Find")]
     [SerializeField] private float _farmSpeed = 1f; // thời gian sau mỗi đòn farm
+    [Foldout("AI Find")]
+    public Item _itemScript; // dùng để tắt chọn đối với item.
 
-    [Header("Inventory")]
     [HideIf(nameof(IsHealerOrTNT))]
-    public bool ShowInventory = false;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxRock = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxGold = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxWood = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _maxMeat = 5;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _rock = 0;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _gold = 0;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _wood = 0;
-    [ShowIf(nameof(ShowInventory))]
-    [SerializeField] public int _meat = 0;
+    [Foldout("Inventory")]
+    public int _maxRock = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _maxGold = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _maxWood = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _maxMeat = 5;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _rock = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _gold = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _wood = 0;
+    [HideIf(nameof(IsHealerOrTNT))]
+    [Foldout("Inventory")]
+    public int _meat = 0;
 
-    [Header("GFX")]
+    [Foldout("GFX")]
     [SerializeField] private GameObject _HPCanvas;
+    [Foldout("GFX")]
     [SerializeField] private GameObject _OutLine;
+    [Foldout("GFX")]
     [SerializeField] private Image _hpBar; // image thanh máu
+    [Foldout("GFX")]
     [SerializeField] private GameObject _selet; // phát hiện đã được chọn
+    [Foldout("GFX")]
     [SerializeField] private GameObject _GFX; // hình ảnh nhân vật
-    [SerializeField] public GameObject _MiniMapIcon;
+    [Foldout("GFX")]
+    public GameObject _MiniMapIcon;
 
+    [Foldout("Other")]
     [Header("Component")]
-    [SerializeField] public Animator _anim; // animation của đối tượng
+    public Animator _anim; // animation của đối tượng
 
+    [Foldout("Other")]
     [Header("Effect")]
     [HideIf(nameof(IsHealerOrTNT))]
-    [SerializeField] public GameObject _healEffect;
+    public GameObject _healEffect;
 
     [Header("Target")]
     [SerializeField] private FindPath path;
     public GameObject target;
 
     // bool
-    [Header("Status")]
+    [Foldout("Status")]
+    [SerializeField] private bool _creating = false;
+    [Foldout("Status")]
     [SerializeField] private bool _Die = false;
-    [SerializeField] private bool _canRespawn = false;
+    [Foldout("Status")]
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
+    [Foldout("Status")]
     [SerializeField] private bool _isLock = false; // khóa lại không cho về và tìm item dựa vào thành chính.
+    [Foldout("Status")]
     [SerializeField] private bool _isAI = true; // để đối tượng được lựa chọn mục tiêu nhắm đến
+    [Foldout("Status")]
     [SerializeField] private bool _isTarget = false; // có đang hướng đến mục tiêu nào hay không
     [ShowIf(nameof(IsHealer))]
-    [SerializeField] bool foundLowHealth = false;
+    [Foldout("Status")]
+    [SerializeField] private bool foundLowHealth = false;
     [HideIf(nameof(IsTNT))]
-    [SerializeField] public int _attackCount = 0;
+    [Foldout("Status")]
+    public int _attackCount = 0;
     [HideIf(nameof(IsHealerOrTNT))]
-    [SerializeField] public float _healPlus = 0;
+    [Foldout("Status")]
+    public float _healPlus = 0;
     [HideIf(nameof(IsHealerOrTNT))]
-    [SerializeField] public bool _AOEHeal = false;
+    [Foldout("Status")]
+    public bool _AOEHeal = false;
+    [Foldout("Status")]
     public bool _canAction = false;
 
 
     // float
     private float _repathRate = 0.5f; // thời gian lặp lại tiềm đường
 
-    // scrip
-    public Item _itemScript; // dùng để tắt chọn đối với item.
     private Rigidbody2D _rb;
 
     private Collider2D[] hits;
@@ -132,9 +167,34 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
+    #region Up Level
+    public void upLevel(int leve)
+    {
+        int level = 0;
+        for (int i = _level; i < leve; i++)
+        {
+            level++;
+            if (!IsTNT)
+            {
+                _health += GameManager.Instance.Info._playerHealthBounus;
+                _maxHealth += GameManager.Instance.Info._playerHealthBounus;
+            }
+            else
+            {
+                _health -= GameManager.Instance.Info._playerHealthBounus;
+                _maxHealth -= GameManager.Instance.Info._playerHealthBounus;
+                _damage += 47;
+            }
+            _damage += GameManager.Instance.Info._damageBounus;
+        }
+    }
+    #endregion
+
+
     #region New Status
     private void newStatus()
     {
+        _level = 1;
         _health = _maxHealth;
         _rock = 0;
         _gold = 0;
@@ -150,6 +210,8 @@ public class PlayerAI : MonoBehaviour
         target = null;
         _healPlus = 0;
         _AOEHeal = false;
+        setDie(false);
+        setIsTarget(false);
         path.setCurrentWaypoint(0);
     }
     #endregion
@@ -170,7 +232,6 @@ public class PlayerAI : MonoBehaviour
         if (!IsHealerOrTNT)
             _healEffect.SetActive(false);
         _selet.SetActive(false);
-        _canRespawn = false;
         setDie(false);
     }
     #endregion
@@ -179,6 +240,8 @@ public class PlayerAI : MonoBehaviour
     #region Dead
     public void Dead()
     {
+        setTarget(transform.position, true);
+        resetItemSelect();
         _MiniMapIcon.SetActive(false);
         _OutLine.SetActive(false);
         _HPCanvas.SetActive(false);
@@ -186,7 +249,10 @@ public class PlayerAI : MonoBehaviour
             _healEffect.SetActive(false);
         _selet.SetActive(false);
         setDie(true);
+        _farmCoroutine = null;
+        _anim.SetTrigger("Die");
     }
+    public virtual void setActive() => gameObject.SetActive(false);
     #endregion
 
 
@@ -197,22 +263,8 @@ public class PlayerAI : MonoBehaviour
     */
     public void setupFolow(GameObject _nearest)
     {
-        if (_nearest != null && _nearest.tag != "Item" && _isTarget)
-            setTarget(_nearest.transform.position, false);
         if (_nearest == null || _nearest.tag == "Item")
             setDetect(false);
-    }
-    #endregion
-
-
-    #region Check Inventory full
-    public bool checkFullInventory()
-    {
-        if (_rock < _maxRock) return false;
-        if (_gold < _maxGold) return false;
-        if (_wood < _maxWood) return false;
-        if (_meat < _maxMeat) return false;
-        return true;
     }
     #endregion
 
@@ -220,11 +272,13 @@ public class PlayerAI : MonoBehaviour
     #region Create Path
     private void UpdatePath()
     {
-        if (_Die) return;
+        //if (_Die) return;
         if (path._seeker.IsDone())
         {
             if (target != null)
+            {
                 path.setTarget(target.transform.position);
+            }
             else
                 setDetect(false);
             path.UpdatePath();
@@ -242,6 +296,10 @@ public class PlayerAI : MonoBehaviour
         + nếu bạn điều khiển thì là true.
         + nếu do Ai điều khiển thì là false.
     */
+    public void setTargetPos(Transform targetPos)
+    {
+        path.setTargetPos(targetPos.position);
+    }
     public virtual void setTarget(Vector3 pos, bool controller)
     {
         resetItemSelect();
@@ -253,6 +311,7 @@ public class PlayerAI : MonoBehaviour
         }
         else setIsTarget(true);
         path.setTarget(pos);
+        _canAction = false;
     }
     public Vector3 getTarget() => path.getTarget();
     public void resetItemSelect()
@@ -265,8 +324,14 @@ public class PlayerAI : MonoBehaviour
             }
             else
             {
-                if (_itemScript._Farmer > 0)
-                    _itemScript._Farmer--;
+                bool see = false;
+                foreach (var hit in _itemScript._Farmlist)
+                {
+                    if (hit == this)
+                        see = true;
+                }
+                if (see)
+                    _itemScript._Farmlist.Remove(this);
             }
             _itemScript = null;
         }
@@ -309,9 +374,13 @@ public class PlayerAI : MonoBehaviour
             float dist = Vector2.Distance(transform.position, _nearest.transform.position);
             if (dist <= _range)
             {
-                _canAction = true;
-                if (_attackSpeed == null)
-                    _attackSpeed = StartCoroutine(attackSpeed());
+                var enemy = _nearest.GetComponent<EnemyAI>();
+                if (!enemy.getDie())
+                {
+                    _canAction = true;
+                    if (_attackSpeed == null)
+                        _attackSpeed = StartCoroutine(attackSpeed());
+                }
             }
             else
                 _canAction = false;
@@ -333,8 +402,8 @@ public class PlayerAI : MonoBehaviour
     }
     private IEnumerator attackSpeed()
     {
-        _anim.SetTrigger("attack");
         yield return new WaitForSeconds(_attackSpeedd);
+        _anim.SetTrigger("attack");
         _attackSpeed = null;
     }
     #endregion
@@ -349,7 +418,7 @@ public class PlayerAI : MonoBehaviour
     public void farm(GameObject _nearest)
     {
         // Kiểm tra _nearest có null không, có tag "Item" không, và có nằm trong vùng farm không
-        if (_nearest != null && _nearest.CompareTag("Item"))
+        if (_nearest != null && _nearest.CompareTag("Item") && !_Die)
         {
             float dist = Vector2.Distance(transform.position, _nearest.transform.position);
             if (dist <= _radius_farm)
@@ -449,7 +518,7 @@ public class PlayerAI : MonoBehaviour
                     {
                         if (_script._detec && _script._value > 0 && _gold < _maxGold)
                         {
-                            if (_script._Farmer < _script._maxFarmer)
+                            if (_script._Farmlist.Count < _script._maxFarmers)
                             {
                                 if (dist < minDist) // chỉ chọn nếu gần hơn
                                 {
@@ -463,8 +532,8 @@ public class PlayerAI : MonoBehaviour
                 }
             }
         }
-        if (nearest != null)
-            Debug.Log(nearest.transform.parent.name + "||" + Vector3.Distance(transform.position, nearest.transform.position));
+        // if (nearest != null)
+        //     Debug.Log(transform.name + " || " + nearest.transform.parent.name + " || " + Vector3.Distance(transform.position, nearest.transform.position));
         Castle.Instance._canFind = true;
         return nearest;
     }
@@ -482,12 +551,16 @@ public class PlayerAI : MonoBehaviour
             if (hit == null) continue;
             if (hit.CompareTag("Animal"))
             {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (dist < minDist)
+                var animalAI = hit.GetComponent<AnimalAI>();
+                if (!animalAI._Die)
                 {
-                    minDist = dist;
-                    nearest = hit.gameObject;
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    var _script = hit.gameObject.GetComponent<Item>();
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
                 }
             }
         }
@@ -507,12 +580,16 @@ public class PlayerAI : MonoBehaviour
             if (hit == null) continue;
             if (hit.CompareTag("Enemy"))
             {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (dist < minDist)
+                var enemy = hit.GetComponent<EnemyAI>();
+                if (!enemy.getDie())
                 {
-                    minDist = dist;
-                    nearest = hit.gameObject;
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    var _script = hit.gameObject.GetComponent<Item>();
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
                 }
             }
         }
@@ -566,19 +643,42 @@ public class PlayerAI : MonoBehaviour
     #region Go To Home
     public void goToHome(GameObject nearest)
     {
-        if (nearest == null)
+        if (nearest == null && checkInventory())
         {
             target = null;
             setIsTarget(false);
-            Vector3 _pos = Vector3.zero;
-            if (Castle.Instance._inventory != null)
-                _pos = Castle.Instance._inventory.transform.position;
-            else
-                _pos = Castle.Instance._In_Castle_Pos.position;
-                setTarget(_pos, true);
+            float minDist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+            Vector3 _pos = Castle.Instance._In_Castle_Pos.position;
+            if (Castle.Instance._storageList.Count > 0)
+            {
+                foreach (var i in Castle.Instance._storageList)
+                {
+                    var _storage = i.GetComponent<Storage>();
+                    if (_storage.getActive())
+                    {
+                        float dist = Vector3.Distance(transform.position, i.transform.position);
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            _pos = _storage.getInPos();
+                        }
+                    }
+                }
+            }
+            setTarget(_pos, false);
         }
     }
     #endregion
+
+
+    private bool checkInventory()
+    {
+        if (_wood > 0) return true;
+        if (_rock > 0) return true;
+        if (_meat > 0) return true;
+        if (_gold > 0) return true;
+        return false;
+    }
 
 
     #region Flip
@@ -666,14 +766,13 @@ public class PlayerAI : MonoBehaviour
     public void setDie(bool amount)
     {
         _Die = amount;
-        _anim.SetBool("Die", amount);
     }
     public bool getDie() => _Die;
 
-    // Can respawn
-    public void setCanRespawn(bool amount)
-        => _canRespawn = amount;
-    public bool getCanRespawn() => _canRespawn;
+    // Creating
+    public void setCreating(bool amount)
+        => _creating = amount;
+    public bool getCreating() => _creating;
     #endregion
 }
 

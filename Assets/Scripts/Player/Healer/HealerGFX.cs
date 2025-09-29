@@ -23,7 +23,7 @@ public class HealerGFX : PlayerAI
     protected override void Update()
     {
         base.Update();
-        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
 
         if (!getIsAI()) return;
         if (target == null)

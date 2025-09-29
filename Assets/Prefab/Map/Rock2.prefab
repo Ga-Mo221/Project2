@@ -50,12 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _GFX: {fileID: 7656845478669358044}
-  _outLine: {fileID: 2642300205362376417}
-  _HPBar: {fileID: 0}
   _MiniMapIcon: {fileID: 0}
-  _Die: {fileID: 3274550444517328863}
+  _HpBar: {fileID: 0}
   _item: {fileID: 5424085374242663375}
+  _seemer: []
   _Detec: 0
 --- !u!58 &335932139889422512
 CircleCollider2D:
@@ -104,7 +102,7 @@ GameObject:
   - component: {fileID: 7423765212627518464}
   - component: {fileID: 3751358352210878373}
   - component: {fileID: 7779357103634365867}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +177,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!60 &7779357103634365867
 PolygonCollider2D:
@@ -227,15 +225,15 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.17421982, y: 0.120620504}
-      - {x: -0.37583327, y: -0.016312122}
-      - {x: -0.13796085, y: -0.31108165}
-      - {x: 0.022837073, y: -0.30556735}
-      - {x: 0.22285461, y: -0.18205665}
-      - {x: 0.41929066, y: -0.16634753}
-      - {x: 0.40785465, y: -0.09315597}
-      - {x: 0.31407812, y: 0.0045744576}
-      - {x: 0.09381208, y: 0.16179077}
+    - - {x: -0.14155075, y: 0.08201132}
+      - {x: -0.17090774, y: -0.0074022617}
+      - {x: -0.102321416, y: -0.1714949}
+      - {x: 0.02580745, y: -0.17192073}
+      - {x: 0.13672702, y: -0.10186854}
+      - {x: 0.13714677, y: -0.059430473}
+      - {x: 0.15243967, y: 0.004851857}
+      - {x: 0.115092725, y: 0.04615402}
+      - {x: 0.034413435, y: 0.10833225}
   m_UseDelaunayMesh: 0
 --- !u!1 &8055385131801396274
 GameObject:
@@ -338,17 +336,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _maxValue: 5
+  _valueOneDrop: 5
   _spawnTime: 120
   _maxStack: 3
+  _Farmlist: []
+  _maxFarmers: 2
   _seleted: 0
   _detec: 0
-  _Farmer:
-  - {fileID: 0}
-  - {fileID: 0}
   _spriteRender: {fileID: 3751358352210878373}
   _anim: {fileID: 0}
   _OderPoin: {fileID: 6407582959383233683}
   _DiePrefab: {fileID: 3274550444517328863}
+  _value: 0
   _stack: 0
 --- !u!1001 &4444869478023065020
 PrefabInstance:
@@ -471,11 +471,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
---- !u!1 &2642300205362376417 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
-  m_PrefabInstance: {fileID: 4444869478023065020}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4615481595732286578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

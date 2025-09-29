@@ -4,8 +4,15 @@ public class PickUp : MonoBehaviour
 {
     [SerializeField] private ItemType _type;
     [SerializeField] private int _value;
-    [SerializeField] private PlayerAI _script;
+    private PlayerAI _script;
     public Animator _anim;
+    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Transform _OderPoin;
+ 
+    void Start()
+    {
+        _sprite.sortingOrder = -(int)(_OderPoin.position.y * 100) + 10000;
+    }
 
     public void setDropItem(ItemType type, int value, PlayerAI playerAI)
     {
@@ -28,7 +35,7 @@ public class PickUp : MonoBehaviour
                 }
                 _script.resetItemSelect();
                 _script.target = null;
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
         if (_type == ItemType.Rock)
@@ -43,7 +50,7 @@ public class PickUp : MonoBehaviour
                 }
                 _script.resetItemSelect();
                 _script.target = null;
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
         if (_type == ItemType.Gold)
@@ -58,9 +65,15 @@ public class PickUp : MonoBehaviour
                 }
                 _script.resetItemSelect();
                 _script.target = null;
-                _anim.SetBool("Die", false);
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
+    }
+
+    public void setAtive()
+    {
+        if (_type == ItemType.Gold)
+            _anim.SetBool("Die", false);
+        gameObject.SetActive(false);
     }
 }

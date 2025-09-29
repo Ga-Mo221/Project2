@@ -18,6 +18,8 @@ public class shoot : MonoBehaviour
         if (target.CompareTag("Item"))
             target.GetComponent<Item>().farm(_archer);
     }
+    
+    public void setActive() => _archer.setActive();
 
     public void shoots()
     {

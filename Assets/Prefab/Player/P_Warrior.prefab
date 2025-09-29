@@ -1,5 +1,92 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7557567352761409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376993133960858846}
+  - component: {fileID: 4583790526346816089}
+  m_Layer: 18
+  m_Name: Circle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1376993133960858846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7557567352761409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.05, y: 0.01, z: 0}
+  m_LocalScale: {x: 197.37097, y: 197.37097, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5628090364594364971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!331 &4583790526346816089
+SpriteMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7557567352761409}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaskAlphaCutoff: 0.2
+  m_FrontSortingLayerID: -1824874913
+  m_BackSortingLayerID: 0
+  m_FrontSortingLayer: 8
+  m_BackSortingLayer: 0
+  m_FrontSortingOrder: 1
+  m_BackSortingOrder: 0
+  m_IsCustomRangeActive: 1
+  m_SpriteSortPoint: 0
+  m_MaskSource: 0
 --- !u!1 &109896237691892845
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,10 +223,10 @@ GameObject:
   - component: {fileID: 6224926396799712632}
   - component: {fileID: 3729840782053474631}
   - component: {fileID: 5670761250453613276}
-  - component: {fileID: 6362947074359857873}
-  - component: {fileID: 1293021993264468765}
   - component: {fileID: 2939301152809590225}
   - component: {fileID: 8115716074318572522}
+  - component: {fileID: 6362947074359857873}
+  - component: {fileID: 1293021993264468765}
   m_Layer: 7
   m_Name: P_Warrior
   m_TagString: Warrior
@@ -166,6 +253,7 @@ Transform:
   - {fileID: 8051612869468556617}
   - {fileID: 4278390630752005888}
   - {fileID: 7449814409677491368}
+  - {fileID: 1376993133960858846}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6224926396799712632
@@ -260,75 +348,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &6362947074359857873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094120962555759500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c611b0ef65df4814e940135b89384a48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitClass: 0
-  _maxHealth: 100
-  _health: 0
-  _damage: 10
-  _maxSpeed: 6
-  _range: 2
-  _attackSpeedd: 2.5
-  _radius: 10
-  _radius_farm: 2.3
-  _farmSpeed: 1
-  ShowInventory: 0
-  _maxRock: 5
-  _maxGold: 5
-  _maxWood: 5
-  _maxMeat: 5
-  _rock: 0
-  _gold: 0
-  _wood: 0
-  _meat: 0
-  _HPCanvas: {fileID: 4352966296300642256}
-  _OutLine: {fileID: 6915786969079094675}
-  _hpBar: {fileID: 154612118751249562}
-  _selet: {fileID: 2577642076283397288}
-  _GFX: {fileID: 109896237691892845}
-  _MiniMapIcon: {fileID: 1627387284613245235}
-  _anim: {fileID: 7255897152711031789}
-  _healEffect: {fileID: 1103703179019586960}
-  path: {fileID: 8115716074318572522}
-  target: {fileID: 0}
-  _Die: 0
-  _canRespawn: 0
-  _detect: 0
-  _isLock: 0
-  _isAI: 1
-  _isTarget: 0
-  foundLowHealth: 0
-  _attackCount: 0
-  _healPlus: 0
-  _AOEHeal: 0
-  _canAction: 0
-  _itemScript: {fileID: 0}
-  _spriteRender: {fileID: 4112465308621576123}
-  _oderSpriterPoint: {fileID: 4025345277128870916}
---- !u!114 &1293021993264468765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094120962555759500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e4afdb1aaff9d4d829f887deb784f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitClass: 0
-  Armor: 2
 --- !u!114 &2939301152809590225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 20
   hits: []
+  _on: 1
 --- !u!114 &8115716074318572522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +382,77 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 7255897152711031789}
+--- !u!114 &6362947074359857873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c611b0ef65df4814e940135b89384a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 0
+  _level: 1
+  _maxHealth: 100
+  _health: 0
+  _damage: 20
+  _maxSpeed: 6
+  _range: 3.5
+  _attackSpeedd: 2.5
+  _slot: 1
+  _createTime_sec: 5
+  _radius: 13
+  _radius_farm: 2.3
+  _farmSpeed: 1
+  _itemScript: {fileID: 0}
+  _maxRock: 5
+  _maxGold: 5
+  _maxWood: 5
+  _maxMeat: 5
+  _rock: 0
+  _gold: 0
+  _wood: 0
+  _meat: 0
+  _HPCanvas: {fileID: 4352966296300642256}
+  _OutLine: {fileID: 6915786969079094675}
+  _hpBar: {fileID: 154612118751249562}
+  _selet: {fileID: 2577642076283397288}
+  _GFX: {fileID: 109896237691892845}
+  _MiniMapIcon: {fileID: 1627387284613245235}
+  _anim: {fileID: 7255897152711031789}
+  _healEffect: {fileID: 1103703179019586960}
+  path: {fileID: 8115716074318572522}
+  target: {fileID: 0}
+  _creating: 0
+  _Die: 0
+  _detect: 0
+  _isLock: 0
+  _isAI: 1
+  _isTarget: 0
+  foundLowHealth: 0
+  _attackCount: 0
+  _healPlus: 0
+  _AOEHeal: 0
+  _canAction: 0
+  _spriteRender: {fileID: 4112465308621576123}
+  _oderSpriterPoint: {fileID: 4025345277128870916}
+--- !u!114 &1293021993264468765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e4afdb1aaff9d4d829f887deb784f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 0
+  Armor: 2
 --- !u!1 &1627387284613245235
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +852,10 @@ PrefabInstance:
     - target: {fileID: 4531822266390242258, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2.1699998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496454969966702490, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_Pivot.x

@@ -48,6 +48,8 @@ public class ArcherUP : MonoBehaviour
         attack(_target);
     }
 
+    public void setDamage(int damage) => _damage += damage;
+
     private GameObject FindEnemy()
     {
         GameObject nearest = null;

@@ -17,7 +17,7 @@ public class WarriorGFX : PlayerAI
 
     protected override void Update()
     {
-        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100);
+        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
         base.Update();
 
         if (!getIsAI()) return;
@@ -51,13 +51,21 @@ public class WarriorGFX : PlayerAI
                     _itemScript._seleted = true;
                 else
                 {
-                    if (_itemScript._Farmer < _itemScript._maxFarmer)
-                    _itemScript._Farmer++;
+                    if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
+                    {
+                        bool see = false;
+                        foreach (var hit in _itemScript._Farmlist)
+                            if (hit == this)
+                                see = true;
+                        if (see)
+                            _itemScript._Farmlist.Add(this);
+                    }
                 }
             }
         }
 
         goToHome(target);
+        setupFolow(target);
         if (target == null) return;
         farm(target);
         attack(target);

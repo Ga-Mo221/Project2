@@ -101,17 +101,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _maxValue: 5
+  _valueOneDrop: 5
   _spawnTime: 120
   _maxStack: 3
+  _Farmlist: []
+  _maxFarmers: 2
   _seleted: 0
   _detec: 0
-  _Farmer:
-  - {fileID: 0}
-  - {fileID: 0}
   _spriteRender: {fileID: 1777536112420729566}
   _anim: {fileID: 0}
   _OderPoin: {fileID: 6595547443937252300}
   _DiePrefab: {fileID: 7647782840851476349}
+  _value: 0
   _stack: 0
 --- !u!1 &5156852707756282127
 GameObject:
@@ -124,7 +126,7 @@ GameObject:
   - component: {fileID: 1746048108064367565}
   - component: {fileID: 1777536112420729566}
   - component: {fileID: 7859509103773972103}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +201,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!60 &7859509103773972103
 PolygonCollider2D:
@@ -305,12 +307,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _GFX: {fileID: 5156852707756282127}
-  _outLine: {fileID: 5488371685753020775}
-  _HPBar: {fileID: 0}
   _MiniMapIcon: {fileID: 0}
-  _Die: {fileID: 7647782840851476349}
+  _HpBar: {fileID: 0}
   _item: {fileID: 8192216039845590812}
+  _seemer: []
   _Detec: 0
 --- !u!58 &2968925384716923918
 CircleCollider2D:
@@ -399,6 +399,10 @@ PrefabInstance:
     - target: {fileID: 5397378991632266765, guid: 3f0d72a250681894f82f20b3aa302f81, type: 3}
       propertyPath: m_Name
       value: Rock_Dead
+      objectReference: {fileID: 0}
+    - target: {fileID: 5397378991632266765, guid: 3f0d72a250681894f82f20b3aa302f81, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -539,10 +543,5 @@ PrefabInstance:
 --- !u!4 &2921911464773538804 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
-  m_PrefabInstance: {fileID: 6138005847483376186}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5488371685753020775 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 6138005847483376186}
   m_PrefabAsset: {fileID: 0}
