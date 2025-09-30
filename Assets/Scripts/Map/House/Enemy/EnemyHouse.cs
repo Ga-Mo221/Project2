@@ -7,6 +7,7 @@ public class EnemyHouse : MonoBehaviour
 
     public List<EnemyPatrol> _listPatrol;
     public List<EnemyAI> _listEnemy;
+    public List<EnemyAI> _listEnemyCreate;
 
     void Awake()
     {

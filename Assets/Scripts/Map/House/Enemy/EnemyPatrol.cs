@@ -14,6 +14,19 @@ public class EnemyPatrol : MonoBehaviour
     void Start()
     {
         EnemyHouse.Instance._listPatrol.Add(this);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                EnemyAI enemy = hit.GetComponent<EnemyAI>();
+                if (enemy != null)
+                {
+                    _listEnemy.Add(enemy);
+                    enemy.setPatrol(this);
+                }
+            }
+        }
     }
 
     void Update()

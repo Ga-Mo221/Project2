@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Rada : MonoBehaviour
@@ -40,6 +41,7 @@ public class Rada : MonoBehaviour
                     if (script._IsBuiding) script.onCanCreate();
                     if (script._IsEnemy) script.onDisplayEnemy();
                     if (script._IsDeco) script.onDisplayDeco();
+                    if (script._IsEnemyHouse) script.onDisplayEnemy();
                 }
             }
             else
@@ -57,6 +59,7 @@ public class Rada : MonoBehaviour
                         if (script._IsBuiding) script.offCanCreate();
                         if (script._IsEnemy) script.offDisplayEnemy();
                         if (script._IsDeco) script.offDisplayDeco();
+                        if (script._IsEnemyHouse) script.offDisplayEnemy();
                     }
                 }
             }
@@ -65,7 +68,8 @@ public class Rada : MonoBehaviour
 
     private bool checkTag(Collider2D hit)
     {
-        return hit.CompareTag("Item+") || hit.CompareTag("Animal") || hit.CompareTag("Enemy") || hit.CompareTag("Buiding") || hit.CompareTag("Deco");
+        List<string> tags = new List<string> { "Item+", "Animal", "Enemy", "Buiding", "Deco", "EnemyHouse" };
+        return tags.Contains(hit.tag);
     }
 
     void OnDrawGizmosSelected()

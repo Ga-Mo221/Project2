@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class ArowEnemy : MonoBehaviour
 {
-    [SerializeField] private float _speed = 10;
+    [SerializeField] private float _maxSpeed = 10;
+    [SerializeField] private float _speed = 0;
     private float _damage;
     private Transform _target;
 
@@ -31,36 +32,49 @@ public class ArowEnemy : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    public void setProperties(Transform target, float damage)
+    public void setProperties(Transform target, float damage, float Xspeed, Vector3 scele)
     {
         _target = target;
         _damage = damage;
+        _speed = _maxSpeed * Xspeed;
+        transform.localScale = scele;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == null) return;
+        bool IsHit = false;
 
         if (checkTagPlayer(collision))
         {
             var health = collision.GetComponent<PlayerHealth>();
             if (health != null)
+            {
                 health.takeDamage(_damage);
+                IsHit = true;
+            }
         }
         if (checkTagHouse(collision))
         {
             var health = collision.GetComponent<HouseHealth>();
             if (health != null && health.getCanDetec())
+            {
                 health.takeDamage(_damage);
+                IsHit = true;
+            }
         }
         if (checkTagAnimal(collision))
         {
             var animalHealth = collision.GetComponent<AnimalHealth>();
             if (animalHealth != null && !animalHealth._animalAi.getDie())
+            {
                 animalHealth.takeDamage(_damage, gameObject);
+                IsHit = true;
+            }
         }
 
-        gameObject.SetActive(false);
+        if (IsHit)
+            gameObject.SetActive(false);
     }
 
     private bool checkTagPlayer(Collider2D collision)

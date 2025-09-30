@@ -10,13 +10,14 @@ public enum ModelType
     Deco,
     Animal,
     Enemy,
-    Buiding
+    Buiding,
+    EnemyHouse
 }
 
 public class Display : MonoBehaviour
 {
     [SerializeField] private ModelType _type;
-    private bool _IsAnimalOrEnemy => _type == ModelType.Animal || _type == ModelType.Enemy;
+    private bool _IsAnimalOrEnemyOrHouse => _type == ModelType.Animal || _type == ModelType.Enemy || _type == ModelType.EnemyHouse;
     private bool _IsItem => _type == ModelType.Tree || _type == ModelType.Rock || _type == ModelType.Gold;
     public bool _IsTree => _type == ModelType.Tree;
     public bool _IsRock => _type == ModelType.Rock;
@@ -26,10 +27,11 @@ public class Display : MonoBehaviour
     public bool _IsEnemy => _type == ModelType.Enemy;
     public bool _IsBuiding => _type == ModelType.Buiding;
     private bool _IsDecoOrGold => _type == ModelType.Deco || _type == ModelType.Gold;
+    public bool _IsEnemyHouse => _type == ModelType.EnemyHouse;
 
-    [ShowIf(nameof(_IsAnimalOrEnemy))]
+    [ShowIf(nameof(_IsAnimalOrEnemyOrHouse))]
     [SerializeField] private GameObject _MiniMapIcon;
-    [ShowIf(nameof(_IsAnimalOrEnemy))]
+    [ShowIf(nameof(_IsAnimalOrEnemyOrHouse))]
     [SerializeField] private GameObject _HpBar;
 
     [ShowIf(nameof(_IsItem))]
@@ -47,7 +49,7 @@ public class Display : MonoBehaviour
 
     void Start()
     {
-        if (_IsAnimalOrEnemy)
+        if (_IsAnimalOrEnemyOrHouse)
         {
             if (!_MiniMapIcon)
                 Debug.LogError($"[{transform.name}] [Display] Chưa gán 'Minimap Icon'");
@@ -63,7 +65,7 @@ public class Display : MonoBehaviour
 
     private void off()
     {
-        if (_IsAnimalOrEnemy)
+        if (_IsAnimalOrEnemyOrHouse)
         {
             if (_HpBar != null)
                 _HpBar.SetActive(false);
@@ -164,5 +166,19 @@ public class Display : MonoBehaviour
     {
         _Detec = false;
         _light.SetActive(false);
+    }
+
+    public void onDisplayEnemyHouse()
+    {
+        _Detec = true;
+        _MiniMapIcon.SetActive(true);
+        _HpBar.SetActive(true);
+    }
+
+    public void offDisplayEnemyHouse()
+    {
+        _Detec = false;
+        _MiniMapIcon.SetActive(false);
+        _HpBar.SetActive(false);
     }
 }

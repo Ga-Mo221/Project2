@@ -48,6 +48,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _changeTargetPatrolDelay = 1f;
 
     [Foldout("Status")]
+    [SerializeField] private bool _IsCreate = false;
+    [Foldout("Status")]
     [SerializeField] private bool _canAction = false;
     [Foldout("Status")]
     [SerializeField] private bool _Detec = false;
@@ -78,7 +80,10 @@ public class EnemyAI : MonoBehaviour
         _currentHealth = _maxHealth;
         _path.setPropety(_speed, _range);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
-        EnemyHouse.Instance._listEnemy.Add(this);
+        if (!_IsCreate)
+            EnemyHouse.Instance._listEnemy.Add(this);
+        else
+            EnemyHouse.Instance._listEnemyCreate.Add(this);
     }
 
     protected virtual void Update()
@@ -160,6 +165,8 @@ public class EnemyAI : MonoBehaviour
 
     #region Pantrol
     private Coroutine _newPaltro;
+    public void setPatrol(EnemyPatrol patrol)
+        => _patrol = patrol;
     public void pantrol()
     {
         if (!_canPatrol) return;
@@ -294,6 +301,8 @@ public class EnemyAI : MonoBehaviour
     // Die
     public void setDie(bool amount) => _Die = amount;
     public bool getDie() => _Die;
+
+    public void setIsCreate(bool amount) => _IsCreate = amount;
     #endregion
 
     #region Draw
