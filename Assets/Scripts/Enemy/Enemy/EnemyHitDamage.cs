@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class EnemyHitDamage : MonoBehaviour
@@ -6,6 +7,16 @@ public class EnemyHitDamage : MonoBehaviour
     [SerializeField] private EnemyAI enemyAi;
     [SerializeField] private GameObject MeatOBJ;
     [SerializeField] private GameObject GoldOBJ;
+
+    public bool _rangeAttack = false;
+    [ShowIf(nameof(_rangeAttack))]
+    [SerializeField] private bool _boss = false;
+    [ShowIf(nameof(_rangeAttack))]
+    [SerializeField] private GameObject _prefeb;
+    [ShowIf(nameof(_rangeAttack))]
+    [SerializeField] private Transform _point;
+    [ShowIf(nameof(_rangeAttack))]
+    [SerializeField] private List<GameObject> _listPrefeb = new List<GameObject>();
 
     public void attack()
     {
@@ -15,17 +26,20 @@ public class EnemyHitDamage : MonoBehaviour
         if (checkTagPlayer(obj))
         {
             var health = obj.GetComponent<PlayerHealth>();
-            health.takeDamage(enemyAi._damage);
+            if (health != null)
+                health.takeDamage(enemyAi._damage);
         }
         if (checkTagHouse(obj))
         {
             var health = obj.GetComponent<HouseHealth>();
-            if (health.getCanDetec())
+            if (health != null && health.getCanDetec())
                 health.takeDamage(enemyAi._damage);
         }
         if (checkTagAnimal(obj))
         {
-            Debug.Log("Chua co");
+            var animalHealth = obj.GetComponent<AnimalHealth>();
+            if (animalHealth != null && !animalHealth._animalAi.getDie())
+                animalHealth.takeDamage(enemyAi._damage, gameObject);
         }
     }
 
@@ -38,6 +52,46 @@ public class EnemyHitDamage : MonoBehaviour
         => collision.CompareTag("House");
     private bool checkTagAnimal(GameObject collision)
         => collision.CompareTag("Animal");
+
+    public void spawnPrefab()
+    {
+        bool isSpawn = false;
+        foreach (var obj in _listPrefeb)
+        {
+            if (!obj.activeSelf && enemyAi.target != null)
+            {
+                if (_boss)
+                {
+                    var script = obj.GetComponent<fireMagic>();
+                    script.setProperties(enemyAi.target.transform, enemyAi._damage);
+                }
+                else
+                {
+                    var script = obj.GetComponent<ArowEnemy>();
+                    script.setProperties(enemyAi.target.transform, enemyAi._damage);
+                }
+                obj.transform.position = _point.position;
+                obj.SetActive(true);
+                isSpawn = true;
+                break;
+            }
+        }
+        if (!isSpawn && enemyAi.target != null)
+        {
+            GameObject obj = Instantiate(_prefeb, _point.position, Quaternion.identity, _point);
+            if (_boss)
+            {
+                var script = obj.GetComponent<fireMagic>();
+                script.setProperties(enemyAi.target.transform, enemyAi._damage);
+            }
+            else
+            {
+                var script = obj.GetComponent<ArowEnemy>();
+                script.setProperties(enemyAi.target.transform, enemyAi._damage);
+            }
+            _listPrefeb.Add(obj);
+        }
+    }
 
     public void openMeat()
     {

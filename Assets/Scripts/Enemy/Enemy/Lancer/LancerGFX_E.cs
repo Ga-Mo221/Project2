@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class LancerGFX_E : EnemyAI
 {
-    [SerializeField] private SpriteRenderer _sotingLayer;
+    [SerializeField] private SpriteRenderer _spriteRender;
 
     protected override void Update()
     {
         base.Update();
-        _sotingLayer.sortingOrder = -(int)(transform.position.y * 100) + 10000;
+        _spriteRender.sortingOrder = -(int)(transform.position.y * 100) + 10000;
 
         if (getDie()) return;
         target = Find();

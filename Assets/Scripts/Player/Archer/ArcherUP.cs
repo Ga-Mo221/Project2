@@ -62,22 +62,28 @@ public class ArcherUP : MonoBehaviour
             if (hit == null) continue;
             if (hit.CompareTag("Enemy"))
             {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (dist < minDist)
+                var enemyAi = hit.GetComponent<EnemyAI>();
+                if (enemyAi != null && !enemyAi.getDie())
                 {
-                    minDist = dist;
-                    nearest = hit.gameObject;
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
                 }
             }
             else if (hit.CompareTag("Animal"))
             {
-                float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
-                if (dist < minDist)
+                var animalAi = hit.GetComponent<AnimalAI>();
+                if (animalAi != null && !animalAi.getDie())
                 {
-                    minDist = dist;
-                    nearest = hit.gameObject;
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
                 }
             }
         }
@@ -119,6 +125,7 @@ public class ArcherUP : MonoBehaviour
 
     public void spawnArrow()
     {
+        if (_target == null) return;
         for (int i = 0; i < _listArrow.Length; i++) // hoặc _listArrow.Count
         {
             if (_listArrow[i] != null)
@@ -128,7 +135,7 @@ public class ArcherUP : MonoBehaviour
                 if (_script.getTarget() == null)
                 {
                     _listArrow[i].transform.position = _shootPos.position;
-                    _script.setTarget(_target.transform, false, _damage);
+                    _script.setTarget(false, _target, false, _damage, 20f);
                     _listArrow[i].SetActive(true);
                     break;
                 }
@@ -138,7 +145,7 @@ public class ArcherUP : MonoBehaviour
                 GameObject _arrow = Instantiate(_arowPrefab, _shootPos.position, Quaternion.identity, _shootPos);
                 _listArrow[i] = _arrow;
                 var _script = _arrow.GetComponent<Arrow>();
-                _script.setTarget(_target.transform, false, _damage);
+                _script.setTarget(false, _target, false, _damage, 20f);
                 break;
             }
         }

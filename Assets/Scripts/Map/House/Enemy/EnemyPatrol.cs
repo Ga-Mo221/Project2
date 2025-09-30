@@ -11,6 +11,11 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private GameObject _fire;
     [SerializeField] private List<EnemyAI> _listEnemy;
 
+    void Start()
+    {
+        EnemyHouse.Instance._listPatrol.Add(this);
+    }
+
     void Update()
     {
         if (GameManager.Instance._timeRTS >= 16 && _isFire)

@@ -2,63 +2,83 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 using NaughtyAttributes;
-using NUnit.Framework.Constraints;
 using System.Collections.Generic;
 
 public class AnimalAI : MonoBehaviour
 {
     #region Value
-    public AnimalClass _animalAI;
-    [SerializeField] private float _radius = 20f;
-    [SerializeField] private int _respawmTime = 10;
-
-    public float _maxHealth = 100;
-    public float _health;
-
-    public float _speed;
-
-    [HideIf(nameof(IsSheep))]
-    public float _damage;
-
-    [HideIf(nameof(IsSheep))]
-    public float _range;
-    
-    [HideIf(nameof(IsSheep))]
-    public float _speedAttack;
-
+    [SerializeField] private AnimalClass _animalAI;
     private bool IsSheep => _animalAI == AnimalClass.Sheep;
 
-    [SerializeField] private FindPath path;
+    [Foldout("Stats")]
+    public float _maxHealth = 100;
+    [Foldout("Stats")]
+    public float _health = 0f;
+    [Foldout("Stats")]
+    [HideIf(nameof(IsSheep))]
+    public float _damage;
+    [Foldout("Stats")]
+    [HideIf(nameof(IsSheep))]
+    [SerializeField] private float _speedAttack = 2f;
+    [Foldout("Stats")]
+    [SerializeField] private float _speed = 5f;
+    [Foldout("Stats")]
+    [HideIf(nameof(IsSheep))]
+    [SerializeField] private float _range = 3f;
 
-    [SerializeField] private GameObject _gfx;
-
-    [SerializeField] public Animator _anim; // animation của đối tượng
-
-    private bool detec = false;
-    public bool _isdetec = false;
+    [Foldout("Find")]
     private float _repathRate = 0.5f;
-
-    public bool _Die = false;
-
-    [Header("GFX")]
-    [SerializeField] private GameObject _HPCanvas;
-    [SerializeField] private GameObject _OutLine;
-    [SerializeField] private Image _hpBar;
-    [SerializeField] public GameObject _MiniMapIcon;
-    [SerializeField] private bool _canPatrol;
-    [SerializeField] private Transform _centerTransform;
-    // [SerializeField] private Transform _PatrolPoin;
-    [SerializeField] public float _PatrolRadius = 10f;
-
-    private Vector3 _patrolTarget;
-    private Coroutine _delay;
-    [SerializeField] private float _timeDelayPatrol = 1.0f;
-    //private Seeker seeker;
+    [Foldout("Find")]
+    [SerializeField] private FindPath path;
+    [Foldout("Find")]
     public GameObject target;
+    [Foldout("Find")]
+    [SerializeField] private float _radius = 20f;
 
-    public bool _canAction = false;
+    [Foldout("Respawm")]
+    [SerializeField] private int _respawmTime = 10;
 
-    public Rigidbody2D _rb;
+
+    [Foldout("Patrol")]
+    public float _PatrolRadius = 10f;
+    [Foldout("Patrol")]
+    [SerializeField] private Vector3 _patrolTarget;
+    [Foldout("Patrol")]
+    [SerializeField] private float _timeDelayPatrol = 1.0f;
+    private Coroutine _delay;
+
+
+    [Foldout("Status")]
+    [SerializeField] private bool _Die = false;
+    [Foldout("Status")]
+    [SerializeField] private bool _canPatrol;
+    [Foldout("Status")]
+    [SerializeField] private bool _canAction = false;
+    [Foldout("Status")]
+    [SerializeField] private bool detec = false;
+
+
+
+
+
+
+    [Foldout("Other")]
+    [SerializeField] private GameObject _gfx;
+    [Foldout("Other")]
+    [SerializeField] private GameObject _HPCanvas;
+    [Foldout("Other")]
+    [SerializeField] private GameObject _OutLine;
+    [Foldout("Other")]
+    [SerializeField] private Image _hpBar;
+    [Foldout("Other")]
+    [SerializeField] private GameObject _MiniMapIcon;
+    [Foldout("Other")]
+    [SerializeField] private Transform _centerTransform;
+
+
+
+    private Animator _anim; // animation của đối tượng
+    private Rigidbody2D _rb;
     #endregion
 
     protected virtual void Start()
@@ -68,7 +88,7 @@ public class AnimalAI : MonoBehaviour
 
         InvokeRepeating("UpdatePath", 0f, _repathRate);
         _health = _maxHealth;
-        
+
 
         //seeker = GetComponent<Seeker>();
 
@@ -116,8 +136,8 @@ public class AnimalAI : MonoBehaviour
                     {
                         _delay = StartCoroutine(setDelayPatrol());
                     }
-                }               
-             }
+                }
+            }
             path.UpdatePath();
         }
     }
@@ -151,7 +171,7 @@ public class AnimalAI : MonoBehaviour
     #endregion
 
     #region Attack
-    [SerializeField] private string[] tagAnimalorEnrmy = { "Enemy", "Archer", "Warrior", "Lancer", "Healer", "TNT" , "Enemy" };
+    private string[] tagAnimalorEnrmy = { "Enemy", "Archer", "Warrior", "Lancer", "Healer", "TNT", "Enemy" };
 
     private Coroutine _attackSpeed;
 
@@ -208,10 +228,6 @@ public class AnimalAI : MonoBehaviour
     #endregion
 
     #region Flip
-    /*
-    Dùng cho tất cả các Unit Class
-    để lật đối tượng theo hướng di chuyển hoặc theo hướng mục tiêu được chọn.
-    */
     public GameObject flip(GameObject _nearest, bool canAction)
     {
         if (canAction)
@@ -295,12 +311,12 @@ public class AnimalAI : MonoBehaviour
 
         StartCoroutine(Respawm(_respawmTime));
 
-       //Debug.Log("die r");
+        //Debug.Log("die r");
     }
     #endregion
 
     #region RunAway Sheep
-    
+
 
     public virtual void FleeFrom(GameObject attackr)
     {
@@ -311,18 +327,16 @@ public class AnimalAI : MonoBehaviour
     private IEnumerator Respawm(int delay)
     {
         yield return new WaitForSeconds(delay);
-
         _Die = false;
         _gfx.GetComponent<SpriteRenderer>().enabled = true;
         _health = _maxHealth;
         _anim.SetBool("Die", false);
-
         _OutLine.SetActive(true);
-
         SetNewPatrol(Vector2.zero);
     }
-
     #endregion
+    
+    public bool getDie() => _Die;
 }
 
 public enum AnimalClass

@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    private PlayerAI _playerAI;
     [SerializeField] private Transform _target;
     private float _damage;
-    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _maxSpeed = 10f;
+    [SerializeField] private float _speed= 0;
     private Rigidbody2D _rb;
     [SerializeField] public bool Skill = false;
     [SerializeField] private GameObject _normal;
@@ -13,6 +15,8 @@ public class Arrow : MonoBehaviour
     private Vector2 direction = Vector2.zero;
     private bool ok = false;
     private bool change = false;
+    [SerializeField] private bool _isPlayer = true;
+    [SerializeField] private PlayerHitDamage _hitDamage;
 
     void Start()
     {
@@ -36,10 +40,28 @@ public class Arrow : MonoBehaviour
         moveToTarget();
     }
 
-    public void setTarget(Transform target,bool Skills ,float damage)
+    public void setTarget(bool isPlayer, PlayerAI script,bool Skills ,float damage, float speed)
     {
+        if (speed != 0)
+            _speed = speed;
+        else _speed = _maxSpeed;
+
+        _isPlayer = isPlayer;
+        _playerAI = script;
         Skill = Skills;
-        _target = target;
+        if (script.target != null)
+            _target = script.target.transform;
+        _damage = damage;
+    }
+    public void setTarget(bool isPlayer, GameObject obj,bool Skills ,float damage, float speed)
+    {
+        if (speed != 0)
+            _speed = speed;
+        else _speed = _maxSpeed;
+        
+        _isPlayer = isPlayer;
+        Skill = Skills;
+        _target = obj.transform;
         _damage = damage;
     }
     public Transform getTarget() => _target;
@@ -81,8 +103,10 @@ public class Arrow : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == null) return;
-        if (collision.CompareTag("Enemy") || collision.CompareTag("Animal"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Animal") || collision.CompareTag("EnemyHouse"))
         {
+            _hitDamage.setPlayerAI(_playerAI);
+            _hitDamage.attack(_isPlayer, _damage, _target.gameObject);
             change = false;
             _target = null;
             if (!Skill)

@@ -322,6 +322,7 @@ MonoBehaviour:
   _HpBar: {fileID: 0}
   _item: {fileID: 0}
   _check: {fileID: 8351225298128915957}
+  _light: {fileID: 0}
   _seemer: []
   _Detec: 0
 --- !u!1 &4351770816322180779
@@ -1453,8 +1454,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: -1513213687
-  m_SortingOrder: 0
+  m_SortingLayerID: 525305935
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &4194649043785746726
 MonoBehaviour:

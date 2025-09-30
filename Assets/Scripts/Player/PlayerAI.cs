@@ -390,11 +390,30 @@ public class PlayerAI : MonoBehaviour
             float dist = Vector2.Distance(transform.position, _nearest.transform.position);
             if (dist <= _range)
             {
-                _canAction = true;
-                if (_attackSpeed == null)
-                    _attackSpeed = StartCoroutine(attackSpeed());
+                var animal = _nearest.GetComponent<AnimalAI>();
+                if (!animal.getDie())
+                {
+                    _canAction = true;
+                    if (_attackSpeed == null)
+                        _attackSpeed = StartCoroutine(attackSpeed());
+                }
             }
-            
+            else
+                _canAction = false;
+        }
+        if (_nearest != null && _nearest.CompareTag("EnemyHouse"))
+        {
+            float dist = Vector2.Distance(transform.position, _nearest.transform.position);
+            if (dist <= _range)
+            {
+                var house = _nearest.GetComponent<EnemyHouseHealth>();
+                if (!house._Die)
+                {
+                    _canAction = true;
+                    if (_attackSpeed == null)
+                        _attackSpeed = StartCoroutine(attackSpeed());
+                }
+            }
             else
                 _canAction = false;
         }
@@ -402,8 +421,8 @@ public class PlayerAI : MonoBehaviour
     }
     private IEnumerator attackSpeed()
     {
-        yield return new WaitForSeconds(_attackSpeedd);
         _anim.SetTrigger("attack");
+        yield return new WaitForSeconds(_attackSpeedd);
         _attackSpeed = null;
     }
     #endregion
@@ -552,10 +571,9 @@ public class PlayerAI : MonoBehaviour
             if (hit.CompareTag("Animal"))
             {
                 var animalAI = hit.GetComponent<AnimalAI>();
-                if (!animalAI._Die)
+                if (!animalAI.getDie())
                 {
                     float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    var _script = hit.gameObject.GetComponent<Item>();
                     if (dist < minDist)
                     {
                         minDist = dist;
@@ -584,7 +602,33 @@ public class PlayerAI : MonoBehaviour
                 if (!enemy.getDie())
                 {
                     float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    var _script = hit.gameObject.GetComponent<Item>();
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        nearest = hit.gameObject;
+                    }
+                }
+            }
+        }
+        return nearest;
+    }
+    #endregion
+
+    #region Find Enemy
+    public GameObject findEnemyHouse()
+    {
+        GameObject nearest = null;
+        float minDist = Mathf.Infinity;
+        if (hits == null) return null;
+        foreach (var hit in hits)
+        {
+            if (hit == null) continue;
+            if (hit.CompareTag("EnemyHouse"))
+            {
+                var enemy = hit.GetComponent<EnemyHouseHealth>();
+                if (!enemy._Die)
+                {
+                    float dist = Vector3.Distance(transform.position, hit.transform.position);
                     if (dist < minDist)
                     {
                         minDist = dist;

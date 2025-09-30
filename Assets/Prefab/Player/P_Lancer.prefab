@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitClass: 2
+  _level: 1
   _maxHealth: 100
   _health: 0
   _damage: 10
@@ -268,8 +269,8 @@ MonoBehaviour:
   _healEffect: {fileID: 3097587033637421824}
   path: {fileID: 3979024118959980987}
   target: {fileID: 0}
+  _creating: 0
   _Die: 0
-  _canRespawn: 0
   _detect: 0
   _isLock: 0
   _isAI: 1
@@ -310,6 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 20
   hits: []
+  _on: 1
 --- !u!114 &3979024118959980987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +461,7 @@ GameObject:
   - component: {fileID: 4153063125047749090}
   - component: {fileID: 3543323217681338626}
   - component: {fileID: 8164770877275569245}
+  - component: {fileID: 6557286433704720976}
   m_Layer: 8
   m_Name: LancerGFX
   m_TagString: Player
@@ -571,6 +574,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lancer: {fileID: 853879499471885898}
+--- !u!114 &6557286433704720976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741758923349159307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad923c1744a657478e4e40fc7cfd894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _script: {fileID: 853879499471885898}
 --- !u!1 &6801348339631517136
 GameObject:
   m_ObjectHideFlags: 0

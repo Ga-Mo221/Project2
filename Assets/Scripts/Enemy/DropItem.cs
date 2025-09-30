@@ -22,7 +22,6 @@ public class DropItem : MonoBehaviour
     private Coroutine des;
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
         List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer" };
         if (_pickUP) return;
         if (collision != null && _tag.Contains(collision.tag))

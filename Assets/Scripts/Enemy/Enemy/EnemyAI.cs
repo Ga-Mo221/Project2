@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
+    [SerializeField] private EnemyType _type;
+    private bool IsTNTRed => _type == EnemyType.TNT;
+
+    
     [Foldout("Stats")]
     public float _maxHealth = 100;
     [Foldout("Stats")]
@@ -24,12 +28,16 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Die")]
     [SerializeField] private bool _Die = false;
     [Foldout("Die")]
+    [HideIf(nameof(IsTNTRed))]
     [Range(0, 100)][SerializeField] private int critDropGold = 25;
     [Foldout("Die")]
+    [HideIf(nameof(IsTNTRed))]
     [Range(0, 100)][SerializeField] private int critDropMeat = 25;
     [Foldout("Die")]
+    [HideIf(nameof(IsTNTRed))]
     [SerializeField] private GameObject MeatDropObj; // respawn thi tat
     [Foldout("Die")]
+    [HideIf(nameof(IsTNTRed))]
     [SerializeField] private GameObject GoldDropObj; // respawn thi tat
 
     [Foldout("Patrol")]
@@ -70,6 +78,7 @@ public class EnemyAI : MonoBehaviour
         _currentHealth = _maxHealth;
         _path.setPropety(_speed, _range);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+        EnemyHouse.Instance._listEnemy.Add(this);
     }
 
     protected virtual void Update()
@@ -101,8 +110,11 @@ public class EnemyAI : MonoBehaviour
     {
         transform.position = pos;
         setCanPatrol(true);
-        MeatDropObj.SetActive(false);
-        GoldDropObj.SetActive(false);
+        if (!IsTNTRed)
+        {
+            MeatDropObj.SetActive(false);
+            GoldDropObj.SetActive(false);
+        }
         _currentHealth = _maxHealth;
         setDie(false);
         _canAction = false;
@@ -131,13 +143,16 @@ public class EnemyAI : MonoBehaviour
         target = null;
         _path.setTarget(transform.position);
 
-        int roll = Random.Range(0, 100);
-        if (roll >= 100 - critDropGold)
-            _anim.SetInteger("Type", 1);
-        else if (roll >= 100 - critDropGold -critDropMeat)
-            _anim.SetInteger("Type", 2);
-        else
-            _anim.SetInteger("Type", 3);
+        if (!IsTNTRed)
+        {
+            int roll = Random.Range(0, 100);
+            if (roll >= 100 - critDropGold)
+                _anim.SetInteger("Type", 1);
+            else if (roll >= 100 - critDropGold - critDropMeat)
+                _anim.SetInteger("Type", 2);
+            else
+                _anim.SetInteger("Type", 3);
+        }
         _anim.SetBool("Die", true);
     }
     #endregion
@@ -181,7 +196,6 @@ public class EnemyAI : MonoBehaviour
             if (checkTag(hit))
             {
                 float dist = Vector3.Distance(transform.position, hit.transform.position);
-                var _script = hit.gameObject.GetComponent<Item>();
                 if (dist < minDist)
                 {
                     minDist = dist;
@@ -205,7 +219,11 @@ public class EnemyAI : MonoBehaviour
             var house = hit.GetComponent<HouseHealth>();
             if (house.getCanDetec()) return true;
         }
-        if (hit.CompareTag("Animal")) return true;
+        if (hit.CompareTag("Animal"))
+        {
+            var animalAi = hit.GetComponent<AnimalAI>();
+            if (!animalAi.getDie()) return true;
+        }
 
         return false;
     }
@@ -289,4 +307,15 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _range);
     }
     #endregion
+}
+
+public enum EnemyType
+{
+    Lancer,
+    Minotaur,
+    Orc,
+    TNT,
+    Shaman,
+    Fish,
+    Gnoll
 }

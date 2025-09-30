@@ -6,6 +6,7 @@ public class EnemyHouse : MonoBehaviour
     public static EnemyHouse Instance { get; private set; }
 
     public List<EnemyPatrol> _listPatrol;
+    public List<EnemyAI> _listEnemy;
 
     void Awake()
     {
@@ -16,6 +17,7 @@ public class EnemyHouse : MonoBehaviour
         }
         Instance = this;
     }
+
 
     public EnemyPatrol getTargetPatrol(EnemyAI enemy)
     {

@@ -21,23 +21,17 @@ public class WarriorGFX : PlayerAI
         base.Update();
 
         if (!getIsAI()) return;
-        if (target == null)
-        {
-            target = findEnemys();
-            if (target != null)
-            {
-                setDetect(true);
-                moveToTarget(target);
-            }
-        }
+        target = findEnemys();
         if (target == null)
         {
             target = findAnimals();
-            if (target != null)
-            {
-                setDetect(true);
-                moveToTarget(target);
-            }
+            if (target == null)
+                target = findEnemyHouse();
+        }
+        if (target != null)
+        {
+            setDetect(true);
+            moveToTarget(target);
         }
         if (target == null)
         {

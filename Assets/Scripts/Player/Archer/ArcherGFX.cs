@@ -44,23 +44,17 @@ public class ArcherGFX : PlayerAI
         base.Update();
 
         if (!getIsAI()) return;
-        if (target == null)
-        {
-            target = findEnemys();
-            if (target != null)
-            {
-                setDetect(true);
-                moveToTarget(target);
-            }
-        }
+        target = findEnemys();
         if (target == null)
         {
             target = findAnimals();
-            if (target != null)
-            {
-                setDetect(true);
-                moveToTarget(target);
-            }
+            if (target == null)
+                target = findEnemyHouse();
+        }
+        if (target != null)
+        {
+            setDetect(true);
+            moveToTarget(target);
         }
         if (target == null)
         {
@@ -114,11 +108,11 @@ public class ArcherGFX : PlayerAI
                     _listArrow[i].transform.position = _shootPos.position;
                     if (_attackCount == _attack_count_SKILL)
                     {
-                        _script.setTarget(target.transform, true, _damage);
+                        _script.setTarget(true, this, true, _damage, 0);
                         _attackCount = 0;
                     }
                     else
-                        _script.setTarget(target.transform, false, _damage);
+                        _script.setTarget(true, this, false, _damage, 0);
                     _listArrow[i].SetActive(true);
                     break;
                 }
@@ -130,11 +124,11 @@ public class ArcherGFX : PlayerAI
                 var _script = _arrow.GetComponent<Arrow>();
                 if (_attackCount == _attack_count_SKILL)
                 {
-                    _script.setTarget(target.transform, true, _damage);
+                    _script.setTarget(true, this, true, _damage, 0);
                     _attackCount = 0;
                 }
                 else
-                    _script.setTarget(target.transform, false, _damage);
+                    _script.setTarget(true, this, false, _damage, 0);
                 break;
             }
         }

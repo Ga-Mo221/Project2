@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 4112465308621576123}
   - component: {fileID: 7255897152711031789}
   - component: {fileID: 8135894491687546118}
+  - component: {fileID: 150220348779839181}
   m_Layer: 8
   m_Name: WarriorGFX
   m_TagString: Player
@@ -208,6 +209,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2d81b7411a09e040978148162425721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _script: {fileID: 6362947074359857873}
+--- !u!114 &150220348779839181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109896237691892845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad923c1744a657478e4e40fc7cfd894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _script: {fileID: 6362947074359857873}
