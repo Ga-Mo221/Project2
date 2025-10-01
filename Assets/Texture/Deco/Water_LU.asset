@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Water_LU
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 8509550459451208454, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: -4124057691748712743, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: -2740290441555968558, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: -7655527456229970072, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: -277465505295718648, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: 3991568953898065832, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: 6886954874036816709, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  - {fileID: 8664258913517867861, guid: dc23982b1f657ab469bf68be82f2c037, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0
