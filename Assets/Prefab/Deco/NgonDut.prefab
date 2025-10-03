@@ -91,7 +91,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!114 &7403078095454939137
 MonoBehaviour:
@@ -119,11 +119,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 3
+  _Die: 0
   _MiniMapIcon: {fileID: 0}
   _HpBar: {fileID: 0}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 7214063700404369491}
+  _animal: {fileID: 0}
+  _enemy: {fileID: 0}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
   _seemer: []
   _Detec: 0
 --- !u!58 &5368364297470880403

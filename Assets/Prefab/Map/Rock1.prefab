@@ -101,10 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _maxValue: 2
+  _maxValue: 4
   _valueOneDrop: 5
   _spawnTime: 120
-  _maxStack: 6
+  _maxStack: 4
   _Farmlist: []
   _maxFarmers: 2
   _seleted: 0

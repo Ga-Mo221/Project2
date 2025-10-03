@@ -105,12 +105,12 @@ public class Arrow : MonoBehaviour
         if (collision == null) return;
         if (collision.CompareTag("Enemy") || collision.CompareTag("Animal") || collision.CompareTag("EnemyHouse"))
         {
+            if (!Skill)
+                gameObject.SetActive(false);
             _hitDamage.setPlayerAI(_playerAI);
             _hitDamage.attack(_isPlayer, _damage, _target.gameObject);
             change = false;
             _target = null;
-            if (!Skill)
-                gameObject.SetActive(false);
         }
     }
 }
