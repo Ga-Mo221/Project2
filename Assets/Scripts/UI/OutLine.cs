@@ -1,8 +1,42 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class OutLine : MonoBehaviour
 {
     [SerializeField] private NodeType _type;
+    private bool _IsStorage => _type == NodeType.Storage;
+    private bool _IsTower => _type == NodeType.Tower;
+    private bool _IsStorageOrTower => _type == NodeType.Storage || _type == NodeType.Tower;
+    private bool _IsEnemyHouse => _type == NodeType.EnemyHouse;
+    private bool _IsEnemyTower => _type == NodeType.EnemyTower;
+    private bool _IsEnemyStorage => _type == NodeType.EnemyStorage;
+    private bool _IsEnemyHouseAll => _type == NodeType.EnemyHouse || _type == NodeType.EnemyTower || _type == NodeType.EnemyStorage;
+    private bool _IsPlayer => _type == NodeType.Player;
+    private bool _IsAnimal => _type == NodeType.Animal;
+    private bool _IsEnemy => _type == NodeType.Enemy;
+    private bool _IsTreeOrRockOrGoldMine => _type == NodeType.TreeOrRock || _type == NodeType.GoldMine;
+    private bool _isTreeOrRock => _type == NodeType.TreeOrRock;
+    private bool _IsGoldMine => _type == NodeType.GoldMine;
+
+    [ShowIf(nameof(_IsStorageOrTower))]
+    [SerializeField] private House _playerHouse;
+
+    [ShowIf(nameof(_IsEnemyHouseAll))]
+    [SerializeField] private EnemyHuoseController _enemyHouse;
+
+    [ShowIf(nameof(_IsPlayer))]
+    [SerializeField] private PlayerAI _player;
+
+    [ShowIf(nameof(_IsAnimal))]
+    [SerializeField] private AnimalAI _animal;
+
+    [ShowIf(nameof(_IsEnemy))]
+    [SerializeField] private EnemyAI _enemy;
+
+    [ShowIf(nameof(_IsTreeOrRockOrGoldMine))]
+    [SerializeField] private Item _item;
+
+
     [SerializeField] private Material _normalMaterial;
     [SerializeField] private Material _outLineMateral;
     [SerializeField] private Collider2D _collider;
@@ -45,6 +79,7 @@ public class OutLine : MonoBehaviour
 
         if (!_isHovering) return;
         CastleClick();
+        clickOther();
     }
     #endregion
 
@@ -81,10 +116,60 @@ public class OutLine : MonoBehaviour
     #region  Castle Click
     private void CastleClick()
     {
+        if (_type != NodeType.Castle) return;
         if (Input.GetMouseButtonDown(0) && _type == NodeType.Castle)
             GameManager.Instance.UIsetActiveButtonUpgrade(true);
     }
     #endregion
+
+    private void clickOther()
+    {
+        if (_type == NodeType.Other || _type == NodeType.Castle) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_IsTower)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsStorage)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsEnemyHouse)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsEnemyTower)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsEnemyStorage)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsPlayer)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsAnimal)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsEnemy)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_isTreeOrRock)
+            {
+                Debug.Log(transform.parent.name);
+            }
+            if (_IsGoldMine)
+            {
+                Debug.Log(transform.parent.name);
+            }
+        }
+    }
 }
 
 public enum NodeType
@@ -93,13 +178,12 @@ public enum NodeType
     Castle,
     Tower,
     Storage,
-    Warrior,
-    Archer,
-    Lancer,
-    Healer,
-    TNT,
-    Tree,
-    Rock,
+    Player,
+    TreeOrRock,
     GoldMine,
-    Bear
+    Animal,
+    Enemy,
+    EnemyHouse,
+    EnemyTower,
+    EnemyStorage
 }

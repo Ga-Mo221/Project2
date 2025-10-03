@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b73478c2293ab4a815873d44beccff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,10 +99,10 @@ GameObject:
   - component: {fileID: 4112424906701819657}
   - component: {fileID: 5087154797460854390}
   - component: {fileID: 8613185182791184821}
-  - component: {fileID: 853879499471885898}
   - component: {fileID: 5814040439313534223}
   - component: {fileID: 6179516593897873944}
   - component: {fileID: 3979024118959980987}
+  - component: {fileID: 853879499471885898}
   m_Layer: 7
   m_Name: P_Lancer
   m_TagString: Lancer
@@ -225,64 +225,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &853879499471885898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2083673048975802569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8430550631ed43f4d89c7bda410bc300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitClass: 2
-  _level: 1
-  _maxHealth: 100
-  _health: 0
-  _damage: 10
-  _maxSpeed: 6
-  _range: 3.5
-  _attackSpeedd: 2.5
-  _slot: 2
-  _createTime_sec: 5
-  _radius: 10
-  _radius_farm: 2.3
-  _farmSpeed: 1
-  _itemScript: {fileID: 0}
-  _maxRock: 5
-  _maxGold: 5
-  _maxWood: 5
-  _maxMeat: 5
-  _rock: 0
-  _gold: 0
-  _wood: 0
-  _meat: 0
-  _HPCanvas: {fileID: 3000300306093073206}
-  _OutLine: {fileID: 7630845236558119986}
-  _hpBar: {fileID: 1724500514910025852}
-  _selet: {fileID: 6801348339631517136}
-  _GFX: {fileID: 4741758923349159307}
-  _MiniMapIcon: {fileID: 656027230675036685}
-  _anim: {fileID: 3543323217681338626}
-  _healEffect: {fileID: 3097587033637421824}
-  path: {fileID: 3979024118959980987}
-  target: {fileID: 0}
-  _creating: 0
-  _Die: 0
-  _detect: 0
-  _isLock: 0
-  _isAI: 1
-  _isTarget: 0
-  foundLowHealth: 0
-  _attackCount: 0
-  _healPlus: 0
-  _AOEHeal: 0
-  _canAction: 0
-  _spriteRender: {fileID: 4153063125047749090}
-  _pos: {fileID: 5333603819750501738}
-  _DirectionCheck: {x: 1.59, y: 1, z: 0}
 --- !u!114 &5814040439313534223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,10 +269,71 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 3543323217681338626}
+--- !u!114 &853879499471885898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083673048975802569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8430550631ed43f4d89c7bda410bc300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 2
+  _level: 1
+  _maxHealth: 55
+  _health: 0
+  _damage: 7
+  _maxSpeed: 4
+  _range: 4.2
+  _attackSpeedd: 1.5
+  _slot: 4
+  _createTime_sec: 15
+  _radius: 9
+  _radius_farm: 2.3
+  _farmSpeed: 1
+  _itemScript: {fileID: 0}
+  _maxRock: 6
+  _maxGold: 15
+  _maxWood: 18
+  _maxMeat: 18
+  _rock: 0
+  _gold: 0
+  _wood: 0
+  _meat: 0
+  _HPCanvas: {fileID: 3000300306093073206}
+  _OutLine: {fileID: 7630845236558119986}
+  _hpBar: {fileID: 1724500514910025852}
+  _selet: {fileID: 6801348339631517136}
+  _GFX: {fileID: 4741758923349159307}
+  _MiniMapIcon: {fileID: 656027230675036685}
+  _anim: {fileID: 3543323217681338626}
+  _healEffect: {fileID: 3097587033637421824}
+  path: {fileID: 3979024118959980987}
+  target: {fileID: 0}
+  cacheTarget: {fileID: 0}
+  _creating: 0
+  _Die: 0
+  _detect: 0
+  _isLock: 0
+  _isAI: 1
+  _isTarget: 0
+  foundLowHealth: 0
+  _attackCount: 0
+  _healPlus: 0
+  _AOEHeal: 0
+  _canAction: 0
+  _spriteRender: {fileID: 4153063125047749090}
+  _pos: {fileID: 5333603819750501738}
+  _DirectionCheck: {x: 1.59, y: 1, z: 0}
 --- !u!1 &2924621329279386389
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +445,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -1824874913
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 8
+  m_FrontSortingLayer: 10
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 1
   m_BackSortingOrder: 0
@@ -526,7 +529,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 65efe7f323886764db64feaac5b18209, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -586,7 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad923c1744a657478e4e40fc7cfd894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isArown: 0
   _script: {fileID: 853879499471885898}
+  _isPlayerAi: 1
 --- !u!1 &6801348339631517136
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +666,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e707bbc6b30c4364ca4f5b4bc7684c02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -887,6 +892,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 858387881440134493}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 853879499471885898}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

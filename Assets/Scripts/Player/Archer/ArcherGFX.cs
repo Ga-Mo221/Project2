@@ -56,13 +56,14 @@ public class ArcherGFX : PlayerAI
             setDetect(true);
             moveToTarget(target);
         }
-        if (target == null)
+        else if (cacheTarget == null)
         {
-            target = findItems();
-            if (target != null)
+            cacheTarget = findItems();
+            target = cacheTarget;
+            if (target != null && _itemScript == null)
             {
                 setDetect(false);
-                moveToTarget(target);
+                moveToTarget(target, true);
                 _itemScript = target.GetComponent<Item>();
                 if (_itemScript._type != ItemType.Gold)
                     _itemScript._seleted = true;
@@ -70,25 +71,34 @@ public class ArcherGFX : PlayerAI
                 {
                     if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
                     {
-                        bool see = false;
+                        bool exists = false;
                         foreach (var hit in _itemScript._Farmlist)
+                        {
                             if (hit == this)
-                                see = true;
-                        if (see)
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists)
                             _itemScript._Farmlist.Add(this);
                     }
                 }
             }
         }
-        
+
         goToHome(target);
         setupFolow(target);
+        if (cacheTarget != null)
+        {
+            target = cacheTarget;
+            farm(target);
+        }
         if (target == null) return;
-        farm(target);
         attack(target);
     }
 
-    public override void setTarget(Vector3 pos, bool controller)
+    public override void setTarget(Vector3 pos, bool controller, bool farm = false)
     {
         base.setTarget(pos, controller);
         _In_Castle = false;

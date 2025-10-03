@@ -35,6 +35,7 @@ public class CheckGroundCreate : MonoBehaviour
     [SerializeField] private GameObject _RotationL;
 
     [SerializeField] private bool _canCreate = true;
+    [SerializeField] private BuidingFire _fire;
     public bool _see = false;
     private Camera _cam;
     private GameObject _selectedObj;
@@ -161,6 +162,7 @@ public class CheckGroundCreate : MonoBehaviour
                 _RotationL.SetActive(false);
                 _RotationR.SetActive(false);
             }
+            _fire.oder(_yOder);
             _TowerGFX.sortingOrder = _yOder;
             _anim.SetBool("Idle", true);
             _houshealth.setCanDetec(true);

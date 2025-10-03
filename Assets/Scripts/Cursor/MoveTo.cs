@@ -5,8 +5,15 @@ using UnityEngine;
 public class MoveTo : MonoBehaviour
 {
     [SerializeField] private float _bankinh = 5f;
+    private CircleCollider2D col;
     private List<GameObject> chosen;
     private Coroutine _destroy;
+
+    void Awake()
+    {
+        col = GetComponent<CircleCollider2D>();
+        col.radius = _bankinh + 0.5f;
+    }
 
     void Update()
     {
@@ -28,9 +35,18 @@ public class MoveTo : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetChosen(List<GameObject> _chonsen)
+    public void SetChosen(List<GameObject> _chonsen, bool add, float? _radius = null)
     {
-        chosen = _chonsen;
+        if (!add)
+            chosen = _chonsen;
+        else
+            chosen.AddRange(_chonsen);
+
+        if (_radius.HasValue) // chỉ update khi có truyền vào
+        {
+            _bankinh = _radius.Value;
+            col.radius = _bankinh + 0.5f;
+        }
     }
 
     private bool checkMoveTo()
@@ -82,5 +98,12 @@ public class MoveTo : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _bankinh);
     }
 }

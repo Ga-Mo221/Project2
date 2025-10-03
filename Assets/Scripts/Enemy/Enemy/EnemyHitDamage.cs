@@ -23,7 +23,7 @@ public class EnemyHitDamage : MonoBehaviour
         GameObject obj = enemyAi.target;
         if (obj == null) return;
 
-        if (checkTagPlayer(obj))
+        if (PlayerTag.checkTag(obj.tag))
         {
             var health = obj.GetComponent<PlayerHealth>();
             if (health != null)
@@ -43,11 +43,6 @@ public class EnemyHitDamage : MonoBehaviour
         }
     }
 
-    private bool checkTagPlayer(GameObject collision)
-    {
-        List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        return _tag.Contains(collision.tag);
-    }
     private bool checkTagHouse(GameObject collision)
         => collision.CompareTag("House");
     private bool checkTagAnimal(GameObject collision)
@@ -55,6 +50,19 @@ public class EnemyHitDamage : MonoBehaviour
 
     public void spawnPrefab()
     {
+        if (enemyAi.target == null) return;
+        if (enemyAi.target.tag == "Animal")
+        {
+            var animal = enemyAi.target.GetComponent<AnimalAI>();
+            if (animal.getDie())
+                return;
+        }
+        if (PlayerTag.checkTag(enemyAi.target.tag))
+        {
+            var player = enemyAi.target.GetComponent<PlayerAI>();
+            if (player.getDie())
+                return;
+        }
         bool isSpawn = false;
         foreach (var obj in _listPrefeb)
         {

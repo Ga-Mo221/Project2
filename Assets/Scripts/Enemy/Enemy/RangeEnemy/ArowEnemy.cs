@@ -45,7 +45,7 @@ public class ArowEnemy : MonoBehaviour
         if (collision == null) return;
         bool IsHit = false;
 
-        if (checkTagPlayer(collision))
+        if (PlayerTag.checkTag(collision.tag))
         {
             var health = collision.GetComponent<PlayerHealth>();
             if (health != null)
@@ -77,11 +77,6 @@ public class ArowEnemy : MonoBehaviour
             gameObject.SetActive(false);
     }
 
-    private bool checkTagPlayer(Collider2D collision)
-    {
-        List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        return _tag.Contains(collision.tag);
-    }
     private bool checkTagHouse(Collider2D collision)
         => collision.CompareTag("House");
     private bool checkTagAnimal(Collider2D collision)

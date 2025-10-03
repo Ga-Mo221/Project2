@@ -77,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 14
   m_Sprite: {fileID: 7257567913506708742, guid: 4a50d1c119d185e4cb18d22e450ed3c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 25
-  _damage: 10
+  _damage: 15
   _attackSpeedd: 0.5
   _arowPrefab: {fileID: 5006367590817628768, guid: 4eb4608d7e7551b41b2b4f21c3a13286, type: 3}
   _shootPos: {fileID: 3417887763861736761}

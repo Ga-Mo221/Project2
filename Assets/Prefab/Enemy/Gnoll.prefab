@@ -160,7 +160,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 2551644031869030968}
   m_Layer: 0
   m_Name: Gnoll
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -320,11 +320,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 5
+  _Die: 0
   _MiniMapIcon: {fileID: 5416600081201093134}
   _HpBar: {fileID: 4602452647896770074}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
+  _animal: {fileID: 0}
+  _enemy: {fileID: 7114177376197230553}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
   _seemer: []
   _Detec: 0
 --- !u!114 &8699079983890791037
@@ -342,8 +347,10 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 8626246881234972018}
 --- !u!114 &7114177376197230553
@@ -359,24 +366,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 6
-  _maxHealth: 100
+  _maxHealth: 60
   _currentHealth: 0
-  _speed: 6
-  _damage: 10
-  _range: 9
-  _attackspeed: 2
-  _radius: 10
+  _speed: 4
+  _damage: 8
+  _range: 7
+  _attackspeed: 1.5
+  _radius: 13
   _Die: 0
-  critDropGold: 25
-  critDropMeat: 25
+  critDropGold: 10
+  critDropMeat: 20
   MeatDropObj: {fileID: 3894141374659694652}
   GoldDropObj: {fileID: 6382806257805309765}
   _canPatrol: 1
   _patrol: {fileID: 0}
-  _changeTargetPatrolDelay: 1
+  _changeTargetPatrolDelay: 30
+  _IsCreate: 0
   _canAction: 0
   _Detec: 0
   target: {fileID: 0}
+  _currentTarget: {fileID: 0}
   _path: {fileID: 8699079983890791037}
   _GFX: {fileID: 7445748888465163246}
   _HPimg: {fileID: 113345783988600144}
@@ -594,7 +603,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -196405934202487797, guid: 769727a0d6195394b98a8d5068c5ae4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -811,6 +820,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6622075730006341072}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _enemy
+      value: 
+      objectReference: {fileID: 7114177376197230553}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

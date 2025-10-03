@@ -2,7 +2,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 using NaughtyAttributes;
-using System.Collections.Generic;
 
 public class AnimalAI : MonoBehaviour
 {
@@ -74,16 +73,15 @@ public class AnimalAI : MonoBehaviour
     [SerializeField] private GameObject _MiniMapIcon;
     [Foldout("Other")]
     [SerializeField] private Transform _centerTransform;
+    [Foldout("Other")]
+    [SerializeField] private Animator _anim; // animation của đối tượng
 
-
-
-    private Animator _anim; // animation của đối tượng
+    
     private Rigidbody2D _rb;
     #endregion
 
     protected virtual void Start()
     {
-
         path.setPropety(_speed, _range);
 
         InvokeRepeating("UpdatePath", 0f, _repathRate);
@@ -122,15 +120,14 @@ public class AnimalAI : MonoBehaviour
             if (target != null && !_Die)
             {
                 // có enemy -> đuổi
-                path.setTarget(target.transform.position);
+                path.setTarget(target.transform.position, target);
             }
             else if (_canPatrol && !_Die)
             {
                 _canAction = false;
-                path.setTarget(_patrolTarget);
+                path.setTarget(_patrolTarget, target);
                 float dist = Vector3.Distance(transform.position, _patrolTarget);
-                //Debug.Log(dist);
-                if (dist < 1.5)
+                if (dist < 3)
                 {
                     if (_delay == null)
                     {
@@ -203,8 +200,7 @@ public class AnimalAI : MonoBehaviour
 
     public bool checkTag(Collider2D hit)
     {
-        List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        if (_tag.Contains(hit.tag))
+        if (PlayerTag.checkTag(hit.tag))
         {
             var playerAI = hit.GetComponent<PlayerAI>();
             if (!playerAI.getDie()) return true;
@@ -224,6 +220,9 @@ public class AnimalAI : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _radius);
 
+        // ranger
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _range);
     }
     #endregion
 
@@ -287,7 +286,7 @@ public class AnimalAI : MonoBehaviour
 
         // gán target
         _patrolTarget = new Vector3(randomPoint.x, randomPoint.y, 0);
-        path.setTarget(_patrolTarget);
+        path.setTarget(_patrolTarget, target);
     }
     private IEnumerator setDelayPatrol()
     {
@@ -302,7 +301,8 @@ public class AnimalAI : MonoBehaviour
     {
         _Die = true;
         _anim.SetBool("Die", true);
-        path.setTarget(transform.position);
+        path.setTarget(transform.position, target);
+        _rb.linearVelocity = Vector2.zero;
 
         //Debug.Log("die rr");
         _MiniMapIcon.SetActive(false);
@@ -328,8 +328,8 @@ public class AnimalAI : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _Die = false;
-        _gfx.GetComponent<SpriteRenderer>().enabled = true;
         _health = _maxHealth;
+        _gfx.GetComponent<SpriteRenderer>().enabled = true;
         _anim.SetBool("Die", false);
         _OutLine.SetActive(true);
         SetNewPatrol(Vector2.zero);

@@ -50,9 +50,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _Die: 0
   _MiniMapIcon: {fileID: 0}
   _HpBar: {fileID: 0}
   _item: {fileID: 5424085374242663375}
+  _check: {fileID: 0}
+  _light: {fileID: 0}
+  _animal: {fileID: 0}
+  _enemy: {fileID: 0}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
   _seemer: []
   _Detec: 0
 --- !u!58 &335932139889422512
@@ -101,8 +108,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7423765212627518464}
   - component: {fileID: 3751358352210878373}
-  - component: {fileID: 7779357103634365867}
-  m_Layer: 0
+  - component: {fileID: 5698340555879720558}
+  m_Layer: 6
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +173,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 386a66b27363f6c4bbd4cf9b0e23953c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -179,8 +186,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!60 &7779357103634365867
-PolygonCollider2D:
+--- !u!58 &5698340555879720558
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -213,28 +220,8 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.0666667, y: 1.0666667}
-    newSize: {x: 1.0666667, y: 1.0666667}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.14155075, y: 0.08201132}
-      - {x: -0.17090774, y: -0.0074022617}
-      - {x: -0.102321416, y: -0.1714949}
-      - {x: 0.02580745, y: -0.17192073}
-      - {x: 0.13672702, y: -0.10186854}
-      - {x: 0.13714677, y: -0.059430473}
-      - {x: 0.15243967, y: 0.004851857}
-      - {x: 0.115092725, y: 0.04615402}
-      - {x: 0.034413435, y: 0.10833225}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: 0, y: -0.00000047683716}
+  m_Radius: 0.15
 --- !u!1 &8055385131801396274
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,10 +323,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _maxValue: 5
+  _maxValue: 2
   _valueOneDrop: 5
   _spawnTime: 120
-  _maxStack: 3
+  _maxStack: 6
   _Farmlist: []
   _maxFarmers: 2
   _seleted: 0
@@ -358,6 +345,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7969066292856676708}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _item
+      value: 
+      objectReference: {fileID: 5424085374242663375}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

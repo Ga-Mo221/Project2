@@ -12,7 +12,8 @@ public class SelectionBox : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Canvas canvas;                // Canvas chứa boxVisual
     [SerializeField] private RectTransform boxVisual;      // UI Image (RectTransform) làm box
-    [SerializeField] private GameObject _moveTo;
+    public GameObject _moveTo;
+    [SerializeField] private GameObject _radialMenu;
     private bool _singleSelected = false;
 
     private Vector2 startScreenPos;
@@ -36,30 +37,56 @@ public class SelectionBox : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !CursorManager.Instance.ChoseUI)
         {
-            GameManager.Instance.UIsetActiveButtonUpgrade(false);
-            _singleSelected = false;
-            startScreenPos = Input.mousePosition;
-            endScreenPos = startScreenPos;
-            if (boxVisual) boxVisual.gameObject.SetActive(true);
-            UpdateVisual(startScreenPos, startScreenPos);
-            if (CursorManager.Instance.Select)
+            if (!CursorManager.Instance.Select)
+                GameManager.Instance.UIsetActiveButtonUpgrade(false);
+            if (!Castle.Instance._V)
             {
-                SelectObject();
+                _singleSelected = false;
+                startScreenPos = Input.mousePosition;
+                endScreenPos = startScreenPos;
+                if (boxVisual) boxVisual.gameObject.SetActive(true);
+                UpdateVisual(startScreenPos, startScreenPos);
+                if (CursorManager.Instance.Select)
+                {
+                    SelectObject();
+                }
+            }
+            else
+            {
+                Vector3 worldPos;
+                RectTransform rect = _radialMenu.GetComponent<RectTransform>();
+                RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                    rect, 
+                    Input.mousePosition, 
+                    Camera.main, 
+                    out worldPos
+                );
+
+                _radialMenu.transform.position = worldPos;
+                var radial = _radialMenu.GetComponent<RadialMenu>();
+                radial.setPos(worldPos);
+                _radialMenu.SetActive(true);
             }
         }
 
         if (Input.GetMouseButton(0) && !CursorManager.Instance.ChoseUI)
         {
-            endScreenPos = Input.mousePosition;
-            UpdateVisual(startScreenPos, endScreenPos);
+            if (!Castle.Instance._V)
+            {
+                endScreenPos = Input.mousePosition;
+                UpdateVisual(startScreenPos, endScreenPos);
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && !CursorManager.Instance.ChoseUI)
         {
-            if (boxVisual) boxVisual.gameObject.SetActive(false);
-            endScreenPos = Input.mousePosition;
-            if (_singleSelected) return;
-            SelectObjects(startScreenPos, endScreenPos);
+            if (!Castle.Instance._V)
+            {
+                if (boxVisual) boxVisual.gameObject.SetActive(false);
+                endScreenPos = Input.mousePosition;
+                if (_singleSelected) return;
+                SelectObjects(startScreenPos, endScreenPos);
+            }
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -70,7 +97,7 @@ public class SelectionBox : MonoBehaviour
             if (chosen.Count != 0)
             {
                 GameObject _co = Instantiate(_moveTo, worldPos, Quaternion.identity);
-                _co.GetComponent<MoveTo>().SetChosen(chosen);
+                _co.GetComponent<MoveTo>().SetChosen(chosen,false);
                 foreach (var obj in chosen)
                 {
                     obj.GetComponent<PlayerAI>().setTarget(worldPos, true);

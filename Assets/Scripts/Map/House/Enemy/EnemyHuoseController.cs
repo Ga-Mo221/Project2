@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -5,23 +7,64 @@ public class EnemyHuoseController : MonoBehaviour
 {
     [SerializeField] private HouseType _type;
     private bool IsTower => _type == HouseType.Tower;
+    private bool IsStorage => _type == HouseType.Storage;
+    private bool IsCastle => _type == HouseType.Castle;
 
+    [Header("Stats")]
+    [SerializeField] private bool _Die = false;
+    [SerializeField] private bool _Detec = false;
     public float _maxHealth = 100f;
     public float _currentHealth = 0f;
 
+    [Header("Assitst")]
+    [HideIf(nameof(IsTower))]
+    [SerializeField] private float _alarmRadius = 20f; // khoảng cách báo động
+    [HideIf(nameof(IsTower))]
+    [SerializeField] private int _playerCountAssist  = 5; // báo động khi có trên 5 kẻ địch lại gần;
+
+    [ShowIf(nameof(IsStorage))]
+    [SerializeField] private float _assistRadius = 50f; // khoảng cách lính trong phạm vi được gọi đến
+
+    [Header("Storage")]
+    [ShowIf(nameof(IsStorage))]
+    [SerializeField] private int _wood = 10;
+    [ShowIf(nameof(IsStorage))]
+    [SerializeField] private int _rock = 10;
+    [ShowIf(nameof(IsStorage))]
+    [SerializeField] private int _meat = 10;
+    [ShowIf(nameof(IsStorage))]
+    [SerializeField] private int _gold = 10;
+
+    [Header("GnollUp")]
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _GnollUp;
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _GnollPrefab;
 
+    [Header("Other")]
+    [SerializeField] private GameObject _HpBar;
+    [SerializeField] private GameObject _Icon;
+
+    private List<EnemyAI> _enemyAssitList = new List<EnemyAI>();
+
     void Start()
     {
+        if (IsStorage)
+            EnemyHouse.Instance._listSpawnPoint.Add(transform);
+
         _currentHealth = _maxHealth;
         if (IsTower && _GnollUp != null && _GnollPrefab != null)
         {
             float damage = _GnollPrefab.GetComponent<GnollGFX>()._damage;
-             _GnollUp.GetComponent<GnollUpGFX>().setDamage(damage);
+            _GnollUp.GetComponent<GnollUpGFX>().setDamage(damage);
         }
+    }
+
+    void Update()
+    {
+        if (IsTower) return;
+        if (_Die) return;
+        callReinforcement();
     }
 
     public void updateSpriteOder(int oder)
@@ -34,6 +77,107 @@ public class EnemyHuoseController : MonoBehaviour
     {
         if (!IsTower) return;
         _GnollUp.SetActive(false);
-        Instantiate(_GnollPrefab, transform.position, Quaternion.identity, amount);
+        GameObject obj = Instantiate(_GnollPrefab, transform.position, Quaternion.identity, amount);
+        var enemy = obj.GetComponent<EnemyAI>();
+        enemy.setIsCreate(true);
+        enemy.setCanPatrol(false);
+    }
+
+    public void die()
+    {
+        _Die = true;
+        _HpBar.SetActive(false);
+        _Icon.SetActive(false);
+        if (IsStorage)
+        {
+            Castle.Instance._wood += _wood;
+            Castle.Instance._rock += _rock;
+            Castle.Instance._meat += _meat;
+            Castle.Instance._gold += _gold;
+            GameManager.Instance.UIupdateReferences();
+        }
+    }
+
+
+    private Coroutine _call;
+    private void callReinforcement()
+    {
+        int _playerCount = 0;
+        Collider2D[] Hits = Physics2D.OverlapCircleAll(transform.position, _alarmRadius);
+        foreach (var hit in Hits)
+        {
+            if (PlayerTag.checkTag(hit.tag))
+            {
+                var playerAI = hit.GetComponent<PlayerAI>();
+                if (!playerAI.getDie())
+                    _playerCount++;
+            }
+        }
+
+        if (_playerCount >= _playerCountAssist)
+        {
+            _Detec = true;
+            if (_call == null)
+                _call = StartCoroutine(Call());
+        }
+        else
+        {
+            _Detec = false;
+            _call = null;
+            resetCurrenTargetEnemy();
+        }
+    }
+
+
+    private IEnumerator Call()
+    {
+        yield return new WaitForSeconds(5f);
+        Debug.Log("Bao Dong Do");
+        if (_Detec)
+        {
+            if (!IsCastle)
+            {
+                Collider2D[] Hits = Physics2D.OverlapCircleAll(transform.position, _assistRadius);
+                foreach (var hit in Hits)
+                {
+                    var enemyPatrol = hit.GetComponent<EnemyPatrol>();
+                    if (enemyPatrol != null)
+                        foreach (var enemy in EnemyHouse.Instance._listEnemy)
+                            if (enemy.getPatrol() == enemyPatrol)
+                            {
+                                enemy.setTarget(gameObject);
+                                _enemyAssitList.Add(enemy);
+                            }
+                }
+            }
+            else
+                foreach (var enemy in EnemyHouse.Instance._listEnemy)
+                    enemy.setTarget(gameObject);
+        }
+    }
+
+    private void resetCurrenTargetEnemy()
+    {
+        foreach (var enemy in _enemyAssitList)
+        {
+            enemy.resetCurrentTarget();
+        }
+        _enemyAssitList = new List<EnemyAI>();
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        // alarm
+        if (!IsTower)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _alarmRadius);
+        }
+
+        // assit
+        if (IsCastle || IsTower) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _assistRadius);
     }
 }

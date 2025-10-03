@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4970c5a63ef12a540a03d8ab06b7de56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -144,13 +144,13 @@ GameObject:
   - component: {fileID: 4073862434788874431}
   - component: {fileID: 6209037097516613479}
   - component: {fileID: 1182947352422448395}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4073862434788874431
 Transform:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   _animal: 1
   _sprite: {fileID: 7937726656656371032}
   _pickUP: 0
-  _maxValueDrop: 10
+  _maxValueDrop: 20
 --- !u!1 &3519243338417639085
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ Transform:
   m_GameObject: {fileID: 3519243338417639085}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -296,7 +296,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -6879290243380990860, guid: 16558da51b3720b4b9221478a670d701, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -358,10 +358,10 @@ GameObject:
   - component: {fileID: 6906181606705150651}
   - component: {fileID: 48724295642100375}
   - component: {fileID: 9215514624699056668}
+  - component: {fileID: 6972055537954536054}
   - component: {fileID: 4831337518752686108}
   - component: {fileID: 7841877529150638004}
-  - component: {fileID: 6972055537954536054}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sheep_Control
   m_TagString: Animal
   m_Icon: {fileID: 0}
@@ -494,10 +494,37 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 2074410760104160228}
+--- !u!114 &6972055537954536054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964107023682193468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 4
+  _Die: 0
+  _MiniMapIcon: {fileID: 11218283690189912}
+  _HpBar: {fileID: 1446847699096658644}
+  _item: {fileID: 0}
+  _check: {fileID: 0}
+  _light: {fileID: 0}
+  _animal: {fileID: 4831337518752686108}
+  _enemy: {fileID: 0}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
+  _seemer: []
+  _Detec: 0
 --- !u!114 &4831337518752686108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,37 +538,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animalAI: 2
-  _radius: 5
-  _respawmTime: 10
-  _maxHealth: 100
-  _health: 12
-  _speed: 6
+  _maxHealth: 30
+  _health: 0
   _damage: 0
-  _range: 0
   _speedAttack: 0
+  _speed: 6
+  _range: 0
   path: {fileID: 9215514624699056668}
-  _gfx: {fileID: 3519243338417639085}
-  _anim: {fileID: 2074410760104160228}
-  _isdetec: 0
+  target: {fileID: 0}
+  _radius: 5
+  _respawmTime: 120
+  _PatrolRadius: 20
+  _patrolTarget: {x: 0, y: 0, z: 0}
+  _timeDelayPatrol: 5
   _Die: 0
+  _canPatrol: 1
+  _canAction: 0
+  detec: 0
+  _gfx: {fileID: 3519243338417639085}
   _HPCanvas: {fileID: 1446847699096658644}
   _OutLine: {fileID: 2860140966254151479}
   _hpBar: {fileID: 3051647788256573854}
   _MiniMapIcon: {fileID: 11218283690189912}
-  _canPatrol: 1
   _centerTransform: {fileID: 9168957731800431330}
-  _PatrolRadius: 20
-  _timeDelayPatrol: 3
-  target: {fileID: 0}
-  _canAction: 0
-  _rb: {fileID: 0}
-  tagAnimalorEnrmy:
-  - Enemy
-  - Archer
-  - Warrior
-  - Lancer
-  - Healer
-  - TNT
+  _anim: {fileID: 2074410760104160228}
   _spriteRender: {fileID: 7937726656656371032}
 --- !u!114 &7841877529150638004
 MonoBehaviour:
@@ -556,26 +576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animalAi: {fileID: 4831337518752686108}
---- !u!114 &6972055537954536054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7964107023682193468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 4
-  _MiniMapIcon: {fileID: 11218283690189912}
-  _HpBar: {fileID: 1446847699096658644}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
-  _light: {fileID: 0}
-  _seemer: []
-  _Detec: 0
 --- !u!1001 &4518601613413549162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -585,12 +585,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 7522906845640314001}
     m_Modifications:
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _animal
+      value: 
+      objectReference: {fileID: 4831337518752686108}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 
       objectReference: {fileID: 7937726656656371032}
     - target: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_Name
       value: OutLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.88
       objectReference: {fileID: 0}
     - target: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -920,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.17
+      value: 2.86
       objectReference: {fileID: 0}
     - target: {fileID: 4531822266390242258, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -928,7 +940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4531822266390242258, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.1699998
+      value: 2.8600023
       objectReference: {fileID: 0}
     - target: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_Pivot.x

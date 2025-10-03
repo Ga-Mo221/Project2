@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4970c5a63ef12a540a03d8ab06b7de56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 3621902628635706636}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.56, y: 0.58, z: 0}
+  m_LocalPosition: {x: -0.05, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 7104874855621525860, guid: c34056ad5348948429b5e2d1ac0b423b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -272,10 +272,10 @@ GameObject:
   - component: {fileID: 1158632041482293870}
   - component: {fileID: 1185888267996431684}
   - component: {fileID: 1139580586559183479}
-  - component: {fileID: 5656457811996703687}
-  - component: {fileID: 2343112834931443696}
   - component: {fileID: 9217240206298758458}
-  m_Layer: 0
+  - component: {fileID: 2343112834931443696}
+  - component: {fileID: 5656457811996703687}
+  m_Layer: 13
   m_Name: Snake_Control
   m_TagString: Animal
   m_Icon: {fileID: 0}
@@ -408,68 +408,12 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 1122478893686310}
---- !u!114 &5656457811996703687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4239862749476530621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7d72e19166becc45a70ba77e5ed64dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animalAI: 1
-  _radius: 5
-  _respawmTime: 10
-  _maxHealth: 100
-  _health: 20
-  _speed: 6
-  _damage: 15
-  _range: 2
-  _speedAttack: 2
-  path: {fileID: 1139580586559183479}
-  _gfx: {fileID: 3621902628635706636}
-  _anim: {fileID: 1122478893686310}
-  _isdetec: 0
-  _Die: 0
-  _HPCanvas: {fileID: 8934237921392490646}
-  _OutLine: {fileID: 7044659946625894540}
-  _hpBar: {fileID: 5021890865072743388}
-  _MiniMapIcon: {fileID: 1288961923305968686}
-  _canPatrol: 1
-  _centerTransform: {fileID: 7267704854268275847}
-  _PatrolRadius: 6.5
-  _timeDelayPatrol: 3
-  target: {fileID: 0}
-  _canAction: 0
-  _rb: {fileID: 0}
-  tagAnimalorEnrmy:
-  - Enemy
-  - Archer
-  - Warrior
-  - Lancer
-  - Healer
-  - TNT
-  _spriteRender: {fileID: 1414051499352753602}
---- !u!114 &2343112834931443696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4239862749476530621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a18079c6c9abd14eb5a96549e92da67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animalAi: {fileID: 5656457811996703687}
 --- !u!114 &9217240206298758458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,13 +427,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
+  _Die: 0
   _MiniMapIcon: {fileID: 1288961923305968686}
   _HpBar: {fileID: 8934237921392490646}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
+  _animal: {fileID: 5656457811996703687}
+  _enemy: {fileID: 0}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
   _seemer: []
   _Detec: 0
+--- !u!114 &2343112834931443696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239862749476530621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a18079c6c9abd14eb5a96549e92da67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animalAi: {fileID: 5656457811996703687}
+--- !u!114 &5656457811996703687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4239862749476530621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d72e19166becc45a70ba77e5ed64dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animalAI: 1
+  _maxHealth: 40
+  _health: 0
+  _damage: 5
+  _speedAttack: 1.5
+  _speed: 6
+  _range: 2
+  path: {fileID: 1139580586559183479}
+  target: {fileID: 0}
+  _radius: 7
+  _respawmTime: 120
+  _PatrolRadius: 6.5
+  _patrolTarget: {x: 0, y: 0, z: 0}
+  _timeDelayPatrol: 5
+  _Die: 0
+  _canPatrol: 1
+  _canAction: 0
+  detec: 0
+  _gfx: {fileID: 3621902628635706636}
+  _HPCanvas: {fileID: 8934237921392490646}
+  _OutLine: {fileID: 7044659946625894540}
+  _hpBar: {fileID: 5021890865072743388}
+  _MiniMapIcon: {fileID: 1288961923305968686}
+  _centerTransform: {fileID: 7267704854268275847}
+  _anim: {fileID: 1122478893686310}
+  _spriteRender: {fileID: 1414051499352753602}
 --- !u!1 &8621393386015354791
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 14551903688149634}
   - component: {fileID: 5181355990461134174}
   - component: {fileID: 6880976098030065018}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,12 +727,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 2781469708915379339}
     m_Modifications:
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _animal
+      value: 
+      objectReference: {fileID: 5656457811996703687}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 
       objectReference: {fileID: 1414051499352753602}
     - target: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_Name
       value: OutLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x

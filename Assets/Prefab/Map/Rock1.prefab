@@ -101,10 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _maxValue: 5
+  _maxValue: 2
   _valueOneDrop: 5
   _spawnTime: 120
-  _maxStack: 3
+  _maxStack: 6
   _Farmlist: []
   _maxFarmers: 2
   _seleted: 0
@@ -125,8 +125,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1746048108064367565}
   - component: {fileID: 1777536112420729566}
-  - component: {fileID: 7859509103773972103}
-  m_Layer: 0
+  - component: {fileID: 709235317287327759}
+  m_Layer: 6
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6fe2b915405c35c4eb7d5b2295d30a76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -203,8 +203,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!60 &7859509103773972103
-PolygonCollider2D:
+--- !u!58 &709235317287327759
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -237,26 +237,8 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.0666667, y: 1.0666667}
-    newSize: {x: 1.0666667, y: 1.0666667}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.17771462, y: 0.009992719}
-      - {x: -0.3255533, y: -0.15549839}
-      - {x: -0.19156238, y: -0.25561887}
-      - {x: 0.24339569, y: -0.2315005}
-      - {x: 0.34699157, y: -0.15444323}
-      - {x: 0.3041147, y: 0.007970065}
-      - {x: 0.09934276, y: 0.047510058}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: 0.00000035762787, y: 0}
+  m_Radius: 0.16
 --- !u!1 &8767884651671963197
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,9 +289,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _Die: 0
   _MiniMapIcon: {fileID: 0}
   _HpBar: {fileID: 0}
   _item: {fileID: 8192216039845590812}
+  _check: {fileID: 0}
+  _light: {fileID: 0}
+  _animal: {fileID: 0}
+  _enemy: {fileID: 0}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
   _seemer: []
   _Detec: 0
 --- !u!58 &2968925384716923918
@@ -427,6 +416,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7822866043786364735}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _item
+      value: 
+      objectReference: {fileID: 8192216039845590812}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

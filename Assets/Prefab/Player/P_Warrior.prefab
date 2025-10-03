@@ -80,7 +80,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -1824874913
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 8
+  m_FrontSortingLayer: 10
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 1
   m_BackSortingOrder: 0
@@ -164,7 +164,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: 7384290322352760091, guid: ddd1d9121c3c6994ebe914d12ce2c083, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -224,7 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad923c1744a657478e4e40fc7cfd894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isArown: 0
   _script: {fileID: 6362947074359857873}
+  _isPlayerAi: 1
 --- !u!1 &1094120962555759500
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,8 +394,10 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 7255897152711031789}
 --- !u!114 &6362947074359857873
@@ -412,20 +416,20 @@ MonoBehaviour:
   _level: 1
   _maxHealth: 100
   _health: 0
-  _damage: 20
-  _maxSpeed: 6
+  _damage: 5
+  _maxSpeed: 4
   _range: 3.5
-  _attackSpeedd: 2.5
-  _slot: 1
-  _createTime_sec: 5
-  _radius: 13
+  _attackSpeedd: 2
+  _slot: 2
+  _createTime_sec: 10
+  _radius: 9
   _radius_farm: 2.3
   _farmSpeed: 1
   _itemScript: {fileID: 0}
-  _maxRock: 5
-  _maxGold: 5
-  _maxWood: 5
-  _maxMeat: 5
+  _maxRock: 8
+  _maxGold: 10
+  _maxWood: 20
+  _maxMeat: 10
   _rock: 0
   _gold: 0
   _wood: 0
@@ -440,6 +444,7 @@ MonoBehaviour:
   _healEffect: {fileID: 1103703179019586960}
   path: {fileID: 8115716074318572522}
   target: {fileID: 0}
+  cacheTarget: {fileID: 0}
   _creating: 0
   _Die: 0
   _detect: 0
@@ -541,7 +546,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b73478c2293ab4a815873d44beccff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -628,7 +633,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e707bbc6b30c4364ca4f5b4bc7684c02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -649,6 +654,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5628090364594364971}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 6362947074359857873}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

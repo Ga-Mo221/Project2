@@ -6,7 +6,6 @@ public class GnollGFX : EnemyAI
 
     protected override void Update()
     {
-        base.Update();
         _spriteRender.sortingOrder = -(int)(transform.position.y * 100) + 10000;
 
         if (getDie()) return;
@@ -18,5 +17,6 @@ public class GnollGFX : EnemyAI
         }
 
         pantrol();
+        base.Update();
     }
 }

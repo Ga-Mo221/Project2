@@ -6,7 +6,6 @@ public class OrcGFX : EnemyAI
 
     protected override void Update()
     {
-        base.Update();
         _spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 10000;
 
         if (getDie()) return;
@@ -18,5 +17,6 @@ public class OrcGFX : EnemyAI
         }
 
         pantrol();
+        base.Update();
     }
 }

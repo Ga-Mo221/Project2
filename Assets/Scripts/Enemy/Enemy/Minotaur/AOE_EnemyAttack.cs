@@ -4,12 +4,24 @@ using UnityEngine;
 public class AOE_EnemyAttack : MonoBehaviour
 {
     [SerializeField] private EnemyAI enemyAi;
+    private CircleCollider2D _col;
+
+    void Awake()
+    {
+        _col = GetComponent<CircleCollider2D>();
+    }
+
+    void Start()
+    {
+        if (_col != null)
+            _col.radius = enemyAi._range;
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == null) return;
 
-        if (checkTagPlayer(collision))
+        if (PlayerTag.checkTag(collision.tag))
         {
             var health = collision.GetComponent<PlayerHealth>();
             if (health != null)
@@ -29,11 +41,6 @@ public class AOE_EnemyAttack : MonoBehaviour
         }
     }
 
-    private bool checkTagPlayer(Collider2D collision)
-    {
-        List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        return _tag.Contains(collision.tag);
-    }
     private bool checkTagHouse(Collider2D collision)
         => collision.CompareTag("House");
     private bool checkTagAnimal(Collider2D collision)

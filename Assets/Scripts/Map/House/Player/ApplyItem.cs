@@ -11,7 +11,7 @@ public class ApplyItem : MonoBehaviour
     private void Apply(Collider2D collision)
     {
         if (collision == null) return;
-        if (checkTag(collision))
+        if (PlayerTag.checkTagFarm(collision.tag))
         {
             var _script = collision.GetComponent<PlayerAI>();
             bool _aply = false;
@@ -54,11 +54,5 @@ public class ApplyItem : MonoBehaviour
         _script.setIsAI(true);
         _script.resetItemSelect();
         _script.target = null;
-    }
-
-    private bool checkTag(Collider2D col)
-    {
-        bool check = col.CompareTag("Warrior") || col.CompareTag("Archer") || col.CompareTag("Lancer");
-        return check;
     }
 }

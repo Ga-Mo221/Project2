@@ -22,8 +22,8 @@ public class EnemyPatrol : MonoBehaviour
                 EnemyAI enemy = hit.GetComponent<EnemyAI>();
                 if (enemy != null)
                 {
-                    _listEnemy.Add(enemy);
-                    enemy.setPatrol(this);
+                    if (checkInEnemy(enemy))
+                        enemy.setPatrol(this);
                 }
             }
         }

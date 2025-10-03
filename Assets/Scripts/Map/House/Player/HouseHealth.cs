@@ -16,8 +16,11 @@ public class HouseHealth : MonoBehaviour
     private bool IsStorage => _type == HouseType.Storage;
     private bool IsCastle => _type == HouseType.Castle;
     private Animator _anim;
+
+    [SerializeField] private BuidingFire _fire;
+
     [SerializeField] private bool _canDetec = false;
-    
+
     [HideIf(nameof(IsCastle))]
     [SerializeField] private Image _imgLoad;
     [ShowIf(nameof(IsTower))]
@@ -64,6 +67,8 @@ public class HouseHealth : MonoBehaviour
         }
         else _canDetec = true;
         _anim = GetComponent<Animator>();
+
+        InvokeRepeating(nameof(fireDie), 1f, 1f);
     }
 
     public void loadCount()
@@ -144,7 +149,7 @@ public class HouseHealth : MonoBehaviour
                     if (rock > _house._rock) rock = _house._rock;
                     if (meat > _house._meat) meat = _house._meat;
                     if (gold > _house._gold) gold = _house._gold;
-                    
+
                     Castle.Instance._wood -= wood;
                     Castle.Instance._rock -= rock;
                     Castle.Instance._meat -= meat;
@@ -166,5 +171,32 @@ public class HouseHealth : MonoBehaviour
                 setCanDetec(false);
             }
         }
+    }
+
+    private void fireDie()
+    {
+        float currentHealth;
+        float maxHealth;
+        if (!_canDetec)
+        {
+            _fire.gameObject.SetActive(false);
+            return;
+        }
+        if (!IsCastle)
+        {
+            currentHealth = _house._currentHealth;
+            maxHealth = _house._maxHealth;
+        }
+        else
+        {
+            currentHealth = Castle.Instance._currentHealth;
+            maxHealth = Castle.Instance._maxHealth;
+        }
+        if (currentHealth / maxHealth < 0.3)
+        {
+            _fire.gameObject.SetActive(true);
+        }
+        else
+            _fire.gameObject.SetActive(false);
     }
 }

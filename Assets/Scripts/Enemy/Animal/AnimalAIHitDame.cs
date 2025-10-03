@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimalAIHitDame : MonoBehaviour
@@ -10,24 +9,18 @@ public class AnimalAIHitDame : MonoBehaviour
         GameObject obj = enimalAi.target;
         if (obj == null) return;
 
-        if (checkTagPlayer(obj))
+        if (PlayerTag.checkTag(obj.tag))
         {
             var health = obj.GetComponent<PlayerHealth>();
             health.takeDamage(enimalAi._damage);
         }
         if (checkTagEnemy(obj))
         {
-             var health = obj.GetComponent<EnemyHealth>();
+            var health = obj.GetComponent<EnemyHealth>();
             health.takeDamage(enimalAi._damage);
         }
-       
     }
 
-    private bool checkTagPlayer(GameObject collision)
-    {
-        List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        return _tag.Contains(collision.tag);
-    }
     private bool checkTagEnemy(GameObject collision)
     {
         return collision.CompareTag("Enemy");
@@ -37,5 +30,4 @@ public class AnimalAIHitDame : MonoBehaviour
     {
         MeatOBJ.SetActive(true);
     }
-   
 }

@@ -35,8 +35,9 @@ public class GoldMine : Item
                     _playerAI.target = null;
                     _playerAI._canAction = false;
                     _value = 0;
-                    foreach (var hit in _Farmlist)
+                    for (int j = _Farmlist.Count - 1; j >= 0; j--)
                     {
+                        var hit = _Farmlist[j];
                         hit.resetItemSelect();
                         hit.target = null;
                     }

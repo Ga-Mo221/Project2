@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4970c5a63ef12a540a03d8ab06b7de56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -98,11 +98,11 @@ GameObject:
   - component: {fileID: 2903967948756811048}
   - component: {fileID: 1663804910315396530}
   - component: {fileID: 7052329563081958641}
+  - component: {fileID: 4011518117632548897}
   - component: {fileID: 4713674498090310569}
   - component: {fileID: 5473874975274410538}
-  - component: {fileID: 6194686548813192028}
   - component: {fileID: 1657560909108414181}
-  - component: {fileID: 4011518117632548897}
+  - component: {fileID: 6194686548813192028}
   m_Layer: 0
   m_Name: Spider_Control
   m_TagString: Untagged
@@ -193,6 +193,31 @@ CapsuleCollider2D:
   m_Offset: {x: -0.008909014, y: 0.28471568}
   m_Size: {x: 1.7178301, y: 1.3617221}
   m_Direction: 1
+--- !u!114 &4011518117632548897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2568047882286174866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 4
+  _Die: 0
+  _MiniMapIcon: {fileID: 712102184399680218}
+  _HpBar: {fileID: 1201309649080037991}
+  _item: {fileID: 0}
+  _check: {fileID: 0}
+  _light: {fileID: 0}
+  _animal: {fileID: 6194686548813192028}
+  _enemy: {fileID: 0}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
+  _seemer: []
+  _Detec: 0
 --- !u!114 &4713674498090310569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,55 +261,12 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 8857089252291914122}
---- !u!114 &6194686548813192028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2568047882286174866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27412c753c58ceb429f263ac5bd5be3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animalAI: 3
-  _radius: 6
-  _respawmTime: 10
-  _maxHealth: 100
-  _health: 20
-  _speed: 6
-  _damage: 10
-  _range: 2
-  _speedAttack: 3
-  path: {fileID: 5473874975274410538}
-  _gfx: {fileID: 3959329072556678441}
-  _anim: {fileID: 8857089252291914122}
-  _isdetec: 0
-  _Die: 0
-  _HPCanvas: {fileID: 1201309649080037991}
-  _OutLine: {fileID: 3563146343261747473}
-  _hpBar: {fileID: 3379518232778434861}
-  _MiniMapIcon: {fileID: 712102184399680218}
-  _canPatrol: 1
-  _centerTransform: {fileID: 2889026991463421449}
-  _PatrolRadius: 7.5
-  _timeDelayPatrol: 5
-  target: {fileID: 0}
-  _canAction: 0
-  _rb: {fileID: 0}
-  tagAnimalorEnrmy:
-  - Enemy
-  - Archer
-  - Warrior
-  - Lancer
-  - Healer
-  - TNT
-  _spriteRender: {fileID: 6287486149944449987}
 --- !u!114 &1657560909108414181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animalAi: {fileID: 6194686548813192028}
---- !u!114 &4011518117632548897
+--- !u!114 &6194686548813192028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -307,17 +289,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 2568047882286174866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
+  m_Script: {fileID: 11500000, guid: 27412c753c58ceb429f263ac5bd5be3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
+  _animalAI: 3
+  _maxHealth: 40
+  _health: 0
+  _damage: 10
+  _speedAttack: 3
+  _speed: 6
+  _range: 2
+  path: {fileID: 5473874975274410538}
+  target: {fileID: 0}
+  _radius: 7
+  _respawmTime: 120
+  _PatrolRadius: 7.5
+  _patrolTarget: {x: 0, y: 0, z: 0}
+  _timeDelayPatrol: 5
+  _Die: 0
+  _canPatrol: 1
+  _canAction: 0
+  detec: 0
+  _gfx: {fileID: 3959329072556678441}
+  _HPCanvas: {fileID: 1201309649080037991}
+  _OutLine: {fileID: 3563146343261747473}
+  _hpBar: {fileID: 3379518232778434861}
   _MiniMapIcon: {fileID: 712102184399680218}
-  _HpBar: {fileID: 1201309649080037991}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
-  _light: {fileID: 0}
-  _seemer: []
-  _Detec: 0
+  _centerTransform: {fileID: 2889026991463421449}
+  _anim: {fileID: 8857089252291914122}
+  _spriteRender: {fileID: 6287486149944449987}
 --- !u!1 &3614332820089817402
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +403,7 @@ MonoBehaviour:
   _animal: 1
   _sprite: {fileID: 6287486149944449987}
   _pickUP: 0
-  _maxValueDrop: 0
+  _maxValueDrop: 5
 --- !u!1 &3959329072556678441
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 1974895838090585116, guid: 53d23a3b75bef974880087e3c73022d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -584,6 +584,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2903967948756811048}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _animal
+      value: 
+      objectReference: {fileID: 6194686548813192028}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

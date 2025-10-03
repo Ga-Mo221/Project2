@@ -5,9 +5,13 @@ public class EnemyHouse : MonoBehaviour
 {
     public static EnemyHouse Instance { get; private set; }
 
+    private int _currentSTRTime = 4;
+    private int _currentDay = 1;
+
     public List<EnemyPatrol> _listPatrol;
     public List<EnemyAI> _listEnemy;
     public List<EnemyAI> _listEnemyCreate;
+    public List<Transform> _listSpawnPoint;
 
     void Awake()
     {
@@ -19,7 +23,20 @@ public class EnemyHouse : MonoBehaviour
         Instance = this;
     }
 
+    #region Update
+    void Update()
+    {
+        if (GameManager.Instance._timeRTS == _currentSTRTime
+            && GameManager.Instance._currentDay != _currentDay)
+        {
+            _currentDay = GameManager.Instance._currentDay;
+            respawnEnemy();
+        }
+    }
+    #endregion
 
+
+    #region Get Target Patrol
     public EnemyPatrol getTargetPatrol(EnemyAI enemy)
     {
         if (_listPatrol == null || _listPatrol.Count == 0)
@@ -56,5 +73,60 @@ public class EnemyHouse : MonoBehaviour
         // Nếu tất cả patrol đều full thì trả về null
         return null;
     }
+    #endregion
 
+
+    #region Respawn Enemy
+    private void respawnEnemy()
+    {
+        foreach (var enemy in _listEnemy)
+        {
+            if (!enemy.gameObject.activeSelf)
+            {
+                enemy.respawn(getMinDirection(enemy));
+                enemy.gameObject.SetActive(true);
+            }
+        }
+    }
+    #endregion
+
+
+    #region Get Pos Spawn Enemy
+    private Vector3 getMinDirection(EnemyAI enemy)
+    {
+        var _patrol = enemy.getPatrol();
+        Vector3 pos = transform.position;
+        float minDist = Mathf.Infinity;
+        foreach (var point in _listSpawnPoint)
+        {
+            float dist = Vector3.Distance(point.position, _patrol.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                pos = point.position;
+            }
+        }
+        return pos;
+    }
+    #endregion
+
+
+    #region get War Pos
+    public Transform getWarPos()
+    {
+        Vector3 castlePos = Castle.Instance.transform.position;
+        Transform pos = transform;
+        float minDist = Mathf.Infinity;
+        foreach (var point in _listSpawnPoint)
+        {
+            float dist = Vector3.Distance(point.position, castlePos);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                pos = point;
+            }
+        }
+        return pos;
+    }
+    #endregion
 }

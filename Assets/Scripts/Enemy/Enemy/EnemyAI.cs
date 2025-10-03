@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private EnemyType _type;
+    public EnemyType _type;
     private bool IsTNTRed => _type == EnemyType.TNT;
 
     
@@ -19,8 +19,9 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Stats")]
     public float _damage = 10f;
     [Foldout("Stats")]
-    [SerializeField] private float _range = 2.5f;
+    public float _range = 2.5f;
     [Foldout("Stats")]
+    [HideIf(nameof(IsTNTRed))]
     [SerializeField] private float _attackspeed = 2f;
     [Foldout("Stats")]
     [SerializeField] private float _radius = 10f;
@@ -43,7 +44,7 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Patrol")]
     [SerializeField] private bool _canPatrol = true;
     [Foldout("Patrol")]
-    [SerializeField] public EnemyPatrol _patrol;
+    [SerializeField] private EnemyPatrol _patrol;
     [Foldout("Patrol")]
     [SerializeField] private float _changeTargetPatrolDelay = 1f;
 
@@ -54,7 +55,9 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Status")]
     [SerializeField] private bool _Detec = false;
     [Foldout("Status")]
-    [SerializeField] public GameObject target;
+    public GameObject target;
+    [Foldout("Status")]
+    [SerializeField] GameObject _currentTarget;
 
     [Foldout("Componet")]
     [SerializeField] private FindPath _path;
@@ -88,6 +91,7 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (!_canPatrol && _IsCreate && target == null) target = _currentTarget;
         flip(target);
         _HPimg.fillAmount = _currentHealth / _maxHealth;
     }
@@ -97,9 +101,12 @@ public class EnemyAI : MonoBehaviour
     {
         if (_path._seeker.IsDone())
         {
-            if (target != null)
+            if (target != null || _currentTarget != null)
             {
-                _path.setTarget(target.transform.position);
+                if (target == null)
+                    target = _currentTarget;
+                if (gameObject.activeSelf)
+                    _path.setTarget(target.transform.position, target);
             }
             else
                 setDetect(false);
@@ -133,8 +140,10 @@ public class EnemyAI : MonoBehaviour
     public void setTarget(GameObject obj)
     {
         target = obj;
+        _currentTarget = obj;
         setCanPatrol(false);
     }
+    public void resetCurrentTarget() => _currentTarget = null;
     #endregion
 
 
@@ -146,7 +155,7 @@ public class EnemyAI : MonoBehaviour
         _MinimapIcon.SetActive(false);
         _HPBar.SetActive(false);
         target = null;
-        _path.setTarget(transform.position);
+        _path.setTarget(transform.position, target);
 
         if (!IsTNTRed)
         {
@@ -165,8 +174,6 @@ public class EnemyAI : MonoBehaviour
 
     #region Pantrol
     private Coroutine _newPaltro;
-    public void setPatrol(EnemyPatrol patrol)
-        => _patrol = patrol;
     public void pantrol()
     {
         if (!_canPatrol) return;
@@ -184,7 +191,7 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(_changeTargetPatrolDelay);
         Vector3 _point = _patrol.GetRandomPoint();
-        _path.setTarget(_point);
+        _path.setTarget(_point, target);
         _newPaltro = null;
     }
     #endregion
@@ -215,8 +222,7 @@ public class EnemyAI : MonoBehaviour
 
     private bool checkTag(Collider2D hit)
     {
-        List<string> _tagPlayer = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        if (_tagPlayer.Contains(hit.tag))
+        if (PlayerTag.checkTag(hit.tag))
         {
             var playerAI = hit.GetComponent<PlayerAI>();
             if (!playerAI.getDie()) return true;
@@ -296,13 +302,17 @@ public class EnemyAI : MonoBehaviour
     }
     public void setCanAction(bool amount) => _canAction = amount;
 
-    public void setCanPatrol(bool amount) => _canPatrol = amount;
-
     // Die
     public void setDie(bool amount) => _Die = amount;
     public bool getDie() => _Die;
 
     public void setIsCreate(bool amount) => _IsCreate = amount;
+
+    // Patrol
+    public void setCanPatrol(bool amount) => _canPatrol = amount;
+    public void setPatrol(EnemyPatrol patrol)
+        => _patrol = patrol;
+    public EnemyPatrol getPatrol() => _patrol;
     #endregion
 
     #region Draw

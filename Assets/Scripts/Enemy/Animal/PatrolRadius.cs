@@ -3,7 +3,6 @@ using UnityEngine;
 public class PatrolRadius : MonoBehaviour
 {
     [SerializeField] private AnimalAI _PatrolRadius;
-    
 
     #region Draw
     protected virtual void OnDrawGizmosSelected()

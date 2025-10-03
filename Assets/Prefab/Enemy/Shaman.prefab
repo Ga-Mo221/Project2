@@ -251,7 +251,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -493310475744596764, guid: e2b2113aea2506240a74ef95ee0aa384, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -453,11 +453,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 5
+  _Die: 0
   _MiniMapIcon: {fileID: 7582648135567740800}
   _HpBar: {fileID: 6707131708674553643}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
+  _animal: {fileID: 0}
+  _enemy: {fileID: 5070159884121745876}
+  _house: {fileID: 0}
+  _fire: {fileID: 0}
   _seemer: []
   _Detec: 0
 --- !u!114 &2820226669578216616
@@ -475,8 +480,10 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 5801490203395602349}
 --- !u!114 &5070159884121745876
@@ -494,22 +501,24 @@ MonoBehaviour:
   _type: 4
   _maxHealth: 100
   _currentHealth: 0
-  _speed: 3
-  _damage: 10
+  _speed: 2
+  _damage: 30
   _range: 9
-  _attackspeed: 2
-  _radius: 10
+  _attackspeed: 6
+  _radius: 13
   _Die: 0
-  critDropGold: 25
-  critDropMeat: 25
+  critDropGold: 5
+  critDropMeat: 10
   MeatDropObj: {fileID: 467420085528867754}
   GoldDropObj: {fileID: 3868642800222077936}
   _canPatrol: 1
   _patrol: {fileID: 0}
-  _changeTargetPatrolDelay: 1
+  _changeTargetPatrolDelay: 30
+  _IsCreate: 0
   _canAction: 0
   _Detec: 0
   target: {fileID: 0}
+  _currentTarget: {fileID: 0}
   _path: {fileID: 2820226669578216616}
   _GFX: {fileID: 5645205361640903114}
   _HPimg: {fileID: 7158781599106133089}
@@ -605,7 +614,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -811,6 +820,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7959856245690335049}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _enemy
+      value: 
+      objectReference: {fileID: 5070159884121745876}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e707bbc6b30c4364ca4f5b4bc7684c02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b73478c2293ab4a815873d44beccff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -285,7 +285,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -1824874913
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 8
+  m_FrontSortingLayer: 10
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 1
   m_BackSortingOrder: 0
@@ -442,18 +442,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitClass: 1
-  _maxHealth: 100
+  _level: 1
+  _maxHealth: 45
   _health: 0
-  _damage: 15
-  _maxSpeed: 6
+  _damage: 10
+  _maxSpeed: 4
   _range: 7
   _attackSpeedd: 1.5
-  _radius: 12
+  _slot: 3
+  _createTime_sec: 15
+  _radius: 9
   _radius_farm: 2.3
   _farmSpeed: 1
-  ShowInventory: 1
-  _maxRock: 5
-  _maxGold: 5
+  _itemScript: {fileID: 0}
+  _maxRock: 6
+  _maxGold: 10
   _maxWood: 15
   _maxMeat: 5
   _rock: 0
@@ -470,8 +473,9 @@ MonoBehaviour:
   _healEffect: {fileID: 6158406815071283477}
   path: {fileID: 3447614152607286350}
   target: {fileID: 0}
+  cacheTarget: {fileID: 0}
+  _creating: 0
   _Die: 0
-  _canRespawn: 0
   _detect: 0
   _isLock: 0
   _isAI: 1
@@ -481,7 +485,6 @@ MonoBehaviour:
   _healPlus: 0
   _AOEHeal: 0
   _canAction: 0
-  _itemScript: {fileID: 0}
   _spriteRender: {fileID: 8455842863801180344}
   _oderSpriterPoint: {fileID: 4228916002793492518}
   _shootPos: {fileID: 2187405661218019223}
@@ -497,7 +500,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _attack_count_SKILL: 5
+  _attack_count_SKILL: 10
   _In_Castle: 0
   _upDirection: 0
 --- !u!114 &7188117328976991693
@@ -528,6 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 20
   hits: []
+  _on: 1
 --- !u!114 &3447614152607286350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,8 +547,10 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 3183734772337768840}
 --- !u!1 &8598520064163797760
@@ -624,7 +630,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 7257567913506708742, guid: 4a50d1c119d185e4cb18d22e450ed3c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -755,6 +761,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7560415923998112990}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 911653575800237934}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

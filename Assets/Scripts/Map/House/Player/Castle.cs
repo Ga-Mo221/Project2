@@ -19,6 +19,8 @@ public class Castle : MonoBehaviour
     [SerializeField] private Transform _point;
     [Foldout("Inport")]
     [SerializeField] public Transform _In_Castle_Pos;
+    [Foldout("Inport")]
+    [SerializeField] private BuidingFire _fire;
 
 
     #region Inventory
@@ -59,15 +61,15 @@ public class Castle : MonoBehaviour
 
     #region Key
     [Foldout("Key Down")]
-    public bool _Q = false;
+    public bool _Q = false; // warrior
     [Foldout("Key Down")]
-    public bool _W = false;
+    public bool _W = false; // archer
     [Foldout("Key Down")]
-    public bool _E = false;
+    public bool _E = false; // lancer
     [Foldout("Key Down")]
-    public bool _A = false;
+    public bool _A = false; // healer
     [Foldout("Key Down")]
-    public bool _S = false;
+    public bool _S = false; // tnt
     [Foldout("Key Down")]
     public bool _V = false;
     #endregion
@@ -178,6 +180,7 @@ public class Castle : MonoBehaviour
 
         int _yOder = -(int)(_point.position.y * 100) + 10000;
         _sottingLayer.sortingOrder = _yOder;
+        _fire.oder(_yOder);
         _archer_Right_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;
         _archer_Center_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;
         _archer_Left_Obj.GetComponent<SpriteRenderer>().sortingOrder = _yOder + 1;

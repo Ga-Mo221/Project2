@@ -1,3 +1,4 @@
+using System.Collections;
 using Pathfinding;
 using UnityEngine;
 
@@ -6,8 +7,11 @@ public class FindPath : MonoBehaviour
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _range;
     [SerializeField] private bool _detect;
+    private float _waypointTolerance = 1.5f; // khoảng cách coi như đã đến waypoint
+    [SerializeField] private GameObject cacheobj;
     [SerializeField] private Vector3 _target;
     [SerializeField] private Vector3 _targetPos;
+    [SerializeField] private Vector3 _cacheTarget;
     [SerializeField] private bool _reachedEndOfPath = false; // đã đến path chưa
 
     private Path _path; // đường
@@ -16,7 +20,7 @@ public class FindPath : MonoBehaviour
     [SerializeField] private Animator _anim;
 
     // float
-    private float _speed = 600f; // lực đẩy
+    private float _force = 600f; // lực đẩy
 
     // int
     private int _currentWaypoint = 0;
@@ -26,6 +30,13 @@ public class FindPath : MonoBehaviour
     {
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
+        _target = RandomPosAround(transform, 3);
+    }
+
+    Vector3 RandomPosAround(Transform center, float radius)
+    {
+        Vector2 randomCircle = Random.insideUnitCircle * radius;
+        return center.position + new Vector3(randomCircle.x, randomCircle.y, 0f);
     }
 
 
@@ -37,73 +48,92 @@ public class FindPath : MonoBehaviour
         _targetPos = Vector3.zero;
     }
 
-    public void setTarget(Vector3 target) => _target = target;
-    public void setTargetPos(Vector3 targetPos) => _targetPos = targetPos;
-    public Vector3 getTargetPos() => _targetPos;
-    public Vector3 getTarget() => _target;
-    public void setDetec(bool detec) => _detect = detec;
-    public void setCurrentWaypoint(int currentWaypoint) => _currentWaypoint = currentWaypoint;
-    public void setReachedEndOfPath(bool reachedEndOfPath) => _reachedEndOfPath = reachedEndOfPath;
+    #region API
+    public void setTarget(Vector3 target, GameObject obj)
+    {
+        if (target != _cacheTarget)
+        {
+            _target = target;
+            //_reachedEndOfPath = false;
+            StartCoroutine(onpath());
+            _cacheTarget = target;
+            if (cacheobj != obj)
+            {
+                UpdatePath();
+                cacheobj = obj;
+            }
+        }
+    }
+    private IEnumerator onpath()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _reachedEndOfPath = false;
+    }
+
+    public void setDetec(bool detect) => _detect = detect;
     public void setPropety(float maxSpeed, float range)
     {
         _maxSpeed = maxSpeed;
         _range = range;
     }
+    #endregion
 
-    #region Create Path
+    public void setTargetPos(Vector3 targetPos) => _targetPos = targetPos;
+    public Vector3 getTargetPos() => _targetPos;
+    public Vector3 getTarget() => _target;
+    public void setCurrentWaypoint(int currentWaypoint) => _currentWaypoint = currentWaypoint;
+    public void setReachedEndOfPath(bool reachedEndOfPath) => _reachedEndOfPath = reachedEndOfPath;
+
+
+    #region Pathfinding
     public void UpdatePath()
     {
-        if (!_reachedEndOfPath || _targetPos != _target)
+        if (_seeker.IsDone())
             _seeker.StartPath(_rb.position, _target, OnPathComplete);
     }
-    #endregion
 
-    #region Reset Way Value
     private void OnPathComplete(Path p)
     {
-        if (p == null) return;
-        if (!p.error)
+        if (p.error)
         {
-            _path = p;
-            _currentWaypoint = 0;
-        }
-        else
-            Debug.LogWarning("Path error: " + p.error);
-    }
-    #endregion
-
-
-    #region Find the way
-    void FixedUpdate()
-    {
-        if (_path == null) return;
-
-        if (_reachedEndOfPath)
-        {
-            _rb.linearVelocity = Vector2.zero; // dừng máy
-            _anim.SetBool("Moving", !_reachedEndOfPath);
-        }
-        else
-            _anim.SetBool("Moving", !_reachedEndOfPath);
-
-        if (_currentWaypoint >= _path.vectorPath.Count)
-        {
-            if (!_reachedEndOfPath)
-            {
-                _reachedEndOfPath = true;
-                _rb.linearVelocity = Vector2.zero; // dừng máy
-                _targetPos = _target;
-            }
+            Debug.LogWarning($"[{gameObject.name}] Path error: {p.error}");
             return;
         }
 
-        _reachedEndOfPath = false;
+        _path = p;
+        _currentWaypoint = 0;
+    }
+    #endregion
+    
+    #region Movement
+    private void FixedUpdate()
+    {
+        if (_path == null) return;
+
+        // Nếu đã đến đích
+        if (_reachedEndOfPath)
+        {
+            _rb.linearVelocity = Vector2.zero;
+            if (_anim) _anim.SetBool("Moving", false);
+            return;
+        }
+
+        if (_anim) _anim.SetBool("Moving", true);
+
+        // Nếu vượt quá waypoint cuối
+        if (_currentWaypoint >= _path.vectorPath.Count)
+        {
+            _reachedEndOfPath = true;
+            _rb.linearVelocity = Vector2.zero;
+            _targetPos = _target;
+            return;
+        }
 
         Vector2 waypoint = (Vector2)_path.vectorPath[_currentWaypoint];
         Vector2 dir = (waypoint - _rb.position).normalized;
 
         // Dùng fixedDeltaTime trong FixedUpdate
-        Vector2 force = dir * _speed * Time.fixedDeltaTime;
+        Vector2 force = dir * _force * Time.fixedDeltaTime;
         _rb.AddForce(force, ForceMode2D.Force);
 
         // Giới hạn tốc độ (nếu dùng AddForce)
@@ -111,9 +141,55 @@ public class FindPath : MonoBehaviour
             _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
 
         float dist = Vector2.Distance(_rb.position, waypoint);
-        float edg = _detect ? _range - 0.8f : 1.5f;
+        float edg = _detect ? _range - 0.8f : _waypointTolerance;
         if (dist < edg)
             _currentWaypoint++;
     }
     #endregion
+
+
+    // #region Find the way
+    // void FixedUpdate()
+    // {
+    //     if (_path == null) return;
+
+    //     if (_reachedEndOfPath)
+    //     {
+    //         _rb.linearVelocity = Vector2.zero; // dừng máy
+    //         _anim.SetBool("Moving", !_reachedEndOfPath);
+    //     }
+    //     else
+    //         _anim.SetBool("Moving", !_reachedEndOfPath);
+
+    //     if (_currentWaypoint >= _path.vectorPath.Count)
+    //     {
+    //         if (!_reachedEndOfPath)
+    //         {
+    //             _reachedEndOfPath = true;
+    //             _rb.linearVelocity = Vector2.zero; // dừng máy
+    //             _targetPos = _target;
+    //             Debug.Log($"{_currentWaypoint} + {_path.vectorPath.Count}");
+    //         }
+    //         return;
+    //     }
+
+    //     _reachedEndOfPath = false;
+
+    //     Vector2 waypoint = (Vector2)_path.vectorPath[_currentWaypoint];
+    //     Vector2 dir = (waypoint - _rb.position).normalized;
+
+    //     // Dùng fixedDeltaTime trong FixedUpdate
+    //     Vector2 force = dir * _speed * Time.fixedDeltaTime;
+    //     _rb.AddForce(force, ForceMode2D.Force);
+
+    //     // Giới hạn tốc độ (nếu dùng AddForce)
+    //     if (_rb.linearVelocity.magnitude > _maxSpeed)
+    //         _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
+
+    //     float dist = Vector2.Distance(_rb.position, waypoint);
+    //     float edg = _detect ? _range - 0.8f : 1.5f;
+    //     if (dist < edg)
+    //         _currentWaypoint++;
+    // }
+    // #endregion
 }

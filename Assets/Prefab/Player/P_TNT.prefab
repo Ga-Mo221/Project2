@@ -80,7 +80,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -1824874913
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 8
+  m_FrontSortingLayer: 10
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 1
   m_BackSortingOrder: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -303196469882448319, guid: df33e350a2fc3e34db9733e6e300ac8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -285,7 +285,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e707bbc6b30c4364ca4f5b4bc7684c02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -372,7 +372,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0b73478c2293ab4a815873d44beccff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -397,10 +397,10 @@ GameObject:
   - component: {fileID: 4546838257081189840}
   - component: {fileID: 5823797820860527911}
   - component: {fileID: 6311222158700064186}
-  - component: {fileID: 3584560550669552905}
   - component: {fileID: 1174447356486810554}
   - component: {fileID: 1245706589315310408}
   - component: {fileID: 6242303459415372960}
+  - component: {fileID: 3584560550669552905}
   m_Layer: 7
   m_Name: P_TNT
   m_TagString: TNT
@@ -521,63 +521,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3584560550669552905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8385458861164146384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beac28fcdf2db14439398067e2e5f4a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unitClass: 4
-  _level: 1
-  _maxHealth: 100
-  _health: 0
-  _damage: 10
-  _maxSpeed: 6
-  _range: 1.5
-  _attackSpeedd: 2.5
-  _slot: 1
-  _createTime_sec: 5
-  _radius: 10
-  _radius_farm: 1.5
-  _farmSpeed: 1
-  _itemScript: {fileID: 0}
-  _maxRock: 5
-  _maxGold: 5
-  _maxWood: 5
-  _maxMeat: 5
-  _rock: 0
-  _gold: 0
-  _wood: 0
-  _meat: 0
-  _HPCanvas: {fileID: 6171374597759951799}
-  _OutLine: {fileID: 7561383490464782488}
-  _hpBar: {fileID: 7775672909582121213}
-  _selet: {fileID: 6655809814181263543}
-  _GFX: {fileID: 4781899603472012374}
-  _MiniMapIcon: {fileID: 6947727037239673675}
-  _anim: {fileID: 3755517668021824491}
-  _healEffect: {fileID: 0}
-  path: {fileID: 6242303459415372960}
-  target: {fileID: 0}
-  _creating: 0
-  _Die: 0
-  _detect: 0
-  _isLock: 0
-  _isAI: 1
-  _isTarget: 0
-  foundLowHealth: 0
-  _attackCount: 0
-  _healPlus: 0
-  _AOEHeal: 0
-  _canAction: 0
-  _spriteRender: {fileID: 506576841911101734}
-  _oderSpriterPoint: {fileID: 6778218175167639651}
 --- !u!114 &1174447356486810554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,10 +565,70 @@ MonoBehaviour:
   _maxSpeed: 0
   _range: 0
   _detect: 0
+  cacheobj: {fileID: 0}
   _target: {x: 0, y: 0, z: 0}
   _targetPos: {x: 0, y: 0, z: 0}
+  _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
   _anim: {fileID: 3755517668021824491}
+--- !u!114 &3584560550669552905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385458861164146384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beac28fcdf2db14439398067e2e5f4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitClass: 4
+  _level: 1
+  _maxHealth: 250
+  _health: 0
+  _damage: 100
+  _maxSpeed: 5
+  _range: 1.5
+  _attackSpeedd: 2.5
+  _slot: 7
+  _createTime_sec: 30
+  _radius: 9
+  _radius_farm: 1.5
+  _farmSpeed: 1
+  _itemScript: {fileID: 0}
+  _maxRock: 5
+  _maxGold: 5
+  _maxWood: 5
+  _maxMeat: 5
+  _rock: 0
+  _gold: 0
+  _wood: 0
+  _meat: 0
+  _HPCanvas: {fileID: 6171374597759951799}
+  _OutLine: {fileID: 7561383490464782488}
+  _hpBar: {fileID: 7775672909582121213}
+  _selet: {fileID: 6655809814181263543}
+  _GFX: {fileID: 4781899603472012374}
+  _MiniMapIcon: {fileID: 6947727037239673675}
+  _anim: {fileID: 3755517668021824491}
+  _healEffect: {fileID: 0}
+  path: {fileID: 6242303459415372960}
+  target: {fileID: 0}
+  cacheTarget: {fileID: 0}
+  _creating: 0
+  _Die: 0
+  _detect: 0
+  _isLock: 0
+  _isAI: 1
+  _isTarget: 0
+  foundLowHealth: 0
+  _attackCount: 0
+  _healPlus: 0
+  _AOEHeal: 0
+  _canAction: 0
+  _spriteRender: {fileID: 506576841911101734}
+  _oderSpriterPoint: {fileID: 6778218175167639651}
 --- !u!1001 &4491107178712406686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -768,6 +771,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1456639922367159675}
     m_Modifications:
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 3584560550669552905}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 

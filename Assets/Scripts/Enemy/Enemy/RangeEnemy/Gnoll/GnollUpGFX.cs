@@ -89,8 +89,7 @@ public class GnollUpGFX : MonoBehaviour
     #region Check Tag
     private bool checkTag(Collider2D col)
     {
-        List<string> _tagPlayer = new List<string> { "Warrior", "Archer", "Lancer", "TNT", "Healer" };
-        if (_tagPlayer.Contains(col.tag))
+        if (PlayerTag.checkTag(col.tag))
         {
             var player = col.GetComponent<PlayerAI>();
             if (player != null && !player.getDie())

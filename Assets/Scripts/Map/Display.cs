@@ -29,6 +29,8 @@ public class Display : MonoBehaviour
     private bool _IsDecoOrGold => _type == ModelType.Deco || _type == ModelType.Gold;
     public bool _IsEnemyHouse => _type == ModelType.EnemyHouse;
 
+    [SerializeField] private bool _Die = false;
+
     [ShowIf(nameof(_IsAnimalOrEnemyOrHouse))]
     [SerializeField] private GameObject _MiniMapIcon;
     [ShowIf(nameof(_IsAnimalOrEnemyOrHouse))]
@@ -42,6 +44,17 @@ public class Display : MonoBehaviour
 
     [ShowIf(nameof(_IsDecoOrGold))]
     [SerializeField] private GameObject _light;
+
+    [ShowIf(nameof(_IsAnimal))]
+    [SerializeField] private AnimalAI _animal;
+
+    [ShowIf(nameof(_IsEnemy))]
+    [SerializeField] private EnemyAI _enemy;
+
+    [ShowIf(nameof(_IsEnemyHouse))]
+    [SerializeField] private EnemyHouseHealth _house;
+    [ShowIf(nameof(_IsEnemyHouse))]
+    [SerializeField] private BuidingFire _fire;
 
     [SerializeField] public List<Rada> _seemer;
 
@@ -61,6 +74,66 @@ public class Display : MonoBehaviour
                 Debug.LogError($"[{transform.name}] [Display] Chưa gán 'Scipt Item'");
 
         off();
+
+        InvokeRepeating(nameof(updateSee), 1f, 1f);
+    }
+
+
+    private void updateSee()
+    {
+        checkDie();
+        if (_seemer.Count > 0 && !_Die)
+        {
+            onDisplay();
+        }
+        else
+        {
+            offDisplay();
+        }
+    }
+
+    void OnDisable()
+    {
+        offDisplay();
+    }
+
+    void OnDestroy()
+    {
+        offDisplay();
+    }
+
+    private void onDisplay()
+    {
+        if (_IsTree) onDisplayTree();
+        if (_IsRock) onDisplayRock();
+        if (_IsAnimal) onDisplayAnimal();
+        if (_IsGold) onDisplayGoldMine();
+        if (_IsBuiding) onCanCreate();
+        if (_IsEnemy) onDisplayEnemy();
+        if (_IsDeco) onDisplayDeco();
+        if (_IsEnemyHouse) onDisplayEnemyHouse();
+    }
+
+    private void offDisplay()
+    {
+        if (_IsTree) offDisplayTree();
+        if (_IsRock) offDisplayRock();
+        if (_IsAnimal) offDisplayAnimal();
+        if (_IsGold) offDisplayGoldMine();
+        if (_IsBuiding) offCanCreate();
+        if (_IsEnemy) offDisplayEnemy();
+        if (_IsDeco) offDisplayDeco();
+        if (_IsEnemyHouse) offDisplayEnemyHouse();
+    }
+
+    private void checkDie()
+    {
+        if (_IsEnemy)
+            _Die = _enemy.getDie();
+        if (_IsAnimal)
+            _Die = _animal.getDie();
+        if (_IsEnemyHouse)
+            _Die = _house._Die;
     }
 
     private void off()
@@ -77,108 +150,110 @@ public class Display : MonoBehaviour
     }
 
 
-    public void onDisplayTree()
+    private void onDisplayTree()
     {
         _Detec = true;
         _item._detec = true;
     }
 
-    public void offDisplayTree()
+    private void offDisplayTree()
     {
         _Detec = false;
         _item._detec = false;
     }
 
-    public void onDisplayRock()
+    private void onDisplayRock()
     {
         _Detec = true;
         _item._detec = true;
     }
 
-    public void offDisplayRock()
+    private void offDisplayRock()
     {
         _Detec = false;
         _item._detec = false;
     }
 
-    public void onDisplayGoldMine()
+    private void onDisplayGoldMine()
     {
         _item._detec = true;
         _Detec = true;
         _light.SetActive(true);
     }
 
-    public void offDisplayGoldMine()
+    private void offDisplayGoldMine()
     {
         _item._detec = false;
         _Detec = false;
         _light.SetActive(false);
     }
 
-    public void onDisplayAnimal()
+    private void onDisplayAnimal()
     {
         _Detec = true;
         _HpBar.SetActive(true);
         _MiniMapIcon.SetActive(true);
     }
 
-    public void offDisplayAnimal()
+    private void offDisplayAnimal()
     {
         _Detec = false;
         _HpBar.SetActive(false);
         _MiniMapIcon.SetActive(false);
     }
 
-    public void onCanCreate()
+    private void onCanCreate()
     {
         _check._see = true;
         _Detec = true;
         _check._anim.SetBool("Red", false);
     }
-    public void offCanCreate()
+    private void offCanCreate()
     {
         _check._see = false;
         _Detec = false;
         _check._anim.SetBool("Red", true);
     }
 
-    public void onDisplayEnemy()
+    private void onDisplayEnemy()
     {
         _Detec = true;
         _HpBar.SetActive(true);
         _MiniMapIcon.SetActive(true);
     }
 
-    public void offDisplayEnemy()
+    private void offDisplayEnemy()
     {
         _Detec = false;
         _HpBar.SetActive(false);
         _MiniMapIcon.SetActive(false);
     }
 
-    public void onDisplayDeco()
+    private void onDisplayDeco()
     {
         _Detec = true;
         _light.SetActive(true);
     }
 
-    public void offDisplayDeco()
+    private void offDisplayDeco()
     {
         _Detec = false;
         _light.SetActive(false);
     }
 
-    public void onDisplayEnemyHouse()
+    private void onDisplayEnemyHouse()
     {
         _Detec = true;
         _MiniMapIcon.SetActive(true);
         _HpBar.SetActive(true);
+        _fire.displayFireLight(true);
     }
 
-    public void offDisplayEnemyHouse()
+    private void offDisplayEnemyHouse()
     {
         _Detec = false;
         _MiniMapIcon.SetActive(false);
         _HpBar.SetActive(false);
+        _fire.displayFireLight(false);
     }
 }

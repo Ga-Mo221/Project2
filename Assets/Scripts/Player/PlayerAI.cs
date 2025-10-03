@@ -19,7 +19,6 @@ public class PlayerAI : MonoBehaviour
     public float _maxHealth = 100;
     [Foldout("Stats")]
     public float _health; // máu
-    [HideIf(nameof(IsHealer))]
     [Foldout("Stats")]
     public float _damage = 10; // sát thương
     [Foldout("Stats")]
@@ -96,6 +95,7 @@ public class PlayerAI : MonoBehaviour
     [Header("Target")]
     [SerializeField] private FindPath path;
     public GameObject target;
+    public GameObject cacheTarget;
 
     // bool
     [Foldout("Status")]
@@ -277,7 +277,7 @@ public class PlayerAI : MonoBehaviour
         {
             if (target != null)
             {
-                path.setTarget(target.transform.position);
+                path.setTarget(target.transform.position, target);
             }
             else
                 setDetect(false);
@@ -300,9 +300,9 @@ public class PlayerAI : MonoBehaviour
     {
         path.setTargetPos(targetPos.position);
     }
-    public virtual void setTarget(Vector3 pos, bool controller)
+    public virtual void setTarget(Vector3 pos, bool controller, bool farm = false)
     {
-        resetItemSelect();
+        resetItemSelect(farm);
         if (controller)
         {
             setIsAI(false);
@@ -310,11 +310,11 @@ public class PlayerAI : MonoBehaviour
             target = null;
         }
         else setIsTarget(true);
-        path.setTarget(pos);
+        path.setTarget(pos, target);
         _canAction = false;
     }
     public Vector3 getTarget() => path.getTarget();
-    public void resetItemSelect()
+    public void resetItemSelect(bool farm = false)
     {
         if (_itemScript != null)
         {
@@ -335,16 +335,18 @@ public class PlayerAI : MonoBehaviour
             }
             _itemScript = null;
         }
+
+        if (!farm) cacheTarget = null;
     }
     #endregion
 
 
     #region Move To Target
-    public bool moveToTarget(GameObject _nearest)
+    public bool moveToTarget(GameObject _nearest, bool farm = false)
     {
         if (_nearest != null)
         {
-            setTarget(_nearest.transform.position, false);
+            setTarget(_nearest.transform.position, false, farm);
             return true;
         }
         else return false;
@@ -559,87 +561,47 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
-    #region Find Animal
+    private GameObject FindNearest(string tag, System.Func<GameObject, bool> isValid)
+    {
+        GameObject nearest = null;
+        float minDist = Mathf.Infinity;
+
+        if (hits == null) return null;
+
+        foreach (var hit in hits)
+        {
+            if (hit == null) continue;
+            if (!hit.CompareTag(tag)) continue;
+
+            if (isValid(hit.gameObject))
+            {
+                float dist = Vector3.Distance(transform.position, hit.transform.position);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nearest = hit.gameObject;
+                }
+            }
+        }
+
+        return nearest;
+    }
+
     public GameObject findAnimals()
     {
-        GameObject nearest = null;
-        float minDist = Mathf.Infinity;
-        if (hits == null) return null;
-        foreach (var hit in hits)
-        {
-            if (hit == null) continue;
-            if (hit.CompareTag("Animal"))
-            {
-                var animalAI = hit.GetComponent<AnimalAI>();
-                if (!animalAI.getDie())
-                {
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    if (dist < minDist)
-                    {
-                        minDist = dist;
-                        nearest = hit.gameObject;
-                    }
-                }
-            }
-        }
-        return nearest;
+        return FindNearest("Animal", go => !go.GetComponent<AnimalAI>().getDie());
     }
-    #endregion
 
-
-    #region Find Enemy
     public GameObject findEnemys()
     {
-        GameObject nearest = null;
-        float minDist = Mathf.Infinity;
-        if (hits == null) return null;
-        foreach (var hit in hits)
-        {
-            if (hit == null) continue;
-            if (hit.CompareTag("Enemy"))
-            {
-                var enemy = hit.GetComponent<EnemyAI>();
-                if (!enemy.getDie())
-                {
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    if (dist < minDist)
-                    {
-                        minDist = dist;
-                        nearest = hit.gameObject;
-                    }
-                }
-            }
-        }
-        return nearest;
+        return FindNearest("Enemy", go => !go.GetComponent<EnemyAI>().getDie());
     }
-    #endregion
 
-    #region Find Enemy
     public GameObject findEnemyHouse()
     {
-        GameObject nearest = null;
-        float minDist = Mathf.Infinity;
-        if (hits == null) return null;
-        foreach (var hit in hits)
-        {
-            if (hit == null) continue;
-            if (hit.CompareTag("EnemyHouse"))
-            {
-                var enemy = hit.GetComponent<EnemyHouseHealth>();
-                if (!enemy._Die)
-                {
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
-                    if (dist < minDist)
-                    {
-                        minDist = dist;
-                        nearest = hit.gameObject;
-                    }
-                }
-            }
-        }
-        return nearest;
+        return FindNearest("EnemyHouse", go => !go.GetComponent<EnemyHouseHealth>()._Die);
     }
-    #endregion
+
 
 
     #region Find Players
@@ -687,9 +649,8 @@ public class PlayerAI : MonoBehaviour
     #region Go To Home
     public void goToHome(GameObject nearest)
     {
-        if (nearest == null && checkInventory())
+        if (nearest == null && cacheTarget == null && checkInventory())
         {
-            target = null;
             setIsTarget(false);
             float minDist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
             Vector3 _pos = Castle.Instance._In_Castle_Pos.position;
