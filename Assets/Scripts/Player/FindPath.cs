@@ -13,6 +13,8 @@ public class FindPath : MonoBehaviour
     [SerializeField] private Vector3 _targetPos;
     [SerializeField] private Vector3 _cacheTarget;
     [SerializeField] private bool _reachedEndOfPath = false; // đã đến path chưa
+    [SerializeField] private bool _Die = false;
+    [SerializeField] private bool _canMove = true;
 
     private Path _path; // đường
     public Seeker _seeker { get; set; }
@@ -55,7 +57,8 @@ public class FindPath : MonoBehaviour
         {
             _target = target;
             //_reachedEndOfPath = false;
-            StartCoroutine(onpath());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(onpath());
             _cacheTarget = target;
             if (cacheobj != obj)
             {
@@ -69,6 +72,7 @@ public class FindPath : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _reachedEndOfPath = false;
     }
+    
 
     public void setDetec(bool detect) => _detect = detect;
     public void setPropety(float maxSpeed, float range)
@@ -77,6 +81,9 @@ public class FindPath : MonoBehaviour
         _range = range;
     }
     #endregion
+
+    public void setDie(bool amount) => _Die = amount;
+    public void setCanMove(bool amount) => _canMove = amount;
 
     public void setTargetPos(Vector3 targetPos) => _targetPos = targetPos;
     public Vector3 getTargetPos() => _targetPos;
@@ -134,7 +141,8 @@ public class FindPath : MonoBehaviour
 
         // Dùng fixedDeltaTime trong FixedUpdate
         Vector2 force = dir * _force * Time.fixedDeltaTime;
-        _rb.AddForce(force, ForceMode2D.Force);
+        if (!_Die && _canMove)
+            _rb.AddForce(force, ForceMode2D.Force);
 
         // Giới hạn tốc độ (nếu dùng AddForce)
         if (_rb.linearVelocity.magnitude > _maxSpeed)

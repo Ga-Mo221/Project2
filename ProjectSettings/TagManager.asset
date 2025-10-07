@@ -54,23 +54,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Water
+  - name: Tilemap
     uniqueID: 598445413
-    locked: 0
-  - name: Water_Animations
-    uniqueID: 120042267
-    locked: 0
-  - name: Ground
-    uniqueID: 543206953
-    locked: 0
-  - name: Ground+
-    uniqueID: 2495322405
-    locked: 0
-  - name: Ground++
-    uniqueID: 899710533
-    locked: 0
-  - name: Ground+++
-    uniqueID: 3215465777
     locked: 0
   - name: Character
     uniqueID: 3352498237
@@ -83,6 +68,9 @@ TagManager:
     locked: 0
   - name: FogOfWar
     uniqueID: 2470092383
+    locked: 0
+  - name: Effect
+    uniqueID: 3305218469
     locked: 0
   - name: UI-
     uniqueID: 525305935

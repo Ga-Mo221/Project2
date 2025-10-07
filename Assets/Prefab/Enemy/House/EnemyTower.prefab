@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1513213687
-  m_SortingLayer: 8
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ed8481e65f7605f4eb42f5a17ccc6da0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -215,6 +215,8 @@ GameObject:
   - component: {fileID: 6356739559074962276}
   - component: {fileID: 1864634508761206114}
   - component: {fileID: 4544399143522091852}
+  - component: {fileID: 7415070529325975760}
+  - component: {fileID: 8066278222854855334}
   m_Layer: 6
   m_Name: EnemyTower
   m_TagString: EnemyHouse
@@ -285,7 +287,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -5443547844040458350, guid: 9486148dc97233140a98a6e4cec1963d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -381,7 +383,6 @@ MonoBehaviour:
   _type: 7
   _Die: 0
   _MiniMapIcon: {fileID: 157157017772184325}
-  _HpBar: {fileID: 6520399217208510562}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
@@ -389,6 +390,7 @@ MonoBehaviour:
   _enemy: {fileID: 0}
   _house: {fileID: 1864634508761206114}
   _fire: {fileID: 8609426416298919333}
+  _outLine: {fileID: 8128939584759546783}
   _seemer: []
   _Detec: 0
 --- !u!114 &1864634508761206114
@@ -408,6 +410,7 @@ MonoBehaviour:
   _HPimg: {fileID: 7219412749106680616}
   _Die: 0
   _fire: {fileID: 8609426416298919333}
+  _HP_obj: {fileID: 6520399217208510562}
 --- !u!114 &4544399143522091852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,12 +424,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _canUpdateHP: 1
   _Die: 0
   _Detec: 0
   _maxHealth: 100
   _currentHealth: 0
   _alarmRadius: 15
   _playerCountAssist: 5
+  _warningTime: 10
   _assistRadius: 50
   _wood: 10
   _rock: 10
@@ -436,6 +441,140 @@ MonoBehaviour:
   _GnollPrefab: {fileID: 5878241667905650849, guid: f77251e675a5b2a4fbe638b3382288a7, type: 3}
   _HpBar: {fileID: 6520399217208510562}
   _Icon: {fileID: 157157017772184325}
+  _audio: {fileID: 8066278222854855334}
+  _display: {fileID: 6356739559074962276}
+--- !u!82 &7415070529325975760
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7272504071303792536}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &8066278222854855334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7272504071303792536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 1
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 1
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 0
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
 --- !u!1 &8308814313783389408
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +652,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 62
   m_Sprite: {fileID: -196405934202487797, guid: 769727a0d6195394b98a8d5068c5ae4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1045,6 +1184,11 @@ PrefabInstance:
 --- !u!4 &1470954678158979340 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 7623402640825565378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8128939584759546783 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 7623402640825565378}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8688780977301101942

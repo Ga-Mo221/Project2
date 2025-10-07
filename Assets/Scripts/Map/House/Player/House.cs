@@ -7,10 +7,12 @@ public class House : MonoBehaviour
     [SerializeField] private HouseType _type;
     private bool _IsTower => _type == HouseType.Tower;
     private bool _IsStorage => _type == HouseType.Storage;
+    [Header("stas")]
     [SerializeField] private int _level = 1;
 
     public bool _new = true;
 
+    [SerializeField] private bool _canUpdateHP = true;
     public float _maxHealth = 100;
     public float _currentHealth = 0;
     [SerializeField] private Image _HpImg;
@@ -18,7 +20,7 @@ public class House : MonoBehaviour
     [ShowIf(nameof(_IsTower))]
     public InTower _inTower;
     [ShowIf(nameof(_IsTower))]
-    [SerializeField] private ArcherUP _archer;
+    public ArcherUP _archer;
 
     [ShowIf(nameof(_IsStorage))]
     public int _wood = 20;
@@ -29,9 +31,13 @@ public class House : MonoBehaviour
     [ShowIf(nameof(_IsStorage))]
     public int _gold = 20;
 
+    public UnitAudio _audio;
+
     protected virtual void Start()
     {
-        _currentHealth = _maxHealth;
+        if (_canUpdateHP)
+            _currentHealth = _maxHealth;
+        updateHP();
     }
 
     public void setLevel(int level)
@@ -65,11 +71,14 @@ public class House : MonoBehaviour
             // health
             _maxHealth += GameManager.Instance.Info._buidingHealthBounus;
             _currentHealth += GameManager.Instance.Info._buidingHealthBounus;
-            updateHP();
         }
+        if (_count != 0)
+            _audio.PlayLevelUpSound();
+        updateHP();
         _level += _count;
     }
     public void updateHP() => _HpImg.fillAmount = _currentHealth / _maxHealth;
     public virtual void setActive(bool amount) { }
     public virtual bool getActive() { return false; }
+    public int getLevel() => _level;
 }

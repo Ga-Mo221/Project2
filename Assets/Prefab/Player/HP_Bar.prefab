@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 6496454969966702490}
   - component: {fileID: 6161422697112141018}
   - component: {fileID: 9118813143836048137}
+  - component: {fileID: 5176453393459185786}
   m_Layer: 5
   m_Name: HP_Bar
   m_TagString: Untagged
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6161422697112141018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +192,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdf053949ce5e74da3e020ef3d02e7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5176453393459185786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779614661162694953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbb5bb07c1dd9f42865e63e3891d830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: 0
+  _Hp_img: {fileID: 6177570343345529443}
+  _xanh: {fileID: 21300000, guid: 6574f21993aa0c844b5cebb3140fc7b6, type: 3}
+  _do: {fileID: 21300000, guid: 493b57427c6c4cd45ab97798f0900308, type: 3}
 --- !u!1 &8679177074759045480
 GameObject:
   m_ObjectHideFlags: 0

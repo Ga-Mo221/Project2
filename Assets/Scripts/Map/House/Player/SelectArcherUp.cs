@@ -61,6 +61,7 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.target = null;
             _scrip.setTargetPos(transform);
             _scrip._In_Castle = false;
+            _scrip.setUpTower(false);
             Castle.Instance._archer_Right.SetActive(true);
             _scrip.setIsAI(true);
             Castle.Instance._archer_Right = null;
@@ -86,6 +87,7 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTargetPos(transform);
             _scrip.target = null;
             _scrip._In_Castle = false;
+            _scrip.setUpTower(false);
             Castle.Instance._archer_Center.SetActive(true);
             _scrip.setIsAI(true);
             Castle.Instance._archer_Center = null;
@@ -111,6 +113,7 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTargetPos(transform);
             _scrip.target = null;
             _scrip._In_Castle = false;
+            _scrip.setUpTower(false);
             Castle.Instance._archer_Left.SetActive(true);
             _scrip.setIsAI(true);
             Castle.Instance._archer_Left = null;
@@ -127,6 +130,7 @@ public class SelectArcherUp : MonoBehaviour
         if (collision == null) return;
         if (collision.CompareTag("Archer"))
         {
+            bool ok = false;
             var _script = collision.GetComponent<ArcherGFX>();
             if (_script._In_Castle)
             {
@@ -134,18 +138,26 @@ public class SelectArcherUp : MonoBehaviour
                 {
                     Castle.Instance._archer_Right = collision.gameObject;
                     Castle.Instance._archer_Right_Obj.SetActive(true);
+                    ok = true;
                 }
                 else if (_archer_center && _script._upDirection == UpDirection.Center)
                 {
                     Castle.Instance._archer_Center = collision.gameObject;
                     Castle.Instance._archer_Center_Obj.SetActive(true);
+                    ok = true;
                 }
                 else if (_archer_Left && _script._upDirection == UpDirection.Left)
                 {
                     Castle.Instance._archer_Left = collision.gameObject;
                     Castle.Instance._archer_Left_Obj.SetActive(true);
+                    ok = true;
                 }
-                collision.gameObject.SetActive(false);
+                if (ok)
+                {
+                    _script.setUpTower(true);
+                    collision.gameObject.SetActive(false);
+                    Castle.Instance._audio.PlayArcherUpSound();
+                }
             }
         }
     }

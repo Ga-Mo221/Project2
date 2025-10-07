@@ -184,6 +184,8 @@ GameObject:
   - component: {fileID: 7159550999280298707}
   - component: {fileID: 5801490203395602349}
   - component: {fileID: 578161674485471899}
+  - component: {fileID: 4664655986664610112}
+  - component: {fileID: 2349103863463546723}
   m_Layer: 12
   m_Name: Shaman_GFX
   m_TagString: Untagged
@@ -251,7 +253,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -493310475744596764, guid: e2b2113aea2506240a74ef95ee0aa384, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -306,6 +308,138 @@ MonoBehaviour:
   _prefeb: {fileID: 3817710931250672567, guid: e2d0453ca378d38449a45204ede5aea3, type: 3}
   _point: {fileID: 2374429609263990312}
   _listPrefeb: []
+--- !u!82 &4664655986664610112
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645205361640903114}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2349103863463546723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645205361640903114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 1
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
 --- !u!1 &6014549478580385976
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,8 +454,8 @@ GameObject:
   - component: {fileID: 2195611199720696203}
   - component: {fileID: 234181298573305030}
   - component: {fileID: 2820226669578216616}
-  - component: {fileID: 5070159884121745876}
   - component: {fileID: 267227330793421485}
+  - component: {fileID: 5070159884121745876}
   m_Layer: 12
   m_Name: Shaman
   m_TagString: Enemy
@@ -455,7 +589,6 @@ MonoBehaviour:
   _type: 5
   _Die: 0
   _MiniMapIcon: {fileID: 7582648135567740800}
-  _HpBar: {fileID: 6707131708674553643}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
@@ -463,6 +596,7 @@ MonoBehaviour:
   _enemy: {fileID: 5070159884121745876}
   _house: {fileID: 0}
   _fire: {fileID: 0}
+  _outLine: {fileID: 2473123039405155524}
   _seemer: []
   _Detec: 0
 --- !u!114 &2820226669578216616
@@ -485,7 +619,23 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
+  _Die: 0
+  _canMove: 1
   _anim: {fileID: 5801490203395602349}
+--- !u!114 &267227330793421485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014549478580385976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188ff852f0ff7a340bd41ced2b9ac5a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyAI: {fileID: 5070159884121745876}
+  _HP_obj: {fileID: 6707131708674553643}
 --- !u!114 &5070159884121745876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,11 +659,12 @@ MonoBehaviour:
   _Die: 0
   critDropGold: 5
   critDropMeat: 10
-  MeatDropObj: {fileID: 467420085528867754}
-  GoldDropObj: {fileID: 3868642800222077936}
+  MeatDropObj: {fileID: 2498588738947707289}
+  GoldDropObj: {fileID: 8151812317891196703}
   _canPatrol: 1
   _patrol: {fileID: 0}
   _changeTargetPatrolDelay: 30
+  _canUpdateHP: 1
   _IsCreate: 0
   _canAction: 0
   _Detec: 0
@@ -526,20 +677,9 @@ MonoBehaviour:
   _outLine: {fileID: 2473123039405155524}
   _HPBar: {fileID: 6707131708674553643}
   _MinimapIcon: {fileID: 7582648135567740800}
+  _audio: {fileID: 2349103863463546723}
+  _display: {fileID: 234181298573305030}
   _spriteRender: {fileID: 7159550999280298707}
---- !u!114 &267227330793421485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6014549478580385976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 188ff852f0ff7a340bd41ced2b9ac5a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyAI: {fileID: 5070159884121745876}
 --- !u!1 &7582648135567740800
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +754,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 9
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

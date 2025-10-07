@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class Rada : MonoBehaviour
 {
-    [SerializeField] private float _radius = 20f;
+    public float _radius = 20f;
     [SerializeField] private Collider2D[] hits;
     [SerializeField] private bool _on = true;
+    [SerializeField] private bool _Die = false;
 
     void Start()
     {
-        InvokeRepeating(nameof(display), 1f, 1f);
+        InvokeRepeating(nameof(display), 0.2f, 0.2f);
     }
 
     void OnDisable()
@@ -34,9 +35,9 @@ public class Rada : MonoBehaviour
             var script = hit.GetComponent<Display>();
             if (script == null) continue;
 
-            if (script._seemer.Contains(this))
+            if (script.checkSeemer(this))
             {
-                script._seemer.Remove(this);
+                script.removeSeemer(this);
             }
         }
     }
@@ -55,18 +56,18 @@ public class Rada : MonoBehaviour
             if (script == null) continue;
 
             float dist = Vector2.Distance(transform.position, hit.transform.position);
-            bool isSeeing = script._seemer.Contains(this);
+            bool isSeeing = script.checkSeemer(this);
 
             if (dist < _radius)
             {
                 if (!isSeeing)
-                    script._seemer.Add(this);
+                    script.addSeemer(this);
             }
             else
             {
                 if (isSeeing)
                 {
-                    script._seemer.Remove(this);
+                    script.removeSeemer(this);
                 }
             }
         }
@@ -85,4 +86,7 @@ public class Rada : MonoBehaviour
     }
 
     public void setOn(bool amount) => _on = amount;
+
+    public void setDie(bool amount) => _Die = amount;
+    public bool getDie() => _Die;
 }

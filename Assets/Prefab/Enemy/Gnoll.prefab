@@ -160,7 +160,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 9
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -322,7 +322,6 @@ MonoBehaviour:
   _type: 5
   _Die: 0
   _MiniMapIcon: {fileID: 5416600081201093134}
-  _HpBar: {fileID: 4602452647896770074}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
@@ -330,6 +329,7 @@ MonoBehaviour:
   _enemy: {fileID: 7114177376197230553}
   _house: {fileID: 0}
   _fire: {fileID: 0}
+  _outLine: {fileID: 8350688159689839361}
   _seemer: []
   _Detec: 0
 --- !u!114 &8699079983890791037
@@ -352,6 +352,8 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
+  _Die: 0
+  _canMove: 1
   _anim: {fileID: 8626246881234972018}
 --- !u!114 &7114177376197230553
 MonoBehaviour:
@@ -376,11 +378,12 @@ MonoBehaviour:
   _Die: 0
   critDropGold: 10
   critDropMeat: 20
-  MeatDropObj: {fileID: 3894141374659694652}
-  GoldDropObj: {fileID: 6382806257805309765}
+  MeatDropObj: {fileID: 6013338496028842881}
+  GoldDropObj: {fileID: 8487664750673356824}
   _canPatrol: 1
   _patrol: {fileID: 0}
   _changeTargetPatrolDelay: 30
+  _canUpdateHP: 1
   _IsCreate: 0
   _canAction: 0
   _Detec: 0
@@ -393,6 +396,8 @@ MonoBehaviour:
   _outLine: {fileID: 8350688159689839361}
   _HPBar: {fileID: 4602452647896770074}
   _MinimapIcon: {fileID: 5416600081201093134}
+  _audio: {fileID: 8169237713657425744}
+  _display: {fileID: 1636379010051863356}
   _spriteRender: {fileID: 3547518405877449291}
 --- !u!114 &2551644031869030968
 MonoBehaviour:
@@ -407,6 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAI: {fileID: 7114177376197230553}
+  _HP_obj: {fileID: 4602452647896770074}
 --- !u!1 &6382806257805309765
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +542,8 @@ GameObject:
   - component: {fileID: 3547518405877449291}
   - component: {fileID: 8626246881234972018}
   - component: {fileID: 5155938778595061664}
+  - component: {fileID: 112718066722330661}
+  - component: {fileID: 8169237713657425744}
   m_Layer: 0
   m_Name: Gnoll_GFX
   m_TagString: Untagged
@@ -603,7 +611,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -196405934202487797, guid: 769727a0d6195394b98a8d5068c5ae4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -614,7 +622,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &8626246881234972018
 Animator:
@@ -658,6 +666,138 @@ MonoBehaviour:
   _prefeb: {fileID: 3786757481127478664, guid: 83a670b1d92c7c5408812e7692b98f96, type: 3}
   _point: {fileID: 4299834743051945519}
   _listPrefeb: []
+--- !u!82 &112718066722330661
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445748888465163246}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &8169237713657425744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445748888465163246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 1
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
 --- !u!1001 &6064532427625504563
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,10 +12,10 @@ public class PlayerHitDamage : MonoBehaviour
     public void setPlayerAI(PlayerAI script) => _script = script;
     public void setTarget(GameObject obj) => target = obj;
 
-    public void attack(bool isPlayer, float damage, GameObject obj)
+    public void attack(bool isPlayer, float damage, GameObject obj, bool isArown = false)
     {
         _isPlayerAi = isPlayer;
-        if (_isPlayerAi)
+        if (_isPlayerAi && !isArown)
             target = _script.target;
         else
             target = obj;

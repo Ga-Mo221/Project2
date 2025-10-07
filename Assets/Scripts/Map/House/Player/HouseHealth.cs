@@ -1,3 +1,4 @@
+using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class HouseHealth : MonoBehaviour
     private bool IsStorage => _type == HouseType.Storage;
     private bool IsCastle => _type == HouseType.Castle;
     private Animator _anim;
-
+    [SerializeField] private bool _tutorial = false;
     [SerializeField] private BuidingFire _fire;
 
     [SerializeField] private bool _canDetec = false;
@@ -67,10 +68,26 @@ public class HouseHealth : MonoBehaviour
         }
         else _canDetec = true;
         _anim = GetComponent<Animator>();
+        if (_HPcanvas == null && !IsCastle)
+            Debug.LogError($"[{transform.name}] [HouseHealth] Chưa gán 'GameObject HPbar'!");
+        else if (!IsCastle)
+            _HPcanvas.SetActive(false);
 
         InvokeRepeating(nameof(fireDie), 1f, 1f);
+
+        if (_tutorial)
+            StartCoroutine(checkDie());
     }
 
+
+    private IEnumerator checkDie()
+    {
+        yield return new WaitForSeconds(1f);
+        takeDamage(0f);
+    }
+
+
+    #region Load Count Create Buiding
     public void loadCount()
     {
         if (_time > 0)
@@ -87,6 +104,7 @@ public class HouseHealth : MonoBehaviour
             _imgLoad.fillAmount = 0f; // chắc chắn thanh load về 0
             _canvas.SetActive(false);
             _canCreate.SetActive(false);
+            _house._audio.StopCreatingSound();
             if (IsTower)
             {
                 _ButtonArcherUP.SetActive(true);
@@ -113,15 +131,22 @@ public class HouseHealth : MonoBehaviour
             }
         }
     }
+    #endregion
 
+
+    #region  Take Damage
     public void takeDamage(float damage)
     {
+        GameManager.Instance.onDefen();
         if (!IsCastle)
         {
             _house._currentHealth -= damage;
             _house.updateHP();
             if (_house._currentHealth <= 0)
             {
+                _rada.setDie(true);
+                _house._currentHealth = 0;
+                CameraShake.Instance.ShakeCamera(0.5f, 0.3f);
                 _anim.SetBool("Die", true);
                 setCanDetec(false);
                 if (IsTower)
@@ -135,6 +160,7 @@ public class HouseHealth : MonoBehaviour
                 }
                 if (IsStorage)
                 {
+                    Debug.Log($"{transform.name} Die");
                     Castle.Instance._maxWood -= _house._wood;
                     Castle.Instance._maxRock -= _house._rock;
                     Castle.Instance._maxMeat -= _house._meat;
@@ -159,7 +185,13 @@ public class HouseHealth : MonoBehaviour
                 }
                 _light.SetActive(false);
                 _HPcanvas.SetActive(false);
+                _house._audio.PlayDieSound();
             }
+
+            _HPcanvas.SetActive(true);
+            if (_hideHP != null)
+                StopCoroutine(_hideHP);
+            _hideHP = StartCoroutine(hideHP());
         }
         else
         {
@@ -167,12 +199,36 @@ public class HouseHealth : MonoBehaviour
             GameManager.Instance.UIupdateHPCastle();
             if (Castle.Instance._currentHealth <= 0)
             {
+                CameraShake.Instance.ShakeCamera(1f, 0.5f);
                 _anim.SetBool("Die", true);
                 setCanDetec(false);
+                StartCoroutine(GameOver());
+                Castle.Instance._audio.PlayDieSound();
             }
         }
     }
+    #endregion
 
+
+    private Coroutine _hideHP;
+    private IEnumerator hideHP()
+    {
+        if (!_canDetec)
+            _HPcanvas.SetActive(false);
+        yield return new WaitForSeconds(5.5f);
+        _HPcanvas.SetActive(false);
+    }
+
+
+    private IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(GameManager.Instance._displayGameOverTime);
+        GameManager.Instance.setWin(false);
+        GameManager.Instance.setGameOver(true);
+    }
+
+
+    #region Display Fire Die
     private void fireDie()
     {
         float currentHealth;
@@ -195,8 +251,21 @@ public class HouseHealth : MonoBehaviour
         if (currentHealth / maxHealth < 0.3)
         {
             _fire.gameObject.SetActive(true);
+            if (!IsCastle)
+                _house._audio.PlayFireSound();
+            else
+                Castle.Instance._audio.PlayFireSound();
         }
         else
+        {
             _fire.gameObject.SetActive(false);
+            if (!IsCastle)
+                _house._audio.StopFireSound();
+            else
+                Castle.Instance._audio.StopFireSound();
+        }
     }
+    #endregion
+
+    public void PlayCreatingSound() => _house._audio.PlayerCreatingSound();
 }

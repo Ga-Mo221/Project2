@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class Moba2DCameraController : MonoBehaviour
 {
+    [Header("Movement")]
     public bool canMove = true;
-    [ShowIf(nameof(canMove))]
-    [SerializeField] public float moveSpeed = 20f;   // tốc độ di chuyển
-    [ShowIf(nameof(canMove))]
-    [SerializeField] public float edgeSize = 10f;    // khoảng cách mép màn hình để di chuyển
+    [ShowIf(nameof(canMove))][SerializeField] private float moveSpeed = 20f;
+    [ShowIf(nameof(canMove))][SerializeField] private float edgeSize = 10f;
+
+    [Header("Zoom")]
     public bool canZoom = true;
-    [ShowIf(nameof(canZoom))]
-    [SerializeField] public float zoomSpeed = 2.5f;    // tốc độ zoom
-    [ShowIf(nameof(canZoom))]
-    [SerializeField] public float minZoom = 10f;      // zoom nhỏ nhất (orthographicSize)
-    [ShowIf(nameof(canZoom))]
-    [SerializeField] public float maxZoom = 25f;     // zoom lớn nhất
+    [ShowIf(nameof(canZoom))][SerializeField] private float zoomSpeed = 2.5f;
+    [ShowIf(nameof(canZoom))][SerializeField] private float minZoom = 10f;
+    [ShowIf(nameof(canZoom))][SerializeField] private float maxZoom = 25f;
+
+    [SerializeField] private CameraLimit _cameraLimit;
 
     private Camera cam;
 
@@ -25,47 +25,60 @@ public class Moba2DCameraController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.getGameOver()) return;
+        if (SelectionBox.Instance.getTutorial()) return;
         Vector3 pos = transform.position;
 
-        if (canMove)
+        // --- Di chuyển ---
+        if (canMove && !CursorManager.Instance.ChoseUI)
         {
-            pos += new Vector3(0, 0, 0) * moveSpeed * Time.deltaTime;
-
-            // --- Di chuyển bằng mép màn hình ---
-            if (Input.mousePosition.x >= Screen.width - edgeSize) // mép phải
-                pos.x += moveSpeed * Time.deltaTime;
-            if (Input.mousePosition.x <= edgeSize) // mép trái
-                pos.x -= moveSpeed * Time.deltaTime;
-            if (Input.mousePosition.y >= Screen.height - edgeSize) // mép trên
-                pos.y += moveSpeed * Time.deltaTime;
-            if (Input.mousePosition.y <= edgeSize) // mép dưới
-                pos.y -= moveSpeed * Time.deltaTime;
+            if (Input.mousePosition.x >= Screen.width - edgeSize) pos.x += moveSpeed * Time.deltaTime;
+            if (Input.mousePosition.x <= edgeSize) pos.x -= moveSpeed * Time.deltaTime;
+            if (Input.mousePosition.y >= Screen.height - edgeSize) pos.y += moveSpeed * Time.deltaTime;
+            if (Input.mousePosition.y <= edgeSize) pos.y -= moveSpeed * Time.deltaTime;
         }
 
+        // --- Zoom ---
         if (canZoom)
         {
-            // --- Zoom theo con lăn chuột ---
             float scroll = Input.mouseScrollDelta.y;
             if (scroll != 0)
             {
-                // lấy vị trí chuột trong world
                 Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-                // zoom in/out
                 float oldSize = cam.orthographicSize;
                 cam.orthographicSize -= scroll * zoomSpeed;
                 cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
 
-                // tỉ lệ thay đổi
                 float delta = oldSize - cam.orthographicSize;
-
-                // dịch camera theo hướng từ cam đến chuột để "zoom vào chỗ chuột"
                 Vector3 dir = mouseWorldPos - transform.position;
                 pos += dir * (delta / oldSize);
             }
         }
 
-        if (canMove || canZoom)
-            transform.position = pos;
+        // --- Giới hạn vùng camera ---
+        if (_cameraLimit.useLimit)
+        {
+            float camHalfHeight = cam.orthographicSize;
+            float camHalfWidth = camHalfHeight * cam.aspect;
+
+            pos.x = Mathf.Clamp(pos.x, _cameraLimit.minBound.x + camHalfWidth, _cameraLimit.maxBound.x - camHalfWidth);
+            pos.y = Mathf.Clamp(pos.y, _cameraLimit.minBound.y + camHalfHeight, _cameraLimit.maxBound.y - camHalfHeight);
+        }
+
+        transform.position = pos;
+
+        SpaceClick();
+    }
+
+
+    // space
+    private void SpaceClick()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            var pos = Castle.Instance.transform.position;
+            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        }
     }
 }

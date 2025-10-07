@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,13 +8,13 @@ public class EnemyAI : MonoBehaviour
     public EnemyType _type;
     private bool IsTNTRed => _type == EnemyType.TNT;
 
-    
+
     [Foldout("Stats")]
     public float _maxHealth = 100;
     [Foldout("Stats")]
     public float _currentHealth = 0;
     [Foldout("Stats")]
-    [SerializeField] private float _speed = 6f;
+    public float _speed = 6f;
     [Foldout("Stats")]
     public float _damage = 10f;
     [Foldout("Stats")]
@@ -36,10 +35,10 @@ public class EnemyAI : MonoBehaviour
     [Range(0, 100)][SerializeField] private int critDropMeat = 25;
     [Foldout("Die")]
     [HideIf(nameof(IsTNTRed))]
-    [SerializeField] private GameObject MeatDropObj; // respawn thi tat
+    [SerializeField] private DropItem MeatDropObj; // respawn thi tat
     [Foldout("Die")]
     [HideIf(nameof(IsTNTRed))]
-    [SerializeField] private GameObject GoldDropObj; // respawn thi tat
+    [SerializeField] private DropItem GoldDropObj; // respawn thi tat
 
     [Foldout("Patrol")]
     [SerializeField] private bool _canPatrol = true;
@@ -48,6 +47,8 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Patrol")]
     [SerializeField] private float _changeTargetPatrolDelay = 1f;
 
+    [Foldout("Status")]
+    [SerializeField] private bool _canUpdateHP = true;
     [Foldout("Status")]
     [SerializeField] private bool _IsCreate = false;
     [Foldout("Status")]
@@ -74,13 +75,20 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private GameObject _HPBar;
     [Foldout("Other")]
     [SerializeField] private GameObject _MinimapIcon;
+    [Foldout("Other")]
+    [SerializeField] private UnitAudio _audio;
+    [Foldout("Other")]
+    [SerializeField] private Display _display;
 
     private Rigidbody2D _rb;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _currentHealth = _maxHealth;
+
+        if (_canUpdateHP)
+            _currentHealth = _maxHealth;
+
         _path.setPropety(_speed, _range);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
         if (!_IsCreate)
@@ -106,7 +114,14 @@ public class EnemyAI : MonoBehaviour
                 if (target == null)
                     target = _currentTarget;
                 if (gameObject.activeSelf)
-                    _path.setTarget(target.transform.position, target);
+                {
+                    if (target == Castle.Instance.gameObject)
+                    {
+                        _path.setTarget(Castle.Instance._In_Castle_Pos.position, target);
+                    }
+                    else
+                        _path.setTarget(target.transform.position, target);
+                }
             }
             else
                 setDetect(false);
@@ -120,12 +135,18 @@ public class EnemyAI : MonoBehaviour
     #region Respawn
     public void respawn(Vector3 pos)
     {
+        Debug.Log($"{transform.name} Respawn");
+        _canUpdateHP = true;
+        _path.setDie(false);
+        _path.setCanMove(true);
         transform.position = pos;
         setCanPatrol(true);
         if (!IsTNTRed)
         {
-            MeatDropObj.SetActive(false);
-            GoldDropObj.SetActive(false);
+            MeatDropObj.gameObject.SetActive(false);
+            MeatDropObj.ResetPickUp();
+            GoldDropObj.gameObject.SetActive(false);
+            GoldDropObj.ResetPickUp();
         }
         _currentHealth = _maxHealth;
         setDie(false);
@@ -155,6 +176,7 @@ public class EnemyAI : MonoBehaviour
         _MinimapIcon.SetActive(false);
         _HPBar.SetActive(false);
         target = null;
+        _path.setDie(true);
         _path.setTarget(transform.position, target);
 
         if (!IsTNTRed)
@@ -167,6 +189,11 @@ public class EnemyAI : MonoBehaviour
             else
                 _anim.SetInteger("Type", 3);
         }
+        else
+        {
+            CameraShake.Instance.ShakeCamera();
+        }
+        playDieSound();
         _anim.SetBool("Die", true);
     }
     #endregion
@@ -247,12 +274,18 @@ public class EnemyAI : MonoBehaviour
     private Coroutine _attackSpawn;
     public virtual void attack()
     {
-        float dist = Vector3.Distance(transform.position, target.transform.position);
+        float dist = 0;
+        if (target == Castle.Instance.gameObject)
+        {
+            dist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+        }
+        else dist = Vector3.Distance(transform.position, target.transform.position);
         if (dist <= _range)
         {
             _canAction = true;
             if (_attackSpawn == null)
-                _attackSpawn = StartCoroutine(attackSpawn(_attackspeed));
+                if (gameObject.activeInHierarchy)
+                    _attackSpawn = StartCoroutine(attackSpawn(_attackspeed));
         }
         else _canAction = false;
     }
@@ -313,6 +346,9 @@ public class EnemyAI : MonoBehaviour
     public void setPatrol(EnemyPatrol patrol)
         => _patrol = patrol;
     public EnemyPatrol getPatrol() => _patrol;
+
+    // path can move
+    public void setCanMove(bool amount) => _path.setCanMove(amount);
     #endregion
 
     #region Draw
@@ -326,7 +362,24 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _range);
     }
     #endregion
+
+
+    #region Play Sound Die
+    public void playDieSound()
+    {
+        if (_display._Detec)
+            _audio.PlayDieSound();
+    }
+    #endregion
+    #region Play Sound Attack
+    public void playAttackSound()
+    {
+        if (_display._Detec)
+            _audio.PlayAttackSound();
+    }
+    #endregion
 }
+
 
 public enum EnemyType
 {

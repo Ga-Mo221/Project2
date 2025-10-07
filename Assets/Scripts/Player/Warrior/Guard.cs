@@ -8,7 +8,7 @@ public class Guard : MonoBehaviour
     public void farm()
     {
         target = _script.target;
-        if (target == null) return; 
+        if (target == null) return;
         if (target.CompareTag("Item"))
             target.GetComponent<Item>().farm(_script);
     }
@@ -19,4 +19,6 @@ public class Guard : MonoBehaviour
         => _script.offDetec();
     public void onDetec()
         => _script.onDetec();
+    public void onCanMove() => _script.setCanMove(true);
+    public void offCanMove() => _script.setCanMove(false);
 }

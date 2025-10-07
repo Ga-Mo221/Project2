@@ -13,13 +13,18 @@ public class TNTGFX : PlayerAI
             Debug.LogError("[TNTGFX] Chưa gán 'SpriteRender'");
         if (!_oderSpriterPoint)
             Debug.LogError("[TNTGFX] Chưa gán '_oderSpriterPoint'");
+
+        addCastle(Castle.Instance._ListTNT);
     }
 
     protected override void Update()
     {
         _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
         base.Update();
+    }
 
+    public override void Ai()
+    {
         if (!getIsAI()) return;
         target = findEnemys();
         if (target == null)

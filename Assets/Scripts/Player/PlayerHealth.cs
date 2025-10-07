@@ -1,3 +1,4 @@
+using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -8,11 +9,16 @@ public class PlayerHealth : MonoBehaviour
     private bool IsWarriorOrLancer => _unitClass == UnitType.Warrior || _unitClass == UnitType.Lancer;
     [ShowIf(nameof(IsWarriorOrLancer))]
     [SerializeField] private float Armor = 2f;
+    [SerializeField] private GameObject _HP_obj;
 
     private PlayerAI _playerAI;
 
     void Start()
     {
+        if (_HP_obj == null)
+            Debug.LogError($"[{transform.name}] [PlayerHealth] Chưa gán 'GameObject HPbar'!");
+        else
+            _HP_obj.SetActive(false);
         _playerAI = GetComponent<PlayerAI>();
         if (!_playerAI)
             Debug.LogError($"[{transform.parent.name}] [PlayerHealth] Chưa lấy được 'PlayerAI'");
@@ -32,5 +38,19 @@ public class PlayerHealth : MonoBehaviour
             GameManager.Instance.UIupdatePlayerValue();
             _playerAI.Dead();
         }
+
+        _HP_obj.SetActive(true);
+        if (_hideHP != null)
+            StopCoroutine(_hideHP);
+        _hideHP = StartCoroutine(hideHP());
+    }
+
+    private Coroutine _hideHP;
+    private IEnumerator hideHP()
+    {
+        if (_playerAI.getDie())
+            _HP_obj.SetActive(false);
+        yield return new WaitForSeconds(5.5f);
+        _HP_obj.SetActive(false);
     }
 }

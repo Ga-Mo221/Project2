@@ -15,7 +15,7 @@ public class Defense : MonoBehaviour
     public void farm()
     {
         target = _lancer.target;
-        if (target == null) return; 
+        if (target == null) return;
         if (target.CompareTag("Item"))
             target.GetComponent<Item>().farm(_lancer);
     }
@@ -25,4 +25,6 @@ public class Defense : MonoBehaviour
     public void off() => _lancer.offDetec();
 
     public void on() => _lancer.onDetec();
+    public void onCanMove() => _lancer.setCanMove(true);
+    public void offCanMove() => _lancer.setCanMove(false);
 }

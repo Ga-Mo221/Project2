@@ -12,26 +12,36 @@ public class LoadCreate : MonoBehaviour
     [SerializeField] private GameObject _w_Avata;
     [Foldout("References")]
     [SerializeField] private GameObject _w_icon;
+    [Foldout("References")]
+    [SerializeField] private bool W;
 
     [Foldout("References")]
     [SerializeField] private GameObject _A_Avata;
     [Foldout("References")]
     [SerializeField] private GameObject _A_icon;
+    [Foldout("References")]
+    [SerializeField] private bool A;
 
     [Foldout("References")]
     [SerializeField] private GameObject _L_Avata;
     [Foldout("References")]
     [SerializeField] private GameObject _L_icon;
+    [Foldout("References")]
+    [SerializeField] private bool L;
 
     [Foldout("References")]
     [SerializeField] private GameObject _T_Avata;
     [Foldout("References")]
     [SerializeField] private GameObject _T_icon;
+    [Foldout("References")]
+    [SerializeField] private bool T;
 
     [Foldout("References")]
     [SerializeField] private GameObject _H_Avata;
     [Foldout("References")]
     [SerializeField] private GameObject _H_icon;
+    [Foldout("References")]
+    [SerializeField] private bool H;
 
     [Foldout("References")]
     [SerializeField] private Image _loadImg;
@@ -64,11 +74,18 @@ public class LoadCreate : MonoBehaviour
                 var player = _listCreate[0].GetComponent<PlayerAI>();
                 player.setCreating(false);
                 GameManager.Instance.UIloadPlayer();
+                GameManager.Instance.UIupdatePlayerValue();
                 _load = 1;
                 _listCreate.RemoveAt(0);
                 _value--;
                 _valueText.text = _value.ToString();
                 elapsed = 0;
+
+                if (W) GameManager.Instance._warriorValue++;
+                if (A) GameManager.Instance._archerValue++;
+                if (L) GameManager.Instance._lancerValue++;
+                if (T) GameManager.Instance._tntValue++;
+                if (H) GameManager.Instance._healerValue++;
             }
         }
         if (_listCreate.Count == 0 && _create)
@@ -97,6 +114,11 @@ public class LoadCreate : MonoBehaviour
                 _T_icon.SetActive(false);
                 _H_Avata.SetActive(false);
                 _H_icon.SetActive(false);
+                W = true;
+                A = false;
+                L = false;
+                T = false;
+                H = false;
                 break;
             case UnitType.Archer:
                 _w_Avata.SetActive(false);
@@ -109,6 +131,11 @@ public class LoadCreate : MonoBehaviour
                 _T_icon.SetActive(false);
                 _H_Avata.SetActive(false);
                 _H_icon.SetActive(false);
+                W = false;
+                A = true;
+                L = false;
+                T = false;
+                H = false;
                 break;
             case UnitType.Lancer:
                 _w_Avata.SetActive(false);
@@ -121,6 +148,11 @@ public class LoadCreate : MonoBehaviour
                 _T_icon.SetActive(false);
                 _H_Avata.SetActive(false);
                 _H_icon.SetActive(false);
+                W = false;
+                A = false;
+                L = true;
+                T = false;
+                H = false;
                 break;
             case UnitType.TNT:
                 _w_Avata.SetActive(false);
@@ -133,6 +165,11 @@ public class LoadCreate : MonoBehaviour
                 _T_icon.SetActive(true);
                 _H_Avata.SetActive(false);
                 _H_icon.SetActive(false);
+                W = false;
+                A = false;
+                L = false;
+                T = true;
+                H = false;
                 break;
             case UnitType.Healer:
                 _w_Avata.SetActive(false);
@@ -145,11 +182,20 @@ public class LoadCreate : MonoBehaviour
                 _T_icon.SetActive(false);
                 _H_Avata.SetActive(true);
                 _H_icon.SetActive(true);
+                W = false;
+                A = false;
+                L = false;
+                T = false;
+                H = true;
                 break;
         }
     }
 
-    public void resetValue() => _value = 0;
+    public void resetValue()
+    {
+        _value = 0;
+        _valueText.text = _value.ToString();
+    }
 
     public void addValue(GameObject obj)
     {

@@ -11,9 +11,12 @@ public class Heal : MonoBehaviour
     }
 
     public void setActive() => _heal.setActive();
-    
+
     public void heal()
     {
         _heal.heals();
     }
+    
+    public void onCanMove() => _heal.setCanMove(true);
+    public void offCanMove() => _heal.setCanMove(false);
 }

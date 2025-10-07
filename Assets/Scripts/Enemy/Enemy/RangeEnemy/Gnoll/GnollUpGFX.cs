@@ -12,7 +12,7 @@ public class GnollUpGFX : MonoBehaviour
     [SerializeField] private float _radius = 10f;
     [SerializeField] private float _attackspeed = 2f;
     [SerializeField] private List<GameObject> _listPrefeb = new List<GameObject>();
-    
+
 
     private Animator _anim;
 
@@ -136,4 +136,7 @@ public class GnollUpGFX : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _radius);
     }
     #endregion
+
+    public float getRadius() => _radius;
+    public float getDamage() => _damage;
 }

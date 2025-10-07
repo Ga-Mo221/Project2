@@ -13,13 +13,18 @@ public class WarriorGFX : PlayerAI
             Debug.LogError("[WarriorGFX] Chưa gán 'SpriteRender'");
         if (!_oderSpriterPoint)
             Debug.LogError("[WarriorGFX] Chưa gán '_oderSpriterPoint'");
+
+        addCastle(Castle.Instance._ListWarrior);
     }
 
     protected override void Update()
     {
         _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
         base.Update();
+    }
 
+    public override void Ai()
+    {
         if (!getIsAI()) return;
         target = findEnemys();
         if (target == null)
@@ -35,33 +40,7 @@ public class WarriorGFX : PlayerAI
         }
         else if (cacheTarget == null)
         {
-            cacheTarget = findItems();
-            target = cacheTarget;
-            if (target != null && _itemScript == null)
-            {
-                setDetect(false);
-                moveToTarget(target, true);
-                _itemScript = target.GetComponent<Item>();
-                if (_itemScript._type != ItemType.Gold)
-                    _itemScript._seleted = true;
-                else
-                {
-                    if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
-                    {
-                        bool exists = false;
-                        foreach (var hit in _itemScript._Farmlist)
-                        {
-                            if (hit == this)
-                            {
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if (!exists)
-                            _itemScript._Farmlist.Add(this);
-                    }
-                }
-            }
+            find();
         }
 
         goToHome(target);
@@ -73,6 +52,41 @@ public class WarriorGFX : PlayerAI
         }
         if (target == null) return;
         attack(target);
+    }
+
+
+    private void find()
+    {
+        cacheTarget = findItems();
+        target = cacheTarget;
+        if (target != null && _itemScript == null)
+        {
+            setDetect(false);
+            moveToTarget(target, true);
+            _itemScript = target.GetComponent<Item>();
+            if (_itemScript._type != ItemType.Gold)
+            {
+                if (!_itemScript.add(this))
+                    return;
+            }
+            else
+            {
+                if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
+                {
+                    bool exists = false;
+                    foreach (var hit in _itemScript._Farmlist)
+                    {
+                        if (hit == this)
+                        {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists)
+                        _itemScript._Farmlist.Add(this);
+                }
+            }
+        }
     }
 
     public void offDetec()

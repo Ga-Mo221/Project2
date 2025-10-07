@@ -1,8 +1,5 @@
 using UnityEngine;
-//using UnityEngine.UI;
 using System.Collections.Generic;
-//using System.Linq;
-//using UnityEditor.Experimental.GraphView;
 
 public class SelectionBox : MonoBehaviour
 {
@@ -12,9 +9,9 @@ public class SelectionBox : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Canvas canvas;                // Canvas chứa boxVisual
     [SerializeField] private RectTransform boxVisual;      // UI Image (RectTransform) làm box
-    public GameObject _moveTo;
     [SerializeField] private GameObject _radialMenu;
     private bool _singleSelected = false;
+    [SerializeField] private bool _tutorial = false;
 
     private Vector2 startScreenPos;
     private Vector2 endScreenPos;
@@ -33,12 +30,18 @@ public class SelectionBox : MonoBehaviour
         if (boxVisual) boxVisual.gameObject.SetActive(false);
     }
 
+    #region Update
     void Update()
     {
+        if (GameManager.Instance.getGameOver()) return;
+
         if (Input.GetMouseButtonDown(0) && !CursorManager.Instance.ChoseUI)
         {
             if (!CursorManager.Instance.Select)
+            {
                 GameManager.Instance.UIsetActiveButtonUpgrade(false);
+                GameManager.Instance._selectBox.gameObject.SetActive(false);
+            }
             if (!Castle.Instance._V)
             {
                 _singleSelected = false;
@@ -56,15 +59,15 @@ public class SelectionBox : MonoBehaviour
                 Vector3 worldPos;
                 RectTransform rect = _radialMenu.GetComponent<RectTransform>();
                 RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                    rect, 
-                    Input.mousePosition, 
-                    Camera.main, 
+                    rect,
+                    Input.mousePosition,
+                    Camera.main,
                     out worldPos
                 );
 
                 _radialMenu.transform.position = worldPos;
                 var radial = _radialMenu.GetComponent<RadialMenu>();
-                radial.setPos(worldPos);
+                radial.SetPos(worldPos);
                 _radialMenu.SetActive(true);
             }
         }
@@ -96,16 +99,39 @@ public class SelectionBox : MonoBehaviour
             worldPos.z = 0; // nếu bạn muốn ở mặt phẳng 2D (z=0)
             if (chosen.Count != 0)
             {
-                GameObject _co = Instantiate(_moveTo, worldPos, Quaternion.identity);
-                _co.GetComponent<MoveTo>().SetChosen(chosen,false);
+                MoveToManager.Instance.CreateMovePoint(chosen, worldPos, -1f);
+                if (_tutorial && CursorManager.Instance.ChoseUI)
+                {
+                    Time.timeScale = 1f;
+                    TutorialSetUp.Instance.PlayerMoveController();
+                    CursorManager.Instance.resetChoseUI();
+                }
                 foreach (var obj in chosen)
                 {
-                    obj.GetComponent<PlayerAI>().setTarget(worldPos, true);
+                    if (obj.activeSelf)
+                        obj.GetComponent<PlayerAI>().setTarget(worldPos, true);
                 }
             }
         }
-    }
 
+        if (_tutorial)
+        {
+            if (chosen.Count > 0)
+                if (TutorialSetUp.Instance._selectBox.activeSelf)
+                {
+                    TutorialSetUp.Instance._selectBox.SetActive(false);
+                    TutorialSetUp.Instance._isSelect = true;
+                }
+        }
+    }
+    #endregion
+
+
+    public void setTutorial(bool amount) => _tutorial = amount;
+    public bool getTutorial() => _tutorial;
+
+
+    #region  Draw CanvasRect
     // Vẽ hộp trên Canvas: chuyển screen -> local của Canvas rồi set anchoredPosition/sizeDelta
     private void UpdateVisual(Vector2 screenStart, Vector2 screenEnd)
     {
@@ -128,7 +154,10 @@ public class SelectionBox : MonoBehaviour
         boxVisual.anchoredPosition = center;
         boxVisual.sizeDelta = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
     }
+    #endregion
 
+
+    #region  Remove ListChosen
     private void cleanListChosen()
     {
         foreach (var obj in chosen)
@@ -137,7 +166,10 @@ public class SelectionBox : MonoBehaviour
         }
         chosen = new List<GameObject>();
     }
+    #endregion
 
+
+    #region get Player in CanvasRect
     // Lấy các object có tag và kiểm tra bằng WorldToScreenPoint
     private void SelectObjects(Vector2 screenStart, Vector2 screenEnd)
     {
@@ -166,7 +198,10 @@ public class SelectionBox : MonoBehaviour
 
         //Debug.Log($"[{transform.name}] [SelectionBox] Selected {chosen.Count} objects");
     }
+    #endregion
 
+
+    #region Get For Unit Class
     private GameObject[] getUnitClass()
     {
         List<GameObject> selectable = new List<GameObject>();
@@ -194,7 +229,10 @@ public class SelectionBox : MonoBehaviour
 
         return selectable.ToArray();
     }
+    #endregion
 
+
+    #region Select Object
     private void SelectObject()
     {
         GameObject _obj = CursorManager.Instance._hoverGameobject;
@@ -212,11 +250,15 @@ public class SelectionBox : MonoBehaviour
             }
         }
     }
+    #endregion
 
+
+    #region Get Screen Rect
     private Rect GetScreenRect(Vector2 a, Vector2 b)
     {
         Vector2 min = Vector2.Min(a, b);
         Vector2 max = Vector2.Max(a, b);
         return new Rect(min, max - min);
     }
+    #endregion
 }

@@ -1,8 +1,10 @@
+using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
 
 public class CheckGroundCreate : MonoBehaviour
 {
+    [SerializeField] private bool _CreateNow = false;
     [SerializeField] private bool Tower = true;
     [SerializeField] private SpriteRenderer _TowerGFX;
     [ShowIf(nameof(Tower))]
@@ -24,7 +26,6 @@ public class CheckGroundCreate : MonoBehaviour
     [SerializeField] private GameObject _inPos3;
 
     [SerializeField] private GameObject _light;
-    [SerializeField] private GameObject _HPBar;
     [SerializeField] private GameObject _buttonOK;
     [SerializeField] private GameObject _buttonCancel;
     [SerializeField] private GameObject _ingLoad;
@@ -73,7 +74,6 @@ public class CheckGroundCreate : MonoBehaviour
         _groundColider.enabled = false;
         _light.SetActive(false);
         _outline.SetActive(false);
-        _HPBar.SetActive(false);
         if (Tower)
         {
             _inPos.SetActive(false);
@@ -85,6 +85,18 @@ public class CheckGroundCreate : MonoBehaviour
             _inPos2.SetActive(false);
             _inPos3.SetActive(false);
         }
+
+        if (_CreateNow)
+        {
+            Debug.Log($"Create {transform.parent.name}");
+            StartCoroutine(createNow());
+        }
+    }
+
+    private IEnumerator createNow()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Create();
     }
 
     void Update()
@@ -130,6 +142,14 @@ public class CheckGroundCreate : MonoBehaviour
         _canCreate = false;
     }
 
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (collision.CompareTag("Buiding")) return;
+        _anim.SetBool("Red", true);
+        _canCreate = false;
+    }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision == null) return;
@@ -137,6 +157,8 @@ public class CheckGroundCreate : MonoBehaviour
         _anim.SetBool("Red", false);
         _canCreate = true;
     }
+
+    public bool getCanCreate() => _canCreate;
 
     public void Create()
     {
@@ -168,7 +190,6 @@ public class CheckGroundCreate : MonoBehaviour
             _houshealth.setCanDetec(true);
             _groundColider.enabled = true;
             _outline.SetActive(true);
-            _HPBar.SetActive(true);
             _buttonOK.SetActive(false);
             _buttonCancel.SetActive(false);
             _ingLoad.SetActive(true);
@@ -180,6 +201,7 @@ public class CheckGroundCreate : MonoBehaviour
             AstarPath.active.Scan();
             GameManager.Instance.setCanBuy(true);
             gameObject.SetActive(false);
+            _houshealth.PlayCreatingSound();
         }
     }
 

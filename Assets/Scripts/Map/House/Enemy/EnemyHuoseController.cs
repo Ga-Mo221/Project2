@@ -11,6 +11,7 @@ public class EnemyHuoseController : MonoBehaviour
     private bool IsCastle => _type == HouseType.Castle;
 
     [Header("Stats")]
+    [SerializeField] private bool _canUpdateHP = true;
     [SerializeField] private bool _Die = false;
     [SerializeField] private bool _Detec = false;
     public float _maxHealth = 100f;
@@ -21,29 +22,33 @@ public class EnemyHuoseController : MonoBehaviour
     [SerializeField] private float _alarmRadius = 20f; // khoảng cách báo động
     [HideIf(nameof(IsTower))]
     [SerializeField] private int _playerCountAssist  = 5; // báo động khi có trên 5 kẻ địch lại gần;
+    [HideIf(nameof(IsTower))]
+    public float _warningTime = 10f;
 
     [ShowIf(nameof(IsStorage))]
     [SerializeField] private float _assistRadius = 50f; // khoảng cách lính trong phạm vi được gọi đến
 
     [Header("Storage")]
     [ShowIf(nameof(IsStorage))]
-    [SerializeField] private int _wood = 10;
+    public int _wood = 10;
     [ShowIf(nameof(IsStorage))]
-    [SerializeField] private int _rock = 10;
+    public int _rock = 10;
     [ShowIf(nameof(IsStorage))]
-    [SerializeField] private int _meat = 10;
+    public int _meat = 10;
     [ShowIf(nameof(IsStorage))]
-    [SerializeField] private int _gold = 10;
+    public int _gold = 10;
 
     [Header("GnollUp")]
     [ShowIf(nameof(IsTower))]
-    [SerializeField] private GameObject _GnollUp;
+    public GameObject _GnollUp;
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _GnollPrefab;
 
     [Header("Other")]
     [SerializeField] private GameObject _HpBar;
     [SerializeField] private GameObject _Icon;
+    public UnitAudio _audio;
+    public Display _display;
 
     private List<EnemyAI> _enemyAssitList = new List<EnemyAI>();
 
@@ -52,7 +57,9 @@ public class EnemyHuoseController : MonoBehaviour
         if (IsStorage)
             EnemyHouse.Instance._listSpawnPoint.Add(transform);
 
-        _currentHealth = _maxHealth;
+        if (_canUpdateHP)
+            _currentHealth = _maxHealth;
+            
         if (IsTower && _GnollUp != null && _GnollPrefab != null)
         {
             float damage = _GnollPrefab.GetComponent<GnollGFX>()._damage;
@@ -88,6 +95,7 @@ public class EnemyHuoseController : MonoBehaviour
         _Die = true;
         _HpBar.SetActive(false);
         _Icon.SetActive(false);
+        CameraShake.Instance.ShakeCamera(1f, 0.5f);
         if (IsStorage)
         {
             Castle.Instance._wood += _wood;
@@ -96,6 +104,18 @@ public class EnemyHuoseController : MonoBehaviour
             Castle.Instance._gold += _gold;
             GameManager.Instance.UIupdateReferences();
         }
+        if (IsCastle)
+        {
+            StartCoroutine(GameOver());
+        }
+    }
+
+
+    private IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(GameManager.Instance._displayGameOverTime);
+        GameManager.Instance.setWin(true);
+        GameManager.Instance.setGameOver(true);
     }
 
 
@@ -131,8 +151,10 @@ public class EnemyHuoseController : MonoBehaviour
 
     private IEnumerator Call()
     {
-        yield return new WaitForSeconds(5f);
         Debug.Log("Bao Dong Do");
+        _audio.PlayWarningSound();
+        GameManager.Instance.UIonWarning(this);
+        yield return new WaitForSeconds(_warningTime);
         if (_Detec)
         {
             if (!IsCastle)
@@ -164,6 +186,9 @@ public class EnemyHuoseController : MonoBehaviour
         }
         _enemyAssitList = new List<EnemyAI>();
     }
+
+
+    public bool getDie() => _Die;
 
 
     private void OnDrawGizmosSelected()

@@ -4,6 +4,7 @@ public class InTower : MonoBehaviour
 {
     public GameObject _ArcherUp;
     public GameObject _ArcherUp_Obj;
+    [SerializeField] private UnitAudio _audio;
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class InTower : MonoBehaviour
         _scrip.target = null;
         _scrip.setTargetPos(transform);
         _scrip._In_Castle = false;
+        _scrip.setUpTower(false);
         _ArcherUp.SetActive(true);
         _scrip.setIsAI(true);
         _ArcherUp = null;
@@ -52,9 +54,10 @@ public class InTower : MonoBehaviour
                 {
                     _ArcherUp = collision.gameObject;
                     _ArcherUp_Obj.SetActive(true);
+                    _script.setUpTower(true);
+                    collision.gameObject.SetActive(false);
+                    _audio.PlayArcherUpSound();
                 }
-
-                collision.gameObject.SetActive(false);
             }
         }
     }

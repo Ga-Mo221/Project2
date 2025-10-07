@@ -18,24 +18,28 @@ public class ApplyItem : MonoBehaviour
             if (_script._rock > 0 && Castle.Instance._rock < Castle.Instance._maxRock)
             {
                 Castle.Instance._rock += _script._rock;
+                GameManager.Instance._rock += _script._rock;
                 _script._rock = 0;
                 _aply = true;
             }
             if (_script._wood > 0 && Castle.Instance._wood < Castle.Instance._maxWood)
             {
                 Castle.Instance._wood += _script._wood;
+                GameManager.Instance._wood += _script._wood;
                 _script._wood = 0;
                 _aply = true;
             }
             if (_script._gold > 0 && Castle.Instance._gold < Castle.Instance._maxGold)
             {
                 Castle.Instance._gold += _script._gold;
+                GameManager.Instance._gold += _script._gold;
                 _script._gold = 0;
                 _aply = true;
             }
             if (_script._meat > 0 && Castle.Instance._meat < Castle.Instance._maxMeat)
             {
                 Castle.Instance._meat += _script._meat;
+                GameManager.Instance._meat += _script._meat;
                 _script._meat = 0;
                 _aply = true;
             }

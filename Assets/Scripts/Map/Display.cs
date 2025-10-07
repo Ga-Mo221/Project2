@@ -28,13 +28,12 @@ public class Display : MonoBehaviour
     public bool _IsBuiding => _type == ModelType.Buiding;
     private bool _IsDecoOrGold => _type == ModelType.Deco || _type == ModelType.Gold;
     public bool _IsEnemyHouse => _type == ModelType.EnemyHouse;
+    public bool _IsDecoOrBuiding => _type == ModelType.Deco || _type == ModelType.Buiding;
 
     [SerializeField] private bool _Die = false;
 
     [ShowIf(nameof(_IsAnimalOrEnemyOrHouse))]
     [SerializeField] private GameObject _MiniMapIcon;
-    [ShowIf(nameof(_IsAnimalOrEnemyOrHouse))]
-    [SerializeField] private GameObject _HpBar;
 
     [ShowIf(nameof(_IsItem))]
     [SerializeField] private Item _item;
@@ -56,7 +55,10 @@ public class Display : MonoBehaviour
     [ShowIf(nameof(_IsEnemyHouse))]
     [SerializeField] private BuidingFire _fire;
 
-    [SerializeField] public List<Rada> _seemer;
+    [HideIf(nameof(_IsDecoOrBuiding))]
+    [SerializeField] private GameObject _outLine;
+
+    [SerializeField] private List<Rada> _seemer = new List<Rada>();
 
     public bool _Detec = false;
 
@@ -66,22 +68,55 @@ public class Display : MonoBehaviour
         {
             if (!_MiniMapIcon)
                 Debug.LogError($"[{transform.name}] [Display] Chưa gán 'Minimap Icon'");
-            if (!_HpBar)
-                Debug.LogError($"[{transform.name}] [Display] Chưa gán 'HpBar'");
         }
         if (_IsItem)
             if (!_item)
                 Debug.LogError($"[{transform.name}] [Display] Chưa gán 'Scipt Item'");
 
+        if (!_IsDeco && !_IsBuiding && !_outLine)
+            Debug.LogError($"[{transform.name}] [Display] Chưa gán 'Out Line'");
+
         off();
 
-        InvokeRepeating(nameof(updateSee), 1f, 1f);
+        InvokeRepeating(nameof(updateSee), 0.2f, 0.2f);
     }
+
+
+    private bool checkDist()
+    {
+        bool _isSee = false;
+        foreach (var seemer in _seemer)
+        {
+            if (!seemer.getDie())
+            {
+                float dis = Vector3.Distance(transform.position, seemer.transform.position);
+                if (dis < seemer._radius)
+                    _isSee = true;
+            }
+        }
+
+        return _isSee;
+    }
+
+
+    public void addSeemer(Rada rada)
+        => _seemer.Add(rada);
+
+
+    public bool removeSeemer(Rada rada)
+        => _seemer.Remove(rada);
+
+    public bool checkSeemer(Rada rada)
+        => _seemer.Contains(rada);
 
 
     private void updateSee()
     {
         checkDie();
+        if (!checkDist())
+        {
+            _seemer = new List<Rada>();
+        }
         if (_seemer.Count > 0 && !_Die)
         {
             onDisplay();
@@ -140,13 +175,14 @@ public class Display : MonoBehaviour
     {
         if (_IsAnimalOrEnemyOrHouse)
         {
-            if (_HpBar != null)
-                _HpBar.SetActive(false);
             if (_MiniMapIcon != null)
                 _MiniMapIcon.SetActive(false);
         }
         if (_IsDecoOrGold)
             _light.SetActive(false);
+
+        if (!_IsDecoOrBuiding)
+            _outLine.SetActive(false);
     }
 
 
@@ -154,24 +190,28 @@ public class Display : MonoBehaviour
     {
         _Detec = true;
         _item._detec = true;
+        _outLine.SetActive(true);
     }
 
     private void offDisplayTree()
     {
         _Detec = false;
         _item._detec = false;
+        _outLine.SetActive(false);
     }
 
     private void onDisplayRock()
     {
         _Detec = true;
         _item._detec = true;
+        _outLine.SetActive(true);
     }
 
     private void offDisplayRock()
     {
         _Detec = false;
         _item._detec = false;
+        _outLine.SetActive(false);
     }
 
     private void onDisplayGoldMine()
@@ -179,6 +219,7 @@ public class Display : MonoBehaviour
         _item._detec = true;
         _Detec = true;
         _light.SetActive(true);
+        _outLine.SetActive(true);
     }
 
     private void offDisplayGoldMine()
@@ -186,27 +227,29 @@ public class Display : MonoBehaviour
         _item._detec = false;
         _Detec = false;
         _light.SetActive(false);
+        _outLine.SetActive(false);
     }
 
     private void onDisplayAnimal()
     {
         _Detec = true;
-        _HpBar.SetActive(true);
         _MiniMapIcon.SetActive(true);
+        _outLine.SetActive(true);
     }
 
     private void offDisplayAnimal()
     {
         _Detec = false;
-        _HpBar.SetActive(false);
         _MiniMapIcon.SetActive(false);
+        _outLine.SetActive(false);
     }
 
     private void onCanCreate()
     {
         _check._see = true;
         _Detec = true;
-        _check._anim.SetBool("Red", false);
+        if (_check.getCanCreate())
+            _check._anim.SetBool("Red", false);
     }
     private void offCanCreate()
     {
@@ -218,15 +261,15 @@ public class Display : MonoBehaviour
     private void onDisplayEnemy()
     {
         _Detec = true;
-        _HpBar.SetActive(true);
         _MiniMapIcon.SetActive(true);
+        _outLine.SetActive(true);
     }
 
     private void offDisplayEnemy()
     {
         _Detec = false;
-        _HpBar.SetActive(false);
         _MiniMapIcon.SetActive(false);
+        _outLine.SetActive(false);
     }
 
     private void onDisplayDeco()
@@ -245,15 +288,15 @@ public class Display : MonoBehaviour
     {
         _Detec = true;
         _MiniMapIcon.SetActive(true);
-        _HpBar.SetActive(true);
         _fire.displayFireLight(true);
+        _outLine.SetActive(true);
     }
 
     private void offDisplayEnemyHouse()
     {
         _Detec = false;
         _MiniMapIcon.SetActive(false);
-        _HpBar.SetActive(false);
         _fire.displayFireLight(false);
+        _outLine.SetActive(false);
     }
 }

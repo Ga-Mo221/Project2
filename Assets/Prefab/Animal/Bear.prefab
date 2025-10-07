@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7228588684794360364}
   - component: {fileID: 4841031992915369599}
   - component: {fileID: 3486057796649738538}
+  - component: {fileID: 248829738036907112}
+  - component: {fileID: 1597863159944926104}
   m_Layer: 0
   m_Name: Bear_GFX
   m_TagString: Untagged
@@ -77,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 6337399714680752440, guid: 4ffec1e30063ad346b56dd39026a7b71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -88,7 +90,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &4841031992915369599
 Animator:
@@ -124,8 +126,140 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d98e8d78c2b7d4ca06f0b1e666063b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enimalAi: {fileID: 8550984485975556114}
+  animalAi: {fileID: 8550984485975556114}
   MeatOBJ: {fileID: 3365851371930870322}
+--- !u!82 &248829738036907112
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664460665962412873}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1597863159944926104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664460665962412873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 1
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
 --- !u!1 &3365851371930870322
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +466,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 9
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4970c5a63ef12a540a03d8ab06b7de56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,8 +493,8 @@ GameObject:
   - component: {fileID: 5512425815357841558}
   - component: {fileID: 6308543700104369663}
   - component: {fileID: 8668385052700953781}
-  - component: {fileID: 8550984485975556114}
   - component: {fileID: 2663733946210448806}
+  - component: {fileID: 8550984485975556114}
   m_Layer: 13
   m_Name: Bear_Control
   m_TagString: Animal
@@ -466,7 +600,6 @@ MonoBehaviour:
   _type: 4
   _Die: 0
   _MiniMapIcon: {fileID: 4473457145054236802}
-  _HpBar: {fileID: 5251481799950296449}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
@@ -474,6 +607,7 @@ MonoBehaviour:
   _enemy: {fileID: 0}
   _house: {fileID: 0}
   _fire: {fileID: 0}
+  _outLine: {fileID: 3762215744532196183}
   _seemer: []
   _Detec: 0
 --- !u!114 &6308543700104369663
@@ -524,7 +658,23 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
+  _Die: 0
+  _canMove: 1
   _anim: {fileID: 4841031992915369599}
+--- !u!114 &2663733946210448806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746891280390363463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a18079c6c9abd14eb5a96549e92da67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animalAi: {fileID: 8550984485975556114}
+  _HP_obj: {fileID: 5251481799950296449}
 --- !u!114 &8550984485975556114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be969e836ccd0484595287c0fbda9813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animalAI: 0
+  _type: 0
   _maxHealth: 100
   _health: 0
   _damage: 5
@@ -562,20 +712,10 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 4473457145054236802}
   _centerTransform: {fileID: 897440408711027409}
   _anim: {fileID: 4841031992915369599}
+  _MeatOBJ: {fileID: 8377702842049377160}
+  _audio: {fileID: 1597863159944926104}
+  _display: {fileID: 5512425815357841558}
   _spriteRender: {fileID: 7228588684794360364}
---- !u!114 &2663733946210448806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4746891280390363463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a18079c6c9abd14eb5a96549e92da67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animalAi: {fileID: 8550984485975556114}
 --- !u!1001 &2528697040011173032
 PrefabInstance:
   m_ObjectHideFlags: 0

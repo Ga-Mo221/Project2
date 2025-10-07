@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -15,13 +16,19 @@ public class LancerGFX : PlayerAI
             Debug.LogError("[LancerGFX] Chưa gán 'SpriteRender'");
         if (!_pos)
             Debug.LogError("[LancerGFX] Chưa gán 'Transform _pos'");
+
+        addCastle(Castle.Instance._ListLancer);
     }
 
     protected override void Update()
     {
         _spriteRender.sortingOrder = -(int)(_pos.position.y * 100) + 10000;
         base.Update();
-        
+        enemyDirection();
+    }
+
+    public override void Ai()
+    {
         if (!getIsAI()) return;
         target = findEnemys();
         if (target == null)
@@ -37,33 +44,7 @@ public class LancerGFX : PlayerAI
         }
         else if (cacheTarget == null)
         {
-            cacheTarget = findItems();
-            target = cacheTarget;
-            if (target != null && _itemScript == null)
-            {
-                setDetect(false);
-                moveToTarget(target, true);
-                _itemScript = target.GetComponent<Item>();
-                if (_itemScript._type != ItemType.Gold)
-                    _itemScript._seleted = true;
-                else
-                {
-                    if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
-                    {
-                        bool exists = false;
-                        foreach (var hit in _itemScript._Farmlist)
-                        {
-                            if (hit == this)
-                            {
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if (!exists)
-                            _itemScript._Farmlist.Add(this);
-                    }
-                }
-            }
+            find();
         }
 
         goToHome(target);
@@ -75,6 +56,41 @@ public class LancerGFX : PlayerAI
         }
         if (target == null) return;
         attack(target);
+    }
+
+
+    private void find()
+    {
+        cacheTarget = findItems();
+        target = cacheTarget;
+        if (target != null && _itemScript == null)
+        {
+            setDetect(false);
+            moveToTarget(target, true);
+            _itemScript = target.GetComponent<Item>();
+            if (_itemScript._type != ItemType.Gold)
+            {
+                if (!_itemScript.add(this))
+                    return;
+            }
+            else
+            {
+                if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
+                {
+                    bool exists = false;
+                    foreach (var hit in _itemScript._Farmlist)
+                    {
+                        if (hit == this)
+                        {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists)
+                        _itemScript._Farmlist.Add(this);
+                }
+            }
+        }
     }
 
     private void enemyDirection()
@@ -106,6 +122,7 @@ public class LancerGFX : PlayerAI
             }
         }
     }
+
 
     private void setAnimDirection(int i) => _anim.SetInteger("Direction", i);
 

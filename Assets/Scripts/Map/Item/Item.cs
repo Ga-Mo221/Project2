@@ -13,7 +13,8 @@ public enum ItemType
 public class Item : MonoBehaviour
 {
     [Header("Type")]
-    [SerializeField] public ItemType _type;
+    public ItemType _type;
+    public int _id = 0;
     private bool _IsTree => _type == ItemType.Tree;
     private bool _IsRock => _type == ItemType.Rock;
     private bool _IsGold => _type == ItemType.Gold;
@@ -30,7 +31,7 @@ public class Item : MonoBehaviour
     [ShowIf(nameof(_IsGold))]
     public int _maxFarmers = 2;
     [HideIf(nameof(_IsGold))]
-    public bool _seleted = false;
+    [SerializeField] private PlayerAI _seleted;
     public bool _detec = false;
 
     [Header("Reference")]
@@ -41,19 +42,26 @@ public class Item : MonoBehaviour
     [HideIf(nameof(_IsGold))]
     [SerializeField] private GameObject _DiePrefab;
 
+    public UnitAudio _audio;
+
     [Header("Value")]
     public int _value = 0;
     public int _stack;
 
+    #region Start
     protected virtual void Start()
     {
         _value = _maxValue;
         _stack = _maxStack;
         _spriteRender.sortingOrder = -(int)(_OderPoin.position.y * 100) + 10000;
     }
+    #endregion
 
+
+    #region farm
     public virtual void farm(PlayerAI _playerAI)
     {
+        _audio.PlayFarmOrHitDamageSound();
         _stack--;
         if (_IsTree)
             _anim.SetTrigger("Farm");
@@ -75,14 +83,18 @@ public class Item : MonoBehaviour
             {
                 _spriteRender.enabled = false;
             }
+            _audio.PlayDieSound();
         }
     }
+    #endregion
 
+
+    #region Respawn
     private IEnumerator resPawn()
     {
         yield return new WaitForSeconds(_spawnTime);
         _stack = _maxStack;
-        _seleted = false;
+        _seleted = null;
         _spriteRender.enabled = true;
         _DiePrefab.SetActive(false);
         Animator _animDie = _DiePrefab.GetComponent<Animator>();
@@ -92,4 +104,28 @@ public class Item : MonoBehaviour
         if (_IsRock)
             _spriteRender.enabled = true;
     }
+    #endregion
+
+
+    #region add Player select
+    public bool add(PlayerAI player)
+    {
+        if (_seleted == null)
+        {
+            _seleted = player;
+            return true;
+        }
+        return false;
+    }
+
+    public void removeSelect(string name)
+    {
+        _seleted = null;
+    }
+
+    public bool checkSelectNull()
+        => _seleted == null;
+    public bool checkSelect(PlayerAI player)
+        => _seleted == player;
+    #endregion
 }

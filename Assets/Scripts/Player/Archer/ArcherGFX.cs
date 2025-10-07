@@ -14,6 +14,7 @@ public class ArcherGFX : PlayerAI
     [SerializeField] private SpriteRenderer _spriteRender;
     [SerializeField] private Transform _oderSpriterPoint;
     [SerializeField] private Transform _shootPos;
+    [SerializeField] private Transform _shootStarge;
 
     [Header("Arrow")]
     [SerializeField] private GameObject _arrowPrefab;
@@ -36,13 +37,18 @@ public class ArcherGFX : PlayerAI
             Debug.LogError("[ArcherGFX] Chưa gán '_shootPos'");
         if (!_arrowPrefab)
             Debug.LogError("[ArcherGFX] Chưa gán '_arrowPrefab'");
+
+        addCastle(Castle.Instance._ListArcher);
     }
 
     protected override void Update()
     {
         _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
         base.Update();
+    }
 
+    public override void Ai()
+    {
         if (!getIsAI()) return;
         target = findEnemys();
         if (target == null)
@@ -58,33 +64,7 @@ public class ArcherGFX : PlayerAI
         }
         else if (cacheTarget == null)
         {
-            cacheTarget = findItems();
-            target = cacheTarget;
-            if (target != null && _itemScript == null)
-            {
-                setDetect(false);
-                moveToTarget(target, true);
-                _itemScript = target.GetComponent<Item>();
-                if (_itemScript._type != ItemType.Gold)
-                    _itemScript._seleted = true;
-                else
-                {
-                    if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
-                    {
-                        bool exists = false;
-                        foreach (var hit in _itemScript._Farmlist)
-                        {
-                            if (hit == this)
-                            {
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if (!exists)
-                            _itemScript._Farmlist.Add(this);
-                    }
-                }
-            }
+            find();
         }
 
         goToHome(target);
@@ -98,9 +78,44 @@ public class ArcherGFX : PlayerAI
         attack(target);
     }
 
+
+    private void find()
+    {
+        cacheTarget = findItems();
+        target = cacheTarget;
+        if (target != null && _itemScript == null)
+        {
+            setDetect(false);
+            moveToTarget(target, true);
+            _itemScript = target.GetComponent<Item>();
+            if (_itemScript._type != ItemType.Gold)
+            {
+                if (!_itemScript.add(this))
+                    return;
+            }
+            else
+            {
+                if (_itemScript._Farmlist.Count < _itemScript._maxFarmers)
+                {
+                    bool exists = false;
+                    foreach (var hit in _itemScript._Farmlist)
+                    {
+                        if (hit == this)
+                        {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists)
+                        _itemScript._Farmlist.Add(this);
+                }
+            }
+        }
+    }
+
     public override void setTarget(Vector3 pos, bool controller, bool farm = false)
     {
-        base.setTarget(pos, controller);
+        base.setTarget(pos, controller, farm);
         _In_Castle = false;
     }
 
@@ -118,27 +133,27 @@ public class ArcherGFX : PlayerAI
                     _listArrow[i].transform.position = _shootPos.position;
                     if (_attackCount == _attack_count_SKILL)
                     {
-                        _script.setTarget(true, this, true, _damage, 0);
+                        _script.setTarget(true, this, true, _damage, 0, transform.localScale);
                         _attackCount = 0;
                     }
                     else
-                        _script.setTarget(true, this, false, _damage, 0);
+                        _script.setTarget(true, this, false, _damage, 0, transform.localScale);
                     _listArrow[i].SetActive(true);
                     break;
                 }
             }
             else
             {
-                GameObject _arrow = Instantiate(_arrowPrefab, _shootPos.position, Quaternion.identity, _shootPos);
+                GameObject _arrow = Instantiate(_arrowPrefab, _shootPos.position, Quaternion.identity, _shootStarge);
                 _listArrow[i] = _arrow;
                 var _script = _arrow.GetComponent<Arrow>();
                 if (_attackCount == _attack_count_SKILL)
                 {
-                    _script.setTarget(true, this, true, _damage, 0);
+                    _script.setTarget(true, this, true, _damage, 0, transform.localScale);
                     _attackCount = 0;
                 }
                 else
-                    _script.setTarget(true, this, false, _damage, 0);
+                    _script.setTarget(true, this, false, _damage, 0, transform.localScale);
                 break;
             }
         }

@@ -3,121 +3,164 @@ using UnityEngine;
 
 public class RadialMenu : MonoBehaviour
 {
-    private Animator _anim;
+    [Header("References")]
+    [SerializeField] private Animator _anim;
     private Vector3 _pos;
-    bool _war = false;
-    bool _support = false;
-    bool _rally = false;
-    GameObject _co;
+    private MoveTo _moveto;
 
-    void Awake()
+    private bool _war;
+    private bool _support;
+    private bool _rally;
+
+    private void Awake()
     {
-        _anim = GetComponent<Animator>();
+        if (_anim == null)
+            _anim = GetComponent<Animator>();
     }
 
-    public void onAnimation(string name, bool active)
+    /// <summary>
+    /// Kích hoạt hoặc tắt animation state
+    /// </summary>
+    public void OnAnimation(string name, bool active)
     {
+        if (_anim == null) return;
         _anim.SetBool(name, active);
+
+        // Cập nhật cờ logic
+        switch (name)
+        {
+            case "war": _war = active; break;
+            case "support": _support = active; break;
+            case "rally": _rally = active; break;
+        }
     }
 
-    public void setPos(Vector3 pos) => _pos = pos;
+    public void SetPos(Vector3 pos) => _pos = pos;
 
-    void Update()
+    private void Update()
     {
-        if (!Castle.Instance._V) gameObject.SetActive(false);
-        _war = _anim.GetBool("war");
-        _support = _anim.GetBool("support");
-        _rally = _anim.GetBool("rally");
+        // Nếu Castle không khả dụng hoặc V == false thì tắt menu
+        if (Castle.Instance == null || !Castle.Instance._V)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
+        // Khi thả chuột trái
         if (Input.GetMouseButtonUp(0))
         {
-            controller();
+            HandleCommand();
             gameObject.SetActive(false);
         }
     }
 
-    private void controller()
+    /// <summary>
+    /// Xử lý lệnh điều khiển quân theo phím và trạng thái lính
+    /// </summary>
+    private void HandleCommand()
     {
-        if (Castle.Instance._Q && Castle.Instance._V)
-        {
-            playerController(Castle.Instance._ListWarrior, false);
-        }
-        else if (Castle.Instance._W && Castle.Instance._V)
-        {
-            playerController(Castle.Instance._ListArcher, false);
-        }
-        else if (Castle.Instance._E && Castle.Instance._V)
-        {
-            playerController(Castle.Instance._ListLancer, false);
-        }
-        else if (Castle.Instance._A && Castle.Instance._V)
-        {
-            playerController(Castle.Instance._ListHealer, false);
-        }
-        else if (Castle.Instance._S && Castle.Instance._V)
-        {
-            playerController(Castle.Instance._ListTNT, false);
-        }
-        else
-        {
-            playerController(Castle.Instance._ListWarrior, false);
-            playerController(Castle.Instance._ListArcher, true);
-            playerController(Castle.Instance._ListLancer, true);
-            playerController(Castle.Instance._ListHealer, true);
-            playerController(Castle.Instance._ListTNT, true);
-        }
-    }
+        _moveto = null;
+        var castle = Castle.Instance;
+        if (castle == null) return;
 
-    private void playerController(List<PlayerAI> _list, bool add)
-    {
-        if (_list == null) return;
-        List<GameObject> _listPlayer = new List<GameObject>();
-        foreach (var player in _list)
+        // Gom tất cả danh sách lính
+        var unitGroups = new List<(bool key, List<PlayerAI> list)>
         {
-            if (!player.gameObject.activeSelf) continue;
-            if (_war)
-            {
-                player.setTarget(_pos, false);
-            }
-            if (_support)
-            {
-                player.setTarget(GetRandomPositionAround(Castle.Instance.transform, 8), false);
-            }
-            if (_rally)
-            {
-                player.setTarget(_pos, true);
-            }
-            _listPlayer.Add(player.gameObject);
-        }
-        if (_listPlayer.Count == 0) return;
-        if (_war || _support)
-        {
-            if (!add)
-            {
-                if (_support)
-                    _pos = Castle.Instance.transform.position;
-                _co = Instantiate(SelectionBox.Instance._moveTo, _pos, Quaternion.identity);
-            }
+            (castle._Q, castle._ListWarrior),
+            (castle._W, castle._ListArcher),
+            (castle._E, castle._ListLancer),
+            (castle._A, castle._ListHealer),
+            (castle._S, castle._ListTNT)
+        };
 
-            if (_support)
+        // Nếu đang giữ phím cụ thể thì chỉ điều khiển nhóm đó
+        foreach (var (key, list) in unitGroups)
+        {
+            if (key && castle._V)
             {
-                _co.GetComponent<MoveTo>().SetChosen(_listPlayer, add, 8.5f);
+                PlayerController(list, false);
+                return;
             }
-            else
+        }
+
+        // Nếu không giữ phím nào, chọn nhóm đầu tiên còn lính chết
+        foreach (var (_, list) in unitGroups)
+        {
+            if (HasInactive(list))
             {
-                _co.GetComponent<MoveTo>().SetChosen(_listPlayer, add);
+                // Nhóm chính (revive)
+                PlayerController(list, false);
+
+                // Các nhóm khác đặt chế độ add = true
+                foreach (var (_, otherList) in unitGroups)
+                    if (otherList != list)
+                        PlayerController(otherList, true);
+
+                return;
             }
         }
     }
 
-    Vector3 GetRandomPositionAround(Transform center, float radius)
+    /// <summary>
+    /// Kiểm tra xem có unit nào trong danh sách đang bị tắt
+    /// </summary>
+    private bool HasInactive(List<PlayerAI> list)
     {
-        // Tạo 1 điểm ngẫu nhiên trong hình tròn (X, Z)
-        Vector2 randomCircle = Random.insideUnitCircle * radius;
+        if (list == null) return false;
+        foreach (var p in list)
+        {
+            if (p != null && p.gameObject.activeSelf)
+                return true;
+        }
+        return false;
+    }
 
-        // Gán vào vị trí 3D (X, Y, Z)
-        Vector3 randomPos = center.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
+    /// <summary>
+    /// Ra lệnh cho nhóm đơn vị di chuyển / hỗ trợ / rally
+    /// </summary>
+    private void PlayerController(List<PlayerAI> list, bool add)
+    {
+        if (list == null || list.Count == 0) return;
 
-        return randomPos;
+        List<GameObject> activePlayers = new List<GameObject>();
+        foreach (var player in list)
+        {
+            if (player == null || !player.gameObject.activeSelf) continue;
+            Vector3 targetPos = _support
+                ? RandomPoint(Castle.Instance._In_Castle_Pos, 8)
+                : _pos;
+
+            player.setTarget(targetPos, true);
+            activePlayers.Add(player.gameObject);
+        }
+
+        if (activePlayers.Count == 0) return;
+
+        // Spawn marker
+        float radius = _support ? 8.5f : _war? 3f : 0f;
+        if (!add)
+        {
+            if (_support)
+                _pos = Castle.Instance._In_Castle_Pos.position;
+            _moveto = MoveToManager.Instance.CreateMovePoint(activePlayers, _pos, radius);
+        }
+
+        if (_moveto == null) return;
+
+        _moveto.SetChosen(activePlayers, add, radius);
+
+        if (!_support && !_war)
+            _moveto.offActive();
+    }
+
+    /// <summary>
+    /// Trả về một vị trí ngẫu nhiên xung quanh tâm trong bán kính radius
+    /// </summary>
+    private Vector3 RandomPoint(Transform center, float radius)
+    {
+        if (center == null) return Vector3.zero;
+
+        Vector2 circle = Random.insideUnitCircle * radius;
+        return center.position + new Vector3(circle.x, 0f, circle.y);
     }
 }

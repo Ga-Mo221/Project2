@@ -26,6 +26,7 @@ public class EnemyWar : MonoBehaviour
         {
             _currentDay = GameManager.Instance._currentDay;
             startWar();
+            GameManager.Instance.UIonEnemyRespawn(true);
         }
     }
     #endregion
@@ -71,7 +72,7 @@ public class EnemyWar : MonoBehaviour
             bool _IsCreate = true;
             foreach (var enemyAi in EnemyHouse.Instance._listEnemyCreate)
             {
-                if (enemyPrefab._enemy == enemyAi._type && !enemyAi.gameObject.activeSelf && enemyAi.getDie())
+                if (enemyPrefab._enemy == enemyAi._type && enemyAi.getDie())
                 {
                     enemyAi.respawn(randomPoint(_spawnPoint));
                     enemyAi.setTarget(Castle.Instance.gameObject);
@@ -96,14 +97,11 @@ public class EnemyWar : MonoBehaviour
 
 
     #region Random Point
-    private Vector3 randomPoint(Transform pos)
+    private Vector3 randomPoint(Transform pos, float _radius = 2f)
     {
-        float _radius = 2f;
         Vector2 randomCircle = Random.insideUnitCircle * _radius;
-
         // 2D top-down => Z không dùng
         Vector3 spawnPos = pos.position + new Vector3(randomCircle.x, randomCircle.y, 0f);
-
         return spawnPos;
     }
     #endregion

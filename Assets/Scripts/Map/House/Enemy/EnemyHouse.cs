@@ -31,6 +31,7 @@ public class EnemyHouse : MonoBehaviour
         {
             _currentDay = GameManager.Instance._currentDay;
             respawnEnemy();
+            GameManager.Instance.UIonEnemyRespawn(false);
         }
     }
     #endregion
@@ -81,7 +82,7 @@ public class EnemyHouse : MonoBehaviour
     {
         foreach (var enemy in _listEnemy)
         {
-            if (!enemy.gameObject.activeSelf)
+            if (enemy.getDie())
             {
                 enemy.respawn(getMinDirection(enemy));
                 enemy.gameObject.SetActive(true);
@@ -119,11 +120,15 @@ public class EnemyHouse : MonoBehaviour
         float minDist = Mathf.Infinity;
         foreach (var point in _listSpawnPoint)
         {
-            float dist = Vector3.Distance(point.position, castlePos);
-            if (dist < minDist)
+            var _script = point.GetComponent<EnemyHuoseController>();
+            if (!_script.getDie())
             {
-                minDist = dist;
-                pos = point;
+                float dist = Vector3.Distance(point.position, castlePos);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    pos = point;
+                }
             }
         }
         return pos;

@@ -6,8 +6,8 @@ using NaughtyAttributes;
 public class AnimalAI : MonoBehaviour
 {
     #region Value
-    [SerializeField] private AnimalClass _animalAI;
-    private bool IsSheep => _animalAI == AnimalClass.Sheep;
+    public AnimalClass _type;
+    private bool IsSheep => _type == AnimalClass.Sheep;
 
     [Foldout("Stats")]
     public float _maxHealth = 100;
@@ -20,7 +20,7 @@ public class AnimalAI : MonoBehaviour
     [HideIf(nameof(IsSheep))]
     [SerializeField] private float _speedAttack = 2f;
     [Foldout("Stats")]
-    [SerializeField] private float _speed = 5f;
+    public float _speed = 5f;
     [Foldout("Stats")]
     [HideIf(nameof(IsSheep))]
     [SerializeField] private float _range = 3f;
@@ -57,10 +57,6 @@ public class AnimalAI : MonoBehaviour
     [SerializeField] private bool detec = false;
 
 
-
-
-
-
     [Foldout("Other")]
     [SerializeField] private GameObject _gfx;
     [Foldout("Other")]
@@ -75,8 +71,13 @@ public class AnimalAI : MonoBehaviour
     [SerializeField] private Transform _centerTransform;
     [Foldout("Other")]
     [SerializeField] private Animator _anim; // animation của đối tượng
+    [Foldout("Other")]
+    [SerializeField] private DropItem _MeatOBJ;
+    [Foldout("Other")]
+    [SerializeField] private UnitAudio _audio;
+    [Foldout("Other")]
+    [SerializeField] private Display _display;
 
-    
     private Rigidbody2D _rb;
     #endregion
 
@@ -181,7 +182,8 @@ public class AnimalAI : MonoBehaviour
             {
                 _canAction = true;
                 if (_attackSpeed == null)
-                    _attackSpeed = StartCoroutine(attackSpeed());
+                    if (gameObject.activeInHierarchy)
+                        _attackSpeed = StartCoroutine(attackSpeed());
             }
             else
                 _canAction = false;
@@ -300,6 +302,7 @@ public class AnimalAI : MonoBehaviour
     public void Die()
     {
         _Die = true;
+        path.setDie(_Die);
         _anim.SetBool("Die", true);
         path.setTarget(transform.position, target);
         _rb.linearVelocity = Vector2.zero;
@@ -309,6 +312,7 @@ public class AnimalAI : MonoBehaviour
         _HPCanvas.SetActive(false);
         _OutLine.SetActive(false);
 
+        playDieSound();
         StartCoroutine(Respawm(_respawmTime));
 
         //Debug.Log("die r");
@@ -327,16 +331,39 @@ public class AnimalAI : MonoBehaviour
     private IEnumerator Respawm(int delay)
     {
         yield return new WaitForSeconds(delay);
+        Debug.Log($"{transform.parent.name} Respawn");
+        transform.position = transform.parent.position;
         _Die = false;
+        path.setDie(_Die);
+        path.setCanMove(!_Die);
         _health = _maxHealth;
         _gfx.GetComponent<SpriteRenderer>().enabled = true;
         _anim.SetBool("Die", false);
         _OutLine.SetActive(true);
         SetNewPatrol(Vector2.zero);
+        _MeatOBJ.gameObject.SetActive(false);
+        _MeatOBJ.ResetPickUp();
     }
     #endregion
-    
+
     public bool getDie() => _Die;
+    public void setCanMove(bool amount) => path.setCanMove(amount);
+
+
+    #region Play Sound Die
+    public void playDieSound()
+    {
+        if (_display._Detec)
+            _audio.PlayDieSound();
+    }
+    #endregion
+    #region Play Sound Attack
+    public void playAttackSound()
+    {
+        if (_display._Detec)
+            _audio.PlayAttackSound();
+    }
+    #endregion
 }
 
 public enum AnimalClass

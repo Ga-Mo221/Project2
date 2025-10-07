@@ -6,7 +6,7 @@ public class CursorManager : MonoBehaviour
 
     [SerializeField] private Texture2D _normal;
     [SerializeField] private Texture2D _select;
-    public Vector2 _hotPot = new Vector2(32,32);
+    public Vector2 _hotPot = new Vector2(32, 32);
 
     public bool ChoseUI = false;
     public bool Select = false;
@@ -43,4 +43,6 @@ public class CursorManager : MonoBehaviour
         Select = true;
         _hoverGameobject = obj;
     }
+
+    public void resetChoseUI() => ChoseUI = false;
 }

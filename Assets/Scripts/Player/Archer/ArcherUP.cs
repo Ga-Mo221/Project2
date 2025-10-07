@@ -49,6 +49,8 @@ public class ArcherUP : MonoBehaviour
     }
 
     public void setDamage(int damage) => _damage += damage;
+    public float getDamage() => _damage;
+    public float getRadius() => _radius;
 
     private GameObject FindEnemy()
     {
@@ -135,7 +137,7 @@ public class ArcherUP : MonoBehaviour
                 if (_script.getTarget() == null)
                 {
                     _listArrow[i].transform.position = _shootPos.position;
-                    _script.setTarget(false, _target, false, _damage, 20f);
+                    _script.setTarget(false, _target, false, _damage, 20f, transform.localScale);
                     _listArrow[i].SetActive(true);
                     break;
                 }
@@ -145,7 +147,7 @@ public class ArcherUP : MonoBehaviour
                 GameObject _arrow = Instantiate(_arowPrefab, _shootPos.position, Quaternion.identity, _shootPos);
                 _listArrow[i] = _arrow;
                 var _script = _arrow.GetComponent<Arrow>();
-                _script.setTarget(false, _target, false, _damage, 20f);
+                _script.setTarget(false, _target, false, _damage, 20f, transform.localScale);
                 break;
             }
         }

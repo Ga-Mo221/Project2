@@ -76,7 +76,7 @@ public class EnemyHitDamage : MonoBehaviour
                 else
                 {
                     var script = obj.GetComponent<ArowEnemy>();
-                    script.setProperties(enemyAi.target.transform, enemyAi._damage,1, transform.localScale);
+                    script.setProperties(enemyAi.target.transform, enemyAi._damage, 1, transform.localScale);
                 }
                 obj.transform.position = _point.position;
                 obj.SetActive(true);
@@ -95,7 +95,7 @@ public class EnemyHitDamage : MonoBehaviour
             else
             {
                 var script = obj.GetComponent<ArowEnemy>();
-                script.setProperties(enemyAi.target.transform, enemyAi._damage,1, transform.localScale);
+                script.setProperties(enemyAi.target.transform, enemyAi._damage, 1, transform.localScale);
             }
             _listPrefeb.Add(obj);
         }
@@ -109,4 +109,9 @@ public class EnemyHitDamage : MonoBehaviour
     {
         GoldOBJ.SetActive(true);
     }
+
+    public void onCanMove() => enemyAi.setCanMove(true);
+    public void offCanMove() => enemyAi.setCanMove(false);
+
+    public void PlayAttackSound() => enemyAi.playAttackSound();
 }

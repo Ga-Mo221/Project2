@@ -3,15 +3,22 @@ using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
+    public static CameraShake Instance { get; private set; }
+
     [Header("Shake Settings")]
-    public float shakeDuration = 0.3f;   // Thời gian rung
-    public float shakeMagnitude = 0.15f; // Độ mạnh rung
+    [SerializeField] private float shakeDuration = 0.3f;   // Thời gian rung
+    [SerializeField] private float shakeMagnitude = 0.15f; // Độ mạnh rung
 
     private Vector3 originalPos;
 
     void Awake()
     {
-        originalPos = transform.localPosition;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
     }
 
     /// <summary>
@@ -19,6 +26,7 @@ public class CameraShake : MonoBehaviour
     /// </summary>
     public void ShakeCamera(float duration = -1f, float magnitude = -1f)
     {
+        originalPos = transform.localPosition;
         if (duration <= 0) duration = shakeDuration;
         if (magnitude <= 0) magnitude = shakeMagnitude;
 
@@ -45,6 +53,6 @@ public class CameraShake : MonoBehaviour
         }
 
         // Reset về vị trí gốc
-        transform.localPosition = originalPos;
+        //transform.localPosition = originalPos;
     }
 }

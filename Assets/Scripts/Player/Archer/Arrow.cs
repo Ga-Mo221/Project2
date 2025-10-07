@@ -13,18 +13,28 @@ public class Arrow : MonoBehaviour
     [SerializeField] private GameObject _normal;
     [SerializeField] private GameObject _Skill;
     private Vector2 direction = Vector2.zero;
-    private bool ok = false;
+    [SerializeField] private bool ok = false;
     private bool change = false;
     [SerializeField] private bool _isPlayer = true;
     [SerializeField] private PlayerHitDamage _hitDamage;
+    [SerializeField] private UnitAudio _audio;
+
+    private SpriteRenderer _arrow1;
+    private SpriteRenderer _arrow2;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _arrow1 = _normal.GetComponent<SpriteRenderer>();
+        _arrow2 = _Skill.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
+        int _yoder = -(int)(transform.position.y * 100) + 100000;
+        _arrow1.sortingOrder = _yoder;
+        _arrow2.sortingOrder = _yoder;
+        if (_target == null) gameObject.SetActive(false);
         if (Skill && !change)
         {
             change = true;
@@ -38,10 +48,25 @@ public class Arrow : MonoBehaviour
             _Skill.SetActive(false);
         }
         moveToTarget();
+
+        if (_target == null) return;
+        float dis = Vector3.Distance(transform.position, _target.position);
+        if (dis <= 0.2 && !Skill)
+        {
+            if (_target.CompareTag("Enemy") || _target.CompareTag("Animal") || _target.CompareTag("EnemyHouse"))
+            {
+                _hitDamage.setPlayerAI(_playerAI);
+                _hitDamage.attack(_isPlayer, _damage, _target.gameObject);
+                gameObject.SetActive(false);
+                _target = null;
+                _audio.PlayFarmOrHitDamageSound();
+            }
+        }
     }
 
-    public void setTarget(bool isPlayer, PlayerAI script,bool Skills ,float damage, float speed)
+    public void setTarget(bool isPlayer, PlayerAI script, bool Skills, float damage, float speed, Vector3 scale)
     {
+        transform.localScale = scale;
         if (speed != 0)
             _speed = speed;
         else _speed = _maxSpeed;
@@ -52,17 +77,22 @@ public class Arrow : MonoBehaviour
         if (script.target != null)
             _target = script.target.transform;
         _damage = damage;
+        change = false;
+        ok = false;
     }
-    public void setTarget(bool isPlayer, GameObject obj,bool Skills ,float damage, float speed)
+    public void setTarget(bool isPlayer, GameObject obj, bool Skills, float damage, float speed, Vector3 scale)
     {
+        transform.localScale = scale;
         if (speed != 0)
             _speed = speed;
         else _speed = _maxSpeed;
-        
+
         _isPlayer = isPlayer;
         Skill = Skills;
         _target = obj.transform;
         _damage = damage;
+        change = false;
+        ok = false;
     }
     public Transform getTarget() => _target;
 
@@ -95,22 +125,18 @@ public class Arrow : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         ok = false;
-        Skill = false;
         change = false;
         gameObject.SetActive(false);
     } 
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision == null) return;
-        if (collision.CompareTag("Enemy") || collision.CompareTag("Animal") || collision.CompareTag("EnemyHouse"))
-        {
-            if (!Skill)
-                gameObject.SetActive(false);
-            _hitDamage.setPlayerAI(_playerAI);
-            _hitDamage.attack(_isPlayer, _damage, _target.gameObject);
-            change = false;
-            _target = null;
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if (collision == null) return;
+    //     if (!Skill) return;
+    //     if (collision.CompareTag("Enemy") || collision.CompareTag("Animal") || collision.CompareTag("EnemyHouse"))
+    //     {
+    //         _hitDamage.setPlayerAI(_playerAI);
+    //         _hitDamage.attack(_isPlayer, _damage, collision.gameObject, true);
+    //     }
+    // }
 }

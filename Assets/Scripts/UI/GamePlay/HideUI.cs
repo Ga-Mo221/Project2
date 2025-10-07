@@ -1,10 +1,11 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class HideUI : MonoBehaviour
 {
-    [SerializeField] private Transform _startPos;
-    [SerializeField] private Transform _endPos;
+    [SerializeField] private RectTransform _rectTransform;
+    [SerializeField] private Vector2 _startPos;
+    [SerializeField] private Vector2 _endPos;
     [SerializeField] private float _timeMove = 0.3f;
 
     private bool isOut = false;
@@ -12,35 +13,35 @@ public class HideUI : MonoBehaviour
 
     void Start()
     {
-        transform.position = _startPos.position;
+        _rectTransform.anchoredPosition = _startPos;
     }
 
     public void move()
     {
         if (!GameManager.Instance.getCanBuy()) return;
         GameManager.Instance.UIcheckButtonBuyBuiding();
+
         if (_moveCoroutine != null) StopCoroutine(_moveCoroutine);
 
-        if (!isOut)
-            _moveCoroutine = StartCoroutine(MoveTo(_endPos.position));
-        else
-            _moveCoroutine = StartCoroutine(MoveTo(_startPos.position));
+        Vector2 target = isOut ? _startPos : _endPos;
+        _moveCoroutine = StartCoroutine(MoveTo(target));
 
-        isOut = !isOut; // đảo trạng thái
+        isOut = !isOut;
     }
 
-    private IEnumerator MoveTo(Vector3 target)
+    private IEnumerator MoveTo(Vector2 target)
     {
-        Vector3 start = transform.position;
+        Vector2 start = _rectTransform.anchoredPosition;
         float elapsed = 0f;
 
         while (elapsed < _timeMove)
         {
-            transform.position = Vector3.Lerp(start, target, elapsed / _timeMove);
-            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / _timeMove);
+            _rectTransform.anchoredPosition = Vector2.Lerp(start, target, t);
+            elapsed += Time.unscaledDeltaTime; // UI nên chạy theo real-time, không bị ảnh hưởng Time.timeScale
             yield return null;
         }
 
-        transform.position = target; // đảm bảo tới chính xác vị trí
+        _rectTransform.anchoredPosition = target;
     }
 }

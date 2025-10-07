@@ -1,3 +1,4 @@
+using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -11,10 +12,60 @@ public class GameManager : MonoBehaviour
     public int _timeRTS = 0;
     public Vector2 _playTime = Vector2.zero;
 
-    [SerializeField] private bool _canBuy = true;
+    public string _contentGameOver { get; set; }
 
+    [Foldout("Status")]
+    [SerializeField] private bool _canBuy = true;
+    [Foldout("Status")]
+    [Header("Game Play")]
+    [SerializeField] private bool _GameOver = false;
+    [Foldout("Status")]
+    [SerializeField] private bool _Win = false;
+    [Foldout("Status")]
+    public float _displayGameOverTime = 1.5f;
+    [Foldout("Status")]
+    [Header("Windowns")]
+    [SerializeField] private bool _canOpenWindown = true;
+    [Foldout("Status")]
+    [SerializeField] private bool _shopOpen = false;
+    [Foldout("Status")]
+    [SerializeField] private bool _upgradeOpen = false;
+    [Foldout("Status")]
+    public bool _canNewDay = false; // dùng để bật tắt new day
+
+    [Foldout("Game Detail Player")]
+    public int _warriorValue = 0;
+    [Foldout("Game Detail Player")]
+    public int _archerValue = 0;
+    [Foldout("Game Detail Player")]
+    public int _lancerValue = 0;
+    [Foldout("Game Detail Player")]
+    public int _healerValue = 0;
+    [Foldout("Game Detail Player")]
+    public int _tntValue = 0;
+
+    [Foldout("Game Detail References")]
+    public int _wood = 0;
+    [Foldout("Game Detail References")]
+    public int _rock = 0;
+    [Foldout("Game Detail References")]
+    public int _meat = 0;
+    [Foldout("Game Detail References")]
+    public int _gold = 0;
+
+    [Foldout("Component")]
     [SerializeField] private GameUI _ui;
-    [SerializeField] public Upgrade Info;
+    [Foldout("Component")]
+    [SerializeField] private DisplayPlayerDie _displayPlayerDie;
+    [Foldout("Component")]
+    public Upgrade Info;
+    [Foldout("Component")]
+    public SelectBoxItem _selectBox;
+
+    [Foldout("Other")]
+    [SerializeField] private GameObject _defen;
+    [SerializeField] private GameObject _GameUI_Obj;
+    private GameOver _gameOver;
 
 
     [Foldout("Prefab")]
@@ -42,6 +93,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        _gameOver = GetComponent<GameOver>();
     }
 
     void Start()
@@ -49,6 +102,7 @@ public class GameManager : MonoBehaviour
         UIupdateReferences();
         UIupdatePlayerValue();
     }
+
 
     public void UIupdateReferences()
         => _ui.updateReferent();
@@ -70,4 +124,100 @@ public class GameManager : MonoBehaviour
 
     public void UIupdateHPCastle()
         => _ui.updateHP();
-}
+
+    public void UIopenShop()
+        => _ui.openShop();
+
+    public void UIcloseShop()
+        => _ui.closeShop();
+
+    public void UIopenUpgradePanel()
+        => _ui.openPanelUpgrade();
+
+    public void UIcloseUpgradePanel()
+        => _ui.closePanelUpgrade();
+
+    private Coroutine _offDefen;
+    public void onDefen()
+    {
+        _defen.SetActive(true);
+        if (_offDefen != null)
+            StopCoroutine(_offDefen);
+        _offDefen = StartCoroutine(offDefen());
+    }
+    private IEnumerator offDefen()
+    {
+        yield return new WaitForSeconds(5.3333333f);
+        _defen.SetActive(false);
+    }
+
+    public void UIOpenBuidingPanel()
+        => _ui.openPanelBuiding();
+
+
+    public void setGameOver(bool amount)
+    {
+        _GameOver = amount;
+        _gameOver.display();
+    }
+    public bool getGameOver() => _GameOver;
+
+    public void setWin(bool amount) => _Win = amount;
+    public bool getWin() => _Win;
+
+    public bool setOpenShop()
+    {
+        if (_canOpenWindown)
+        {
+            _canOpenWindown = false;
+            _shopOpen = true;
+            return true;
+        }
+        return false;
+    }
+
+    public bool getCanOpenWindown() => _canOpenWindown;
+
+    public void setCloseShop()
+    {
+        _canOpenWindown = true;
+        _shopOpen = false;
+    }
+
+    public bool getShopOpen() => _shopOpen;
+
+    public bool setOpenUpgrade()
+    {
+        if (_canOpenWindown)
+        {
+            _canOpenWindown = false;
+            _upgradeOpen = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void setCloseUpgrade()
+    {
+        _canOpenWindown = true;
+        _upgradeOpen = false;
+    }
+
+    public bool getUpgradeOpen() => _upgradeOpen;
+
+
+    public void UIonEnemyRespawn(bool war)
+        => _ui.onEnemyRespawn(war);
+
+
+    public void UIonWarning(EnemyHuoseController house)
+        => _ui.onWarning(house);
+
+
+    public void UIPlayerDie(UnitType type)
+        => _displayPlayerDie.Add(type);
+
+
+    public void setActiveGameUI(bool amount)
+        => _GameUI_Obj.SetActive(amount);
+} 

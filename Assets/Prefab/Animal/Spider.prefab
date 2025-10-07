@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 9
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4970c5a63ef12a540a03d8ab06b7de56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,9 +103,9 @@ GameObject:
   - component: {fileID: 5473874975274410538}
   - component: {fileID: 1657560909108414181}
   - component: {fileID: 6194686548813192028}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Spider_Control
-  m_TagString: Untagged
+  m_TagString: Animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,7 +208,6 @@ MonoBehaviour:
   _type: 4
   _Die: 0
   _MiniMapIcon: {fileID: 712102184399680218}
-  _HpBar: {fileID: 1201309649080037991}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
@@ -216,6 +215,7 @@ MonoBehaviour:
   _enemy: {fileID: 0}
   _house: {fileID: 0}
   _fire: {fileID: 0}
+  _outLine: {fileID: 3563146343261747473}
   _seemer: []
   _Detec: 0
 --- !u!114 &4713674498090310569
@@ -266,6 +266,8 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
+  _Die: 0
+  _canMove: 1
   _anim: {fileID: 8857089252291914122}
 --- !u!114 &1657560909108414181
 MonoBehaviour:
@@ -280,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animalAi: {fileID: 6194686548813192028}
+  _HP_obj: {fileID: 1201309649080037991}
 --- !u!114 &6194686548813192028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27412c753c58ceb429f263ac5bd5be3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animalAI: 3
+  _type: 3
   _maxHealth: 40
   _health: 0
   _damage: 10
@@ -317,6 +320,9 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 712102184399680218}
   _centerTransform: {fileID: 2889026991463421449}
   _anim: {fileID: 8857089252291914122}
+  _MeatOBJ: {fileID: 3441818050998879131}
+  _audio: {fileID: 4968763823680787947}
+  _display: {fileID: 4011518117632548897}
   _spriteRender: {fileID: 6287486149944449987}
 --- !u!1 &3614332820089817402
 GameObject:
@@ -416,6 +422,8 @@ GameObject:
   - component: {fileID: 6287486149944449987}
   - component: {fileID: 8857089252291914122}
   - component: {fileID: 6362312622891634646}
+  - component: {fileID: 2731459702570204417}
+  - component: {fileID: 4968763823680787947}
   m_Layer: 0
   m_Name: Spider_GFX
   m_TagString: Untagged
@@ -481,7 +489,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1974895838090585116, guid: 53d23a3b75bef974880087e3c73022d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -492,7 +500,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &8857089252291914122
 Animator:
@@ -528,8 +536,140 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d98e8d78c2b7d4ca06f0b1e666063b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enimalAi: {fileID: 6194686548813192028}
+  animalAi: {fileID: 6194686548813192028}
   MeatOBJ: {fileID: 3959329072556678441}
+--- !u!82 &2731459702570204417
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959329072556678441}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &4968763823680787947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959329072556678441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 1
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
 --- !u!1 &4501419682732265499
 GameObject:
   m_ObjectHideFlags: 0

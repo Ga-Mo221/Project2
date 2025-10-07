@@ -100,8 +100,8 @@ GameObject:
   - component: {fileID: 8697943465799053866}
   - component: {fileID: 7532318715208445112}
   - component: {fileID: 8722014607091077051}
-  - component: {fileID: 4904664617741834541}
   - component: {fileID: 8455537026955100263}
+  - component: {fileID: 4904664617741834541}
   m_Layer: 12
   m_Name: Minotaur
   m_TagString: Enemy
@@ -235,7 +235,6 @@ MonoBehaviour:
   _type: 5
   _Die: 0
   _MiniMapIcon: {fileID: 3814148309622223578}
-  _HpBar: {fileID: 2199332181708398396}
   _item: {fileID: 0}
   _check: {fileID: 0}
   _light: {fileID: 0}
@@ -243,6 +242,7 @@ MonoBehaviour:
   _enemy: {fileID: 4904664617741834541}
   _house: {fileID: 0}
   _fire: {fileID: 0}
+  _outLine: {fileID: 3488690456950136520}
   _seemer: []
   _Detec: 0
 --- !u!114 &8722014607091077051
@@ -265,7 +265,23 @@ MonoBehaviour:
   _targetPos: {x: 0, y: 0, z: 0}
   _cacheTarget: {x: 0, y: 0, z: 0}
   _reachedEndOfPath: 0
+  _Die: 0
+  _canMove: 1
   _anim: {fileID: 3718300335381008067}
+--- !u!114 &8455537026955100263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2676710633938619929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188ff852f0ff7a340bd41ced2b9ac5a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyAI: {fileID: 4904664617741834541}
+  _HP_obj: {fileID: 2199332181708398396}
 --- !u!114 &4904664617741834541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,11 +305,12 @@ MonoBehaviour:
   _Die: 0
   critDropGold: 5
   critDropMeat: 5
-  MeatDropObj: {fileID: 3642006283248741935}
-  GoldDropObj: {fileID: 13980673645886467}
+  MeatDropObj: {fileID: 4351506826751174570}
+  GoldDropObj: {fileID: 8020191331099066207}
   _canPatrol: 1
   _patrol: {fileID: 0}
   _changeTargetPatrolDelay: 30
+  _canUpdateHP: 1
   _IsCreate: 0
   _canAction: 0
   _Detec: 0
@@ -306,20 +323,9 @@ MonoBehaviour:
   _outLine: {fileID: 3488690456950136520}
   _HPBar: {fileID: 2199332181708398396}
   _MinimapIcon: {fileID: 3814148309622223578}
+  _audio: {fileID: 2879357650664050859}
+  _display: {fileID: 7532318715208445112}
   _spriteRender: {fileID: 7094314309141008626}
---- !u!114 &8455537026955100263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2676710633938619929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 188ff852f0ff7a340bd41ced2b9ac5a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyAI: {fileID: 4904664617741834541}
 --- !u!1 &3383233013237360834
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +338,8 @@ GameObject:
   - component: {fileID: 7094314309141008626}
   - component: {fileID: 3718300335381008067}
   - component: {fileID: 2316290531413544065}
+  - component: {fileID: 3177855727606187861}
+  - component: {fileID: 2879357650664050859}
   m_Layer: 12
   m_Name: Minotaur_GFX
   m_TagString: Untagged
@@ -399,7 +407,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 7
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1493461491694850562, guid: 18de49d78df976248b769c7ea852993f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -454,6 +462,138 @@ MonoBehaviour:
   _prefeb: {fileID: 0}
   _point: {fileID: 0}
   _listPrefeb: []
+--- !u!82 &3177855727606187861
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383233013237360834}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &2879357650664050859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383233013237360834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 1
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
 --- !u!1 &3642006283248741935
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +754,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1340047751
-  m_SortingLayer: 9
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

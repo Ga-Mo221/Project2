@@ -7,6 +7,7 @@ public class Castle : MonoBehaviour
     public static Castle Instance { get; private set; }
 
     [Header("Propety")]
+    [SerializeField] private bool _canUpdateHP = true;
     public int _level = 1;
     public float _maxHealth = 500;
     public float _currentHealth = 0;
@@ -21,6 +22,8 @@ public class Castle : MonoBehaviour
     [SerializeField] public Transform _In_Castle_Pos;
     [Foldout("Inport")]
     [SerializeField] private BuidingFire _fire;
+
+    public UnitAudio _audio;
 
 
     #region Inventory
@@ -163,6 +166,7 @@ public class Castle : MonoBehaviour
     }
 
 
+    #region  Start
     void Start()
     {
         if (!_sottingLayer)
@@ -191,34 +195,55 @@ public class Castle : MonoBehaviour
 
         _allItems = GameObject.FindGameObjectsWithTag("Item");
 
-        _currentHealth = _maxHealth;
+        if (_canUpdateHP)
+            _currentHealth = _maxHealth;
+        GameManager.Instance.UIupdateHPCastle();
     }
+    #endregion
 
+
+    #region  Update
     void Update()
     {
+        if (GameManager.Instance.getGameOver()) return;
         buttonEnter();
+        buttonTab();
+        OpenWindown();
+        CloseWindown();
     }
+    #endregion
+
 
     #region Upgrade
     public void Upgrade()
     {
+        _audio.PlayLevelUpSound();
         _level++;
+        float health = 0;
         switch (_level)
         {
             case 2:
+                health = _lv2_MaxHealth - _maxHealth;
                 _maxHealth = _lv2_MaxHealth;
+                _currentHealth += health;
                 _maxSlot = _lv2_MaxSlot;
                 break;
             case 3:
+                health = _lv3_MaxHealth - _maxHealth;
                 _maxHealth = _lv3_MaxHealth;
+                _currentHealth += health;
                 _maxSlot = _lv3_MaxSlot;
                 break;
             case 4:
+                health = _lv4_MaxHealth - _maxHealth;
                 _maxHealth = _lv4_MaxHealth;
+                _currentHealth += health;
                 _maxSlot = _lv4_MaxSlot;
                 break;
             case 5:
+                health = _lv5_MaxHealth - _maxHealth;
                 _maxHealth = _lv5_MaxHealth;
+                _currentHealth += health;
                 _maxSlot = _lv5_MaxSlot;
                 break;
         }
@@ -226,6 +251,120 @@ public class Castle : MonoBehaviour
     #endregion
 
 
+    #region Check GameOver
+    public void CheckGameOver()
+    {
+        // Nếu tất cả quân đã chết
+        if (AreAllUnitsDead(_level))
+        {
+            Debug.Log("tất cả đã chết");
+            // Và không đủ tài nguyên tạo bất kỳ loại nào
+            if (NoResourcesToCreateAny(_level))
+            {
+                GameManager.Instance.setWin(false);
+                GameManager.Instance.setGameOver(true);
+            }
+        }
+    }
+
+    // Check từng list class có còn lính hay không
+    private bool AreAllUnitsDead(int level)
+    {
+        var unitLists = new List<List<PlayerAI>> { _ListWarrior };
+        if (level >= 2) unitLists.Add(_ListArcher);
+        if (level >= 3) unitLists.Add(_ListLancer);
+        if (level >= 4) unitLists.Add(_ListTNT);
+        if (level >= 5) unitLists.Add(_ListHealer);
+
+        foreach (var list in unitLists)
+        {
+            if (!IsListDead(list))
+                return false;
+        }
+
+        return true;
+    }
+
+
+    // kiểm tra còn lính hay không
+    private bool IsListDead(List<PlayerAI> list)
+    {
+        // Nếu còn bất kỳ lính nào sống, chưa tạo xong, hoặc đang lên tháp → chưa "dead"
+        foreach (var p in list)
+        {
+            if (p.gameObject.activeSelf || p.getCreating() || p.getUpTower())
+                return false;
+        }
+        return true;
+    }
+
+    // kiểm tra đủ tài nguyên để tạo lính mới hay không
+    private bool NoResourcesToCreateAny(int level)
+    {
+        // Mô tả điều kiện tài nguyên cho từng class
+        bool noWarrior = checkReferences(_wood, GameManager.Instance.Info._wood_Warrior);
+        bool noArcher = checkReferences(_wood, GameManager.Instance.Info._wood_Archer)
+                        && checkReferences(_rock, GameManager.Instance.Info._rock_Archer);
+        bool noLancer = checkReferences(_wood, GameManager.Instance.Info._wood_Lancer)
+                        && checkReferences(_rock, GameManager.Instance.Info._rock_Lancer)
+                        && checkReferences(_meat, GameManager.Instance.Info._meat_Lancer);
+        bool noTNT = checkReferences(_rock, GameManager.Instance.Info._rock_TNT)
+                        && checkReferences(_meat, GameManager.Instance.Info._meat_TNT)
+                        && checkReferences(_gold, GameManager.Instance.Info._gold_TNT);
+        bool noHealer = checkReferences(_wood, GameManager.Instance.Info._wood_Healer)
+                        && checkReferences(_rock, GameManager.Instance.Info._rock_Healer)
+                        && checkReferences(_meat, GameManager.Instance.Info._meat_Healer)
+                        && checkReferences(_gold, GameManager.Instance.Info._gold_Healer);
+
+        bool result = level switch
+        {
+            1 => noWarrior,
+            2 => noWarrior && noArcher,
+            3 => noWarrior && noArcher && noLancer,
+            4 => noWarrior && noArcher && noLancer && noTNT,
+            5 => noWarrior && noArcher && noLancer && noTNT && noHealer,
+            _ => false
+        };
+
+        // Gắn thông báo cụ thể
+        if (result)
+        {
+            string msg = level switch
+            {
+                1 => "Không đủ tài nguyên để tạo lính Warrior.",
+                2 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
+                    "Không đủ tài nguyên để tạo lính Archer.",
+                3 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
+                    !noArcher ? "Không đủ tài nguyên để tạo lính Archer." :
+                    "Không đủ tài nguyên để tạo lính Lancer.",
+                4 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
+                    !noArcher ? "Không đủ tài nguyên để tạo lính Archer." :
+                    !noLancer ? "Không đủ tài nguyên để tạo lính Lancer." :
+                    "Không đủ tài nguyên để tạo lính TNT.",
+                5 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
+                    !noArcher ? "Không đủ tài nguyên để tạo lính Archer." :
+                    !noLancer ? "Không đủ tài nguyên để tạo lính Lancer." :
+                    !noTNT ? "Không đủ tài nguyên để tạo lính TNT." :
+                    "Không đủ tài nguyên để tạo lính Healer.",
+                _ => "Không đủ tài nguyên để tạo lính."
+            };
+
+            GameManager.Instance._contentGameOver = msg;
+        }
+
+        return result;
+    }
+
+    private bool checkReferences(int currentValue, int createValue)
+    {
+        // Trả về true nếu KHÔNG đủ tài nguyên để tạo
+        return currentValue < createValue;
+    }
+    #endregion
+
+
+
+    #region Button Enter
     private void buttonEnter()
     {
         // Q
@@ -264,4 +403,49 @@ public class Castle : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.V))
             _V = false;
     }
+    #endregion
+
+
+    #region  Button Tab
+    private void buttonTab()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            GameManager.Instance.UIOpenBuidingPanel();
+        }
+    }
+    #endregion
+
+
+    #region Open Windown
+    private void OpenWindown()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            GameManager.Instance.UIopenShop();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GameManager.Instance.UIopenUpgradePanel();
+        }
+    }
+    #endregion
+
+
+    #region Close Windown
+    private void CloseWindown()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameManager.Instance.getShopOpen())
+            {
+                GameManager.Instance.UIcloseShop();
+            }
+            if (GameManager.Instance.getUpgradeOpen())
+            {
+                GameManager.Instance.UIcloseUpgradePanel();
+            }
+        }
+    }
+    #endregion
 }

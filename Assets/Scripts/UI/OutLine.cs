@@ -78,8 +78,11 @@ public class OutLine : MonoBehaviour
         }
 
         if (!_isHovering) return;
-        CastleClick();
-        clickOther();
+        if (GameManager.Instance.getCanOpenWindown())
+        {
+            CastleClick();
+            clickOther();
+        }
     }
     #endregion
 
@@ -130,43 +133,53 @@ public class OutLine : MonoBehaviour
         {
             if (_IsTower)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openPlayerTower(_playerHouse);
             }
             if (_IsStorage)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openPlayerStorage(_playerHouse);
             }
             if (_IsEnemyHouse)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openEnemyHouse(_enemyHouse);
             }
             if (_IsEnemyTower)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openEnemyTower(_enemyHouse);
             }
             if (_IsEnemyStorage)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openEnemyStorage(_enemyHouse);
             }
             if (_IsPlayer)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openPlayer(_player);
             }
             if (_IsAnimal)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openAnimal(_animal);
             }
             if (_IsEnemy)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openEnemy(_enemy);
             }
             if (_isTreeOrRock)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openTreeOrRock(_item);
             }
             if (_IsGoldMine)
             {
-                Debug.Log(transform.parent.name);
+                GameManager.Instance._selectBox.gameObject.SetActive(true);
+                GameManager.Instance._selectBox.openGold(_item);
             }
         }
     }

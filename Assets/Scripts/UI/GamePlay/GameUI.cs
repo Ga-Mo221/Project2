@@ -152,6 +152,8 @@ public class GameUI : MonoBehaviour
 
     #region Upgrade
     [Foldout("Upgrade")]
+    [SerializeField] private GameObject _UpgradePanel;
+    [Foldout("Upgrade")]
     [SerializeField] private GameObject _ButtonUpgrade;
     [Foldout("Upgrade")]
     [SerializeField] private TextMeshProUGUI _buttonUpgrade_Wood;
@@ -178,6 +180,32 @@ public class GameUI : MonoBehaviour
     #endregion
 
 
+    #region NewDay
+    [Foldout("New Day")]
+    [SerializeField] private GameObject _newday;
+    [Foldout("New Day")]
+    [SerializeField] private TextMeshProUGUI _textNewDay;
+    #endregion
+
+
+    #region Enemy Respawn
+    [Foldout("Enemy Respawn")]
+    [SerializeField] private GameObject _enemyRespawn;
+    [Foldout("Enemy Respawn")]
+    [SerializeField] private TextMeshProUGUI _textEnemyRespawn;
+    #endregion
+
+
+    #region Warning
+    [Foldout("Warning")]
+    [SerializeField] private GameObject _warning;
+    [Foldout("Warning")]
+    [SerializeField] private TextMeshProUGUI _textWarning1;
+    [Foldout("Warning")]
+    [SerializeField] private TextMeshProUGUI _textWarning2;
+    #endregion
+
+
     [SerializeField] private List<GameObject> _createList = new List<GameObject>();
     [SerializeField] private List<GameObject> _PlayerCreate = new List<GameObject>();
     private Dictionary<string, Button> _unitButtons;
@@ -198,6 +226,7 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         updateBuidingReference();
+        updateHP();
     }
 
 
@@ -233,11 +262,19 @@ public class GameUI : MonoBehaviour
         {
             _Night.SetActive(true);
             _Sun.SetActive(false);
+            if (GameManager.Instance._canNewDay)
+                GameManager.Instance._canNewDay = false;
         }
         if (_hours == 8)
         {
             _Night.SetActive(false);
             _Sun.SetActive(true);
+            if (!GameManager.Instance._canNewDay)
+            {
+                GameManager.Instance._canNewDay = true;
+                _textNewDay.text = "Ngày " + GameManager.Instance._currentDay;
+                _newday.SetActive(true);
+            }
         }
 
         // Kiểm tra Night
@@ -282,11 +319,37 @@ public class GameUI : MonoBehaviour
     #region Update Player Value
     public void updatePlayerValue()
     {
-        int WarriorVulue = Castle.Instance._ListWarrior.Count;
-        int ArcherVulue = Castle.Instance._ListArcher.Count;
-        int LancerVulue = Castle.Instance._ListLancer.Count;
-        int HealerVulue = Castle.Instance._ListHealer.Count;
-        int TNTVulue = Castle.Instance._ListTNT.Count;
+        int WarriorVulue = 0;
+        int ArcherVulue = 0;
+        int LancerVulue = 0;
+        int HealerVulue = 0;
+        int TNTVulue = 0;
+
+        foreach (var p in Castle.Instance._ListWarrior)
+        {
+            if (p.gameObject.activeSelf)
+                WarriorVulue++;
+        }
+        foreach (var p in Castle.Instance._ListArcher)
+        {
+            if (p.gameObject.activeSelf || p.getUpTower())
+                ArcherVulue++;
+        }
+        foreach (var p in Castle.Instance._ListLancer)
+        {
+            if (p.gameObject.activeSelf)
+                LancerVulue++;
+        }
+        foreach (var p in Castle.Instance._ListHealer)
+        {
+            if (p.gameObject.activeSelf)
+                HealerVulue++;
+        }
+        foreach (var p in Castle.Instance._ListTNT)
+        {
+            if (p.gameObject.activeSelf)
+                TNTVulue++;
+        }
 
         _HP_Warrior_Value.text = WarriorVulue.ToString();
         _HP_Archer_Value.text = ArcherVulue.ToString();
@@ -310,7 +373,7 @@ public class GameUI : MonoBehaviour
         }
         foreach (var p in Castle.Instance._ListArcher)
         {
-            if (p.gameObject.activeSelf || p.getCreating())
+            if (p.gameObject.activeSelf || p.getCreating() || p.getUpTower())
                 Castle.Instance._currentSlot += p._slot;
         }
         foreach (var p in Castle.Instance._ListLancer)
@@ -338,6 +401,8 @@ public class GameUI : MonoBehaviour
     #region Open Shop
     public void openShop()
     {
+        if (!GameManager.Instance.setOpenShop()) return;
+        GameManager.Instance._selectBox.gameObject.SetActive(false);
         _gr.alpha = 1;
         _gr.interactable = true;
         _gr.blocksRaycasts = true;
@@ -372,9 +437,30 @@ public class GameUI : MonoBehaviour
     #region Close Shop
     public void closeShop()
     {
+        GameManager.Instance.setCloseShop();
         _gr.alpha = 0;
         _gr.interactable = false;
         _gr.blocksRaycasts = false;
+    }
+    #endregion
+
+
+    #region Open Panel Upgrade
+    public void openPanelUpgrade()
+    {
+        if (!GameManager.Instance.setOpenUpgrade()) return;
+        GameManager.Instance._selectBox.gameObject.SetActive(false);
+        updateInfoUpgrade();
+        _UpgradePanel.SetActive(true);
+    }
+    #endregion
+
+
+    #region Close Panel Upgrade
+    public void closePanelUpgrade()
+    {
+        GameManager.Instance.setCloseUpgrade();
+        _UpgradePanel.SetActive(false);
     }
     #endregion
 
@@ -448,6 +534,7 @@ public class GameUI : MonoBehaviour
     #region Warrior
     public void createWarrior()
     {
+        Debug.Log("Đã Tạo Warrior");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Warrior;
         updateReferent();
         // tao player
@@ -456,7 +543,7 @@ public class GameUI : MonoBehaviour
         bool _isHas = false;
         foreach (var player in Castle.Instance._ListWarrior)
         {
-            if (!player.getCreating() && !player.gameObject.activeSelf)
+            if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
                 player.setCreating(true);
@@ -486,7 +573,7 @@ public class GameUI : MonoBehaviour
         {
             var _scripCreate = _objcreate.GetComponent<LoadCreate>();
             bool _on = _objcreate.activeSelf;
-            if (_on && _obj && _scripCreate._unitClass == _scripPlayer._unitClass)
+            if (_on && _obj && _scripCreate != null && _scripPlayer != null && _scripCreate._unitClass == _scripPlayer._unitClass)
             {
                 _scripCreate.add(_obj);
                 _has = true;
@@ -514,6 +601,7 @@ public class GameUI : MonoBehaviour
     #region Archer
     public void createArcher()
     {
+        Debug.Log("Đã Tạo Archer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Archer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Archer;
         updateReferent();
@@ -523,7 +611,7 @@ public class GameUI : MonoBehaviour
         bool _isHas = false;
         foreach (var player in Castle.Instance._ListArcher)
         {
-            if (!player.getCreating() && !player.gameObject.activeSelf)
+            if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
                 player.setCreating(true);
@@ -539,7 +627,8 @@ public class GameUI : MonoBehaviour
             _scripPlayer.setCreating(true);
             Castle.Instance._ListArcher.Add(_scripPlayer);
         }
-        _scripPlayer.upLevel(Castle.Instance._level - 1);
+        if (_scripPlayer != null)
+            _scripPlayer.upLevel(Castle.Instance._level - 1);
         // check
         updatePlayerValue();
         CheckLevel();
@@ -550,7 +639,7 @@ public class GameUI : MonoBehaviour
         {
             var _scripCreate = _objcreate.GetComponent<LoadCreate>();
             bool _on = _objcreate.activeSelf;
-            if (_on && _obj && _scripCreate._unitClass == _scripPlayer._unitClass)
+            if (_on && _obj && _scripCreate != null && _scripPlayer != null && _scripCreate._unitClass == _scripPlayer._unitClass)
             {
                 _scripCreate.add(_obj);
                 _has = true;
@@ -578,6 +667,7 @@ public class GameUI : MonoBehaviour
     #region Lancer
     public void createLancer()
     {
+        Debug.Log("Đã Tạo Lancer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Lancer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Lancer;
         Castle.Instance._meat -= GameManager.Instance.Info._meat_Lancer;
@@ -588,7 +678,7 @@ public class GameUI : MonoBehaviour
         bool _isHas = false;
         foreach (var player in Castle.Instance._ListLancer)
         {
-            if (!player.getCreating() && !player.gameObject.activeSelf)
+            if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
                 player.setCreating(true);
@@ -616,7 +706,7 @@ public class GameUI : MonoBehaviour
         {
             var _scripCreate = _objcreate.GetComponent<LoadCreate>();
             bool _on = _objcreate.activeSelf;
-            if (_on && _obj && _scripCreate._unitClass == _scripPlayer._unitClass)
+            if (_on && _obj && _scripCreate != null && _scripPlayer != null && _scripCreate._unitClass == _scripPlayer._unitClass)
             {
                 _scripCreate.add(_obj);
                 _has = true;
@@ -644,6 +734,7 @@ public class GameUI : MonoBehaviour
     #region TNT
     public void createTNT()
     {
+        Debug.Log("Đã Tạo TNT");
         Castle.Instance._rock -= GameManager.Instance.Info._rock_TNT;
         Castle.Instance._meat -= GameManager.Instance.Info._meat_TNT;
         Castle.Instance._gold -= GameManager.Instance.Info._gold_TNT;
@@ -654,7 +745,7 @@ public class GameUI : MonoBehaviour
         bool _isHas = false;
         foreach (var player in Castle.Instance._ListTNT)
         {
-            if (!player.getCreating() && !player.gameObject.activeSelf)
+            if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
                 player.setCreating(true);
@@ -682,7 +773,7 @@ public class GameUI : MonoBehaviour
         {
             var _scripCreate = _objcreate.GetComponent<LoadCreate>();
             bool _on = _objcreate.activeSelf;
-            if (_on && _obj && _scripCreate._unitClass == _scripPlayer._unitClass)
+            if (_on && _obj && _scripCreate != null && _scripPlayer != null && _scripCreate._unitClass == _scripPlayer._unitClass)
             {
                 _scripCreate.add(_obj);
                 _has = true;
@@ -710,6 +801,7 @@ public class GameUI : MonoBehaviour
     #region Healer
     public void createHealer()
     {
+        Debug.Log("Đã Tạo Healer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Healer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Healer;
         Castle.Instance._meat -= GameManager.Instance.Info._meat_Healer;
@@ -721,7 +813,7 @@ public class GameUI : MonoBehaviour
         bool _isHas = false;
         foreach (var player in Castle.Instance._ListHealer)
         {
-            if (!player.getCreating() && !player.gameObject.activeSelf)
+            if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
                 player.setCreating(true);
@@ -748,7 +840,7 @@ public class GameUI : MonoBehaviour
         {
             var _scripCreate = _objcreate.GetComponent<LoadCreate>();
             bool _on = _objcreate.activeSelf;
-            if (_on && _obj && _scripCreate._unitClass == _scripPlayer._unitClass)
+            if (_on && _obj && _scripCreate != null && _scripPlayer != null && _scripCreate._unitClass == _scripPlayer._unitClass)
             {
                 _scripCreate.add(_obj);
                 _has = true;
@@ -909,7 +1001,7 @@ public class GameUI : MonoBehaviour
             scripA.resetValue();
             foreach (var obj in Castle.Instance._ListArcher)
             {
-                if (obj.gameObject.activeSelf)
+                if (obj.gameObject.activeSelf || obj.getUpTower())
                     scripA.addValue(obj.gameObject);
             }
         }
@@ -944,12 +1036,19 @@ public class GameUI : MonoBehaviour
     #endregion
 
 
+    #region Open Panel Buiding
+    public void openPanelBuiding()
+        => _buiding_hide.move();
+    #endregion
+
+
     #region Buy Tower
     public void CreateTower()
     {
+        Debug.Log("Đã Tạo Tower");
         GameObject obj = Instantiate(GameManager.Instance._TowerPrefab, wordSpace(), Quaternion.identity, Castle.Instance._TowerFolder);
         obj.GetComponent<House>().setLevel(Castle.Instance._level);
-        _buiding_hide.move();
+        openPanelBuiding();
         GameManager.Instance.setCanBuy(false);
     }
     #endregion
@@ -970,9 +1069,10 @@ public class GameUI : MonoBehaviour
     #region Buy Storage
     public void CreateStorage()
     {
+        Debug.Log("Đã Tạo Storage");
         GameObject obj = Instantiate(GameManager.Instance._StoragePrefab, wordSpace(), Quaternion.identity, Castle.Instance._StorgeFolder);
         obj.GetComponent<House>().setLevel(Castle.Instance._level);
-        _buiding_hide.move();
+        openPanelBuiding();
         GameManager.Instance.setCanBuy(false);
     }
     #endregion
@@ -1107,6 +1207,7 @@ public class GameUI : MonoBehaviour
     #region Button Upgrade Click
     public void Upgrade()
     {
+        Debug.Log("Đã UpLevel");
         // trừ tài nguyên
         switch (Castle.Instance._level)
         {
@@ -1187,6 +1288,8 @@ public class GameUI : MonoBehaviour
             _PanelUpgrade_Slot.text = Castle.Instance._lv5_MaxSlot.ToString();
             _PanelButtonUpgrade.interactable = false;
         }
+
+        updateHP();
     }
     #endregion
 
@@ -1222,6 +1325,36 @@ public class GameUI : MonoBehaviour
                 else _buttonStorage.interactable = false;
             else _buttonStorage.interactable = false;
         else _buttonStorage.interactable = false;
+    }
+    #endregion
+
+
+    #region Enemy Respawn
+    public void onEnemyRespawn(bool war)
+    {
+        string content;
+        Color color;
+        if (war)
+        {
+            content = "Bọn 'Man Rợn' kia đã phát động tấn công. Hãy bảo vệ nhà chính!";
+            color = Color.red;
+        }
+        else
+        {
+            content = "Chúng đã hồi sinh! Lũ quái vật gớm ghiếc đang trỗi dậy — cẩn thận đấy!";
+            color = Color.white;
+        }
+        _textEnemyRespawn.text = content;
+        _textEnemyRespawn.color = color;
+        _enemyRespawn.SetActive(true);
+    }
+
+
+    public void onWarning(EnemyHuoseController house)
+    {
+        _textWarning1.text = "Đánh nhanh – thắng nhanh! Bọn quái vật đã đánh hơi thấy bạn!";
+        _textWarning2.text = $"{(int)house._warningTime} giây nữa, bọn chúng sẽ kéo đến.";
+        _warning.SetActive(true);
     }
     #endregion
 }

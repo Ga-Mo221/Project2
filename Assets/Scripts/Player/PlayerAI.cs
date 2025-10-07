@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using NaughtyAttributes;
+using System.Collections.Generic;
 
 public class PlayerAI : MonoBehaviour
 {
@@ -22,10 +23,9 @@ public class PlayerAI : MonoBehaviour
     [Foldout("Stats")]
     public float _damage = 10; // sát thương
     [Foldout("Stats")]
-    [SerializeField] private float _maxSpeed = 6f; // tốc độ tối đa
-    [HideIf(nameof(IsTNT))]
+    public float _maxSpeed = 6f; // tốc độ tối đa
     [Foldout("Stats")]
-    [SerializeField] private float _range = 1.5f; // tầm đánh
+    public float _range = 1.5f; // tầm đánh
     [HideIf(nameof(IsTNT))]
     [Foldout("Stats")]
     public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
@@ -82,7 +82,13 @@ public class PlayerAI : MonoBehaviour
     [SerializeField] private GameObject _GFX; // hình ảnh nhân vật
     [Foldout("GFX")]
     public GameObject _MiniMapIcon;
+    [Foldout("GFX")]
+    [SerializeField] private GameObject _AI; // hiển thị đang bật tắt AI
 
+    [Foldout("Other")]
+    [SerializeField] private UnitAudio _audio;
+    [Foldout("Other")]
+    [SerializeField] private Rada _rada;
     [Foldout("Other")]
     [Header("Component")]
     public Animator _anim; // animation của đối tượng
@@ -99,7 +105,11 @@ public class PlayerAI : MonoBehaviour
 
     // bool
     [Foldout("Status")]
+    [SerializeField] private bool _canUpdateHP = true;
+    [Foldout("Status")]
     [SerializeField] private bool _creating = false;
+    [Foldout("Status")]
+    [SerializeField] private bool _UpTower = false;
     [Foldout("Status")]
     [SerializeField] private bool _Die = false;
     [Foldout("Status")]
@@ -139,7 +149,9 @@ public class PlayerAI : MonoBehaviour
 
     protected virtual void Start()
     {
-        _health = _maxHealth;
+        if (_canUpdateHP)
+            _health = _maxHealth;
+
         if (!_anim)
             Debug.LogError($"[{gameObject.name}] [PlayerAI] Chưa Gán 'Animator'");
         if (!_MiniMapIcon)
@@ -152,7 +164,11 @@ public class PlayerAI : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("UpdatePath", 0f, _repathRate);
+        InvokeRepeating(nameof(Ai), 0.3f, 0.3f);
     }
+
+
+    public virtual void Ai(){}
 
 
     #region Update
@@ -187,6 +203,9 @@ public class PlayerAI : MonoBehaviour
             }
             _damage += GameManager.Instance.Info._damageBounus;
         }
+        _level = leve;
+        if (level != 0)
+            _audio.PlayLevelUpSound();
     }
     #endregion
 
@@ -194,6 +213,7 @@ public class PlayerAI : MonoBehaviour
     #region New Status
     private void newStatus()
     {
+        _canUpdateHP = true;
         _level = 1;
         _health = _maxHealth;
         _rock = 0;
@@ -224,6 +244,8 @@ public class PlayerAI : MonoBehaviour
     public void respawn(Transform pos)
     {
         newStatus();
+        path.setDie(false);
+        path.setCanMove(true);
         transform.position = pos.position;
         _MiniMapIcon.SetActive(true);
         _OutLine.SetActive(true);
@@ -233,6 +255,7 @@ public class PlayerAI : MonoBehaviour
             _healEffect.SetActive(false);
         _selet.SetActive(false);
         setDie(false);
+        _rada.setDie(false);
     }
     #endregion
 
@@ -240,6 +263,8 @@ public class PlayerAI : MonoBehaviour
     #region Dead
     public void Dead()
     {
+        _rada.setDie(true);
+        path.setDie(true);
         setTarget(transform.position, true);
         resetItemSelect();
         _MiniMapIcon.SetActive(false);
@@ -251,6 +276,8 @@ public class PlayerAI : MonoBehaviour
         setDie(true);
         _farmCoroutine = null;
         _anim.SetTrigger("Die");
+        GameManager.Instance.UIPlayerDie(_unitClass);
+        Castle.Instance.CheckGameOver();
     }
     public virtual void setActive() => gameObject.SetActive(false);
     #endregion
@@ -320,7 +347,7 @@ public class PlayerAI : MonoBehaviour
         {
             if (_itemScript._type != ItemType.Gold)
             {
-                _itemScript._seleted = false;
+                _itemScript.removeSelect(transform.name);
             }
             else
             {
@@ -336,7 +363,8 @@ public class PlayerAI : MonoBehaviour
             _itemScript = null;
         }
 
-        if (!farm) cacheTarget = null;
+        if (!farm)
+            cacheTarget = null;
     }
     #endregion
 
@@ -358,6 +386,7 @@ public class PlayerAI : MonoBehaviour
     private void setHPBar()
     {
         _hpBar.fillAmount = _health / _maxHealth;
+        _AI.SetActive(!_isAI);
     }
     #endregion
 
@@ -381,7 +410,8 @@ public class PlayerAI : MonoBehaviour
                 {
                     _canAction = true;
                     if (_attackSpeed == null)
-                        _attackSpeed = StartCoroutine(attackSpeed());
+                        if (gameObject.activeInHierarchy)
+                            _attackSpeed = StartCoroutine(attackSpeed());
                 }
             }
             else
@@ -397,7 +427,8 @@ public class PlayerAI : MonoBehaviour
                 {
                     _canAction = true;
                     if (_attackSpeed == null)
-                        _attackSpeed = StartCoroutine(attackSpeed());
+                        if (gameObject.activeInHierarchy)
+                            _attackSpeed = StartCoroutine(attackSpeed());
                 }
             }
             else
@@ -460,7 +491,7 @@ public class PlayerAI : MonoBehaviour
         ItemType type = _script._type;
         if (_script._stack > 0)
         {
-            if (type == ItemType.Tree && _script._seleted)
+            if (type == ItemType.Tree && _script.checkSelect(this))
             {
                 if (_wood < _maxWood)
                 {
@@ -468,7 +499,7 @@ public class PlayerAI : MonoBehaviour
                     _anim.SetTrigger("attack");
                 }
             }
-            else if (type == ItemType.Rock && _script._seleted)
+            else if (type == ItemType.Rock && _script.checkSelect(this))
             {
                 if (_rock < _maxRock)
                 {
@@ -485,11 +516,11 @@ public class PlayerAI : MonoBehaviour
                 }
             }
         }
-        else if (_script._stack <= 0 && _script._seleted)
+        else if (_script._stack <= 0 && _script.checkSelect(this))
         {
             setIsTarget(false);
             if (_script._type != ItemType.Gold)
-                _script._seleted = false;
+                _script.removeSelect(transform.name);
         }
         yield return new WaitForSeconds(_farmSpeed);
         _farmCoroutine = null;
@@ -511,11 +542,25 @@ public class PlayerAI : MonoBehaviour
                 if (hit == null) continue;
                 if (hit.CompareTag("Item"))
                 {
-                    float dist = Vector3.Distance(transform.position, hit.transform.position);
+                    float dist = Vector2.Distance(transform.position, hit.transform.position);
                     var _script = hit.gameObject.GetComponent<Item>();
-                    if (_script._type != ItemType.Gold)
+                    if (_script._type == ItemType.Gold)
                     {
-                        if (!_script._seleted && _script._stack > 0 && _script._detec)
+                        if (_script._detec && _script._value > 0 && _gold < _maxGold)
+                        {
+                            if (_script._Farmlist.Count < _script._maxFarmers && _script._detec)
+                            {
+                                if (dist < minDist) // chỉ chọn nếu gần hơn
+                                {
+                                    minDist = dist;
+                                    nearest = hit.gameObject;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (_script.checkSelectNull() && _script._stack > 0 && _script._detec)
                         {
                             if (_script._type == ItemType.Tree && _wood < _maxWood)
                             {
@@ -532,21 +577,6 @@ public class PlayerAI : MonoBehaviour
                                     minDist = dist;
                                     nearest = hit.gameObject;
                                 }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (_script._detec && _script._value > 0 && _gold < _maxGold)
-                        {
-                            if (_script._Farmlist.Count < _script._maxFarmers)
-                            {
-                                if (dist < minDist) // chỉ chọn nếu gần hơn
-                                {
-                                    minDist = dist;
-                                    nearest = hit.gameObject;
-                                }
-                                break;
                             }
                         }
                     }
@@ -719,6 +749,19 @@ public class PlayerAI : MonoBehaviour
     }
     #endregion
 
+    #region Check and Add Castle
+    public void addCastle(List<PlayerAI> listplayer)
+    {
+        foreach (var p in listplayer)
+        {
+            if (p == this)
+                return;
+        }
+        listplayer.Add(this);
+        Debug.Log($"Add [{transform.name}] in Castle");
+    }
+    #endregion
+
 
     #region Draw
     protected virtual void OnDrawGizmosSelected()
@@ -728,8 +771,12 @@ public class PlayerAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _radius);
 
         // farm
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _radius_farm);
+        if (!IsHealerOrTNT)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, _radius_farm);
+        }
+
         // attack
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _range);
@@ -778,6 +825,14 @@ public class PlayerAI : MonoBehaviour
     public void setCreating(bool amount)
         => _creating = amount;
     public bool getCreating() => _creating;
+
+    // path can move
+    public void setCanMove(bool amount) => path.setCanMove(amount);
+
+
+    // Archer
+    public void setUpTower(bool amount) => _UpTower = amount;
+    public bool getUpTower() => _UpTower;
     #endregion
 }
 

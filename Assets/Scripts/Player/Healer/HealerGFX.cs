@@ -18,22 +18,25 @@ public class HealerGFX : PlayerAI
             Debug.LogError("[HealerGFX] Chưa gán 'SpriteRender'");
         if (!_oderSpriterPoint)
             Debug.LogError("[HealerGFX] Chưa gán '_oderSpriterPoint'");
+
+        addCastle(Castle.Instance._ListHealer);
     }
 
     protected override void Update()
     {
         base.Update();
         _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
+    }
 
+
+    public override void Ai()
+    {
         if (!getIsAI()) return;
-        if (target == null)
+        target = findPlayers();
+        if (target != null)
         {
-            target = findPlayers();
-            if (target != null)
-            {
-                setDetect(true);
-                moveToTarget(target);
-            }
+            setDetect(true);
+            moveToTarget(target);
         }
 
         attack(target);

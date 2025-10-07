@@ -10,6 +10,7 @@ public class GoldMine : Item
 
     public override void farm(PlayerAI _playerAI)
     {
+        _audio.PlayFarmOrHitDamageSound();
         _stack--;
         if (_value > 0)
         {
@@ -42,6 +43,7 @@ public class GoldMine : Item
                         hit.target = null;
                     }
                     _anim.SetBool("Die", true);
+                    _audio.PlayDieSound();
                 }
             }
             if (_value <= _maxValue / 3)

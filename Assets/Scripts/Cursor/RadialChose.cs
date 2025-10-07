@@ -25,30 +25,30 @@ public class RadialChose : MonoBehaviour
         {
             if (_type == ChosenType.War)
             {
-                _menu.onAnimation("war", true);
+                _menu.OnAnimation("war", true);
             }
             else if (_type == ChosenType.Support)
             {
-                _menu.onAnimation("support", true);
+                _menu.OnAnimation("support", true);
             }
             else if (_type == ChosenType.Rally)
             {
-                _menu.onAnimation("rally", true);
+                _menu.OnAnimation("rally", true);
             }
         }
         else
         {
             if (_type == ChosenType.War)
             {
-                _menu.onAnimation("war", false);
+                _menu.OnAnimation("war", false);
             }
             else if (_type == ChosenType.Support)
             {
-                _menu.onAnimation("support", false);
+                _menu.OnAnimation("support", false);
             }
             else if (_type == ChosenType.Rally)
             {
-                _menu.onAnimation("rally", false);
+                _menu.OnAnimation("rally", false);
             }
         }
     }

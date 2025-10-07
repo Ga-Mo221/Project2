@@ -58,6 +58,7 @@ public class DropItem : MonoBehaviour
     private IEnumerator destroy()
     {
         _pickUP = true;
+        des = null;
         yield return new WaitForSeconds(2f);
         if (_animal)
         {
