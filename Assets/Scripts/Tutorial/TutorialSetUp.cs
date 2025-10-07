@@ -107,6 +107,7 @@ public class TutorialSetUp : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);
         _Baw.SetBool("chi", false);
         _Baw.SetBool("noi", false);
+        _typewriter.StartTyping("");
         _Mess.SetTrigger("exit");
         _selectBox.SetActive(true);
     }
@@ -117,7 +118,6 @@ public class TutorialSetUp : MonoBehaviour
         yield return new WaitForSecondsRealtime(1.5f);
         _Baw.SetBool("khen", false);
 
-        _typewriter.StartTyping("");
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);

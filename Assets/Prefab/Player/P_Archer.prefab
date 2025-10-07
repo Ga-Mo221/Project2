@@ -619,12 +619,12 @@ MonoBehaviour:
   _level: 1
   _maxHealth: 45
   _health: 0
-  _damage: 10
+  _damage: 17
   _maxSpeed: 4
   _range: 7
   _attackSpeedd: 1.5
   _slot: 3
-  _createTime_sec: 2
+  _createTime_sec: 13
   _radius: 9
   _radius_farm: 3
   _farmSpeed: 1
@@ -929,6 +929,7 @@ MonoBehaviour:
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0

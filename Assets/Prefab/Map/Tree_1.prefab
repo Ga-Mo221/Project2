@@ -446,7 +446,7 @@ MonoBehaviour:
   _maxValue: 5
   _valueOneDrop: 5
   _spawnTime: 120
-  _maxStack: 10
+  _maxStack: 7
   _Farmlist: []
   _maxFarmers: 2
   _seleted: {fileID: 0}

@@ -296,7 +296,7 @@ MonoBehaviour:
   _level: 1
   _maxHealth: 75
   _health: 0
-  _damage: 15
+  _damage: 23
   _maxSpeed: 4
   _range: 4.2
   _attackSpeedd: 1.2
@@ -810,6 +810,7 @@ MonoBehaviour:
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0

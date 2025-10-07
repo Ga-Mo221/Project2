@@ -6,6 +6,7 @@ public class ArowEnemy : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed = 10;
     [SerializeField] private float _speed = 0;
+    [SerializeField] private bool _isAttack = false; // kiem tra da goi takedamage chua
     private float _damage;
     private Transform _target;
 
@@ -21,6 +22,7 @@ public class ArowEnemy : MonoBehaviour
 
     void Update()
     {
+        if (_isAttack) gameObject.SetActive(true);
         _spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 100000;
         if (_target == null) return;
 
@@ -46,6 +48,7 @@ public class ArowEnemy : MonoBehaviour
                 {
                     health.takeDamage(_damage);
                     IsHit = true;
+                    _isAttack = true;
                 }
             }
             if (checkTagHouse(_target.gameObject))
@@ -55,6 +58,7 @@ public class ArowEnemy : MonoBehaviour
                 {
                     health.takeDamage(_damage);
                     IsHit = true;
+                    _isAttack = true;
                 }
             }
             if (checkTagAnimal(_target.gameObject))
@@ -64,6 +68,7 @@ public class ArowEnemy : MonoBehaviour
                 {
                     animalHealth.takeDamage(_damage, gameObject);
                     IsHit = true;
+                    _isAttack = true;
                 }
             }
 
@@ -84,6 +89,7 @@ public class ArowEnemy : MonoBehaviour
 
     public void setProperties(Transform target, float damage, float Xspeed, Vector3 scele)
     {
+        _isAttack = false;
         _target = target;
         _damage = damage;
         _speed = _maxSpeed * Xspeed;

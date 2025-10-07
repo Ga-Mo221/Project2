@@ -137,9 +137,9 @@ MonoBehaviour:
   _maxValue: 500
   _valueOneDrop: 5
   _spawnTime: 60
-  _maxStack: 15
+  _maxStack: 10
   _Farmlist: []
-  _maxFarmers: 2
+  _maxFarmers: 3
   _seleted: {fileID: 0}
   _detec: 0
   _spriteRender: {fileID: 3791499043775884485}
@@ -625,6 +625,7 @@ MonoBehaviour:
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0
