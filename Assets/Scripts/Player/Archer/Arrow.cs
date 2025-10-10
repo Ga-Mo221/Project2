@@ -7,26 +7,30 @@ public class Arrow : MonoBehaviour
     [SerializeField] private Transform _target;
     private float _damage;
     [SerializeField] private float _maxSpeed = 10f;
-    [SerializeField] private float _speed= 0;
+    [SerializeField] private float _speed = 0;
     private Rigidbody2D _rb;
     [SerializeField] public bool Skill = false;
     [SerializeField] private GameObject _normal;
     [SerializeField] private GameObject _Skill;
     private Vector2 direction = Vector2.zero;
     [SerializeField] private bool ok = false;
-    private bool change = false;
     [SerializeField] private bool _isPlayer = true;
     [SerializeField] private PlayerHitDamage _hitDamage;
     [SerializeField] private UnitAudio _audio;
 
     private SpriteRenderer _arrow1;
     private SpriteRenderer _arrow2;
+    private Coroutine _null;
+
+    void Awake()
+    {
+        _arrow1 = _normal.GetComponent<SpriteRenderer>();
+        _arrow2 = _Skill.GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _arrow1 = _normal.GetComponent<SpriteRenderer>();
-        _arrow2 = _Skill.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -34,38 +38,39 @@ public class Arrow : MonoBehaviour
         int _yoder = -(int)(transform.position.y * 100) + 100000;
         _arrow1.sortingOrder = _yoder;
         _arrow2.sortingOrder = _yoder;
-        if (_target == null) gameObject.SetActive(false);
-        if (Skill && !change)
+        if (_target == null && _null == null)
         {
-            change = true;
-            _Skill.SetActive(true);
-            _normal.SetActive(false);
+            _null = StartCoroutine(setActive(Skill, 1f));
         }
-        else if (!Skill && !change)
+
+        if (_null != null)
         {
-            change = true;
-            _normal.SetActive(true);
-            _Skill.SetActive(false);
+            return;
         }
+    
         moveToTarget();
 
-        if (_target == null) return;
-        float dis = Vector3.Distance(transform.position, _target.position);
+        float dis = _target? Vector3.Distance(transform.position, _target.position) : 0;
         if (dis <= 0.2 && !Skill)
         {
             if (_target.CompareTag("Enemy") || _target.CompareTag("Animal") || _target.CompareTag("EnemyHouse"))
             {
                 _hitDamage.setPlayerAI(_playerAI);
                 _hitDamage.attack(_isPlayer, _damage, _target.gameObject);
-                gameObject.SetActive(false);
                 _target = null;
                 _audio.PlayFarmOrHitDamageSound();
+
+                if (gameObject.activeInHierarchy)
+                    StartCoroutine(setActive(false, 0.5f));
             }
         }
     }
 
+
+
     public void setTarget(bool isPlayer, PlayerAI script, bool Skills, float damage, float speed, Vector3 scale)
     {
+        _null = null;
         transform.localScale = scale;
         if (speed != 0)
             _speed = speed;
@@ -77,11 +82,24 @@ public class Arrow : MonoBehaviour
         if (script.target != null)
             _target = script.target.transform;
         _damage = damage;
-        change = false;
         ok = false;
+
+
+        if (Skill)
+        {
+            _normal.SetActive(false);
+            _Skill.SetActive(true);
+        }
+        else
+        {
+            _normal.SetActive(true);
+            _Skill.SetActive(false);
+            _arrow1.enabled = true;
+        }
     }
     public void setTarget(bool isPlayer, GameObject obj, bool Skills, float damage, float speed, Vector3 scale)
     {
+        _null = null;
         transform.localScale = scale;
         if (speed != 0)
             _speed = speed;
@@ -91,8 +109,19 @@ public class Arrow : MonoBehaviour
         Skill = Skills;
         _target = obj.transform;
         _damage = damage;
-        change = false;
         ok = false;
+
+        if (Skill)
+        {
+            _normal.SetActive(false);
+            _Skill.SetActive(true);
+        }
+        else
+        {
+            _normal.SetActive(true);
+            _Skill.SetActive(false);
+            _arrow1.enabled = true;
+        }
     }
     public Transform getTarget() => _target;
 
@@ -110,33 +139,37 @@ public class Arrow : MonoBehaviour
             ok = true;
             direction = ((Vector2)_target.position - _rb.position).normalized;
             _speed *= 2.5f;
-            StartCoroutine(setactive());
+            StartCoroutine(setActive(true, 2f));
         }
 
         // Gán vận tốc cho Rigidbody2D
-            _rb.linearVelocity = direction * _speed;
+        _rb.linearVelocity = direction * _speed;
 
         // Xoay mũi tên theo hướng bay (để mũi tên trông tự nhiên hơn)
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
-
-    private IEnumerator setactive()
+    
+    private IEnumerator setActive(bool skill, float delay)
     {
-        yield return new WaitForSeconds(2f);
-        ok = false;
-        change = false;
+        _arrow1.enabled = false;
+        yield return new WaitForSeconds(delay);
+        if (skill)
+        {
+            ok = false;
+        }
         gameObject.SetActive(false);
-    } 
+    }
 
-    // void OnTriggerEnter2D(Collider2D collision)
-    // {
-    //     if (collision == null) return;
-    //     if (!Skill) return;
-    //     if (collision.CompareTag("Enemy") || collision.CompareTag("Animal") || collision.CompareTag("EnemyHouse"))
-    //     {
-    //         _hitDamage.setPlayerAI(_playerAI);
-    //         _hitDamage.attack(_isPlayer, _damage, collision.gameObject, true);
-    //     }
-    // }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null) return;
+        if (!Skill) return;
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Animal") || collision.CompareTag("EnemyHouse"))
+        {
+            _hitDamage.setPlayerAI(_playerAI);
+            _hitDamage.attack(_isPlayer, _damage, collision.gameObject, true);
+            _audio.PlayFarmOrHitDamageSound();
+        }
+    }
 }

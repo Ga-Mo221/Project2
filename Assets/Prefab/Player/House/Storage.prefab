@@ -200,8 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _fire: {fileID: 4933985475725199286}
+  _tutorial: 0
   _canDetec: 0
+  _fire: {fileID: 4933985475725199286}
   _imgLoad: {fileID: 3192182290273527900}
   _inPos: {fileID: 0}
   _inPos1: {fileID: 5478221784368428117}
@@ -213,6 +214,7 @@ MonoBehaviour:
   _canvas: {fileID: 7623795245536797997}
   _canCreate: {fileID: 1205387266648903066}
   _HPcanvas: {fileID: 9173508382521863227}
+  _outLine: {fileID: 6628966080478042825}
   _createTimeSec: 20
 --- !u!114 &7951098483681800556
 MonoBehaviour:
@@ -227,6 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _Die: 0
   _level: 1
   _new: 1
   _canUpdateHP: 1
@@ -363,6 +366,7 @@ MonoBehaviour:
   Enemy: 0
   Storage: 1
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 1
@@ -755,7 +759,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.91
+  m_Radius: 2.61
 --- !u!114 &909896978609501282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,8 +1046,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 1.94
+  m_Offset: {x: 0.03, y: -0.22}
+  m_Radius: 2.61
 --- !u!114 &3673956207516421960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,7 +1369,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 1.94
+  m_Radius: 2.61
 --- !u!114 &5598366931429519864
 MonoBehaviour:
   m_ObjectHideFlags: 0

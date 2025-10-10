@@ -18,36 +18,50 @@ public class HouseHealth : MonoBehaviour
     private bool IsCastle => _type == HouseType.Castle;
     private Animator _anim;
     [SerializeField] private bool _tutorial = false;
-    [SerializeField] private BuidingFire _fire;
 
     [SerializeField] private bool _canDetec = false;
 
+    [Foldout("Other")]
+    [SerializeField] private BuidingFire _fire;
+    [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private Image _imgLoad;
+    [Foldout("Other")]
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _inPos;
+    [Foldout("Other")]
     [ShowIf(nameof(IsStorage))]
     [SerializeField] private GameObject _inPos1;
+    [Foldout("Other")]
     [ShowIf(nameof(IsStorage))]
     [SerializeField] private GameObject _inPos2;
+    [Foldout("Other")]
     [ShowIf(nameof(IsStorage))]
     [SerializeField] private GameObject _inPos3;
+    [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private Rada _rada;
-    [ShowIf(nameof(IsStorage))]
     private House _house;
 
 
+    [Foldout("Other")]
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _ButtonArcherUP; // canvas
+    [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private GameObject _light;
+    [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private GameObject _canvas; // button x and v
+    [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private GameObject _canCreate;
+    [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private GameObject _HPcanvas;
+
+    [Foldout("Other")]
+    [SerializeField] private GameObject _outLine;
 
 
 
@@ -144,6 +158,7 @@ public class HouseHealth : MonoBehaviour
             _house.updateHP();
             if (_house._currentHealth <= 0)
             {
+                _house.setDie(true);
                 _rada.setDie(true);
                 _house._currentHealth = 0;
                 CameraShake.Instance.ShakeCamera(0.5f, 0.3f);
@@ -186,6 +201,7 @@ public class HouseHealth : MonoBehaviour
                 _light.SetActive(false);
                 _HPcanvas.SetActive(false);
                 _house._audio.PlayDieSound();
+                _outLine.SetActive(false);
             }
 
             _HPcanvas.SetActive(true);
@@ -203,6 +219,7 @@ public class HouseHealth : MonoBehaviour
                 _anim.SetBool("Die", true);
                 setCanDetec(false);
                 StartCoroutine(GameOver());
+                _outLine.SetActive(false);
                 Castle.Instance._audio.PlayDieSound();
             }
         }
@@ -223,8 +240,15 @@ public class HouseHealth : MonoBehaviour
     private IEnumerator GameOver()
     {
         yield return new WaitForSeconds(GameManager.Instance._displayGameOverTime);
-        GameManager.Instance.setWin(false);
-        GameManager.Instance.setGameOver(true);
+        if (GameManager.Instance.TutorialWar && !TutorialSetUp.Instance._Win)
+        {
+            TutorialSetUp.Instance.GameLose();
+        }
+        else
+        {
+            GameManager.Instance.setWin(false);
+            GameManager.Instance.setGameOver(true);
+        }
     }
 
 

@@ -455,6 +455,7 @@ MonoBehaviour:
   _anim: {fileID: 2578942861528010811}
   _OderPoin: {fileID: 553791211117434666}
   _DiePrefab: {fileID: 977759521818629307}
+  _outLine: {fileID: 3297104714365249867}
   _audio: {fileID: 3206057560611992500}
   _value: 0
   _stack: 0

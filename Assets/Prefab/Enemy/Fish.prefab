@@ -494,7 +494,7 @@ MonoBehaviour:
   _Die_Clip: {fileID: 0}
   Enemy: 0
   Storage: 0
-  _Attack_Clip: {fileID: 0}
+  _Attack_Clip: {fileID: 8300000, guid: c4739ad884eca5743bdef2405bb562a2, type: 3}
   Animal: 1
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}

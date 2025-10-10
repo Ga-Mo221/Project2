@@ -18,6 +18,7 @@ public class HideUI : MonoBehaviour
 
     public void move()
     {
+        if (GameManager.Instance.Tutorial && (TutorialSetUp.Instance.ID == 2|| TutorialSetUp.Instance.ID == 4)) return;
         if (!GameManager.Instance.getCanBuy()) return;
         GameManager.Instance.UIcheckButtonBuyBuiding();
 
@@ -27,6 +28,8 @@ public class HideUI : MonoBehaviour
         _moveCoroutine = StartCoroutine(MoveTo(target));
 
         isOut = !isOut;
+        if (isOut && GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 3)
+            TutorialSetUp.Instance.TutorialBuyTower();
     }
 
     private IEnumerator MoveTo(Vector2 target)

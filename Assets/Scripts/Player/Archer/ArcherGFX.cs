@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum UpDirection
@@ -19,7 +20,7 @@ public class ArcherGFX : PlayerAI
     [Header("Arrow")]
     [SerializeField] private GameObject _arrowPrefab;
     //private GameObject _targets;
-    [SerializeField] private GameObject[] _listArrow = new GameObject[10];
+    [SerializeField] private List<GameObject> _listArrow = new List<GameObject>();
 
     [Header("SKILL")]
     [SerializeField] private int _attack_count_SKILL = 5;
@@ -122,31 +123,13 @@ public class ArcherGFX : PlayerAI
     public void spawnArrow()
     {
         _attackCount++;
-        for (int i = 0; i < _listArrow.Length; i++) // hoặc _listArrow.Count
-        {
-            if (_listArrow[i] != null)
-            {
-                var _script = _listArrow[i].GetComponent<Arrow>();
 
-                if (_script.getTarget() == null)
-                {
-                    _listArrow[i].transform.position = _shootPos.position;
-                    if (_attackCount == _attack_count_SKILL)
-                    {
-                        _script.setTarget(true, this, true, _damage, 0, transform.localScale);
-                        _attackCount = 0;
-                    }
-                    else
-                        _script.setTarget(true, this, false, _damage, 0, transform.localScale);
-                    _listArrow[i].SetActive(true);
-                    break;
-                }
-            }
-            else
+        bool _has = true;
+        foreach (var arrow in _listArrow)
+        {
+            if (arrow != null && !arrow.activeSelf)
             {
-                GameObject _arrow = Instantiate(_arrowPrefab, _shootPos.position, Quaternion.identity, _shootStarge);
-                _listArrow[i] = _arrow;
-                var _script = _arrow.GetComponent<Arrow>();
+                var _script = arrow.GetComponent<Arrow>();
                 if (_attackCount == _attack_count_SKILL)
                 {
                     _script.setTarget(true, this, true, _damage, 0, transform.localScale);
@@ -154,8 +137,26 @@ public class ArcherGFX : PlayerAI
                 }
                 else
                     _script.setTarget(true, this, false, _damage, 0, transform.localScale);
+
+                arrow.transform.position = _shootPos.position;
+                arrow.SetActive(true);
+                _has = false;
                 break;
             }
+        }
+
+        if (_has)
+        {
+            GameObject _arrow = Instantiate(_arrowPrefab, _shootPos.position, Quaternion.identity, _shootStarge);
+            _listArrow.Add(_arrow);
+            var _script = _arrow.GetComponent<Arrow>();
+            if (_attackCount == _attack_count_SKILL)
+            {
+                _script.setTarget(true, this, true, _damage, 0, transform.localScale);
+                _attackCount = 0;
+            }
+            else
+                _script.setTarget(true, this, false, _damage, 0, transform.localScale);
         }
     }
 }

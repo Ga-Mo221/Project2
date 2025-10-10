@@ -18,7 +18,7 @@ public class Lights : MonoBehaviour
     {
         _light = GetComponent<Light2D>();
         _light.color = _defaultColor;
-        transitionTime = GameManager.Instance._4Hours_Sec;
+        transitionTime = GameManager.Instance._2Hours_Sec;
     }
 
     private void Update()

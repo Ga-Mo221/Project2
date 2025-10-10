@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxSpeed: 10
   _speed: 10
+  _isAttack: 0
   _audio: {fileID: 1968993029456079076}
 --- !u!61 &7232642637589709337
 BoxCollider2D:
@@ -291,7 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   TNTOrSheep: 0
-  _Hit_Damage_Clip: {fileID: 0}
+  _Hit_Damage_Clip: {fileID: 8300000, guid: 52b4ffba6ea540b4e906423d4ce71c9b, type: 3}
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0

@@ -6,7 +6,6 @@ public class ArowEnemy : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed = 10;
     [SerializeField] private float _speed = 0;
-    [SerializeField] private bool _isAttack = false; // kiem tra da goi takedamage chua
     private float _damage;
     private Transform _target;
 
@@ -22,7 +21,6 @@ public class ArowEnemy : MonoBehaviour
 
     void Update()
     {
-        if (_isAttack) gameObject.SetActive(true);
         _spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 100000;
         if (_target == null) return;
 
@@ -41,40 +39,41 @@ public class ArowEnemy : MonoBehaviour
         {
             bool IsHit = false;
 
-            if (PlayerTag.checkTag(_target.gameObject.tag))
+            if (_target != null && PlayerTag.checkTag(_target.gameObject.tag))
             {
                 var health = _target.gameObject.GetComponent<PlayerHealth>();
                 if (health != null)
                 {
                     health.takeDamage(_damage);
                     IsHit = true;
-                    _isAttack = true;
+                    _target = null;
                 }
             }
-            if (checkTagHouse(_target.gameObject))
+            if (_target != null && checkTagHouse(_target.gameObject))
             {
                 var health = _target.gameObject.GetComponent<HouseHealth>();
                 if (health != null && health.getCanDetec())
                 {
                     health.takeDamage(_damage);
                     IsHit = true;
-                    _isAttack = true;
+                    _target = null;
                 }
             }
-            if (checkTagAnimal(_target.gameObject))
+            if (_target != null && checkTagAnimal(_target.gameObject))
             {
                 var animalHealth = _target.gameObject.GetComponent<AnimalHealth>();
                 if (animalHealth != null && !animalHealth._animalAi.getDie())
                 {
                     animalHealth.takeDamage(_damage, gameObject);
                     IsHit = true;
-                    _isAttack = true;
+                    _target = null;
                 }
             }
 
             if (IsHit)
             {
                 _audio.PlayFarmOrHitDamageSound();
+                _spriteRenderer.enabled = false;
                 if (gameObject.activeInHierarchy)
                     StartCoroutine(setActive());
             }
@@ -89,7 +88,7 @@ public class ArowEnemy : MonoBehaviour
 
     public void setProperties(Transform target, float damage, float Xspeed, Vector3 scele)
     {
-        _isAttack = false;
+        _spriteRenderer.enabled = true;
         _target = target;
         _damage = damage;
         _speed = _maxSpeed * Xspeed;

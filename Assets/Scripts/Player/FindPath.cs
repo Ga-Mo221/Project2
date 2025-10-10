@@ -149,7 +149,7 @@ public class FindPath : MonoBehaviour
             _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
 
         float dist = Vector2.Distance(_rb.position, waypoint);
-        float edg = _detect ? _range - 0.8f : _waypointTolerance;
+        float edg = _detect ? _range - 1.2f : _waypointTolerance;
         if (dist < edg)
             _currentWaypoint++;
     }

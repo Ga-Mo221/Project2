@@ -119,6 +119,14 @@ public class EnemyAI : MonoBehaviour
                     {
                         _path.setTarget(Castle.Instance._In_Castle_Pos.position, target);
                     }
+                    else if (target.CompareTag("House"))
+                    {
+                        var house = target.GetComponent<House>();
+                        if (house._type == HouseType.Tower)
+                            _path.setTarget(house._inTower.transform.position, target);
+                        if (house._type == HouseType.Storage)
+                            _path.setTarget(house.getInPos(), target);
+                    }
                     else
                         _path.setTarget(target.transform.position, target);
                 }
@@ -275,9 +283,20 @@ public class EnemyAI : MonoBehaviour
     public virtual void attack()
     {
         float dist = 0;
-        if (target == Castle.Instance.gameObject)
+        if (target.CompareTag("House"))
         {
-            dist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+            if (target == Castle.Instance.gameObject)
+            {
+                dist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+            }
+            else
+            {
+                var house = target.GetComponent<House>();
+                if (house._type == HouseType.Tower)
+                    dist = Vector3.Distance(house._inTower.transform.position, target.transform.position);
+                else if (house._type == HouseType.Storage)
+                    dist = Vector3.Distance(house.getInPos(), target.transform.position);
+            }
         }
         else dist = Vector3.Distance(transform.position, target.transform.position);
         if (dist <= _range)

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherUP : MonoBehaviour
@@ -18,7 +19,7 @@ public class ArcherUP : MonoBehaviour
     private Animator _anim;
 
     [SerializeField] private Collider2D[] _hits;
-    [SerializeField] private GameObject[] _listArrow = new GameObject[5];
+    [SerializeField] private List<GameObject> _listArrow = new List<GameObject>();
 
     void Start()
     {
@@ -124,32 +125,31 @@ public class ArcherUP : MonoBehaviour
         _attackSpeed = null;
     }
 
-
     public void spawnArrow()
     {
-        if (_target == null) return;
-        for (int i = 0; i < _listArrow.Length; i++) // hoặc _listArrow.Count
+        bool _has = true;
+        foreach (var arrow in _listArrow)
         {
-            if (_listArrow[i] != null)
+            if (arrow != null && !arrow.activeSelf)
             {
-                var _script = _listArrow[i].GetComponent<Arrow>();
+                if (_target == null) return;
+                var _script = arrow.GetComponent<Arrow>();
+                _script.setTarget(false, _target, false, _damage, 0, transform.localScale);
 
-                if (_script.getTarget() == null)
-                {
-                    _listArrow[i].transform.position = _shootPos.position;
-                    _script.setTarget(false, _target, false, _damage, 20f, transform.localScale);
-                    _listArrow[i].SetActive(true);
-                    break;
-                }
-            }
-            else
-            {
-                GameObject _arrow = Instantiate(_arowPrefab, _shootPos.position, Quaternion.identity, _shootPos);
-                _listArrow[i] = _arrow;
-                var _script = _arrow.GetComponent<Arrow>();
-                _script.setTarget(false, _target, false, _damage, 20f, transform.localScale);
+                arrow.transform.position = _shootPos.position;
+                arrow.SetActive(true);
+                _has = false;
                 break;
             }
+        }
+
+        if (_has)
+        {
+            if (_target == null) return;
+            GameObject _arrow = Instantiate(_arowPrefab, _shootPos.position, Quaternion.identity, _shootPos);
+            _listArrow.Add(_arrow);
+            var _script = _arrow.GetComponent<Arrow>();
+            _script.setTarget(false, _target, false, _damage, 0, transform.localScale);
         }
     }
 

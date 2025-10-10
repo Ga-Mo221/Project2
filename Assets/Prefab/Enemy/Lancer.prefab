@@ -471,7 +471,7 @@ MonoBehaviour:
   _maxHealth: 80
   _currentHealth: 0
   _speed: 5
-  _damage: 3
+  _damage: 5
   _range: 4
   _attackspeed: 1.5
   _radius: 13

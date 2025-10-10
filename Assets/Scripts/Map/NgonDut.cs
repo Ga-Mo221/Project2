@@ -14,11 +14,11 @@ public class NgonDut : MonoBehaviour
 
     private void Onfire()
     {
-        if (GameManager.Instance._timeRTS >= 16)
+        if (GameManager.Instance._timeRTS >= 18)
         {
             Fire.SetActive(true);
         }
-        else if (GameManager.Instance._timeRTS >= 8)
+        else if (GameManager.Instance._timeRTS >= 6)
         {
             Fire.SetActive(false);
         }

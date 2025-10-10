@@ -856,6 +856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
+  _tutorial: 0
   _fire: {fileID: 6574188369614319417}
   _canDetec: 0
   _imgLoad: {fileID: 0}
@@ -1244,7 +1245,7 @@ GameObject:
   - component: {fileID: 7363187027790678078}
   - component: {fileID: 1599324780184899269}
   - component: {fileID: 7083402862170406111}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: In_Castle_Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

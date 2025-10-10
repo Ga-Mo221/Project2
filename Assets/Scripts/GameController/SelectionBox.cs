@@ -11,7 +11,6 @@ public class SelectionBox : MonoBehaviour
     [SerializeField] private RectTransform boxVisual;      // UI Image (RectTransform) làm box
     [SerializeField] private GameObject _radialMenu;
     private bool _singleSelected = false;
-    [SerializeField] private bool _tutorial = false;
 
     private Vector2 startScreenPos;
     private Vector2 endScreenPos;
@@ -100,7 +99,7 @@ public class SelectionBox : MonoBehaviour
             if (chosen.Count != 0)
             {
                 MoveToManager.Instance.CreateMovePoint(chosen, worldPos, -1f);
-                if (_tutorial && CursorManager.Instance.ChoseUI)
+                if (GameManager.Instance.Tutorial && CursorManager.Instance.ChoseUI && TutorialSetUp.Instance.ID == 1)
                 {
                     Time.timeScale = 1f;
                     TutorialSetUp.Instance.PlayerMoveController();
@@ -114,21 +113,15 @@ public class SelectionBox : MonoBehaviour
             }
         }
 
-        if (_tutorial)
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance._StarSelectUnit)
         {
             if (chosen.Count > 0)
-                if (TutorialSetUp.Instance._selectBox.activeSelf)
-                {
-                    TutorialSetUp.Instance._selectBox.SetActive(false);
-                    TutorialSetUp.Instance._isSelect = true;
-                }
+                TutorialSetUp.Instance._isSelect = true;
+            else
+                TutorialSetUp.Instance._isSelect = false;
         }
     }
     #endregion
-
-
-    public void setTutorial(bool amount) => _tutorial = amount;
-    public bool getTutorial() => _tutorial;
 
 
     #region  Draw CanvasRect

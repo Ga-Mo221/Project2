@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
 
     public int _currentDay = 1;
     public bool _night = false;
-    public float _4Hours_Sec = 120;
+    public float _2Hours_Sec = 120;
+    public int _startTimeRTS = 8;
     public int _timeRTS = 0;
     public Vector2 _playTime = Vector2.zero;
 
     public string _contentGameOver { get; set; }
 
+    [Foldout("Status")]
+    public bool Tutorial = false;
+    public bool TutorialWar = false;
     [Foldout("Status")]
     [SerializeField] private bool _canBuy = true;
     [Foldout("Status")]
@@ -84,6 +88,20 @@ public class GameManager : MonoBehaviour
     public GameObject _TowerPrefab;
     [Foldout("Prefab")]
     public GameObject _StoragePrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_LancerPrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_OrcPrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_GnollPrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_FishPrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_TNTRedPrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_MinotaurPrefab;
+    [Foldout("Prefab")]
+    public GameObject _enemy_ShamanPrefab;
 
     void Awake()
     {
@@ -103,6 +121,8 @@ public class GameManager : MonoBehaviour
         UIupdatePlayerValue();
     }
 
+    public void setHourRTS(int house)
+        => _ui.setHouseRTS(house);
 
     public void UIupdateReferences()
         => _ui.updateReferent();
@@ -169,6 +189,7 @@ public class GameManager : MonoBehaviour
     {
         if (_canOpenWindown)
         {
+            if (Tutorial && (TutorialSetUp.Instance.ID == 2 || TutorialSetUp.Instance.ID == 3 || TutorialSetUp.Instance.ID == 4)) return false;
             _canOpenWindown = false;
             _shopOpen = true;
             return true;
@@ -180,6 +201,7 @@ public class GameManager : MonoBehaviour
 
     public void setCloseShop()
     {
+        if (Tutorial && TutorialSetUp.Instance.ID == 5) return;
         _canOpenWindown = true;
         _shopOpen = false;
     }
@@ -190,6 +212,10 @@ public class GameManager : MonoBehaviour
     {
         if (_canOpenWindown)
         {
+            if (Tutorial && (TutorialSetUp.Instance.ID == 2
+            || TutorialSetUp.Instance.ID == 3
+            || TutorialSetUp.Instance.ID == 4
+            || TutorialSetUp.Instance.ID == 5)) return false;
             _canOpenWindown = false;
             _upgradeOpen = true;
             return true;

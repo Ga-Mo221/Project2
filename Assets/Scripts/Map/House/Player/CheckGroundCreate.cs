@@ -202,11 +202,21 @@ public class CheckGroundCreate : MonoBehaviour
             GameManager.Instance.setCanBuy(true);
             gameObject.SetActive(false);
             _houshealth.PlayCreatingSound();
+
+            if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 2)
+            {
+                TutorialSetUp.Instance.TutorialCreatePlayer();
+            }
         }
     }
 
     public void Cancle()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 2)
+        {
+            TutorialSetUp.Instance.TutorialBuilding();
+        }
+        
         GameManager.Instance.setCanBuy(true);
         Destroy(transform.parent.gameObject);
     }

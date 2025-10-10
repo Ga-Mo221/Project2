@@ -31,9 +31,9 @@ public class EnemyPatrol : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance._timeRTS >= 16 && _isFire)
+        if (GameManager.Instance._timeRTS >= 18 && _isFire)
             _fire.SetActive(true);
-        else if (GameManager.Instance._timeRTS >= 8 && _isFire)
+        else if (GameManager.Instance._timeRTS >= 6 && _isFire)
             _fire.SetActive(false);
     }
 

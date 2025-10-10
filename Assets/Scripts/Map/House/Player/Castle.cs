@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -257,13 +258,26 @@ public class Castle : MonoBehaviour
         // Nếu tất cả quân đã chết
         if (AreAllUnitsDead(_level))
         {
-            Debug.Log("tất cả đã chết");
             // Và không đủ tài nguyên tạo bất kỳ loại nào
             if (NoResourcesToCreateAny(_level))
             {
                 GameManager.Instance.setWin(false);
                 GameManager.Instance.setGameOver(true);
             }
+        }
+    }
+
+    private IEnumerator Over()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        if (GameManager.Instance.TutorialWar && !TutorialSetUp.Instance._Win)
+        {
+            TutorialSetUp.Instance.GameLose();
+        }
+        else
+        {
+            
         }
     }
 

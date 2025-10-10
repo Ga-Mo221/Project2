@@ -4,10 +4,11 @@ using UnityEngine.UI;
 
 public class House : MonoBehaviour
 {
-    [SerializeField] private HouseType _type;
+    public HouseType _type;
     private bool _IsTower => _type == HouseType.Tower;
     private bool _IsStorage => _type == HouseType.Storage;
     [Header("stas")]
+    [SerializeField] private bool _Die = false;
     [SerializeField] private int _level = 1;
 
     public bool _new = true;
@@ -42,6 +43,7 @@ public class House : MonoBehaviour
 
     public void setLevel(int level)
     {
+        if (_Die) return;
         int _count = 0;
         for (int i = _level; i < level; i++)
         {
@@ -81,4 +83,9 @@ public class House : MonoBehaviour
     public virtual void setActive(bool amount) { }
     public virtual bool getActive() { return false; }
     public int getLevel() => _level;
+
+    public void setDie(bool amount) => _Die = amount;
+    public bool getDie() => _Die;
+
+    public virtual Vector3 getInPos() { return transform.position; }
 }

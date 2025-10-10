@@ -41,8 +41,10 @@ public class Item : MonoBehaviour
     [SerializeField] private Transform _OderPoin;
     [HideIf(nameof(_IsGold))]
     [SerializeField] private GameObject _DiePrefab;
+    public GameObject _outLine;
 
     public UnitAudio _audio;
+    private bool _Die = false;
 
     [Header("Value")]
     public int _value = 0;
@@ -67,6 +69,7 @@ public class Item : MonoBehaviour
             _anim.SetTrigger("Farm");
         if (_stack <= 0 && !_IsGold)
         {
+            _Die = true;
             _playerAI.target = null;
             _playerAI._canAction = false;
             StartCoroutine(resPawn());
@@ -78,9 +81,13 @@ public class Item : MonoBehaviour
             _sprite.sortingOrder = -(int)(_OderPoin.position.y * 100);
             _animDie.SetBool("Die", true);
             if (_IsTree)
+            {
+                _outLine.SetActive(false);
                 _anim.SetBool("Die", true);
+            }
             if (_IsRock)
             {
+                _outLine.SetActive(false);
                 _spriteRender.enabled = false;
             }
             _audio.PlayDieSound();
@@ -93,6 +100,8 @@ public class Item : MonoBehaviour
     private IEnumerator resPawn()
     {
         yield return new WaitForSeconds(_spawnTime);
+        _Die = false;
+        _outLine.SetActive(true);
         _stack = _maxStack;
         _seleted = null;
         _spriteRender.enabled = true;
@@ -128,4 +137,7 @@ public class Item : MonoBehaviour
     public bool checkSelect(PlayerAI player)
         => _seleted == player;
     #endregion
+
+    public bool getDie()
+        => _Die;
 }

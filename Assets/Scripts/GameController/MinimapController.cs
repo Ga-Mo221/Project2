@@ -22,12 +22,14 @@ public class MinimapController : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (GameManager.Instance.Tutorial) return;
         _isDragging = true;
         MoveCameraTo(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (GameManager.Instance.Tutorial) return;
         if (_isDragging)
         {
             MoveCameraTo(eventData);
@@ -36,6 +38,7 @@ public class MinimapController : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (GameManager.Instance.Tutorial) return;
         _isDragging = false;
     }
 

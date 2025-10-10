@@ -14,7 +14,7 @@ public class Storage : House
         _anim = GetComponent<Animator>();
     }
 
-    public Vector3 getInPos()
+    public override Vector3 getInPos()
     {
         int type = _anim.GetInteger("Type");
         if (type == 1)

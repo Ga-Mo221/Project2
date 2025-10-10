@@ -121,12 +121,19 @@ public class OutLine : MonoBehaviour
     {
         if (_type != NodeType.Castle) return;
         if (Input.GetMouseButtonDown(0) && _type == NodeType.Castle)
+        {
             GameManager.Instance.UIsetActiveButtonUpgrade(true);
+            if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID > 5)
+            {
+                TutorialSetUp.Instance.TutorialOpenPanelUpgrade();
+            }
+        }
     }
     #endregion
 
     private void clickOther()
     {
+        if (GameManager.Instance.Tutorial) return;
         if (_type == NodeType.Other || _type == NodeType.Castle) return;
 
         if (Input.GetMouseButtonDown(0))

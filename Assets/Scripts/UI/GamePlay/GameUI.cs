@@ -13,6 +13,8 @@ public class GameUI : MonoBehaviour
     private float _playTime = 0;
     // references
     [Foldout("TakBar")]
+    [SerializeField] private GameObject _Takbar_Obj;
+    [Foldout("TakBar")]
     [SerializeField] private TextMeshProUGUI _currentwood;
     [Foldout("TakBar")]
     [SerializeField] private TextMeshProUGUI _maxWood;
@@ -33,6 +35,8 @@ public class GameUI : MonoBehaviour
 
     #region Mini Map
     [Foldout("Mini Map")]
+    [SerializeField] private GameObject _MiniMap_Obj;
+    [Foldout("Mini Map")]
     [SerializeField] private TextMeshProUGUI _Day;
     [Foldout("Mini Map")]
     [SerializeField] private TextMeshProUGUI _Time_RTS;
@@ -41,11 +45,13 @@ public class GameUI : MonoBehaviour
     [Foldout("Mini Map")]
     [SerializeField] private GameObject _Night;
     private float _timeAccumulator = 0f; // tích lũy thời gian để tăng giờ RTS
-    private int _hours = 8; // bắt đầu 8h sáng
+    private int _hours = 0; // bắt đầu 8h sáng
     #endregion
 
 
     #region HP Bar
+    [Foldout("HP Bar")]
+    [SerializeField] private GameObject _HPBar_Obj;
     [Foldout("HP Bar")]
     [SerializeField] private TextMeshProUGUI _HP_Text;
     [Foldout("HP Bar")]
@@ -130,6 +136,8 @@ public class GameUI : MonoBehaviour
 
     #region Buiding
     [Foldout("Buiding")]
+    [SerializeField] private GameObject _Buiding_Obj;
+    [Foldout("Buiding")]
     [SerializeField] private HideUI _buiding_hide;
     [Foldout("Buiding")]
     [SerializeField] private Button _buttonTower;
@@ -147,6 +155,11 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rock_Storage;
     [Foldout("Buiding")]
     [SerializeField] private TextMeshProUGUI _gold_Storage;
+    #endregion
+
+    #region Tutorial
+    [Foldout("Tutorial")]
+    [SerializeField] private GameObject _Tutorial_Obj;
     #endregion
 
 
@@ -225,6 +238,7 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
+        _hours = GameManager.Instance._startTimeRTS;
         updateBuidingReference();
         updateHP();
     }
@@ -234,8 +248,10 @@ public class GameUI : MonoBehaviour
     void Update()
     {
         // Tăng thời gian chơi
+        if (!GameManager.Instance.Tutorial)
+            _timeAccumulator += Time.deltaTime;
+
         _playTime += Time.deltaTime;
-        _timeAccumulator += Time.deltaTime;
 
         // Cập nhật PlayTime hiển thị 00:00
         int playMinutes = Mathf.FloorToInt(_playTime / 60f);
@@ -245,9 +261,9 @@ public class GameUI : MonoBehaviour
 
         GameManager.Instance._playTime = new Vector2(playMinutes, playSeconds);
         // Mỗi 120 giây playtime = tăng 4 giờ RTS
-        if (_timeAccumulator >= GameManager.Instance._4Hours_Sec)
+        if (_timeAccumulator >= GameManager.Instance._2Hours_Sec)
         {
-            _hours += 4;
+            _hours += 2;
             _timeAccumulator = 0f;
         }
 
@@ -286,6 +302,39 @@ public class GameUI : MonoBehaviour
         // Hiển thị Day và Time RTS
         _Day.text = "Day " + GameManager.Instance._currentDay;
         _Time_RTS.text = string.Format("{0:00}:{1:00}", _hours, 0);
+    }
+    #endregion
+
+
+    #region Set House
+    public void setHouseRTS(int hours)
+        => _hours = hours;
+    #endregion
+
+
+    #region On All WinDown
+    public void OnAllWinDown()
+    {
+        _Takbar_Obj.SetActive(true);
+        _MiniMap_Obj.SetActive(true);
+        _Buiding_Obj.SetActive(true);
+        _Tutorial_Obj.SetActive(true);
+        _HPBar_Obj.SetActive(true);
+    }
+    #endregion
+
+    #region Off All WinDown
+    public void OffAllWinDown()
+    {
+        closePanelUpgrade();
+        closeShop();
+        setActiveButtonUpgrade(false);
+        GameManager.Instance._selectBox.gameObject.SetActive(false);
+        _Takbar_Obj.SetActive(false);
+        _MiniMap_Obj.SetActive(false);
+        _Buiding_Obj.SetActive(false);
+        _Tutorial_Obj.SetActive(false);
+        _HPBar_Obj.SetActive(false);
     }
     #endregion
 
@@ -401,6 +450,8 @@ public class GameUI : MonoBehaviour
     #region Open Shop
     public void openShop()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 5)
+            TutorialSetUp.Instance.TutorialCreateArcher();
         if (!GameManager.Instance.setOpenShop()) return;
         GameManager.Instance._selectBox.gameObject.SetActive(false);
         _gr.alpha = 1;
@@ -437,6 +488,10 @@ public class GameUI : MonoBehaviour
     #region Close Shop
     public void closeShop()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 5) return;
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 2 && !TutorialSetUp.Instance._openNhatKy) return;
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 2)
+            TutorialSetUp.Instance.TutorialOpenButtonUpgrade();
         GameManager.Instance.setCloseShop();
         _gr.alpha = 0;
         _gr.interactable = false;
@@ -449,6 +504,8 @@ public class GameUI : MonoBehaviour
     public void openPanelUpgrade()
     {
         if (!GameManager.Instance.setOpenUpgrade()) return;
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 6)
+            TutorialSetUp.Instance.TutorialUpgradeAndReferencesAndSlot();
         GameManager.Instance._selectBox.gameObject.SetActive(false);
         updateInfoUpgrade();
         _UpgradePanel.SetActive(true);
@@ -459,6 +516,9 @@ public class GameUI : MonoBehaviour
     #region Close Panel Upgrade
     public void closePanelUpgrade()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID < 7) return;
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 8)
+            TutorialSetUp.Instance.TutorialArcherInCastle();
         GameManager.Instance.setCloseUpgrade();
         _UpgradePanel.SetActive(false);
     }
@@ -534,6 +594,7 @@ public class GameUI : MonoBehaviour
     #region Warrior
     public void createWarrior()
     {
+        if (GameManager.Instance.Tutorial) return;
         Debug.Log("Đã Tạo Warrior");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Warrior;
         updateReferent();
@@ -601,6 +662,9 @@ public class GameUI : MonoBehaviour
     #region Archer
     public void createArcher()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance._CreateArcher) return;
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 5)
+            TutorialSetUp.Instance.TutorialCreateTimeAddSlotPlayer();
         Debug.Log("Đã Tạo Archer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Archer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Archer;
@@ -1046,6 +1110,8 @@ public class GameUI : MonoBehaviour
     public void CreateTower()
     {
         Debug.Log("Đã Tạo Tower");
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 4)
+            TutorialSetUp.Instance.TutorialDropTower();
         GameObject obj = Instantiate(GameManager.Instance._TowerPrefab, wordSpace(), Quaternion.identity, Castle.Instance._TowerFolder);
         obj.GetComponent<House>().setLevel(Castle.Instance._level);
         openPanelBuiding();
@@ -1069,6 +1135,7 @@ public class GameUI : MonoBehaviour
     #region Buy Storage
     public void CreateStorage()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 4) return;
         Debug.Log("Đã Tạo Storage");
         GameObject obj = Instantiate(GameManager.Instance._StoragePrefab, wordSpace(), Quaternion.identity, Castle.Instance._StorgeFolder);
         obj.GetComponent<House>().setLevel(Castle.Instance._level);
@@ -1207,6 +1274,9 @@ public class GameUI : MonoBehaviour
     #region Button Upgrade Click
     public void Upgrade()
     {
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID < 7) return;
+        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 7)
+            TutorialSetUp.Instance.TutorialClosePanelUpgrade();
         Debug.Log("Đã UpLevel");
         // trừ tài nguyên
         switch (Castle.Instance._level)
@@ -1355,6 +1425,30 @@ public class GameUI : MonoBehaviour
         _textWarning1.text = "Đánh nhanh – thắng nhanh! Bọn quái vật đã đánh hơi thấy bạn!";
         _textWarning2.text = $"{(int)house._warningTime} giây nữa, bọn chúng sẽ kéo đến.";
         _warning.SetActive(true);
+    }
+    #endregion
+
+
+    #region Open Tutorial_Viedo
+    public void openTutorialVideo()
+    {
+        if (GameManager.Instance.Tutorial
+        && TutorialSetUp.Instance.ID == 2
+        && !TutorialSetUp.Instance._openNhatKy)
+            TutorialSetUp.Instance.Tutorial_Select_Unit();
+
+        // load ngon ngu o day
+    }
+    #endregion
+
+
+    #region Close Tutorial_Video
+    public void closeTutorialVideo()
+    {
+        if (GameManager.Instance.Tutorial
+        && TutorialSetUp.Instance.ID == 2
+        && !TutorialSetUp.Instance._TutorialNhatKy)
+            TutorialSetUp.Instance.TutorialBuilding();
     }
     #endregion
 }

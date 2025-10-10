@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyWar : MonoBehaviour
@@ -9,13 +8,6 @@ public class EnemyWar : MonoBehaviour
 
     private int _currentDay = 1;
     //private Coroutine _currentWave;
-    [SerializeField] private GameObject Lancer;
-    [SerializeField] private GameObject Orc;
-    [SerializeField] private GameObject Gnoll;
-    [SerializeField] private GameObject Fish;
-    [SerializeField] private GameObject TNTRed;
-    [SerializeField] private GameObject Minotaur;
-    [SerializeField] private GameObject Shaman;
 
 
     #region Update
@@ -113,25 +105,25 @@ public class EnemyWar : MonoBehaviour
         switch (type)
         {
             case EnemyType.Lancer:
-                prefab = Lancer;
+                prefab = GameManager.Instance._enemy_LancerPrefab;
                 break;
             case EnemyType.Orc:
-                prefab = Orc;
+                prefab = GameManager.Instance._enemy_OrcPrefab;
                 break;
             case EnemyType.Gnoll:
-                prefab = Gnoll;
+                prefab = GameManager.Instance._enemy_GnollPrefab;
                 break;
             case EnemyType.Fish:
-                prefab = Fish;
+                prefab = GameManager.Instance._enemy_FishPrefab;
                 break;
             case EnemyType.Minotaur:
-                prefab = Minotaur;
+                prefab = GameManager.Instance._enemy_MinotaurPrefab;
                 break;
             case EnemyType.Shaman:
-                prefab = Shaman;
+                prefab = GameManager.Instance._enemy_ShamanPrefab;
                 break;
             case EnemyType.TNT:
-                prefab = TNTRed;
+                prefab = GameManager.Instance._enemy_TNTRedPrefab;
                 break;
         }
         return prefab;

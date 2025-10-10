@@ -752,6 +752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _tutorial: 0
   _fire: {fileID: 3372721448681757854}
   _canDetec: 0
   _imgLoad: {fileID: 8819435455824178060}
@@ -765,6 +766,7 @@ MonoBehaviour:
   _canvas: {fileID: 7954586051342352286}
   _canCreate: {fileID: 9218680089185298883}
   _HPcanvas: {fileID: 5294076326495381866}
+  _outLine: {fileID: 6075400687741877258}
   _createTimeSec: 30
 --- !u!114 &4511442007061942783
 MonoBehaviour:
@@ -779,6 +781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _Die: 0
   _level: 1
   _new: 1
   _canUpdateHP: 1
@@ -911,6 +914,7 @@ MonoBehaviour:
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 1

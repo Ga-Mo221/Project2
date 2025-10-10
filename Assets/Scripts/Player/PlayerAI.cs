@@ -689,7 +689,7 @@ public class PlayerAI : MonoBehaviour
                 foreach (var i in Castle.Instance._storageList)
                 {
                     var _storage = i.GetComponent<Storage>();
-                    if (_storage.getActive())
+                    if (_storage.getActive() && !_storage.getDie())
                     {
                         float dist = Vector3.Distance(transform.position, i.transform.position);
                         if (dist < minDist)

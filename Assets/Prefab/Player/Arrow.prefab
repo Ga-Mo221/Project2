@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2519335184055485510}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.51, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 5006367590817628768}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.345, y: 0, z: 0}
+  m_LocalPosition: {x: 2.004, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -187,7 +187,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.33, y: -0.003929138}
+  m_Offset: {x: -0.41, y: -0.003929138}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   TNTOrSheep: 0
-  _Hit_Damage_Clip: {fileID: 0}
+  _Hit_Damage_Clip: {fileID: 8300000, guid: 6ae74fedaa36cb149afce1436e586162, type: 3}
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
@@ -355,6 +355,7 @@ MonoBehaviour:
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0
@@ -393,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 5222783041119388556}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.177, y: 0, z: 0}
+  m_LocalPosition: {x: -0.526, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

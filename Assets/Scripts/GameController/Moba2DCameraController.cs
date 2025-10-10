@@ -26,7 +26,7 @@ public class Moba2DCameraController : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.getGameOver()) return;
-        if (SelectionBox.Instance.getTutorial()) return;
+        if (GameManager.Instance.Tutorial) return;
         Vector3 pos = transform.position;
 
         // --- Di chuyển ---

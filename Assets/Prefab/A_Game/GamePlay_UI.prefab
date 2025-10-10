@@ -1813,6 +1813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Time: {fileID: 4341546619867900778}
+  _Takbar_Obj: {fileID: 2273903877684500792}
   _currentwood: {fileID: 4173714734110755461}
   _maxWood: {fileID: 378960261139284080}
   _currentrock: {fileID: 517060410562758320}
@@ -1821,10 +1822,12 @@ MonoBehaviour:
   _maxMeat: {fileID: 2987427377109805659}
   _currentgold: {fileID: 6524200257441837920}
   _maxGold: {fileID: 6576889742044104652}
+  _MiniMap_Obj: {fileID: 3108953802877135604}
   _Day: {fileID: 8695331916827802212}
   _Time_RTS: {fileID: 6108456601793811991}
   _Sun: {fileID: 3282446928517925312}
   _Night: {fileID: 8201809917450078683}
+  _HPBar_Obj: {fileID: 2808503466827073391}
   _HP_Text: {fileID: 7325782995487717807}
   _HPBar: {fileID: 7657194478350603968}
   _HP_Warrior_Value: {fileID: 3023397486331992070}
@@ -1859,6 +1862,7 @@ MonoBehaviour:
   _lancerSlot: {fileID: 516511737111590172}
   _tntSlot: {fileID: 2265885747257956583}
   _healerSlot: {fileID: 5072953244378751041}
+  _Buiding_Obj: {fileID: 8068642452353113417}
   _buiding_hide: {fileID: 826212736544353918}
   _buttonTower: {fileID: 8089659827552212034}
   _wood_Tower: {fileID: 645904451304469029}
@@ -1868,6 +1872,7 @@ MonoBehaviour:
   _wood_Storage: {fileID: 1511745540977035140}
   _rock_Storage: {fileID: 7651445395693498837}
   _gold_Storage: {fileID: 2425055937774524853}
+  _Tutorial_Obj: {fileID: 4227527904736662990}
   _UpgradePanel: {fileID: 7760611059640741033}
   _ButtonUpgrade: {fileID: 5828527383270155004}
   _buttonUpgrade_Wood: {fileID: 7033129604749304226}
@@ -1914,12 +1919,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentDay: 1
   _night: 0
-  _4Hours_Sec: 90
+  _4Hours_Sec: 30
   _timeRTS: 0
   _playTime: {x: 0, y: 0}
   _canBuy: 1
   _GameOver: 0
-  _contentGameOver: 
   _Win: 0
   _displayGameOverTime: 1.5
   _canOpenWindown: 1
@@ -1940,6 +1944,7 @@ MonoBehaviour:
   Info: {fileID: 7065678428648887116}
   _selectBox: {fileID: 6315695564644471801}
   _defen: {fileID: 2031311007898101499}
+  _GameUI_Obj: {fileID: 0}
   _warriorPrefab: {fileID: 1094120962555759500, guid: 6982341a03cfccc45bd08c41e02c9bd9, type: 3}
   _ArcherPrefab: {fileID: 4786281004219764415, guid: ab68149a2b111b141bccb6f95930349c, type: 3}
   _LancerPrefab: {fileID: 2083673048975802569, guid: 2ec3e99e010715f41bf73ceda8d1f3e3, type: 3}

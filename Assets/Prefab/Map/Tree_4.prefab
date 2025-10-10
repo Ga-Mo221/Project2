@@ -96,6 +96,7 @@ MonoBehaviour:
   _anim: {fileID: 4441763564821092069}
   _OderPoin: {fileID: 3498057346564388949}
   _DiePrefab: {fileID: 1987013481956950845}
+  _outLine: {fileID: 1071419181509958614}
   _audio: {fileID: 6624490675699951776}
   _value: 0
   _stack: 0
@@ -113,7 +114,7 @@ GameObject:
   - component: {fileID: 1578069992777279891}
   m_Layer: 0
   m_Name: Tree_4
-  m_TagString: Untagged
+  m_TagString: Item+
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

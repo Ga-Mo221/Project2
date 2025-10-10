@@ -29,6 +29,7 @@ public class Display : MonoBehaviour
     private bool _IsDecoOrGold => _type == ModelType.Deco || _type == ModelType.Gold;
     public bool _IsEnemyHouse => _type == ModelType.EnemyHouse;
     public bool _IsDecoOrBuiding => _type == ModelType.Deco || _type == ModelType.Buiding;
+    public bool _IsTreeOrRock => _IsTree || _IsRock;
 
     [SerializeField] private bool _Die = false;
 
@@ -190,7 +191,10 @@ public class Display : MonoBehaviour
     {
         _Detec = true;
         _item._detec = true;
-        _outLine.SetActive(true);
+        if (!_item.getDie())
+            _outLine.SetActive(true);
+        else
+            _outLine.SetActive(false);
     }
 
     private void offDisplayTree()
@@ -204,7 +208,10 @@ public class Display : MonoBehaviour
     {
         _Detec = true;
         _item._detec = true;
-        _outLine.SetActive(true);
+        if (!_item.getDie())
+            _outLine.SetActive(true);
+        else
+            _outLine.SetActive(false);
     }
 
     private void offDisplayRock()
