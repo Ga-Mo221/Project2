@@ -221,6 +221,7 @@ public class HouseHealth : MonoBehaviour
                 StartCoroutine(GameOver());
                 _outLine.SetActive(false);
                 Castle.Instance._audio.PlayDieSound();
+                Castle.Instance.Dead();
             }
         }
     }

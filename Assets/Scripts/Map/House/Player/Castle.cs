@@ -23,6 +23,8 @@ public class Castle : MonoBehaviour
     [SerializeField] public Transform _In_Castle_Pos;
     [Foldout("Inport")]
     [SerializeField] private BuidingFire _fire;
+    [Foldout("Inport")]
+    [SerializeField] private SelectArcherUp _archerUp;
 
     public UnitAudio _audio;
 
@@ -311,6 +313,37 @@ public class Castle : MonoBehaviour
         }
         return true;
     }
+
+
+    #region Dead
+    public void Dead()
+    {
+        _archerUp.Out();
+        
+
+        foreach (var storage in _storageList)
+        {
+            var scipt = storage.GetComponent<HouseHealth>();
+            scipt.takeDamage(10000);
+        }
+        foreach (var tower in _towerList)
+        {
+            var scipt = tower.GetComponent<HouseHealth>();
+            scipt.takeDamage(10000);
+        }
+
+        foreach (var p in _ListArcher)
+            p.gameObject.GetComponent<PlayerHealth>().takeDamage(1000);
+        foreach (var p in _ListHealer)
+            p.gameObject.GetComponent<PlayerHealth>().takeDamage(1000);
+        foreach (var p in _ListLancer)
+            p.gameObject.GetComponent<PlayerHealth>().takeDamage(1000);
+        foreach (var p in _ListTNT)
+            p.gameObject.GetComponent<PlayerHealth>().takeDamage(1000);
+        foreach (var p in _ListWarrior)
+            p.gameObject.GetComponent<PlayerHealth>().takeDamage(1000);
+    }
+    #endregion
 
     // kiểm tra đủ tài nguyên để tạo lính mới hay không
     private bool NoResourcesToCreateAny(int level)

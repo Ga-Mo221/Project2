@@ -25,6 +25,7 @@ public class TNTGFX : PlayerAI
 
     public override void Ai()
     {
+        base.Ai();
         if (!getIsAI()) return;
         target = findEnemys();
         if (target == null)

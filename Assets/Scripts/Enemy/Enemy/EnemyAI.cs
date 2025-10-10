@@ -297,6 +297,7 @@ public class EnemyAI : MonoBehaviour
                 else if (house._type == HouseType.Storage)
                     dist = Vector3.Distance(house.getInPos(), target.transform.position);
             }
+            Debug.Log($"Name[{transform.name}] || Dist[{dist} || Range[{_range}]");
         }
         else dist = Vector3.Distance(transform.position, target.transform.position);
         if (dist <= _range)
@@ -310,8 +311,8 @@ public class EnemyAI : MonoBehaviour
     }
     private IEnumerator attackSpawn(float delay)
     {
-        yield return new WaitForSeconds(delay);
         _anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(delay);
         _attackSpawn = null;
     }
     #endregion

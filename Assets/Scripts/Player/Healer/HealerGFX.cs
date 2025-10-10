@@ -31,6 +31,7 @@ public class HealerGFX : PlayerAI
 
     public override void Ai()
     {
+        base.Ai();
         if (!getIsAI()) return;
         target = findPlayers();
         if (target != null)

@@ -161,4 +161,57 @@ public class SelectArcherUp : MonoBehaviour
             }
         }
     }
+
+
+    public void Out()
+    {
+        // right
+        Castle.Instance._archer_Right_Obj.SetActive(false);
+        if (Castle.Instance._archer_Right != null)
+        {
+            var _scrip = Castle.Instance._archer_Right.GetComponent<ArcherGFX>();
+            if (_scrip != null)
+            {
+                _scrip.target = null;
+                _scrip.setTargetPos(transform);
+                _scrip._In_Castle = false;
+                _scrip.setUpTower(false);
+                Castle.Instance._archer_Right.SetActive(true);
+                _scrip.setIsAI(true);
+                Castle.Instance._archer_Right = null;
+            }
+        }
+
+        // center
+        Castle.Instance._archer_Center_Obj.SetActive(false);
+        if (Castle.Instance._archer_Center != null)
+        {
+            var _scrip = Castle.Instance._archer_Center.GetComponent<ArcherGFX>();
+            if (_scrip  != null)
+            {
+                _scrip.setTargetPos(transform);
+                _scrip.target = null;
+                _scrip._In_Castle = false;
+                _scrip.setUpTower(false);
+                Castle.Instance._archer_Center.SetActive(true);
+                _scrip.setIsAI(true);
+                Castle.Instance._archer_Center = null;
+            }
+        }
+
+        // left
+        Castle.Instance._archer_Left_Obj.SetActive(false);
+        if (Castle.Instance._archer_Left == null) return;
+        var _script = Castle.Instance._archer_Left.GetComponent<ArcherGFX>();
+        if (_script != null)
+        {
+            _script.setTargetPos(transform);
+            _script.target = null;
+            _script._In_Castle = false;
+            _script.setUpTower(false);
+            Castle.Instance._archer_Left.SetActive(true);
+            _script.setIsAI(true);
+            Castle.Instance._archer_Left = null;
+        }
+    }
 }

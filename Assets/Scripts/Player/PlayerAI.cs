@@ -168,7 +168,16 @@ public class PlayerAI : MonoBehaviour
     }
 
 
-    public virtual void Ai(){}
+    private bool IsDie = false;
+    public virtual void Ai()
+    {
+        if (_Die && !IsDie)
+        {
+            IsDie = true;
+            Dead();
+            return;
+        }
+    }
 
 
     #region Update
@@ -243,6 +252,7 @@ public class PlayerAI : MonoBehaviour
     */
     public void respawn(Transform pos)
     {
+        IsDie = false;
         newStatus();
         path.setDie(false);
         path.setCanMove(true);

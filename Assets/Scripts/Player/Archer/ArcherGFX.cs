@@ -50,6 +50,7 @@ public class ArcherGFX : PlayerAI
 
     public override void Ai()
     {
+        base.Ai();
         if (!getIsAI()) return;
         target = findEnemys();
         if (target == null)

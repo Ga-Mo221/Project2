@@ -739,7 +739,7 @@ MonoBehaviour:
   _currentHealth: 0
   _speed: 2
   _damage: 10
-  _range: 3
+  _range: 4.2
   _attackspeed: 5
   _radius: 13
   _Die: 0

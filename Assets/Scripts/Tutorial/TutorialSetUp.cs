@@ -232,6 +232,10 @@ public class TutorialSetUp : MonoBehaviour
         yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
         _typewriter.StartTyping("");
         StartCoroutine(SelectBox());
+        _Baw.SetBool("chi", false);
+        _Baw.SetBool("noi", false);
+        _typewriter.StartTyping("");
+        _Mess.SetTrigger("exit");
     }
     #endregion
 
@@ -248,10 +252,6 @@ public class TutorialSetUp : MonoBehaviour
         _camera.Zoom(15, 1.5f);
         _camera.Move(_1.position, 1.5f);
         yield return new WaitForSecondsRealtime(1.6f);
-        _Baw.SetBool("chi", false);
-        _Baw.SetBool("noi", false);
-        _typewriter.StartTyping("");
-        _Mess.SetTrigger("exit");
         _selectBox.SetActive(true);
     }
     #endregion
@@ -676,41 +676,10 @@ public class TutorialSetUp : MonoBehaviour
         content = "Bọn chúng đến rồi! Thấy chưa – lần này còn dắt theo cả con to đầu đấy!";
         _typewriter.StartTyping(content);
         yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Nhanh lên, tập hợp binh lính! Giữ V và nhấn chuột trái để mở Radial Menu – chọn mệnh lệnh ngay đi!";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        _enemyList.SetActive(true);
-        _Baw.SetBool("noi", false);
-        _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
-        _Mess.SetTrigger("exit");
-        GameManager.Instance.Tutorial = false;
-        _War = true;
-        Time.timeScale = 1f;
-    }
-    #endregion
-
-
-    #region text 18
-    // Hướng dẫn đưa archer vào thành
-    private IEnumerator displayText18()
-    {
-        yield return new WaitForSecondsRealtime(2f);
-        Time.timeScale = 0;
-        GameManager.Instance.Tutorial = true;
-        _Baw.gameObject.SetActive(true);
-        _camera.Move(_enemy.position, 1f);
-        yield return new WaitForSecondsRealtime(1f);
-        _Mess.gameObject.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.3f);
-        _Baw.SetBool("noi", true);
-        string content = "Khốn kiếp, một công trình đã bị phá hủy!";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
         content = "Lũ này có vẻ chuẩn bị kỹ hơn ta tưởng đấy.";
         _typewriter.StartTyping(content);
         yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Điều động cung thủ vào trong thành ngay! Chúng là tuyến thủ cuối cùng của ta.";
+        content = "Điều động cung thủ vào trong thành ngay!";
         _typewriter.StartTyping(content);
         yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
         _camera.Move(_archer.position, 1f);
@@ -718,32 +687,48 @@ public class TutorialSetUp : MonoBehaviour
         content = "Chọn một cung thủ, rồi click vào công tắc trên tháp để ra lệnh cho hắn vào vị trí.";
         _typewriter.StartTyping(content);
         yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+        StartCoroutine(displayText19());
         _enemyList.SetActive(true);
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
         _typewriter.StartTyping("");
         _Mess.SetTrigger("exit");
-        _camera.Zoom(20, 1f);
-        Time.timeScale = 1f;
-        GameManager.Instance.Tutorial = false;
+        _War = true;
     }
     #endregion
+
 
     #region text 19
     // on off công tắt
     private IEnumerator displayText19()
     {
-        _camera.Move(_buttonArcherInCastle1.position,1f);
+        _camera.Move(_buttonArcherInCastle1.position, 1f);
         yield return new WaitForSecondsRealtime(1.5f);
         OnClickIcon(_buttonArcherInCastle1);
         yield return new WaitForSecondsRealtime(2f);
         OffClickIcon();
-        _camera.Move(_buttonArcherInCastle2.position,1f);
+        _camera.Move(_buttonArcherInCastle2.position, 1f);
         yield return new WaitForSecondsRealtime(1.5f);
         OnClickIcon(_buttonArcherInCastle2);
         yield return new WaitForSecondsRealtime(1f);
         OffClickIcon();
+        yield return new WaitForSecondsRealtime(1f);
+        _Baw.gameObject.SetActive(true);
+        _camera.Move(_enemy.position, 1f);
+        yield return new WaitForSecondsRealtime(1f);
+        _Mess.gameObject.SetActive(true);
+        yield return new WaitForSecondsRealtime(0.3f);
+        _Baw.SetBool("noi", true);
+        _camera.Move(_enemy.position, 1f);
+        string content = "Nhanh lên, tập hợp binh lính! Giữ V và nhấn chuột trái để mở Radial Menu – chọn mệnh lệnh ngay đi!";
+        _typewriter.StartTyping(content);
+        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+        _Baw.SetBool("noi", false);
+        _Baw.gameObject.SetActive(false);
+        _typewriter.StartTyping("");
+        _Mess.SetTrigger("exit");
         GameManager.Instance.Tutorial = false;
+        Time.timeScale = 1f;
     }
     #endregion
 
@@ -830,7 +815,7 @@ public class TutorialSetUp : MonoBehaviour
         }
         col.a = 1f;
         _BG1.color = col;
-        Debug.Log("Thoat");
+        Application.Quit();
     }
     #endregion
 
@@ -968,16 +953,7 @@ public class TutorialSetUp : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(displayText17());
     }
-
-
-    public void TutorialArcherInTowerAndCatlse()
-    {
-        Debug.Log("Hướng dẫn đưa Archer Vào Thành");
-        StopAllCoroutines();
-        StartCoroutine(displayText18());
-    }
     #endregion
-
 
 
     private void OnBlackBox(Transform target)
