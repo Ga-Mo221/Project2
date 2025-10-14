@@ -240,6 +240,7 @@ MonoBehaviour:
   _GnollPrefab: {fileID: 0}
   _HpBar: {fileID: 4683230190239297350}
   _Icon: {fileID: 5077017766781081612}
+  _outLine: {fileID: 2982159892587144878}
   _audio: {fileID: 4523841905323739653}
   _display: {fileID: 5598502115355180800}
 --- !u!82 &7624311555773662639
@@ -357,7 +358,7 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 99423764123bfb54badf9231fa93ad8e, type: 3}
   Enemy: 1
   Storage: 1
   _Attack_Clip: {fileID: 0}
@@ -366,9 +367,12 @@ MonoBehaviour:
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0
   _Creating_Clip: {fileID: 0}
-  _Warning_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 8300000, guid: e4b4858c10d6ba04b9b6824d7d1fd62f, type: 3}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -802,6 +806,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+--- !u!114 &2982159892587144878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 2474067758220700133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274382997817879224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a7846ca1cfa244a86f78c5afc18c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4274382997817879224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

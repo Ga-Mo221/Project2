@@ -157,6 +157,12 @@ public class GameManager : MonoBehaviour
     public void UIcloseUpgradePanel()
         => _ui.closePanelUpgrade();
 
+    public void UIupdateInfoUpgrade()
+        => _ui.updateInfoUpgrade();
+
+    public void UIupdateCreateUnitButton()
+        => _ui.CheckLevel();
+
     private Coroutine _offDefen;
     public void onDefen()
     {
@@ -228,6 +234,8 @@ public class GameManager : MonoBehaviour
         _canOpenWindown = true;
         _upgradeOpen = false;
     }
+
+    public void setCanOpenWindowan(bool amount) => _canOpenWindown = amount;
 
     public bool getUpgradeOpen() => _upgradeOpen;
 

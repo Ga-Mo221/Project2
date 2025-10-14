@@ -17,8 +17,6 @@ public class HouseHealth : MonoBehaviour
     private bool IsStorage => _type == HouseType.Storage;
     private bool IsCastle => _type == HouseType.Castle;
     private Animator _anim;
-    [SerializeField] private bool _tutorial = false;
-
     [SerializeField] private bool _canDetec = false;
 
     [Foldout("Other")]
@@ -41,7 +39,8 @@ public class HouseHealth : MonoBehaviour
     [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
     [SerializeField] private Rada _rada;
-    private House _house;
+    [HideIf(nameof(IsCastle))]
+    public House _house;
 
 
     [Foldout("Other")]
@@ -61,7 +60,7 @@ public class HouseHealth : MonoBehaviour
     [SerializeField] private GameObject _HPcanvas;
 
     [Foldout("Other")]
-    [SerializeField] private GameObject _outLine;
+    [SerializeField] private OutLine _outLine;
 
 
 
@@ -69,16 +68,16 @@ public class HouseHealth : MonoBehaviour
     public bool getCanDetec() => _canDetec;
 
     [HideIf(nameof(IsCastle))]
-    [SerializeField] private int _createTimeSec = 10;
-    private int _time = 0;
+    [SerializeField] private int _time = 0;
 
     void Start()
     {
         if (!IsCastle)
         {
-            _house = GetComponent<House>();
+            if (_house == null)
+                _house = GetComponent<House>();
             _rada.setOn(false);
-            _time = _createTimeSec;
+            _time = _house._createTimeSec;
         }
         else _canDetec = true;
         _anim = GetComponent<Animator>();
@@ -88,16 +87,6 @@ public class HouseHealth : MonoBehaviour
             _HPcanvas.SetActive(false);
 
         InvokeRepeating(nameof(fireDie), 1f, 1f);
-
-        if (_tutorial)
-            StartCoroutine(checkDie());
-    }
-
-
-    private IEnumerator checkDie()
-    {
-        yield return new WaitForSeconds(1f);
-        takeDamage(0f);
     }
 
 
@@ -107,7 +96,7 @@ public class HouseHealth : MonoBehaviour
         if (_time > 0)
         {
             _time--;
-            _imgLoad.fillAmount = Mathf.Clamp01((float)_time / _createTimeSec);
+            _imgLoad.fillAmount = Mathf.Clamp01((float)_time / _house._createTimeSec);
         }
 
         if (_time <= 0)
@@ -172,10 +161,10 @@ public class HouseHealth : MonoBehaviour
                         _house._inTower.Out();
                     }
                     _ButtonArcherUP.SetActive(false);
+                    _canvas.SetActive(false);
                 }
                 if (IsStorage)
                 {
-                    Debug.Log($"{transform.name} Die");
                     Castle.Instance._maxWood -= _house._wood;
                     Castle.Instance._maxRock -= _house._rock;
                     Castle.Instance._maxMeat -= _house._meat;
@@ -201,7 +190,7 @@ public class HouseHealth : MonoBehaviour
                 _light.SetActive(false);
                 _HPcanvas.SetActive(false);
                 _house._audio.PlayDieSound();
-                _outLine.SetActive(false);
+                _outLine.Out();
             }
 
             _HPcanvas.SetActive(true);
@@ -219,7 +208,7 @@ public class HouseHealth : MonoBehaviour
                 _anim.SetBool("Die", true);
                 setCanDetec(false);
                 StartCoroutine(GameOver());
-                _outLine.SetActive(false);
+                _outLine.Out();
                 Castle.Instance._audio.PlayDieSound();
                 Castle.Instance.Dead();
             }
@@ -292,5 +281,5 @@ public class HouseHealth : MonoBehaviour
     }
     #endregion
 
-    public void PlayCreatingSound() => _house._audio.PlayerCreatingSound();
+    public void PlayCreatingSound() => _house._audio.PlayCreatingSound();
 }

@@ -13,31 +13,26 @@ public class Select5Unit_Image : MonoBehaviour
 
     public void onWarrior()
     {
-        _warrior.text = "Dũng Sĩ";
         _warrior.gameObject.SetActive(true);
     }
 
     public void onArcher()
     {
-        _Archer.text = "Cung Thủ";
         _Archer.gameObject.SetActive(true);
     }
 
     public void onLancer()
     {
-        _Lancer.text = "Thương Sĩ";
         _Lancer.gameObject.SetActive(true);
     }
 
     public void onHealer()
     {
-        _Healer.text = "Pháp Sư";
         _Healer.gameObject.SetActive(true);
     }
 
     public void onTNT()
     {
-        _TNT.text = "Boom Cảm Tử";
         _TNT.gameObject.SetActive(true);
     }
 

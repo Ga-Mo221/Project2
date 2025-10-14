@@ -98,7 +98,7 @@ public class SelectionBox : MonoBehaviour
             worldPos.z = 0; // nếu bạn muốn ở mặt phẳng 2D (z=0)
             if (chosen.Count != 0)
             {
-                MoveToManager.Instance.CreateMovePoint(chosen, worldPos, -1f);
+                MoveToManager.Instance.CreateMovePoint(chosen, worldPos);
                 if (GameManager.Instance.Tutorial && CursorManager.Instance.ChoseUI && TutorialSetUp.Instance.ID == 1)
                 {
                     Time.timeScale = 1f;

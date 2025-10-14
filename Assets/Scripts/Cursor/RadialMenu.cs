@@ -94,7 +94,9 @@ public class RadialMenu : MonoBehaviour
                 // Các nhóm khác đặt chế độ add = true
                 foreach (var (_, otherList) in unitGroups)
                     if (otherList != list)
+                    {
                         PlayerController(otherList, true);
+                    }
 
                 return;
             }
@@ -109,7 +111,7 @@ public class RadialMenu : MonoBehaviour
         if (list == null) return false;
         foreach (var p in list)
         {
-            if (p != null && p.gameObject.activeSelf)
+            if (p != null && p.gameObject.activeSelf &&  !p.getUpTower())
                 return true;
         }
         return false;
@@ -125,7 +127,7 @@ public class RadialMenu : MonoBehaviour
         List<GameObject> activePlayers = new List<GameObject>();
         foreach (var player in list)
         {
-            if (player == null || !player.gameObject.activeSelf) continue;
+            if (player == null || !player.gameObject.activeSelf || player.getUpTower() || player._movingToTower) continue;
             Vector3 targetPos = _support
                 ? RandomPoint(Castle.Instance._In_Castle_Pos, 8)
                 : _pos;
@@ -136,21 +138,20 @@ public class RadialMenu : MonoBehaviour
 
         if (activePlayers.Count == 0) return;
 
-        // Spawn marker
-        float radius = _support ? 8.5f : _war? 3f : 0f;
+        //Spawn marker
         if (!add)
         {
             if (_support)
                 _pos = Castle.Instance._In_Castle_Pos.position;
-            _moveto = MoveToManager.Instance.CreateMovePoint(activePlayers, _pos, radius);
+            _moveto = MoveToManager.Instance.CreateMovePoint(activePlayers, _pos);
         }
 
         if (_moveto == null) return;
 
-        _moveto.SetChosen(activePlayers, add, radius);
 
-        if (!_support && !_war)
-            _moveto.offActive();
+        float radius = _support ? 8.5f : -1f;
+        bool active = _rally ? false : true;
+        _moveto.SetChosen(activePlayers, true, add, active, radius, _support);
     }
 
     /// <summary>

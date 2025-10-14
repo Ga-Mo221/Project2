@@ -42,7 +42,12 @@ public class PlayerHealth : MonoBehaviour
         _HP_obj.SetActive(true);
         if (_hideHP != null)
             StopCoroutine(_hideHP);
-        _hideHP = StartCoroutine(hideHP());
+        if (gameObject.activeInHierarchy)
+            _hideHP = StartCoroutine(hideHP());
+
+        if (_playerAI.getDie()) return;
+
+        _playerAI.resetUnderAttack();
     }
 
     private Coroutine _hideHP;

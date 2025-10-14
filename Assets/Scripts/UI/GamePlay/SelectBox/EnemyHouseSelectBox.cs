@@ -13,6 +13,9 @@ public class EnemyHouseSelectBox : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _content;
 
+    private string key = "";
+    private string txt = "";
+
     void Update()
     {
         if (_enemyHouse != null)
@@ -26,8 +29,12 @@ public class EnemyHouseSelectBox : MonoBehaviour
     {
         _enemyHouse = House;
 
-        _name.text = "Danh trại Quái Vật";
+        key = "ui.Level";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _name.text = txt;
 
-        _content.text = "Nơi đây là đầu sỏ của bọn quái vật. Bạn chỉ cần phá hủy nó là bọn quái vật sẽ tự rút lui khỏi lảnh thổ của bạn.";
+        key = "ui.Level";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _content.text = txt;
     }
 }

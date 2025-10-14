@@ -323,6 +323,9 @@ MonoBehaviour:
   _MeatOBJ: {fileID: 3441818050998879131}
   _audio: {fileID: 4968763823680787947}
   _display: {fileID: 4011518117632548897}
+  visibleUpdateRate: 0.3
+  invisibleUpdateRate: 0.8
+  _Rate: 0
   _spriteRender: {fileID: 6287486149944449987}
 --- !u!1 &3614332820089817402
 GameObject:
@@ -653,10 +656,10 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 314b8a2d5cbaff642850761abebcbd74, type: 3}
   Enemy: 0
   Storage: 0
-  _Attack_Clip: {fileID: 0}
+  _Attack_Clip: {fileID: 8300000, guid: 27e3abeb7290e674e9e2d5660e9daa0e, type: 3}
   Animal: 1
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
@@ -664,7 +667,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50

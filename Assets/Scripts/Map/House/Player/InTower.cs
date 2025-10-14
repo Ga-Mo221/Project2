@@ -4,6 +4,8 @@ public class InTower : MonoBehaviour
 {
     public GameObject _ArcherUp;
     public GameObject _ArcherUp_Obj;
+
+    public GameObject _cache;
     [SerializeField] private UnitAudio _audio;
 
     void Start()
@@ -18,10 +20,12 @@ public class InTower : MonoBehaviour
         && _ArcherUp == null)
         {
             if (!SelectionBox.Instance.chosen[0].CompareTag("Archer")) return;
-            var _scrip = SelectionBox.Instance.chosen[0].GetComponent<ArcherGFX>();
+            _cache = SelectionBox.Instance.chosen[0];
+            var _scrip = _cache.GetComponent<ArcherGFX>();
             _scrip.setTarget(transform.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Tower;
+            _scrip._movingToTower = true;
         }
         else if (_ArcherUp != null)
         {
@@ -50,7 +54,7 @@ public class InTower : MonoBehaviour
             var _script = collision.GetComponent<ArcherGFX>();
             if (_script._In_Castle)
             {
-                if (_script._upDirection == UpDirection.Tower)
+                if (_script._upDirection == UpDirection.Tower && _cache == collision.gameObject)
                 {
                     _ArcherUp = collision.gameObject;
                     _ArcherUp_Obj.SetActive(true);

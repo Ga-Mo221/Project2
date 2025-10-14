@@ -52,7 +52,7 @@ public class AnimalAI : MonoBehaviour
     [Foldout("Status")]
     [SerializeField] private bool _canPatrol;
     [Foldout("Status")]
-    [SerializeField] private bool _canAction = false;
+    public bool _canAction = false;
     [Foldout("Status")]
     [SerializeField] private bool detec = false;
 
@@ -78,6 +78,13 @@ public class AnimalAI : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] private Display _display;
 
+    [Foldout("Update Time")]
+    [SerializeField] private float visibleUpdateRate = 0.3f;
+    [Foldout("Update Time")]
+    [SerializeField] private float invisibleUpdateRate = 0.8f;
+    [Foldout("Update Time")]
+    [SerializeField] private float _Rate;
+
     private Rigidbody2D _rb;
     #endregion
 
@@ -90,6 +97,8 @@ public class AnimalAI : MonoBehaviour
 
 
         //seeker = GetComponent<Seeker>();
+        _Rate = visibleUpdateRate;
+        InvokeRepeating(nameof(AI), 0f, _Rate);
 
         _rb = GetComponent<Rigidbody2D>();
         if (target == null && !_Die)
@@ -98,11 +107,32 @@ public class AnimalAI : MonoBehaviour
         }
     }
 
+    protected virtual void AI()
+    {
+        if (_display._Detec)
+            _Rate = visibleUpdateRate;
+        else
+            _Rate = invisibleUpdateRate + Random.Range(0f, visibleUpdateRate);
+
+        flip(target, _canAction);
+
+        target = findEnemyorPlayer();
+        if (target != null)
+        {
+           //Debug.Log("tim thay");
+            setdetec(true);
+            attack(target);
+        }
+        else
+        {
+            setdetec(false);
+        }
+    }
+
     private bool _isDead = false;
     protected virtual void Update()
     {
         _hpBar.fillAmount = _health / _maxHealth;
-        flip(target, _canAction);
 
         if (_Die && !_isDead)
         {
@@ -331,7 +361,6 @@ public class AnimalAI : MonoBehaviour
     private IEnumerator Respawm(int delay)
     {
         yield return new WaitForSeconds(delay);
-        Debug.Log($"{transform.parent.name} Respawn");
         transform.position = transform.parent.position;
         _Die = false;
         path.setDie(_Die);

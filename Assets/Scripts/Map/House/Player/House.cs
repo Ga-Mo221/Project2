@@ -16,6 +16,7 @@ public class House : MonoBehaviour
     [SerializeField] private bool _canUpdateHP = true;
     public float _maxHealth = 100;
     public float _currentHealth = 0;
+    public int _createTimeSec = 30;
     [SerializeField] private Image _HpImg;
 
     [ShowIf(nameof(_IsTower))]

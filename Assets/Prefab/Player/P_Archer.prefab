@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.805, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5133001799217994396}
   m_Father: {fileID: 7560415923998112990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2326934633906367625
@@ -169,6 +170,93 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.32, y: 0.32}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &1708582954844663347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5133001799217994396}
+  - component: {fileID: 7970280283986561126}
+  m_Layer: 0
+  m_Name: SelectCirce
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5133001799217994396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708582954844663347}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.039, y: -2.581, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6171546708538105988}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &7970280283986561126
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708582954844663347}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -942469059
+  m_SortingLayer: 2
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: ffae5955486afc644a00a4bfe6e4f5d6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -664,7 +752,14 @@ MonoBehaviour:
   _healPlus: 0
   _AOEHeal: 0
   _canAction: 0
+  _movingToTower: 0
+  _isUnderAttack: 0
+  _isAttacking: 0
+  _isHarvesting: 0
+  _isIdle: 0
+  _isNewlySpawned: 1
   _spriteRender: {fileID: 8455842863801180344}
+  _select: {fileID: 7970280283986561126}
   _oderSpriterPoint: {fileID: 4228916002793492518}
   _shootPos: {fileID: 2187405661218019223}
   _shootStarge: {fileID: 2105802441403488284}
@@ -925,18 +1020,21 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 03a103c9867594b4f9c4be0c6fb16c86, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 8300000, guid: c4739ad884eca5743bdef2405bb562a2, type: 3}
   Animal: 0
-  _Level_Up_Clip: {fileID: 0}
+  _Level_Up_Clip: {fileID: 8300000, guid: 9a28eca7d5e74fc4ab6fef531a12f711, type: 3}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50

@@ -7,11 +7,14 @@ public class ArowEnemy : MonoBehaviour
     [SerializeField] private float _maxSpeed = 10;
     [SerializeField] private float _speed = 0;
     private float _damage;
-    private Transform _target;
+    [SerializeField] private Transform _target;
+    private Coroutine _setActive;
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
     [SerializeField] private UnitAudio _audio;
+
+
 
     void Awake()
     {
@@ -74,9 +77,12 @@ public class ArowEnemy : MonoBehaviour
             {
                 _audio.PlayFarmOrHitDamageSound();
                 _spriteRenderer.enabled = false;
-                if (gameObject.activeInHierarchy)
-                    StartCoroutine(setActive());
+                if (gameObject.activeInHierarchy && _setActive != null)
+                    _setActive = StartCoroutine(setActive());
             }
+
+            if (_target == null && _setActive == null)
+                gameObject.SetActive(false);
         }
     }
 

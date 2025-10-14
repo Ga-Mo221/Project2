@@ -134,6 +134,24 @@ public class PlayerAI : MonoBehaviour
     public bool _AOEHeal = false;
     [Foldout("Status")]
     public bool _canAction = false;
+    [Foldout("Status")]
+    public bool _movingToTower = false;
+
+
+    [Foldout("Priority")]
+    [SerializeField] bool _isUnderAttack = false;
+    private Coroutine _cor_UnderAttack;
+    [Foldout("Priority")]
+    [SerializeField] bool _isAttacking = false;
+    private Coroutine _cor_Attacking;
+    [Foldout("Priority")]
+    [SerializeField] bool _isHarvesting = false;
+    private Coroutine _cor_Harvesting;
+    [Foldout("Priority")]
+    [SerializeField] bool _isIdle = false;
+    [Foldout("Priority")]
+    [SerializeField] bool _isNewlySpawned = true;
+    private Coroutine _cor_NewlySpawned;
 
 
     // float
@@ -165,6 +183,12 @@ public class PlayerAI : MonoBehaviour
 
         InvokeRepeating("UpdatePath", 0f, _repathRate);
         InvokeRepeating(nameof(Ai), 0.3f, 0.3f);
+
+        if (_cor_NewlySpawned != null)
+            StopCoroutine(_cor_NewlySpawned);
+
+        if (gameObject.activeInHierarchy)
+            _cor_NewlySpawned = StartCoroutine(reset_isNewlySpawned());
     }
 
 
@@ -266,6 +290,12 @@ public class PlayerAI : MonoBehaviour
         _selet.SetActive(false);
         setDie(false);
         _rada.setDie(false);
+
+        if (_cor_NewlySpawned != null)
+            StopCoroutine(_cor_NewlySpawned);
+
+        if (gameObject.activeInHierarchy)
+            _cor_NewlySpawned = StartCoroutine(reset_isNewlySpawned());
     }
     #endregion
 
@@ -339,6 +369,8 @@ public class PlayerAI : MonoBehaviour
     }
     public virtual void setTarget(Vector3 pos, bool controller, bool farm = false)
     {
+        if (_unitClass == UnitType.Archer)
+            _movingToTower = false;
         resetItemSelect(farm);
         if (controller)
         {
@@ -409,6 +441,7 @@ public class PlayerAI : MonoBehaviour
     private Coroutine _attackSpeed;
     protected virtual PlayerAI attack(GameObject _nearest)
     {
+        if (_UpTower) return null;
         // Kiểm tra _nearest có null không, có tag "Item" không, và có nằm trong vùng farm không
         if (_nearest != null && _nearest.CompareTag("Enemy"))
         {
@@ -465,6 +498,13 @@ public class PlayerAI : MonoBehaviour
     private IEnumerator attackSpeed()
     {
         _anim.SetTrigger("attack");
+
+        if (_cor_Attacking != null)
+            StopCoroutine(_cor_Attacking);
+
+        if (gameObject.activeInHierarchy)
+            _cor_Attacking = StartCoroutine(reset_isAttacking());
+
         yield return new WaitForSeconds(_attackSpeedd);
         _attackSpeed = null;
     }
@@ -480,7 +520,7 @@ public class PlayerAI : MonoBehaviour
     public void farm(GameObject _nearest)
     {
         // Kiểm tra _nearest có null không, có tag "Item" không, và có nằm trong vùng farm không
-        if (_nearest != null && _nearest.CompareTag("Item") && !_Die)
+        if (_nearest != null && _nearest.CompareTag("Item") && !_Die && !_UpTower)
         {
             float dist = Vector2.Distance(transform.position, _nearest.transform.position);
             if (dist <= _radius_farm)
@@ -507,6 +547,12 @@ public class PlayerAI : MonoBehaviour
                 {
                     _anim.SetInteger("TypeFarm", 1);
                     _anim.SetTrigger("attack");
+
+                    if (_cor_Harvesting != null)
+                        StopCoroutine(_cor_Harvesting);
+
+                    if (gameObject.activeInHierarchy)
+                        _cor_Harvesting = StartCoroutine(reset_isHarvesting());
                 }
             }
             else if (type == ItemType.Rock && _script.checkSelect(this))
@@ -515,6 +561,12 @@ public class PlayerAI : MonoBehaviour
                 {
                     _anim.SetInteger("TypeFarm", 2);
                     _anim.SetTrigger("attack");
+
+                    if (_cor_Harvesting != null)
+                        StopCoroutine(_cor_Harvesting);
+
+                    if (gameObject.activeInHierarchy)
+                        _cor_Harvesting = StartCoroutine(reset_isHarvesting());
                 }
             }
             else if (type == ItemType.Gold && _script._value > 0)
@@ -523,6 +575,12 @@ public class PlayerAI : MonoBehaviour
                 {
                     _anim.SetInteger("TypeFarm", 2);
                     _anim.SetTrigger("attack");
+
+                    if (_cor_Harvesting != null)
+                        StopCoroutine(_cor_Harvesting);
+
+                    if (gameObject.activeInHierarchy)
+                        _cor_Harvesting = StartCoroutine(reset_isHarvesting());
                 }
             }
         }
@@ -541,6 +599,7 @@ public class PlayerAI : MonoBehaviour
     #region Find Item
     public GameObject findItems()
     {
+        if (_UpTower) return null;
         GameObject nearest = null;
         if (Castle.Instance._canFind)
         {
@@ -601,6 +660,7 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
+    #region Find Artor
     private GameObject FindNearest(string tag, System.Func<GameObject, bool> isValid)
     {
         GameObject nearest = null;
@@ -641,6 +701,7 @@ public class PlayerAI : MonoBehaviour
     {
         return FindNearest("EnemyHouse", go => !go.GetComponent<EnemyHouseHealth>()._Die);
     }
+    #endregion
 
 
 
@@ -682,6 +743,13 @@ public class PlayerAI : MonoBehaviour
             }
         }
         return nearest;
+    }
+    #endregion
+
+    #region Stop Here
+    public void StopHere()
+    {
+        path.setTarget(transform.position, gameObject);
     }
     #endregion
 
@@ -768,7 +836,21 @@ public class PlayerAI : MonoBehaviour
                 return;
         }
         listplayer.Add(this);
-        Debug.Log($"Add [{transform.name}] in Castle");
+    }
+    #endregion
+
+
+    #region  Get Player Priority
+    public float GetPlayerPriority()
+    {
+        float score = 0;
+
+        if (_isUnderAttack) score += 10;
+        if (_isAttacking) score += 8;
+        if (_isHarvesting) score += 4;
+        if (_isIdle) score -= 3;
+        if (_isNewlySpawned) score += 6;
+        return score;
     }
     #endregion
 
@@ -843,6 +925,102 @@ public class PlayerAI : MonoBehaviour
     // Archer
     public void setUpTower(bool amount) => _UpTower = amount;
     public bool getUpTower() => _UpTower;
+
+    public virtual int getOderInLayer() => 0;
+    #endregion
+
+
+    #region IEnumerator
+    private IEnumerator reset_isNewlySpawned()
+    {
+        if (_cor_Attacking != null)
+            StopCoroutine(_cor_Attacking);
+        if (_cor_Harvesting != null)
+            StopCoroutine(_cor_Harvesting);
+        if (_cor_UnderAttack != null)
+            StopCoroutine(_cor_UnderAttack);
+
+
+        _isNewlySpawned = true;
+        yield return new WaitForSeconds(3f);
+        _isNewlySpawned = false;
+        _isIdle = true;
+        _isUnderAttack = false;
+        _isAttacking = false;
+        _isHarvesting = false;
+    }
+
+    private IEnumerator reset_isUnderAttack()
+    {
+        if (_cor_NewlySpawned != null)
+            StopCoroutine(_cor_NewlySpawned);
+        if (_cor_Harvesting != null)
+            StopCoroutine(_cor_Harvesting);
+
+
+        _isNewlySpawned = false;
+        _isIdle = false;
+        _isUnderAttack = true;
+        _isHarvesting = false;
+        yield return new WaitForSeconds(3f);
+        _isUnderAttack = false;
+        _isIdle = true;
+    }
+    
+    public void resetUnderAttack()
+    {
+        if (_cor_UnderAttack != null)
+            StopCoroutine(_cor_UnderAttack);
+
+        if (gameObject.activeInHierarchy)
+            _cor_UnderAttack = StartCoroutine(reset_isUnderAttack());
+    }
+
+    private IEnumerator reset_isAttacking()
+    {
+        if (_cor_NewlySpawned != null)
+            StopCoroutine(_cor_NewlySpawned);
+        if (_cor_Harvesting != null)
+            StopCoroutine(_cor_Harvesting);
+
+
+        _isNewlySpawned = false;
+        _isIdle = false;
+        _isAttacking = true;
+        _isHarvesting = false;
+        yield return new WaitForSeconds(3f);
+        _isAttacking = false;
+        _isIdle = true;
+    }
+
+    public void resetAttacking()
+    {
+        if (_cor_Attacking != null)
+            StopCoroutine(_cor_Attacking);
+
+        if (gameObject.activeInHierarchy)
+            _cor_Attacking = StartCoroutine(reset_isAttacking());
+    }
+
+    private IEnumerator reset_isHarvesting()
+    {
+        if (_cor_NewlySpawned != null)
+            StopCoroutine(_cor_NewlySpawned);
+        if (_cor_Attacking != null)
+            StopCoroutine(_cor_Attacking);
+        if (_cor_UnderAttack != null)
+            StopCoroutine(_cor_UnderAttack);
+
+
+        _isNewlySpawned = false;
+        _isIdle = false;
+        _isAttacking = false;
+        _isUnderAttack = false;
+        _isHarvesting = true;
+        yield return new WaitForSeconds(3f);
+        _isHarvesting = false;
+        _isIdle = true;
+    }
     #endregion
 }
 

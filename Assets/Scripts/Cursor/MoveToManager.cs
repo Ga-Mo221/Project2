@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ public class MoveToManager : MonoBehaviour
     [SerializeField] private GameObject moveToPrefab;
     [SerializeField] private Transform moveToParent;
 
-    private readonly List<MoveTo> activeMoveTos = new List<MoveTo>();
-    private readonly Queue<MoveTo> pool = new Queue<MoveTo>();
+    [SerializeField] private readonly List<MoveTo> activeMoveTos = new List<MoveTo>();
+    [SerializeField] private readonly Queue<MoveTo> pool = new Queue<MoveTo>();
 
     private void Awake()
     {
@@ -27,16 +28,22 @@ public class MoveToManager : MonoBehaviour
     /// <summary>
     /// Tạo một MoveTo mới hoặc lấy từ pool ra để tái sử dụng
     /// </summary>
-    public MoveTo CreateMovePoint(List<GameObject> chosen, Vector3 pos, float radius, bool add = false)
+    public MoveTo CreateMovePoint(List<GameObject> chosen, Vector2 pos, bool rally = false, bool add = false, bool active = true, float radius = -1)
     {
         MoveTo moveTo = GetMoveToFromPool();
 
         moveTo.transform.position = pos;
-        moveTo.gameObject.SetActive(true);
-        moveTo.SetChosen(chosen, add, radius);
+        moveTo.SetChosen(chosen, rally, add, active, radius);
+        StartCoroutine(setActive(moveTo));
 
         activeMoveTos.Add(moveTo);
         return moveTo;
+    }
+
+    private IEnumerator setActive(MoveTo moveTo)
+    {
+        yield return new WaitForSeconds(0.1f);
+        moveTo.gameObject.SetActive(true);
     }
 
     private MoveTo GetMoveToFromPool()

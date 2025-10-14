@@ -5,20 +5,24 @@ public class Lights : MonoBehaviour
 {
     private Light2D _light;
 
+    [Header("Target Color")]
     [SerializeField] private Color _nightColor;
     [SerializeField] private Color _defaultColor;
 
-    private float transitionTime;
-    private float timer = 0f;            // đếm thời gian đang chuyển
-    private bool isTransitioning = false;
-    private Color startColor;
-    private Color targetColor;
+    [Header("Status Change")]
+    [SerializeField] private float transitionTime;
+    [SerializeField] private float timer = 0f;            // đếm thời gian đang chuyển
+    [SerializeField] private bool isTransitioning = false;
+
+    [Header("Status Color")]
+    [SerializeField] private Color startColor;
+    [SerializeField] private Color targetColor;
 
     private void Start()
     {
         _light = GetComponent<Light2D>();
         _light.color = _defaultColor;
-        transitionTime = GameManager.Instance._2Hours_Sec;
+        transitionTime = GameManager.Instance._2Hours_Sec * 2;
     }
 
     private void Update()

@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1847074372351036968}
   - component: {fileID: 6808370736136092860}
+  - component: {fileID: 433433321181395220}
+  - component: {fileID: 7090054386118423345}
+  - component: {fileID: 8378677578297867844}
   m_Layer: 0
   m_Name: CursorManager
   m_TagString: Untagged
@@ -50,3 +53,57 @@ MonoBehaviour:
   ChoseUI: 0
   Select: 0
   _hoverGameobject: {fileID: 0}
+--- !u!114 &433433321181395220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567654202575403183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739796322a2179d42b4909f715888a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settingPrefab: {fileID: 1511080569459791376, guid: 10cdb6a7d20c30046a775d78ad5e7409, type: 3}
+  _gameSettings:
+    _language: vi
+    _isFullscreen: 1
+    _overall_Volume: 1
+    _music_Volume: 1
+    _SFX_volume: 1
+    _mouseSensitivity: 40
+    _panCameraRightMouse: 0
+    _speedPanCamera: 1.5
+    _isBloom: 1
+    _isWeather: 1
+    _Tutorial: 1
+  _playing: 0
+--- !u!114 &7090054386118423345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567654202575403183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4372519b7dc7964cbc120b359dbf67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultLanguage: vi
+  currentLocalization:
+    languageCode: 
+    languageName: 
+--- !u!114 &8378677578297867844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567654202575403183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b66d5be666d4ef4885a287150376880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

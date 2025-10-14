@@ -8,17 +8,20 @@ public class Sheep : AnimalAI
 
     protected override void Start()
     {
-        base.Start();
         if (!_spriteRender)
-        {
             Debug.LogError("[Sheep] chua gan 'spriterender'");
-        }
+        base.Start();
     }
 
     protected override void Update()
     {
         base.Update();
         _spriteRender.sortingOrder = -(int)(transform.position.y * 100) + 10000;
+    }
+
+    protected override void AI()
+    {
+        flip(target, _canAction);
     }
 
 

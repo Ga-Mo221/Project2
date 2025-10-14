@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 8699079983890791037}
   - component: {fileID: 7114177376197230553}
   - component: {fileID: 2551644031869030968}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Gnoll
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -398,6 +398,9 @@ MonoBehaviour:
   _MinimapIcon: {fileID: 5416600081201093134}
   _audio: {fileID: 8169237713657425744}
   _display: {fileID: 1636379010051863356}
+  visibleUpdateRate: 0.3
+  invisibleUpdateRate: 0.8
+  _Rate: 0
   _spriteRender: {fileID: 3547518405877449291}
 --- !u!114 &2551644031869030968
 MonoBehaviour:
@@ -781,10 +784,10 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 1146f7a71b6870b43b173f1a5e9c23fd, type: 3}
   Enemy: 0
   Storage: 0
-  _Attack_Clip: {fileID: 0}
+  _Attack_Clip: {fileID: 8300000, guid: f3f3ad691c390fb469bf6e74cdf707dd, type: 3}
   Animal: 1
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
@@ -792,7 +795,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50

@@ -352,11 +352,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   TNTOrSheep: 0
-  _Hit_Damage_Clip: {fileID: 8300000, guid: 6ae74fedaa36cb149afce1436e586162, type: 3}
+  _Hit_Damage_Clip: {fileID: 8300000, guid: 033ae2467a176a44eac8cb55e636e4f0, type: 3}
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 1
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 5ae0280272e3bfe46aed856682e87d98, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
@@ -367,7 +367,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 0.5
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -487,7 +490,7 @@ MonoBehaviour:
   _anim: {fileID: 0}
   _OderPoin: {fileID: 6407582959383233683}
   _DiePrefab: {fileID: 3274550444517328863}
-  _outLine: {fileID: 2642300205362376417}
+  _outLine: {fileID: 3933960409847259895}
   _audio: {fileID: 8955578299326118630}
   _value: 0
   _stack: 0
@@ -505,7 +508,7 @@ PrefabInstance:
       objectReference: {fileID: 5424085374242663375}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _type
-      value: 5
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
@@ -625,6 +628,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 4444869478023065020}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3933960409847259895 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 4444869478023065020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642300205362376417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a7846ca1cfa244a86f78c5afc18c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4615481595732286578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

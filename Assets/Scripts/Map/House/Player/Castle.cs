@@ -220,7 +220,6 @@ public class Castle : MonoBehaviour
     #region Upgrade
     public void Upgrade()
     {
-        _audio.PlayLevelUpSound();
         _level++;
         float health = 0;
         switch (_level)
@@ -250,6 +249,8 @@ public class Castle : MonoBehaviour
                 _maxSlot = _lv5_MaxSlot;
                 break;
         }
+
+        _audio.PlayLevelUpSound();
     }
     #endregion
 
@@ -318,8 +319,7 @@ public class Castle : MonoBehaviour
     #region Dead
     public void Dead()
     {
-        _archerUp.Out();
-        
+        _archerUp.Out();        
 
         foreach (var storage in _storageList)
         {

@@ -4,38 +4,29 @@ using UnityEngine;
 
 public class MoveTo : MonoBehaviour
 {
-    [SerializeField] private float _bankinh = 5f;
-    [SerializeField] private float _currentBanKinh = 0f;
-    private CircleCollider2D col;
-    [SerializeField] private List<GameObject> chosen;
-    private Coroutine _destroy;
+    private float _defausRadius = 1.8f;
+    [SerializeField] private float _radius = 0f;
     [SerializeField] private bool _active = true;
-    [SerializeField] private UnitAudio _audio;
+    [SerializeField] private bool _rally = false;
+    [SerializeField] private bool _support = false;
+    [SerializeField] private List<GameObject> chosen;
+    
+
+    private CircleCollider2D col;
+    private Coroutine _destroy;
 
     void Awake()
     {
         col = GetComponent<CircleCollider2D>();
-        col.radius = _bankinh + 0.5f;
-        _currentBanKinh = _bankinh;
+        col.radius = _radius + 0.5f;
     }
 
     void Update()
     {
-        if (!checkMoveTo())
-        {
-            if (_destroy == null)
-                _destroy = StartCoroutine(destroy());
-        }
-        if (checkDistance())
-        {
-            if (_destroy == null)
-                _destroy = StartCoroutine(destroy());
-        }
-        if (checkDie())
-        {
-            if (_destroy == null)
-                _destroy = StartCoroutine(destroy());
-        }
+        checkPlayerToTarget();
+
+        if (chosen.Count == 0 && _destroy == null)
+            _destroy = StartCoroutine(destroy());
     }
 
     private IEnumerator destroy()
@@ -44,104 +35,81 @@ public class MoveTo : MonoBehaviour
         MoveToManager.Instance.ReturnToPool(this);
     }
 
-    public void SetChosen(List<GameObject> _chonsen, bool add, float _radius = -1)
+
+    public void SetChosen(List<GameObject> _chonsen, bool rally = false, bool add = false, bool active = true, float radius = -1, bool support = false)
     {
         _destroy = null;
-        _active = true;
-        if (!add)
-            chosen = _chonsen;
-        else
-            chosen.AddRange(_chonsen);
+        _active = active;
+        _rally = rally;
+        _support = support;
 
-        if (_radius > 0) // chỉ update khi có truyền vào
-        {
-            _bankinh = _radius;
-            col.radius = _bankinh + 0.5f;
-        }
-        else
-        {
-            _bankinh = _currentBanKinh;
-            col.radius = _bankinh + 0.5f;
-        }
-        _audio.PlayMoveToSound();
+        if (!add && _chonsen != null && _chonsen.Count != 0)
+            chosen = new List<GameObject>(_chonsen);
+        else if (add && _chonsen != null && _chonsen.Count != 0)
+            chosen.AddRange(new List<GameObject>(_chonsen));
+
+        // chỉ update khi có truyền vào
+        _radius = radius < 0 ? _defausRadius : radius + 0.5f;
+
+        col.radius = _radius + 0.5f;
     }
-
-    public void offActive() => _active = false;
-
 
     // trả về kết quả có còn ai đến vị trí chỉ định không
-    private bool checkMoveTo()
+    private bool checkPlayerToTarget()
     {
+        bool _isTarget = false;
         if (chosen.Count != 0)
         {
+            // list dùng để lưu các player không đến target
+            List<GameObject> _players = new List<GameObject>();
+
             foreach (var linh in chosen)
             {
-                Vector3 _target = linh.GetComponent<PlayerAI>().getTarget();
-                if (_target.x == transform.position.x && _target.y == transform.position.y)
+                if (linh == null) continue; // check null
+                var script = linh.GetComponent<PlayerAI>();
+                if (script.getDie()) // check die
                 {
-                    return true;
+                    _players.Add(linh);
+                    continue;
+                }
+
+                if (_rally && !_support)
+                    _radius = script._range;
+
+                Vector3 _target = script.getTarget();
+                float dist = Vector2.Distance(transform.position, _target);
+                if (dist < _radius)
+                    _isTarget = true;
+                else
+                {
+                    _players.Add(linh);
+                    continue;
+                }
+
+                dist = Vector2.Distance(linh.transform.position, transform.position);
+                if (dist < _radius)
+                {
+                    if (!_support)
+                        script.StopHere();
+                    if (_active)
+                    {
+                        script.setIsAI(true);
+                        script.setIsTarget(false);
+                    }
+                    _players.Add(linh);
                 }
             }
+
+            foreach (var linh in _players)
+                chosen.Remove(linh);
         }
-        return false;
-    }
-
-
-    // check co ai chet khong
-    private bool checkDie()
-    {
-        if (chosen.Count != 0)
-        {
-            foreach (var linh in chosen)
-            {
-                if (linh.activeSelf)
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    private bool checkDistance()
-    {
-        if (chosen.Count != 0)
-        {
-            foreach (var linh in chosen)
-            {
-                float radius = _active ? _bankinh : 2.5f;
-                float dist = Vector2.Distance(linh.transform.position, transform.position);
-                if (dist < radius)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision != null)
-        {
-            if (collision.CompareTag("Warrior")
-            || collision.CompareTag("Archer")
-            || collision.CompareTag("Lancer")
-            || collision.CompareTag("Healer")
-            || collision.CompareTag("TNT"))
-            {
-                if (chosen.Contains(collision.gameObject) && _active)
-                {
-                    collision.GetComponent<PlayerAI>().setIsAI(true);
-                    collision.GetComponent<PlayerAI>().setIsTarget(false);
-                }
-            }
-        }
+        return _isTarget;
     }
 
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _bankinh);
+        Gizmos.DrawWireSphere(transform.position, _defausRadius);
     }
 }

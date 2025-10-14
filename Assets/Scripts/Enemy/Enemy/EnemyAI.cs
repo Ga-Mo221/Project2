@@ -80,6 +80,13 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] private Display _display;
 
+    [Foldout("Update Time")]
+    [SerializeField] private float visibleUpdateRate = 0.3f;
+    [Foldout("Update Time")]
+    [SerializeField] private float invisibleUpdateRate = 0.8f;
+    [Foldout("Update Time")]
+    [SerializeField] private float _Rate;
+
     private Rigidbody2D _rb;
 
     void Start()
@@ -91,16 +98,37 @@ public class EnemyAI : MonoBehaviour
 
         _path.setPropety(_speed, _range);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+        //_Rate = invisibleUpdateRate + Random.Range(0f, visibleUpdateRate);
+        _Rate = visibleUpdateRate;
+        InvokeRepeating(nameof(AI), 0f, _Rate);
+
         if (!_IsCreate)
             EnemyHouse.Instance._listEnemy.Add(this);
         else
             EnemyHouse.Instance._listEnemyCreate.Add(this);
     }
 
+    protected virtual void AI()
+    {
+        if (_display._Detec)
+            _Rate = visibleUpdateRate;
+        else
+            _Rate = invisibleUpdateRate + Random.Range(0f, visibleUpdateRate);
+
+        flip(target);
+        if (getDie()) return;
+        target = Find();
+        if (target != null)
+        {
+            setDetect(true);
+            attack();
+        }
+
+        pantrol();
+    }
+
     protected virtual void Update()
     {
-        if (!_canPatrol && _IsCreate && target == null) target = _currentTarget;
-        flip(target);
         _HPimg.fillAmount = _currentHealth / _maxHealth;
     }
 
@@ -111,24 +139,45 @@ public class EnemyAI : MonoBehaviour
         {
             if (target != null || _currentTarget != null)
             {
-                if (target == null)
-                    target = _currentTarget;
-                if (gameObject.activeSelf)
+                if (target != null)
                 {
-                    if (target == Castle.Instance.gameObject)
+                    if (gameObject.activeSelf)
                     {
-                        _path.setTarget(Castle.Instance._In_Castle_Pos.position, target);
+                        if (target == Castle.Instance.gameObject)
+                        {
+                            _path.setTarget(Castle.Instance._In_Castle_Pos.position, target);
+                        }
+                        else if (target.CompareTag("House"))
+                        {
+                            var house = target.GetComponent<House>();
+                            if (house._type == HouseType.Tower)
+                                _path.setTarget(house._inTower.transform.position, target);
+                            if (house._type == HouseType.Storage)
+                                _path.setTarget(house.getInPos(), target);
+                        }
+                        else
+                            _path.setTarget(target.transform.position, target);
                     }
-                    else if (target.CompareTag("House"))
+                }
+                else
+                {
+                    if (gameObject.activeSelf)
                     {
-                        var house = target.GetComponent<House>();
-                        if (house._type == HouseType.Tower)
-                            _path.setTarget(house._inTower.transform.position, target);
-                        if (house._type == HouseType.Storage)
-                            _path.setTarget(house.getInPos(), target);
+                        if (_currentTarget == Castle.Instance.gameObject)
+                        {
+                            _path.setTarget(Castle.Instance._In_Castle_Pos.position, _currentTarget);
+                        }
+                        else if (_currentTarget.CompareTag("House"))
+                        {
+                            var house = _currentTarget.GetComponent<House>();
+                            if (house._type == HouseType.Tower)
+                                _path.setTarget(house._inTower.transform.position, _currentTarget);
+                            if (house._type == HouseType.Storage)
+                                _path.setTarget(house.getInPos(), _currentTarget);
+                        }
+                        else
+                            _path.setTarget(_currentTarget.transform.position, _currentTarget);
                     }
-                    else
-                        _path.setTarget(target.transform.position, target);
                 }
             }
             else
@@ -201,7 +250,8 @@ public class EnemyAI : MonoBehaviour
         {
             CameraShake.Instance.ShakeCamera();
         }
-        playDieSound();
+        if (_type != EnemyType.TNT)
+            playDieSound();
         _anim.SetBool("Die", true);
     }
     #endregion
@@ -297,7 +347,6 @@ public class EnemyAI : MonoBehaviour
                 else if (house._type == HouseType.Storage)
                     dist = Vector3.Distance(house.getInPos(), target.transform.position);
             }
-            Debug.Log($"Name[{transform.name}] || Dist[{dist} || Range[{_range}]");
         }
         else dist = Vector3.Distance(transform.position, target.transform.position);
         if (dist <= _range)

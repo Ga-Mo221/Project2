@@ -42,6 +42,9 @@ public class EnemyOrAnimalSelectBox : MonoBehaviour
     [Foldout("Animal Sprite")]
     [SerializeField] private Sprite _SpiderSprite;
 
+    private string key = "";
+    private string txt = "";
+
 
     void Update()
     {
@@ -82,39 +85,74 @@ public class EnemyOrAnimalSelectBox : MonoBehaviour
         switch (type)
         {
             case EnemyType.Lancer:
-                _name.text = "Yêu Tinh Xanh";
+                key = "Name.enemy.lancer";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _LancerSprite;
-                _content.text = "Những chiến binh lùn tịt nhưng lì lợm, luôn xông lên với ngọn giáo cùn. Chúng không mạnh, nhưng cực kỳ đông và phiền phức.";
+                key = "Name.enemy.lancerContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case EnemyType.Fish:
-                _name.text = "Cá Mập Mắc Cạn";
+                key = "Name.enemy.fish";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _FishSprite;
-                _content.text = "Sinh vật từng thống trị biển sâu, nay bị dòng hắc ám biến dị và lang thang trên đất liền, trông vừa đáng sợ vừa… buồn cười.";
+                key = "Name.enemy.fishContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case EnemyType.Gnoll:
-                _name.text = "Linh Cẩu";
+                key = "Name.enemy.gnoll";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _GnollSprite;
-                _content.text = "Loài ăn xác sống thích cười khanh khách. Đừng để tiếng cười của chúng đánh lừa, bởi móng vuốt và hàm răng ấy có thể xé toạc xương thịt.";
+                key = "Name.enemy.gnollContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case EnemyType.Orc:
-                _name.text = "Mập Xanh";
+                key = "Name.enemy.orc";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _OrcSprite;
-                _content.text = "Khổng lồ da xanh, bắp tay to như thân cây. Chúng không cần chiến lược, chỉ cần một cú đấm là đủ làm rung chuyển mặt đất.";
+                key = "Name.enemy.orcContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case EnemyType.TNT:
-                _name.text = "Thuốc Nổ Di Động";
+                key = "Name.enemy.tnt";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _TNTRedSprite;
-                _content.text = "Quái vật dị hợm mang trên người những thùng thuốc nổ. Đánh nó thì chết, để nó lại gần thì càng chết. Chỉ có cách chạy hoặc dụ nó nổ.";
+                key = "Name.enemy.tntContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case EnemyType.Minotaur:
-                _name.text = "Ngưu Ca (Boss)";
+                key = "Name.enemy.minotaur";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _MinotaurSprite;
-                _content.text = "Một con quái thú nửa người nửa bò, cư trú trong tàn tích. Hắn cầm rìu khổng lồ, mỗi bước đi như dội sấm vào đất.";
+                key = "Name.enemy.minotaurContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case EnemyType.Shaman:
-                _name.text = "Phù Thủy (Boss)";
+                key = "Name.enemy.shaman";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _ShamanSprite;
-                _content.text = "Kẻ điều khiển năng lượng hắc ám, ẩn sau tấm mặt nạ già nua. Những lời chú ngữ của hắn khiến đất trời méo mó, kẻ địch tan xác.";
+                key = "Name.enemy.shamanContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
         }
     }
@@ -124,24 +162,44 @@ public class EnemyOrAnimalSelectBox : MonoBehaviour
         switch (type)
         {
             case AnimalClass.Bear:
-                _name.text = "Gấu Nô Ngáo";
+                key = "Name.animal.Bear";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _BearSprite;
-                _content.text = "Một con gấu to xác, thường lang thang tìm mật ong nhưng hay ngủ quên giữa chiến trường. Khi nổi điên, nó vả cả cây rừng bật gốc.";
+                key = "Name.animal.BearContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case AnimalClass.Sheep:
-                _name.text = "Cừu Nhát Gan";
+                key = "Name.animal.sheep";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _SheepSprite;
-                _content.text = "Loài vật hiền lành, run rẩy trước tiếng động lớn. Tuy nhiên, đừng coi thường, vì khi dồn ép, nó có thể tông cả nhóm quái ngã rạp.";
+                key = "Name.animal.sheepContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case AnimalClass.Snake:
-                _name.text = "Rắn 2K1";
+                key = "Name.animal.snack";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _SnakeSprite;
-                _content.text = "Nhanh nhẹn, trơn tuột và thích lao vào từ bóng tối. Bị gọi là '2K1' bởi lúc nào cũng thích 'cắn lén' mà không chịu đối mặt trực diện.";
+                key = "Name.animal.snackContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
             case AnimalClass.Spider:
-                _name.text = "Nhền Nhện";
+                key = "Name.animal.spider";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
+
                 _icon.sprite = _SpiderSprite;
-                _content.text = "Ẩn mình trong bóng tối và giăng lưới chờ mồi. Chúng không mạnh, nhưng mạng nhện của chúng sẽ khiến bất cứ ai cũng thấy khó thở.";
+                key = "Name.animal.spiderContent";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
                 break;
         }
     }

@@ -27,6 +27,9 @@ public class TreeOrRockSelectBox : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _content;
 
+    private string key = "";
+    private string txt = "";
+
     void Update()
     {
         if (_item != null)
@@ -52,28 +55,48 @@ public class TreeOrRockSelectBox : MonoBehaviour
             switch (id)
             {
                 case 1:
-                    _name.text = "Cây Lá Kim Thấp";
+                    key = "Name.item.tree1";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _name.text = txt;
                     _icon.sprite = _tree1;
                     _iconValue.sprite = _icontree;
-                    _content.text = "Loài cây mọc chen chúc ở vùng đất lạnh, gỗ tuy nhỏ nhưng dẻo dai, thường dùng để dựng cột hoặc vũ khí đơn giản.";
+
+                    key = "Name.item.tree1content";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _content.text = txt;
                     break;
                 case 2:
-                    _name.text = "Cây Lá Kim Cao";
+                    key = "Name.item.tree2";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _name.text = txt;
                     _icon.sprite = _tree2;
                     _iconValue.sprite = _icontree;
-                    _content.text = "Vươn thẳng lên trời như mũi giáo khổng lồ. Người ta tin rằng linh hồn cổ xưa trú ngụ trong từng vòng gỗ của nó.";
+
+                    key = "Name.item.tree2content";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _content.text =txt;
                     break;
                 case 3:
-                    _name.text = "Cây Lá Vàng";
+                    key = "Name.item.tree3";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _name.text = txt;
                     _icon.sprite = _tree3;
                     _iconValue.sprite = _icontree;
-                    _content.text = "Màu vàng rực rỡ như ngọn lửa mùa thu, gỗ của nó nhẹ nhưng dễ cháy. Chặt một cây, lá vàng bay như mưa.";
+
+                    key = "Name.item.tree3content";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _content.text = txt;
                     break;
                 case 4:
-                    _name.text = "Cây Lá Cam";
+                    key = "Name.item.tree4";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _name.text = txt;
                     _icon.sprite = _tree4;
                     _iconValue.sprite = _icontree;
-                    _content.text = "Hiếm thấy, tỏa ra sắc cam ấm áp như mặt trời chiều. Dân gian đồn rằng ai ngủ dưới bóng cây này sẽ mơ thấy tương lai.";
+
+                    key = "Name.item.tree4content";
+                    txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                    _content.text = txt;
                     break;
             }
         }
@@ -81,17 +104,27 @@ public class TreeOrRockSelectBox : MonoBehaviour
         {
             if (id == 1)
             {
-                _name.text = "Đá Cuội Nhỏ";
+                key = "Name.item.rock1";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _icon.sprite = _rock1;
                 _iconValue.sprite = _iconrock;
-                _content.text = "Viên đá phổ biến, có thể dùng làm công cụ thô sơ hoặc ném lũ quái cho vui. Thường nằm rải rác khắp nơi.";
+
+                key = "Name.item.rock1content";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
             }
             else if (id == 2)
             {
-                _name.text = "Đá Cuội Lớn";
+                key = "Name.item.rock2";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _icon.sprite = _rock2;
                 _iconValue.sprite = _iconrock;
-                _content.text = "Những tảng đá to như bắp đùi, nặng nề nhưng vững chắc. Người thợ rèn ưa thích chúng để làm nền cho lò rèn.";
+
+                key = "Name.item.rock2content";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _content.text = txt;
             }
         }
     }

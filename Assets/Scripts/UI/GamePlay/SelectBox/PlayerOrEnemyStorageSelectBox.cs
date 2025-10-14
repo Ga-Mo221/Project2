@@ -25,6 +25,9 @@ public class PlayerOrEnemyStorageSelectBox : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _Lv;
 
+    private string key = "";
+    private string txt = "";
+
     void Update()
     {
         if (_playerHouse != null)
@@ -46,16 +49,23 @@ public class PlayerOrEnemyStorageSelectBox : MonoBehaviour
         _enemyHouse = null;
 
         _icon.sprite = _playerStorageSprite;
-        _Lv.text = $"LV.{_playerHouse.getLevel()}";
 
-        _name.text = "Nhà Kho";
+        key = "ui.Level";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _Lv.text = $"{txt}{_playerHouse.getLevel()}";
+
+        key = "Name.building.storage";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _name.text = txt;
 
         _wood.text = _playerHouse._wood.ToString();
         _rock.text = _playerHouse._rock.ToString();
         _meat.text = _playerHouse._meat.ToString();
         _gold.text = _playerHouse._gold.ToString();
 
-        _content.text = "Nơi chứa tài nguyên quan trọng. Hãy bảo vệ nơi này. nếu bị đánh hỏng sẽ mất tài nguyên và không khôi phục được.";
+        key = "Name.building.storageContent";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _content.text = txt;
     }
     public void add(EnemyHuoseController House)
     {
@@ -65,13 +75,17 @@ public class PlayerOrEnemyStorageSelectBox : MonoBehaviour
         _icon.sprite = _enemyStorageSprite;
         _Lv.text = "";
 
-        _name.text = "Trại Lính";
+        key = "Name.building.enemystorage";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _name.text = txt;
 
         _wood.text = _enemyHouse._wood.ToString();
         _rock.text = _enemyHouse._rock.ToString();
         _meat.text = _enemyHouse._meat.ToString();
         _gold.text = _enemyHouse._gold.ToString();
 
-        _content.text = "Nơi bọn quái vật sẽ xuất hiện và tấn công nhà bạn vào lúc nữa đêm. Và là nơi chứa tài nguyên của bọn quái tàn ác.";
+        key = "Name.building.enemystorageContent";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _content.text = txt;
     }
 }

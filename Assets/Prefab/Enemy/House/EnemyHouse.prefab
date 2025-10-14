@@ -330,6 +330,7 @@ MonoBehaviour:
   _GnollPrefab: {fileID: 0}
   _HpBar: {fileID: 309070564478404832}
   _Icon: {fileID: 8513273932317693376}
+  _outLine: {fileID: 1124622852421708143}
   _audio: {fileID: 6622652187061841322}
   _display: {fileID: 4157316575791534723}
 --- !u!114 &7183346957051983319
@@ -353,13 +354,6 @@ MonoBehaviour:
       - _count: {x: 0, y: 0}
         _delay: 0
         _enemy: 0
-  Lancer: {fileID: 6475483239564058501, guid: 12f95715cd2cb5845b24f59f16a621b3, type: 3}
-  Orc: {fileID: 9022292179351054961, guid: d3a35e608fdefa147b5443352edee7c0, type: 3}
-  Gnoll: {fileID: 5878241667905650849, guid: f77251e675a5b2a4fbe638b3382288a7, type: 3}
-  Fish: {fileID: 700211065945214060, guid: 61187bb16f33f3f45bfebaab298ddd77, type: 3}
-  TNTRed: {fileID: 8308106257862273322, guid: a436c1d9e5dcc604baaa2d374c143efa, type: 3}
-  Minotaur: {fileID: 2676710633938619929, guid: cc67047e21e5adb4b89c8377c57535b6, type: 3}
-  Shaman: {fileID: 6014549478580385976, guid: ce64d003eceb6124aa0ee560b8bb6833, type: 3}
 --- !u!82 &8372347336992342789
 AudioSource:
   m_ObjectHideFlags: 0
@@ -475,7 +469,7 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 99423764123bfb54badf9231fa93ad8e, type: 3}
   Enemy: 1
   Storage: 1
   _Attack_Clip: {fileID: 0}
@@ -484,9 +478,12 @@ MonoBehaviour:
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0
   _Creating_Clip: {fileID: 0}
-  _Warning_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 8300000, guid: 28f5ab902ad2dbe41b29f43c373cbbba, type: 3}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -881,6 +878,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+--- !u!114 &1124622852421708143 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 336665638436005412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136989536554870137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a7846ca1cfa244a86f78c5afc18c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2136989536554870137 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

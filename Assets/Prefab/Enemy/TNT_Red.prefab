@@ -177,7 +177,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &8330557005576017021
 Animator:
@@ -328,7 +328,7 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: b86694f71c1e1a34d9c3336d4e8b35e4, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
@@ -339,7 +339,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -666,6 +669,9 @@ MonoBehaviour:
   _MinimapIcon: {fileID: 1932404575488155257}
   _audio: {fileID: 7065071676973096707}
   _display: {fileID: 1914722072580922791}
+  visibleUpdateRate: 0.3
+  invisibleUpdateRate: 0.8
+  _Rate: 0
   _spriteRender: {fileID: 6739796166725704768}
 --- !u!1001 &922253674039554981
 PrefabInstance:

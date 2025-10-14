@@ -9,6 +9,8 @@ public class UnitAudio : MonoBehaviour
     private bool IsBuilding => _type == UnitSound.Buiding;
     private bool IsItem => _type == UnitSound.Item;
     private bool IsMoveTo => _type == UnitSound.MoveTo;
+    private bool IsMainHome => _type == UnitSound.MainHome;
+    private bool IsWeather => _type == UnitSound.Weather;
 
     [Foldout("AudioClip")]
     [ShowIf(nameof(IsArtor))]
@@ -43,7 +45,7 @@ public class UnitAudio : MonoBehaviour
     [Foldout("AudioClip")]
     [ShowIf(nameof(IsBuilding))]
     [SerializeField] private bool Storage = false;
-    
+
 
 
     private bool showAttack => IsArtor && !TNTOrSheep;
@@ -82,9 +84,22 @@ public class UnitAudio : MonoBehaviour
     [ShowIf(nameof(IsMoveTo))]
     [SerializeField] private AudioClip _MoveTo_Clip;
 
+    [Foldout("AudioClip")]
+    [ShowIf(nameof(IsMainHome))]
+    [SerializeField] private AudioClip _BackgroundMusic;
+
+    [Foldout("AudioClip")]
+    [ShowIf(nameof(IsWeather))]
+    [SerializeField] private AudioClip _Sun_Clip;
+    [Foldout("AudioClip")]
+    [ShowIf(nameof(IsWeather))]
+    [SerializeField] private AudioClip _Rain_Clip;
+    [Foldout("AudioClip")]
+    [ShowIf(nameof(IsWeather))]
+    [SerializeField] private AudioClip _Night_Clip;
+
 
     [Header("Audio Settings")]
-    [Range(0f, 1f)] public float volume = 1f;
     [Range(0f, 1f)] public float spatialBlend = 1f; // 3D sound
     public float minDistance = 10f;
     public float maxDistance = 50f;
@@ -102,7 +117,31 @@ public class UnitAudio : MonoBehaviour
         _audio.maxDistance = maxDistance;
     }
 
-    private void PlayClip(AudioClip clip)
+    void OnEnable()
+    {
+        SettingManager.Instance._onVolumeChanged += ApplyVolumeChange;
+    }
+
+    void OnDisable()
+    {
+        SettingManager.Instance._onVolumeChanged -= ApplyVolumeChange;
+    }
+
+    private void ApplyVolumeChange()
+    {
+        if (!_audio.isPlaying) return;
+
+        float overall = SettingManager.Instance._gameSettings._overall_Volume;
+        float music = SettingManager.Instance._gameSettings._music_Volume;
+        float sfx = SettingManager.Instance._gameSettings._SFX_volume;
+
+        _audio.volume = _audio.loop
+            ? music * overall
+            : sfx * overall;
+    }
+
+
+    private void PlayClip(AudioClip clip, bool loop)
     {
         if (clip == null) return;
 
@@ -111,27 +150,72 @@ public class UnitAudio : MonoBehaviour
         else
             _audio.pitch = 1f;
 
-        _audio.volume = volume;
-        _audio.PlayOneShot(clip);
+
+        if (loop)
+        {
+            // Nếu là loop → dùng clip trực tiếp
+            if (_audio.isPlaying && _audio.clip == clip) return; // tránh trùng lặp
+            _audio.clip = clip;
+            _audio.loop = true;
+            ApplyVolumeChange();
+            _audio.Play();
+        }
+        else
+        {
+            // Nếu không loop → phát tạm 1 lần
+            _audio.loop = false;
+            ApplyVolumeChange();
+            _audio.PlayOneShot(clip);
+        }
     }
 
     // -----------------------------
     // 📢 Public Methods for Actions
     // -----------------------------
     // play
-    public void PlayAttackSound() => PlayClip(_Attack_Clip);
-    public void PlayDieSound() => PlayClip(_Die_Clip);
-    public void PlayFarmOrHitDamageSound() => PlayClip(_Hit_Damage_Clip);
-    public void PlayLevelUpSound() => PlayClip(_Level_Up_Clip);
-    public void PlayFireSound() => PlayClip(_Fire_Clip);
-    public void PlayArcherUpSound() => PlayClip(_Archer_Up_Clip);
-    public void PlayWarningSound() => PlayClip(_Warning_Clip);
-    public void PlayMoveToSound() => PlayClip(_MoveTo_Clip);
-    public void PlayerCreatingSound() => PlayClip(_Creating_Clip);
+    public void PlayAttackSound() => PlayClip(_Attack_Clip, false);
+    public void PlayDieSound() => PlayClip(_Die_Clip, false);
+    public void PlayFarmOrHitDamageSound() => PlayClip(_Hit_Damage_Clip, false);
+    public void PlayLevelUpSound() => PlayClip(_Level_Up_Clip, false);
+    public void PlayArcherUpSound() => PlayClip(_Archer_Up_Clip, false);
+    public void PlayWarningSound() => PlayClip(_Warning_Clip, false);
+    public void PlayMoveToSound() => PlayClip(_MoveTo_Clip, false);
 
-    // stop
-    public void StopFireSound() { }
-    public void StopCreatingSound(){}
+    // Loop sounds
+    public void PlayFireSound() => PlayClip(_Fire_Clip, true);
+    public void PlayCreatingSound() => PlayClip(_Creating_Clip, true);
+    public void PlayBackgroundSound() => PlayClip(_BackgroundMusic, true);
+    public void PlaySunSound() => PlayClip(_Sun_Clip, true);
+    public void PlayRainSound() => PlayClip(_Rain_Clip, true);
+    public void PlayNightSound() => PlayClip(_Night_Clip, true);
+
+    // Stop loop sounds
+    public void StopFireSound()
+    {
+        if (_audio.isPlaying && _audio.clip != null && _audio.clip == _Fire_Clip)
+        {
+            Debug.Log(_audio.clip);
+            _audio.Stop();
+        }
+    }
+
+    public void StopCreatingSound()
+    {
+        if (_audio.isPlaying && _audio.clip != null && _audio.clip == _Creating_Clip)
+            _audio.Stop();
+    }
+
+    public void StopBackgroundSound()
+    {
+        if (_audio.isPlaying && _audio.clip != null && _audio.clip == _BackgroundMusic)
+            _audio.Stop();
+    }
+
+    public void StopWeatherSound()
+    {
+        if (_audio.isPlaying)
+            _audio.Stop();
+    }
 }
 
 public enum UnitSound
@@ -139,5 +223,7 @@ public enum UnitSound
     Actor,
     Buiding,
     Item,
-    MoveTo
+    MoveTo,
+    MainHome,
+    Weather
 }

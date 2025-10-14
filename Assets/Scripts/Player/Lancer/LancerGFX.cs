@@ -6,6 +6,7 @@ public class LancerGFX : PlayerAI
 {
     [Header("Lance GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private SpriteRenderer _select;
     [SerializeField] private Transform _pos;
     [SerializeField] private Vector3 _DirectionCheck;
 
@@ -22,10 +23,15 @@ public class LancerGFX : PlayerAI
 
     protected override void Update()
     {
-        _spriteRender.sortingOrder = -(int)(_pos.position.y * 100) + 10000;
+        int _yOder = getOderInLayer();
+        _spriteRender.sortingOrder = _yOder;
+        _select.sortingOrder = _yOder - 1;
         base.Update();
         enemyDirection();
     }
+
+    public override int getOderInLayer()
+        => -(int)(_pos.position.y * 100) + 10000;
 
     public override void Ai()
     {
