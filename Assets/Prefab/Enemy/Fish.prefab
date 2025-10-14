@@ -225,6 +225,9 @@ MonoBehaviour:
   _MinimapIcon: {fileID: 3917638414227011866}
   _audio: {fileID: 9202776193231432757}
   _display: {fileID: 3808187255373097384}
+  visibleUpdateRate: 0.3
+  invisibleUpdateRate: 0.8
+  _Rate: 0
   _spriteRender: {fileID: 6871030508359076257}
 --- !u!114 &7481632550545816098
 MonoBehaviour:
@@ -491,10 +494,10 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 1146f7a71b6870b43b173f1a5e9c23fd, type: 3}
   Enemy: 0
   Storage: 0
-  _Attack_Clip: {fileID: 8300000, guid: c4739ad884eca5743bdef2405bb562a2, type: 3}
+  _Attack_Clip: {fileID: 8300000, guid: dcff707ff2f98874382192c3dd89e5c9, type: 3}
   Animal: 1
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
@@ -502,7 +505,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50

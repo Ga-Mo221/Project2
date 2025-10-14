@@ -4,6 +4,7 @@ public class WarriorGFX : PlayerAI
 {
     [Header("Warrior GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private SpriteRenderer _select;
     [SerializeField] private Transform _oderSpriterPoint;
 
     protected override void Start()
@@ -19,9 +20,14 @@ public class WarriorGFX : PlayerAI
 
     protected override void Update()
     {
-        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
+        int _yOder = getOderInLayer();
+        _spriteRender.sortingOrder = _yOder;
+        _select.sortingOrder = _yOder - 1;
         base.Update();
     }
+
+    public override int getOderInLayer()
+        => -(int)(_oderSpriterPoint.position.y * 100) + 10000;
 
     public override void Ai()
     {

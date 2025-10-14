@@ -27,7 +27,8 @@ public class AnimalHealth : MonoBehaviour
         _HP_obj.SetActive(true);
         if (_hideHP != null)
             StopCoroutine(_hideHP);
-        _hideHP = StartCoroutine(hideHP());
+        if (gameObject.activeInHierarchy)
+            _hideHP = StartCoroutine(hideHP());
     }
 
 

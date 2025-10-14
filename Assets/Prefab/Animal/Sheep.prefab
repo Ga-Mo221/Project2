@@ -462,7 +462,7 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: ca0ab928b824e484086572cc4db35072, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
@@ -473,7 +473,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -715,6 +718,9 @@ MonoBehaviour:
   _MeatOBJ: {fileID: 1182947352422448395}
   _audio: {fileID: 7063214331281983257}
   _display: {fileID: 6972055537954536054}
+  visibleUpdateRate: 0.3
+  invisibleUpdateRate: 0.8
+  _Rate: 0
   _spriteRender: {fileID: 7937726656656371032}
 --- !u!1001 &4518601613413549162
 PrefabInstance:

@@ -41,7 +41,7 @@ public class Item : MonoBehaviour
     [SerializeField] private Transform _OderPoin;
     [HideIf(nameof(_IsGold))]
     [SerializeField] private GameObject _DiePrefab;
-    public GameObject _outLine;
+    public OutLine _outLine;
 
     public UnitAudio _audio;
     private bool _Die = false;
@@ -82,12 +82,12 @@ public class Item : MonoBehaviour
             _animDie.SetBool("Die", true);
             if (_IsTree)
             {
-                _outLine.SetActive(false);
+                _outLine.Out();
                 _anim.SetBool("Die", true);
             }
             if (_IsRock)
             {
-                _outLine.SetActive(false);
+                _outLine.Out();
                 _spriteRender.enabled = false;
             }
             _audio.PlayDieSound();
@@ -101,7 +101,11 @@ public class Item : MonoBehaviour
     {
         yield return new WaitForSeconds(_spawnTime);
         _Die = false;
-        _outLine.SetActive(true);
+        if (_IsTree)
+        {
+            _outLine.ResetMaterial();
+        }
+        _outLine.gameObject.SetActive(true);
         _stack = _maxStack;
         _seleted = null;
         _spriteRender.enabled = true;

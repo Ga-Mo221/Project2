@@ -13,6 +13,9 @@ public class GoldMineSelectBox : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _content;
 
+    private string key = "";
+    private string txt = "";
+
     void Update()
     {
         if (_item != null)
@@ -25,7 +28,12 @@ public class GoldMineSelectBox : MonoBehaviour
     public void add(Item item)
     {
         _item = item;
-        _name.text = "Mỏ Vàng";
-        _content.text = $"Mỏ Vàng sẽ cho sản lượng({_item._valueOneDrop}) mỗi {_item._maxStack} lần đánh. Và tối đa {_item._maxFarmers} người được farm cùng lúc.";
+        key = "Name.item.goldmine";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _name.text = txt;
+
+        key = "Name.item.goldminecontent";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _content.text = string.Format(txt, _item._valueOneDrop, _item._maxStack, _item._maxFarmers);
     }
 }

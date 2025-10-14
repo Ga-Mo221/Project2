@@ -13,6 +13,7 @@ public class ArcherGFX : PlayerAI
 {
     [Header("Archer GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private SpriteRenderer _select;
     [SerializeField] private Transform _oderSpriterPoint;
     [SerializeField] private Transform _shootPos;
     [SerializeField] private Transform _shootStarge;
@@ -44,9 +45,14 @@ public class ArcherGFX : PlayerAI
 
     protected override void Update()
     {
-        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
+        int _yOder = getOderInLayer();
+        _spriteRender.sortingOrder = _yOder;
+        _select.sortingOrder = _yOder - 1;
         base.Update();
     }
+
+    public override int getOderInLayer()
+        => -(int)(_oderSpriterPoint.position.y * 100) + 10000;
 
     public override void Ai()
     {

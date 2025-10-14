@@ -1,5 +1,6 @@
 using System.Collections;
 using Pathfinding;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FindPath : MonoBehaviour
@@ -32,7 +33,7 @@ public class FindPath : MonoBehaviour
     {
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
-        _target = RandomPosAround(transform, 3);
+        
     }
 
     Vector3 RandomPosAround(Transform center, float radius)
@@ -47,6 +48,7 @@ public class FindPath : MonoBehaviour
         if (!_anim)
             Debug.LogError($"[{gameObject.name}] [FindPath] Chưa Gán 'Animator'");
         //_targetPos = _target;
+        _target = RandomPosAround(transform, 3);
         _targetPos = Vector3.zero;
     }
 
@@ -154,50 +156,4 @@ public class FindPath : MonoBehaviour
             _currentWaypoint++;
     }
     #endregion
-
-
-    // #region Find the way
-    // void FixedUpdate()
-    // {
-    //     if (_path == null) return;
-
-    //     if (_reachedEndOfPath)
-    //     {
-    //         _rb.linearVelocity = Vector2.zero; // dừng máy
-    //         _anim.SetBool("Moving", !_reachedEndOfPath);
-    //     }
-    //     else
-    //         _anim.SetBool("Moving", !_reachedEndOfPath);
-
-    //     if (_currentWaypoint >= _path.vectorPath.Count)
-    //     {
-    //         if (!_reachedEndOfPath)
-    //         {
-    //             _reachedEndOfPath = true;
-    //             _rb.linearVelocity = Vector2.zero; // dừng máy
-    //             _targetPos = _target;
-    //             Debug.Log($"{_currentWaypoint} + {_path.vectorPath.Count}");
-    //         }
-    //         return;
-    //     }
-
-    //     _reachedEndOfPath = false;
-
-    //     Vector2 waypoint = (Vector2)_path.vectorPath[_currentWaypoint];
-    //     Vector2 dir = (waypoint - _rb.position).normalized;
-
-    //     // Dùng fixedDeltaTime trong FixedUpdate
-    //     Vector2 force = dir * _speed * Time.fixedDeltaTime;
-    //     _rb.AddForce(force, ForceMode2D.Force);
-
-    //     // Giới hạn tốc độ (nếu dùng AddForce)
-    //     if (_rb.linearVelocity.magnitude > _maxSpeed)
-    //         _rb.linearVelocity = _rb.linearVelocity.normalized * _maxSpeed;
-
-    //     float dist = Vector2.Distance(_rb.position, waypoint);
-    //     float edg = _detect ? _range - 0.8f : 1.5f;
-    //     if (dist < edg)
-    //         _currentWaypoint++;
-    // }
-    // #endregion
 }

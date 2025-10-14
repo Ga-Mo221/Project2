@@ -19,7 +19,7 @@ public class Weather : MonoBehaviour
 
     [Header("Weather Cycle Settings")]
     [SerializeField] private float _weatherDuration = 60f; // thời gian giữa 2 lần random thời tiết
-
+    public bool isSnow;
     private Coroutine lightningCoroutine;
     private Coroutine weatherCycleCoroutine;
 
@@ -41,13 +41,14 @@ public class Weather : MonoBehaviour
     private void RandomizeWeather()
     {
         float chance = Random.value;
-        bool isSnow = chance <= _crit_snow; // 70% snow, 30% rain
+        isSnow = chance <= _crit_snow; // 70% snow, 30% rain
 
+        
         // Gọi coroutine fade để chuyển mượt giữa hai trạng thái
-        StartCoroutine(SmoothTransition(isSnow));
+        StartCoroutine(SmoothTransition());
     }
 
-    private IEnumerator SmoothTransition(bool isSnow)
+    private IEnumerator SmoothTransition()
     {
         float duration = 2f; // thời gian fade
         float elapsed = 0f;

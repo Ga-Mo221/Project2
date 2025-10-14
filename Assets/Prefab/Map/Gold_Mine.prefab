@@ -146,7 +146,7 @@ MonoBehaviour:
   _anim: {fileID: 5828999588693371778}
   _OderPoin: {fileID: 1440442551158257980}
   _DiePrefab: {fileID: 0}
-  _outLine: {fileID: 2991709533211408206}
+  _outLine: {fileID: 4303125499972074328}
   _audio: {fileID: 4194138327728713443}
   _value: 0
   _stack: 0
@@ -618,11 +618,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   TNTOrSheep: 0
-  _Hit_Damage_Clip: {fileID: 0}
+  _Hit_Damage_Clip: {fileID: 8300000, guid: 033ae2467a176a44eac8cb55e636e4f0, type: 3}
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 1
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 99423764123bfb54badf9231fa93ad8e, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
@@ -633,7 +633,10 @@ MonoBehaviour:
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -1027,6 +1030,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 3494970109715133459}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4303125499972074328 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 3494970109715133459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991709533211408206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a7846ca1cfa244a86f78c5afc18c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5558152220397929949 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

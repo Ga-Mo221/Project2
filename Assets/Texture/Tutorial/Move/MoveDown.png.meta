@@ -1,0 +1,623 @@
+fileFormatVersion: 2
+guid: be1f71dbd61aa9f4b80d21d1b520f0f0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3913234044325718528
+    second: MoveDown_0
+  - first:
+      213: -5306235089904061499
+    second: MoveDown_1
+  - first:
+      213: -7912692621249555434
+    second: MoveDown_2
+  - first:
+      213: 4252497390406038812
+    second: MoveDown_3
+  - first:
+      213: 4052277105884958788
+    second: MoveDown_4
+  - first:
+      213: 8595960372414441957
+    second: MoveDown_5
+  - first:
+      213: 3865693973664822171
+    second: MoveDown_6
+  - first:
+      213: -5350639391956601236
+    second: MoveDown_7
+  - first:
+      213: -4624937965430820228
+    second: MoveDown_8
+  - first:
+      213: -1279747663012035608
+    second: MoveDown_9
+  - first:
+      213: -4663515595782047493
+    second: MoveDown_10
+  - first:
+      213: 4983854452635947375
+    second: MoveDown_11
+  - first:
+      213: -6279265667036857675
+    second: MoveDown_12
+  - first:
+      213: 9005839936108917076
+    second: MoveDown_13
+  - first:
+      213: 8291587765678837090
+    second: MoveDown_14
+  - first:
+      213: 3393568779443789950
+    second: MoveDown_15
+  - first:
+      213: 2396023037892436356
+    second: MoveDown_16
+  - first:
+      213: 6681536837289901898
+    second: MoveDown_17
+  - first:
+      213: -3563347599771569719
+    second: MoveDown_18
+  - first:
+      213: 1299063577281488151
+    second: MoveDown_19
+  - first:
+      213: 8902274010464817385
+    second: MoveDown_20
+  - first:
+      213: 5869634960057491638
+    second: MoveDown_21
+  - first:
+      213: -833512761149017149
+    second: MoveDown_22
+  - first:
+      213: 467720942328589446
+    second: MoveDown_23
+  - first:
+      213: 6312596660227155308
+    second: MoveDown_24
+  - first:
+      213: -1166379587260661190
+    second: MoveDown_25
+  - first:
+      213: -6259003112062145838
+    second: MoveDown_26
+  - first:
+      213: -2409025732101883207
+    second: MoveDown_27
+  - first:
+      213: -8903510688566202543
+    second: MoveDown_28
+  - first:
+      213: 4645252129958282114
+    second: MoveDown_29
+  - first:
+      213: 4725353875284461048
+    second: MoveDown_30
+  - first:
+      213: 3798280460052809684
+    second: MoveDown_31
+  - first:
+      213: -3998045972807215333
+    second: MoveDown_32
+  - first:
+      213: -1824635629854110985
+    second: MoveDown_33
+  - first:
+      213: -7149842267708189424
+    second: MoveDown_34
+  - first:
+      213: 4521440822360032759
+    second: MoveDown_35
+  - first:
+      213: -199688026232687406
+    second: MoveDown_36
+  - first:
+      213: -4310793113800220267
+    second: MoveDown_37
+  - first:
+      213: 43457136424805607
+    second: MoveDown_38
+  - first:
+      213: 5805106190340187726
+    second: MoveDown_39
+  - first:
+      213: -6015956832803978832
+    second: MoveDown_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MoveDown_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0061001be5661b9c0800000000000000
+      internalID: -3913234044325718528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c33e83ac477c56b0800000000000000
+      internalID: -5306235089904061499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 614d095fbf7703290800000000000000
+      internalID: -7912692621249555434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c157d6b88d7e30b30800000000000000
+      internalID: 4252497390406038812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44098b3de849c3830800000000000000
+      internalID: 4052277105884958788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e9e8155a6cfa4770800000000000000
+      internalID: 8595960372414441957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_6
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b93f8ae0034b5a530800000000000000
+      internalID: 3865693973664822171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_7
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c66f63962d5beb5b0800000000000000
+      internalID: -5350639391956601236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c723746ac6be0dfb0800000000000000
+      internalID: -4624937965430820228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_9
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e30808e74c6d3ee0800000000000000
+      internalID: -1279747663012035608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_10
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf8bae4264dd74fb0800000000000000
+      internalID: -4663515595782047493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_11
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f615d9518353a2540800000000000000
+      internalID: 4983854452635947375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_12
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ba36f115219bd8a0800000000000000
+      internalID: -6279265667036857675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_13
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4517cc7f4bb2bfc70800000000000000
+      internalID: 9005839936108917076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_14
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26d03456423a11370800000000000000
+      internalID: 8291587765678837090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveDown_15
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e706a9333d0681f20800000000000000
+      internalID: 3393568779443789950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1853fcc653a9db7479e6b26b0e7711c7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":200.0,"y":420.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      MoveDown_0: -3913234044325718528
+      MoveDown_1: -5306235089904061499
+      MoveDown_10: -4663515595782047493
+      MoveDown_11: 4983854452635947375
+      MoveDown_12: -6279265667036857675
+      MoveDown_13: 9005839936108917076
+      MoveDown_14: 8291587765678837090
+      MoveDown_15: 3393568779443789950
+      MoveDown_2: -7912692621249555434
+      MoveDown_3: 4252497390406038812
+      MoveDown_4: 4052277105884958788
+      MoveDown_5: 8595960372414441957
+      MoveDown_6: 3865693973664822171
+      MoveDown_7: -5350639391956601236
+      MoveDown_8: -4624937965430820228
+      MoveDown_9: -1279747663012035608
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

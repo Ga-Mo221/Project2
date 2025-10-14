@@ -79,7 +79,7 @@ public class Display : MonoBehaviour
 
         off();
 
-        InvokeRepeating(nameof(updateSee), 0.2f, 0.2f);
+        InvokeRepeating(nameof(updateSee), 0f, Random.Range(0.2f,0.3f));
     }
 
 
@@ -195,6 +195,28 @@ public class Display : MonoBehaviour
             _outLine.SetActive(true);
         else
             _outLine.SetActive(false);
+
+        if (_item.getDie()) return;
+        Transform target = null;
+        float mindist = 100000;
+        foreach (var p in _seemer)
+        {
+            if (PlayerTag.checkTag(p.tag))
+            {
+                float dist = Vector2.Distance(transform.position, p.transform.position);
+                if (dist < mindist)
+                {
+                    mindist = dist;
+                    target = p.transform;
+                }
+            }
+        }
+
+        if (target != null)
+        {
+            var script = _outLine.GetComponent<OutLine>();
+            script.setPlayer(target);
+        }
     }
 
     private void offDisplayTree()

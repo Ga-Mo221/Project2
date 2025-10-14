@@ -7,15 +7,17 @@ public class TNTRedGFX : EnemyAI
     protected override void Update()
     {
         _spriteRender.sortingOrder = -(int)(transform.position.y * 100) + 10000;
+        base.Update();
+    }
 
+    protected override void AI()
+    {
+        flip(target);
         if (getDie()) return;
         target = Find();
         if (target != null)
         {
             setDetect(true);
         }
-
-        base.Update();
-        //pantrol();
     }
 }

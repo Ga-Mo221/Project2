@@ -5,6 +5,7 @@ public class HealerGFX : PlayerAI
 {
     [Header("Healer GFX")]
     [SerializeField] private SpriteRenderer _spriteRender;
+    [SerializeField] private SpriteRenderer _select;
     [SerializeField] private Transform _oderSpriterPoint;
     private PlayerAI _scripTarget;
 
@@ -24,9 +25,14 @@ public class HealerGFX : PlayerAI
 
     protected override void Update()
     {
+        int _yOder = getOderInLayer();
+        _spriteRender.sortingOrder = _yOder;
+        _select.sortingOrder = _yOder - 1;
         base.Update();
-        _spriteRender.sortingOrder = -(int)(_oderSpriterPoint.position.y * 100) + 10000;
     }
+
+    public override int getOderInLayer()
+        => -(int)(_oderSpriterPoint.position.y * 100) + 10000;
 
 
     public override void Ai()
@@ -61,6 +67,7 @@ public class HealerGFX : PlayerAI
     {
         _anim.SetTrigger("Heal");
         _attackCount++;
+        resetAttacking();
         yield return new WaitForSeconds(_attackSpeedd);
         _healspeed = null;
     }

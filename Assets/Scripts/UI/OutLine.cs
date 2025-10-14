@@ -14,8 +14,10 @@ public class OutLine : MonoBehaviour
     private bool _IsPlayer => _type == NodeType.Player;
     private bool _IsAnimal => _type == NodeType.Animal;
     private bool _IsEnemy => _type == NodeType.Enemy;
-    private bool _IsTreeOrRockOrGoldMine => _type == NodeType.TreeOrRock || _type == NodeType.GoldMine;
-    private bool _isTreeOrRock => _type == NodeType.TreeOrRock;
+    private bool _IsTree => _type == NodeType.Tree;
+    private bool _IsRock => _type == NodeType.Rock;
+    private bool _IsTreeOrRockOrGoldMine => _IsTree || _IsRock || _type == NodeType.GoldMine;
+    private bool _isTreeOrRock => _IsTree || _IsRock;
     private bool _IsGoldMine => _type == NodeType.GoldMine;
 
     [ShowIf(nameof(_IsStorageOrTower))]
@@ -38,9 +40,19 @@ public class OutLine : MonoBehaviour
 
 
     [SerializeField] private Material _normalMaterial;
+    private Material _startMaterial;
     [SerializeField] private Material _outLineMateral;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private SpriteRenderer _spriteRender;
+
+    [ShowIf(nameof(_IsTree))]
+    public Transform player;
+    [ShowIf(nameof(_IsTree))]
+    public float radius = 1f;
+    [ShowIf(nameof(_IsTree))]
+    public float fade = 0.5f;
+    [ShowIf(nameof(_IsTree))]
+    public float seeThroughAlpha = 0.1f; // 0 = trong suốt, 1 = bình thường
 
     private bool _isHovering = false;
 
@@ -51,8 +63,15 @@ public class OutLine : MonoBehaviour
             _spriteRender = transform.parent.gameObject.GetComponent<SpriteRenderer>();
         if (!_spriteRender || _spriteRender == null)
             Debug.LogError($"[{transform.parent.name}] [OutLine] Chưa gán 'SpriteRender'");
+
+        if (!_IsTree) return;
+        _startMaterial = _normalMaterial;
+        _normalMaterial = Instantiate(_normalMaterial);
+        _spriteRender.GetComponent<SpriteRenderer>().material = _normalMaterial;
     }
     #endregion
+
+    public void setPlayer(Transform target) => player = target;
 
 
     #region Update
@@ -75,6 +94,22 @@ public class OutLine : MonoBehaviour
                 ResetMaterial();
                 _isHovering = false;
             }
+
+            if (_type == NodeType.Tree && player != null)
+            {
+
+                _normalMaterial.SetVector("_PlayerPos", player.position);
+                _normalMaterial.SetFloat("_Radius", radius);
+                _normalMaterial.SetFloat("_Fade", fade);
+                _normalMaterial.SetFloat("_SeeThroughStrength", seeThroughAlpha);
+
+                var scrip = player.GetComponent<PlayerAI>();
+                if (scrip != null)
+                {
+                    bool shouldSeeThrough = _spriteRender.sortingOrder > scrip.getOderInLayer();
+                    _normalMaterial.SetFloat("_ShouldSeeThrough", shouldSeeThrough ? 1f : 0f);  
+                }
+            }
         }
 
         if (!_isHovering) return;
@@ -85,7 +120,6 @@ public class OutLine : MonoBehaviour
         }
     }
     #endregion
-
 
     #region Change Material
     private void ChangeMaterial()
@@ -107,7 +141,7 @@ public class OutLine : MonoBehaviour
 
 
     #region  Reset Material
-    private void ResetMaterial()
+    public void ResetMaterial()
     {
         if (_spriteRender.enabled == false) return;
         _spriteRender.material = _normalMaterial;
@@ -190,6 +224,16 @@ public class OutLine : MonoBehaviour
             }
         }
     }
+
+    public void Out()
+    {
+        ResetMaterial();
+        player = null;
+        if (_IsTree)
+            _spriteRender.material = _startMaterial;
+        gameObject.SetActive(false);
+    }
+
 }
 
 public enum NodeType
@@ -199,11 +243,12 @@ public enum NodeType
     Tower,
     Storage,
     Player,
-    TreeOrRock,
+    Tree,
     GoldMine,
     Animal,
     Enemy,
     EnemyHouse,
     EnemyTower,
-    EnemyStorage
+    EnemyStorage,
+    Rock
 }

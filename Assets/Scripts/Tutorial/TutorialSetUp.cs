@@ -2,6 +2,7 @@ using System.Collections;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialSetUp : MonoBehaviour
@@ -29,7 +30,6 @@ public class TutorialSetUp : MonoBehaviour
 
     [SerializeField] private Animator _Baw;
     [SerializeField] private Animator _Mess;
-    [SerializeField] private TextMeshProUGUI _textMess;
 
     public GameObject _selectBox;
     public bool _isSelect = false;
@@ -47,8 +47,12 @@ public class TutorialSetUp : MonoBehaviour
     [SerializeField] private GameObject _U_Button;
 
     [SerializeField] private CameraTutorial _camera;
+    [SerializeField] private GameObject _MoveCamera;
 
     private TypewriterEffect _typewriter;
+    private bool _isTyping = false;
+    private bool _skipRequested = false;
+
     [SerializeField] private bool _controller;
     [SerializeField] private bool _select;
 
@@ -91,6 +95,9 @@ public class TutorialSetUp : MonoBehaviour
     [Foldout("Point")]
     [SerializeField] private Transform _buttonArcherInCastle2; // vị trí button cho archer
 
+    private string key = "";
+    private string txt = "";
+
     #endregion
 
     #region Awke
@@ -102,6 +109,8 @@ public class TutorialSetUp : MonoBehaviour
             return;
         }
         Instance = this;
+        if (GameManager.Instance != null)
+            GameManager.Instance.Tutorial = true;
     }
     #endregion
 
@@ -110,7 +119,6 @@ public class TutorialSetUp : MonoBehaviour
     void Start()
     {
         _currentDay = GameManager.Instance._currentDay;
-        GameManager.Instance.Tutorial = true;
         GameManager.Instance.setActiveGameUI(false);
         _BG1.gameObject.SetActive(true);
         _Baw.gameObject.SetActive(false);
@@ -152,7 +160,6 @@ public class TutorialSetUp : MonoBehaviour
         if (GameManager.Instance._timeRTS == 0 && _currentDay != GameManager.Instance._currentDay)
         {
             _currentDay = GameManager.Instance._currentDay;
-            GameManager.Instance.Tutorial = true;
             StartCoroutine(displayText16());
         }
 
@@ -174,8 +181,15 @@ public class TutorialSetUp : MonoBehaviour
             {
                 _War = false;
                 StopAllCoroutines();
-                StartCoroutine(displayText20());
+                StartCoroutine(displayText19());
             }
+        }
+
+        // Khi nhấn phím Space
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_isTyping)
+                _skipRequested = true; // báo hiệu muốn skip
         }
     }
     #endregion
@@ -185,7 +199,7 @@ public class TutorialSetUp : MonoBehaviour
     private IEnumerator start()
     {
         yield return new WaitForSeconds(2f);
-        _camera.Move(Castle.Instance.transform.position, _fadeDuration + 2);
+        _camera.Move(Castle.Instance.transform.position, _fadeDuration + 4);
         Color col = _BG1.color;
         float time = 0f;
         while (time < _fadeDuration)
@@ -212,29 +226,37 @@ public class TutorialSetUp : MonoBehaviour
     #region text 1
     private IEnumerator displayText1()
     {
-        string content = "…Tỉnh rồi à, chỉ huy?";
         _Baw.SetBool("noi", true);
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Cả vùng đất này... đã thành tro tàn. Căn cứ của ta, đồng đội của ta – chỉ còn vài linh hồn chưa gục ngã.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Ta là Baw. Cựu chỉ huy tiền tuyến của đội trinh sát phương Bắc.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Giờ thì... xem ra ta lại thành hướng dẫn viên bất đắc dĩ rồi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext1.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext1.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext1.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext1.text4";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("chi", true);
-        content = "Không sao đâu, ta sẽ chỉ ngươi từng bước. Trước hết... thử kéo chuột trái đi – chọn mấy người sống sót quanh nhà chính xem nào.";
-        _typewriter.StartTyping(content);
+
+        key = "Tutorial.displaytext1.text5";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _StarSelectUnit = true;
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         StartCoroutine(SelectBox());
-        _Baw.SetBool("chi", false);
         _Baw.SetBool("noi", false);
-        _typewriter.StartTyping("");
         _Mess.SetTrigger("exit");
     }
     #endregion
@@ -253,6 +275,7 @@ public class TutorialSetUp : MonoBehaviour
         _camera.Move(_1.position, 1.5f);
         yield return new WaitForSecondsRealtime(1.6f);
         _selectBox.SetActive(true);
+        _Baw.SetBool("chi", false);
     }
     #endregion
 
@@ -270,14 +293,18 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Tốt! Ngươi vẫn còn nhớ cách nắm lấy vận mệnh của mình.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext2.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _camera.Move(_2.position, 1.5f);
-        content = "Giờ thì thử bảo họ di chuyển. Nhấn chuột phải vào vùng sáng phía trước đi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        _typewriter.StartTyping("");
+
+        key = "Tutorial.displaytext2.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
         _Mess.SetTrigger("exit");
@@ -293,6 +320,7 @@ public class TutorialSetUp : MonoBehaviour
     // mở ui lên
     private IEnumerator displayText3()
     {
+        _selectBox.SetActive(false);
         _StarSelectUnit = false;
         _Baw.gameObject.SetActive(true);
         _Baw.SetBool("khen", true);
@@ -303,16 +331,20 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Tốt lắm, họ nghe lệnh của ngươi rồi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext3.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _camera.Zoom(20, 2f);
-        content = "Ngươi là niềm hy vọng cuối cùng của vùng đất này, chỉ huy.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext3.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         ID = 2;
         GameManager.Instance.setActiveGameUI(true);
@@ -332,12 +364,14 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Ta không còn nhiều thời gian. Nên giờ thì hãy tự mình đọc Nhật ký của ta đi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext4.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         OnBlackBox(_3);
         yield return new WaitForSecondsRealtime(0.5f);
@@ -355,15 +389,19 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Đây là Nhật ký của ta khi còn ở thời huy hoàng... mà thôi, giờ không phải lúc để kể chuyện cũ.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Ngươi hãy xem thật kỹ, vì thời gian của chúng ta không còn nhiều đâu.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext5.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext5.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
     }
     #endregion
@@ -378,23 +416,29 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Nhìn quanh đi, chỉ huy. Ban đêm là lúc bọn man rợ sẽ mò tới.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext6.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _camera.Move(_4.position, getSpeedText(content));
         _camera.Zoom(15, getSpeedText(content));
-        content = "Các công trình này… từng là niềm kiêu hãnh của ta, giờ chỉ còn là đống sắt vụn.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Ta cần ngươi giúp ta dựng lại một tháp cung – thứ duy nhất còn khiến bọn quái phải dè chừng.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext6.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext6.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _camera.Zoom(20, 1.5f);
         yield return new WaitForSecondsRealtime(1.6f);
         OnBlackBox(_5);
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         yield return new WaitForSecondsRealtime(0.5f);
         OnClickIcon(_5);
@@ -426,15 +470,19 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Tháp cung sẽ giúp ngươi chống chịu được các đợt tấn công ban đêm.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Hãy đặt nó ở đây đi – click vào dấu tích màu xanh. Chọn đúng, và nó sẽ trụ vững hơn cả niềm tin của ta.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext8.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext8.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
     }
     #endregion
@@ -449,18 +497,24 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Công trình này cần thời gian để hoàn thành. Trong lúc chờ, hãy chiêu mộ thêm binh sĩ đi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Chúng ta đang cần một cung thủ cho tuyến phòng thủ đêm nay.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Họ cần thời gian để đến nơi, nên chiêu mộ ngay từ bây giờ là khôn ngoan đấy.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext9.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext9.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext9.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         OnBlackBox(_8);
         _C_Button.SetActive(true);
@@ -481,15 +535,19 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Nhớ nhé, chiêu mộ lính sẽ tiêu hao tài nguyên. Càng mạnh, càng tốn.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Thế nên hãy học cách khai thác tài nguyên, kẻo chưa thấy địch đã đói lả.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext10.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext10.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         OnClickIcon(_9);
     }
@@ -506,21 +564,27 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Tốt! Họ sẽ đến nhanh thôi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext11.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         OnBlackBox(_10);
-        content = "Nhưng... nhìn kìa, chỗ ở cho lính mới sắp đầy rồi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext11.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         OffBlackBox();
-        content = "Đi nào, ta sẽ chỉ ngươi cách nâng cấp thành chính để mở rộng căn cứ.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext11.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         ID = 2;
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         yield return new WaitForSecondsRealtime(0.3f);
         OnClickIcon(_11);
@@ -538,18 +602,21 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Click vào Nhà chính đi, chỉ huy.";
-        _typewriter.StartTyping(content);
-        _camera.Zoom(15, getSpeedText(content));
-        _camera.Move(Castle.Instance.transform.position, getSpeedText(content));
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        _typewriter.StartTyping("");
-        ID = 6;
-        OnClickIcon(Castle.Instance.transform);
+
+        key = "Tutorial.displaytext12.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
+        _camera.Zoom(15, getSpeedText(content));
+        _camera.Move(Castle.Instance.transform.position, getSpeedText(content));
+        yield return StartCoroutine(ShowLine("", 0.1f));
+        yield return new WaitForSecondsRealtime(getSpeedText(content)+0.1f);
+        ID = 6;
+        OnClickIcon(Castle.Instance.transform);
     }
     #endregion
 
@@ -579,21 +646,27 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Nâng cấp thành chính tốn tài nguyên lớn, nhưng đổi lại toàn bộ công trình và binh sĩ sẽ mạnh hơn.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Tài nguyên tiêu hao sau này cũng nhiều hơn, nhưng ta tin ngươi sẽ xoay xở được.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Và quan trọng nhất – không gian cho quân lính cũng tăng lên. Một món hời, phải không?";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        _typewriter.StartTyping("");
+
+        key = "Tutorial.displaytext14.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext14.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext14.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+        yield return StartCoroutine(ShowLine("",0.1f));
         OnClickIcon(_13);
         ID = 7;
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
     }
     #endregion
@@ -609,23 +682,36 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Tốt lắm, thành chính nâng cấp rồi. Ánh sáng đó... là dấu hiệu của hy vọng.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Ban ngày, bọn quái sẽ không dám bén mảng lại gần đâu.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext15.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext15.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _camera.Zoom(20, 2f);
-        content = "Mau tranh thủ thu thập tài nguyên và chiêu mộ thêm binh sĩ. Đêm nay... sẽ dài đấy.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        _typewriter.StartTyping("");
+
+        key = "Tutorial.displaytext15.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+        _MoveCamera.SetActive(true);
+
+        key = "Tutorial.displaytext15.text4";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+        yield return StartCoroutine(ShowLine("",0.1f));
         GameManager.Instance.setHourRTS(16);
         ID = 2;
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
+        _MoveCamera.SetActive(false);
         GameManager.Instance.Tutorial = false;
     }
     #endregion
@@ -636,6 +722,7 @@ public class TutorialSetUp : MonoBehaviour
     private IEnumerator displayText16()
     {
         yield return new WaitForSecondsRealtime(5f);
+        GameManager.Instance.Tutorial = true;
         _enemyList.SetActive(true);
         Time.timeScale = 0;
         _Baw.gameObject.SetActive(true);
@@ -643,15 +730,19 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Chỉ huy, nghe cho kỹ này. Mỗi đêm, vào giờ này, bọn quái vật sẽ kéo tới.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Nhưng đừng lo. Ta đã sống sót hàng chục lần, và giờ ta sẽ chỉ ngươi cách chỉ huy một đội quân thực thụ.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext16.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext16.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         GameManager.Instance.Tutorial = false;
         Time.timeScale = 1f;
@@ -670,37 +761,47 @@ public class TutorialSetUp : MonoBehaviour
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Bọn Chúng đã đến rồi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Bọn chúng đến rồi! Thấy chưa – lần này còn dắt theo cả con to đầu đấy!";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Lũ này có vẻ chuẩn bị kỹ hơn ta tưởng đấy.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Điều động cung thủ vào trong thành ngay!";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext17.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext17.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext17.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext17.text4";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _camera.Move(_archer.position, 1f);
         _camera.Zoom(15, 1f);
-        content = "Chọn một cung thủ, rồi click vào công tắc trên tháp để ra lệnh cho hắn vào vị trí.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        StartCoroutine(displayText19());
+
+        key = "Tutorial.displaytext17.text5";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+        StartCoroutine(displayText18());
         _enemyList.SetActive(true);
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         _War = true;
     }
     #endregion
 
 
-    #region text 19
+    #region text 18
     // on off công tắt
-    private IEnumerator displayText19()
+    private IEnumerator displayText18()
     {
         _camera.Move(_buttonArcherInCastle1.position, 1f);
         yield return new WaitForSecondsRealtime(1.5f);
@@ -720,12 +821,14 @@ public class TutorialSetUp : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
         _camera.Move(_enemy.position, 1f);
-        string content = "Nhanh lên, tập hợp binh lính! Giữ V và nhấn chuột trái để mở Radial Menu – chọn mệnh lệnh ngay đi!";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
+
+        key = "Tutorial.displaytext9.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         GameManager.Instance.Tutorial = false;
         Time.timeScale = 1f;
@@ -733,36 +836,48 @@ public class TutorialSetUp : MonoBehaviour
     #endregion
 
 
-    #region text 20
+    #region text 19
     // Sống sót qua một đêm
-    private IEnumerator displayText20()
+    private IEnumerator displayText19()
     {
+        GameManager.Instance.Tutorial = true;
+        _camera.Move(Castle.Instance.transform.position, 2f);
+        _camera.Zoom(20, 2f);
         CameraShake.Instance.ShakeCamera(2f);
         yield return new WaitForSecondsRealtime(2.5f);
         _Baw.gameObject.SetActive(true);
-        _camera.Move(_enemy.position, 1f);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Tốt lắm, chỉ huy. Chúng ta vẫn trụ được... lần này.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Ngươi đã bảo vệ được căn cứ đầu tiên. Không tệ cho tân chỉ huy vừa hồi sinh giữa tro tàn.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Trận chiến vừa rồi... có thể ngươi còn vụng về, nhưng lửa chiến đã bùng lên trong mắt ngươi.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Còn nhiều thứ phía trước – nhưng ít nhất, giờ ta không còn phải chiến đấu một mình nữa.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Chào mừng ngươi đến với chiến trường thực thụ, chỉ huy.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 4f);
+
+        key = "Tutorial.displaytext19.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext19.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext19.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext19.text4";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext19.text5";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content, 3f));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+        yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         StartCoroutine(FadeOut());
     }
@@ -770,30 +885,40 @@ public class TutorialSetUp : MonoBehaviour
 
     #region text 20
     // Sống sót qua một đêm
-    private IEnumerator displayText21()
+    private IEnumerator displayText20()
     {
+        GameManager.Instance.Tutorial = true;
+        _camera.Move(Castle.Instance.transform.position, 2f);
+        _camera.Zoom(20, 2f);
         CameraShake.Instance.ShakeCamera(2f);
         _Baw.gameObject.SetActive(true);
-        _camera.Move(_enemy.position, 1f);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.3f);
         _Baw.SetBool("noi", true);
-        string content = "Ừ... đừng cúi đầu, chỉ huy. Thua trận không có nghĩa là hết đường.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Ta từng mất cả đơn vị, cả căn cứ... nhưng ta vẫn đứng dậy, vì không ai khác sẽ làm điều đó thay ta.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Rút kinh nghiệm, tính toán lại, rồi thử lại lần nữa. Kẻ sống sót không phải kẻ mạnh nhất – mà là kẻ không bỏ cuộc.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 1f);
-        content = "Giờ thì... lau bụi trên giáp, thẳng lưng lên, và cho ta thấy lửa trong mắt ngươi vẫn chưa tắt.";
-        _typewriter.StartTyping(content);
-        yield return new WaitForSecondsRealtime(getSpeedText(content) + 4f);
+
+        key = "Tutorial.displaytext20.text1";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        string content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext20.text2";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext20.text3";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content));
+
+        key = "Tutorial.displaytext20.text4";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        content = txt;
+        yield return StartCoroutine(ShowLine(content, 3f));
         _Baw.SetBool("noi", false);
         _Baw.gameObject.SetActive(false);
-        _typewriter.StartTyping("");
+                yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         StartCoroutine(FadeOut());
     }
@@ -815,7 +940,10 @@ public class TutorialSetUp : MonoBehaviour
         }
         col.a = 1f;
         _BG1.color = col;
-        Application.Quit();
+        SettingManager.Instance._playing = false;
+        SettingManager.Instance._gameSettings._Tutorial = false;
+        SettingManager.Instance.Save();
+        SceneManager.LoadScene("MainMenu");
     }
     #endregion
 
@@ -824,7 +952,7 @@ public class TutorialSetUp : MonoBehaviour
     public void GameLose()
     {
         StopAllCoroutines();
-        StartCoroutine(displayText21());
+        StartCoroutine(displayText20());
     }
 
     public void PlayerMoveController()
@@ -982,5 +1110,26 @@ public class TutorialSetUp : MonoBehaviour
         foreach (var h in content)
             count++;
         return count * _typewriter.getSpeed();
+    }
+
+
+    private IEnumerator ShowLine(string content, float time = 1f)
+    {
+        _isTyping = true;
+        _skipRequested = false;
+
+        // Gõ chữ (có thể bị skip)
+        yield return StartCoroutine(_typewriter.TypeText(content, () => _skipRequested));
+
+        _isTyping = false;
+
+        // Luôn chờ đủ thời gian baseWaitTime, kể cả khi skip
+        float waitDuration = _skipRequested ? time+0.5f : time;
+        float timer = 0f;
+        while (timer < waitDuration)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
     }
 }

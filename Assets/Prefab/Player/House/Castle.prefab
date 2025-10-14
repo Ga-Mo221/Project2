@@ -790,6 +790,7 @@ MonoBehaviour:
   _point: {fileID: 7649450949825743490}
   _In_Castle_Pos: {fileID: 7281954126970470205}
   _fire: {fileID: 6574188369614319417}
+  _archerUp: {fileID: 1599324780184899269}
   _audio: {fileID: 4366058646421753762}
   _maxRock: 50
   _maxWood: 50
@@ -856,21 +857,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
-  _tutorial: 0
-  _fire: {fileID: 6574188369614319417}
   _canDetec: 0
+  _fire: {fileID: 6574188369614319417}
   _imgLoad: {fileID: 0}
   _inPos: {fileID: 0}
   _inPos1: {fileID: 0}
   _inPos2: {fileID: 0}
   _inPos3: {fileID: 0}
   _rada: {fileID: 0}
+  _house: {fileID: 0}
   _ButtonArcherUP: {fileID: 0}
   _light: {fileID: 0}
   _canvas: {fileID: 0}
   _canCreate: {fileID: 0}
   _HPcanvas: {fileID: 0}
-  _createTimeSec: 10
+  _outLine: {fileID: 6297650747066956658}
+  _time: 0
 --- !u!82 &7061340492252060705
 AudioSource:
   m_ObjectHideFlags: 0
@@ -986,18 +988,21 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 99423764123bfb54badf9231fa93ad8e, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
   Animal: 0
-  _Level_Up_Clip: {fileID: 0}
-  _Archer_Up_Clip: {fileID: 0}
+  _Level_Up_Clip: {fileID: 8300000, guid: 05a7f9fdf6867cf4091246df0cbdb40c, type: 3}
+  _Archer_Up_Clip: {fileID: 8300000, guid: ba72fa23a6c5d804a850942cb66a8f7a, type: 3}
   CanCreate: 0
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -2425,6 +2430,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 6652620285814584377}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6297650747066956658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 6652620285814584377}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a7846ca1cfa244a86f78c5afc18c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!60 &7159308744911961199 stripped
 PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

@@ -14,6 +14,7 @@ public class ApplyItem : MonoBehaviour
         if (PlayerTag.checkTagFarm(collision.tag))
         {
             var _script = collision.GetComponent<PlayerAI>();
+            if (_script.getUpTower()) return;
             bool _aply = false;
             if (_script._rock > 0 && Castle.Instance._rock < Castle.Instance._maxRock)
             {
@@ -48,6 +49,8 @@ public class ApplyItem : MonoBehaviour
                 _aply = false;
                 StartCoroutine(ResetPlayer(_script));
                 GameManager.Instance.UIupdateReferences();
+                GameManager.Instance.UIupdateCreateUnitButton();
+                GameManager.Instance.UIupdateInfoUpgrade();
             }
         }
     }

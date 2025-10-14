@@ -23,6 +23,9 @@ public class PlayerOrEnemyTowerSelectBox : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _Lv;
 
+    private string key = "";
+    private string txt = "";
+
     void Update()
     {
         if (_playerHouse != null)
@@ -42,17 +45,23 @@ public class PlayerOrEnemyTowerSelectBox : MonoBehaviour
     {
         _playerHouse = House;
         _enemyHouse = null;
-
+        key = "ui.Level";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
         _icon.sprite = _playerTowerSprite;
-        _Lv.text = $"LV.{_playerHouse.getLevel()}";
+        _Lv.text = $"{txt}{_playerHouse.getLevel()}";
 
-        _name.text = "Tháp Cung Thủ";
+        key = "Name.building.tower";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _name.text = txt;
 
         _damge.text = _playerHouse._archer.getDamage().ToString();
         _PhamVi.text = _playerHouse._archer.getRadius().ToString();
 
-        _content.text = "Khi bạn điều khiển cung thủ vào tháp cung thì thực lực của tháp cung mới thực sự phát huy.";
+        key = "Name.building.towerContent";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _content.text = txt;
     }
+
     public void add(EnemyHuoseController House)
     {
         _playerHouse = null;
@@ -61,12 +70,16 @@ public class PlayerOrEnemyTowerSelectBox : MonoBehaviour
         _icon.sprite = _enemyTowerSprite;
         _Lv.text = "";
 
-        _name.text = "Tháp Linh Cẩu";
+        key = "Name.building.enemytower";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _name.text = txt;
 
         var gnoll = _enemyHouse._GnollUp.GetComponent<GnollUpGFX>();
         _damge.text = gnoll.getDamage().ToString();
         _PhamVi.text = gnoll.getRadius().ToString();
 
-        _content.text = "Bọn Linh Cẩu luôn luôn nhòm ngó bạn và chúng luôn chực chờ để nếm những cục xương vào người bạn.";
+        key = "Name.building.enemytowerContent";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _content.text = txt;
     }
 }

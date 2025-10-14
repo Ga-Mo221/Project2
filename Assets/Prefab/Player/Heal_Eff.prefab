@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   TNTOrSheep: 0
-  _Hit_Damage_Clip: {fileID: 0}
+  _Hit_Damage_Clip: {fileID: 8300000, guid: d382d65377419a04fa495d850aa1e387, type: 3}
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
@@ -284,13 +284,17 @@ MonoBehaviour:
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
+  Animal: 0
   _Level_Up_Clip: {fileID: 0}
   _Archer_Up_Clip: {fileID: 0}
   CanCreate: 0
   _Creating_Clip: {fileID: 0}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50

@@ -53,6 +53,7 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Right;
+            _scrip._movingToTower = true;
         }
         else if (Castle.Instance._archer_Right != null)
         {
@@ -79,6 +80,7 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Center;
+            _scrip._movingToTower = true;
         }
         else if (Castle.Instance._archer_Center != null)
         {
@@ -105,6 +107,7 @@ public class SelectArcherUp : MonoBehaviour
             _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Left;
+            _scrip._movingToTower = true;
         }
         else if (Castle.Instance._archer_Left != null)
         {

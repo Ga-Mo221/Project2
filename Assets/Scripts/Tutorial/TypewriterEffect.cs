@@ -4,31 +4,26 @@ using System.Collections;
 
 public class TypewriterEffect : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI textMeshPro;
+    [SerializeField] private TextMeshProUGUI textUI;
     [SerializeField] private string fullText;
     [SerializeField] private float typeSpeed = 0.05f; // Thời gian giữa mỗi ký tự (giây)
 
-    private Coroutine typingCoroutine;
-
-    public void StartTyping(string text)
-    {
-        fullText = text;
-        if (!gameObject.activeInHierarchy) return;
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        typingCoroutine = StartCoroutine(TypeText());
-    }
-
     public float getSpeed() => typeSpeed;
 
-    private IEnumerator TypeText()
+    public IEnumerator TypeText(string content, System.Func<bool> skipCheck)
     {
-        textMeshPro.text = "";
-        for (int i = 0; i < fullText.Length; i++)
+        textUI.text = "";
+        foreach (char c in content)
         {
-            textMeshPro.text += fullText[i];
-            yield return new WaitForSecondsRealtime(typeSpeed); // ✅ Dùng Realtime để hoạt động khi Time.timeScale = 0
+            // Nếu người chơi nhấn skip => hiện toàn bộ text
+            if (skipCheck())
+            {
+                textUI.text = content;
+                yield break;
+            }
+
+            textUI.text += c;
+            yield return new WaitForSecondsRealtime(typeSpeed);
         }
     }
 }

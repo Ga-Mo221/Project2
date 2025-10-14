@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
@@ -213,10 +214,14 @@ public class GameUI : MonoBehaviour
     [Foldout("Warning")]
     [SerializeField] private GameObject _warning;
     [Foldout("Warning")]
-    [SerializeField] private TextMeshProUGUI _textWarning1;
-    [Foldout("Warning")]
     [SerializeField] private TextMeshProUGUI _textWarning2;
     #endregion
+
+    [Foldout("Exit Game")]
+    [SerializeField] private GameObject _exitgameimg;
+
+    [Foldout("In Game")]
+    [SerializeField] private GameObject _inGame;
 
 
     [SerializeField] private List<GameObject> _createList = new List<GameObject>();
@@ -238,6 +243,10 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
+        if (!GameManager.Instance.Tutorial)
+        {
+            _inGame.SetActive(true);
+        }
         _hours = GameManager.Instance._startTimeRTS;
         updateBuidingReference();
         updateHP();
@@ -247,6 +256,8 @@ public class GameUI : MonoBehaviour
     #region Update
     void Update()
     {
+        string key = "";
+        string txt = "";
         // Tăng thời gian chơi
         if (!GameManager.Instance.Tutorial)
             _timeAccumulator += Time.deltaTime;
@@ -287,9 +298,13 @@ public class GameUI : MonoBehaviour
             _Sun.SetActive(true);
             if (!GameManager.Instance._canNewDay)
             {
+                key = "ui.NewDay.Day";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+
                 GameManager.Instance._canNewDay = true;
-                _textNewDay.text = "Ngày " + GameManager.Instance._currentDay;
-                _newday.SetActive(true);
+                _textNewDay.text = txt + GameManager.Instance._currentDay;
+                if (gameObject.activeInHierarchy)
+                    StartCoroutine(displayNewDay());
             }
         }
 
@@ -300,10 +315,19 @@ public class GameUI : MonoBehaviour
             GameManager.Instance._night = false;
 
         // Hiển thị Day và Time RTS
-        _Day.text = "Day " + GameManager.Instance._currentDay;
+        key = "ui.minimap.Day";
+        txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+        _Day.text = txt + GameManager.Instance._currentDay;
         _Time_RTS.text = string.Format("{0:00}:{1:00}", _hours, 0);
     }
     #endregion
+
+
+    private IEnumerator displayNewDay()
+    {
+        yield return new WaitForSeconds(1f);
+        _newday.SetActive(true);
+    }
 
 
     #region Set House
@@ -320,6 +344,7 @@ public class GameUI : MonoBehaviour
         _Buiding_Obj.SetActive(true);
         _Tutorial_Obj.SetActive(true);
         _HPBar_Obj.SetActive(true);
+        GameManager.Instance.setCanOpenWindowan(true);
     }
     #endregion
 
@@ -335,6 +360,7 @@ public class GameUI : MonoBehaviour
         _Buiding_Obj.SetActive(false);
         _Tutorial_Obj.SetActive(false);
         _HPBar_Obj.SetActive(false);
+        GameManager.Instance.setCanOpenWindowan(false);
     }
     #endregion
 
@@ -525,8 +551,48 @@ public class GameUI : MonoBehaviour
     #endregion
 
 
+    #region Open Setting
+    public void OpenSetting()
+    {
+        OffAllWinDown();
+        SettingManager.Instance.OpenSetting();
+    }
+    #endregion
+
+    #region Close Setting
+    private void OnEnable()
+    {
+        if (SettingManager.Instance != null)
+        {
+            SettingManager.Instance._onCloseSetting += CloseSetting;
+            SettingManager.Instance._onExitGame += exitGame;
+        }
+    }
+
+    private void OnDisable()
+    {
+        // 4. Hủy đăng ký (unsubscribe)
+        if (SettingManager.Instance != null)
+        {
+            SettingManager.Instance._onCloseSetting -= CloseSetting;
+            SettingManager.Instance._onExitGame -= exitGame;
+        }
+    }
+
+    private void exitGame()
+    {
+        _exitgameimg.SetActive(true);
+    }
+
+    private void CloseSetting()
+    {
+        OnAllWinDown();
+    }
+    #endregion
+
+
     #region Check Level
-    private void CheckLevel()
+    public void CheckLevel()
     {
         int level = Castle.Instance._level;
 
@@ -607,6 +673,7 @@ public class GameUI : MonoBehaviour
             if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
+                _scripPlayer = player;
                 player.setCreating(true);
                 player.respawn(Castle.Instance._In_Castle_Pos);
                 _isHas = true;
@@ -678,6 +745,7 @@ public class GameUI : MonoBehaviour
             if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
+                _scripPlayer = player;
                 player.setCreating(true);
                 _isHas = true;
                 break;
@@ -745,6 +813,7 @@ public class GameUI : MonoBehaviour
             if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
+                _scripPlayer = player;
                 player.setCreating(true);
                 _isHas = true;
                 break;
@@ -812,6 +881,7 @@ public class GameUI : MonoBehaviour
             if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
+                _scripPlayer = player;
                 player.setCreating(true);
                 _isHas = true;
                 break;
@@ -880,6 +950,7 @@ public class GameUI : MonoBehaviour
             if (!player.getCreating() && !player.gameObject.activeSelf && player.getDie())
             {
                 _obj = player.gameObject;
+                _scripPlayer = player;
                 player.setCreating(true);
                 _isHas = true;
                 break;
@@ -1166,8 +1237,11 @@ public class GameUI : MonoBehaviour
 
 
     #region Update Reference Upgrade
-    private void updateInfoUpgrade()
+    public void updateInfoUpgrade()
     {
+        string key = "ui.Level";
+        string txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+
         switch (Castle.Instance._level)
         {
             case 1:
@@ -1181,8 +1255,8 @@ public class GameUI : MonoBehaviour
                 _PanelUpgrade_Rock.text = Castle.Instance._lv2_Rock.ToString();
                 _PanelUpgrade_Gold.text = Castle.Instance._lv2_Gold.ToString();
 
-                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
-                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Level.text = txt + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = txt + Castle.Instance._level + " -> " + txt + (Castle.Instance._level + 1);
                 _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv2_MaxHealth;
                 _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv2_MaxSlot;
 
@@ -1205,8 +1279,8 @@ public class GameUI : MonoBehaviour
                 _PanelUpgrade_Rock.text = Castle.Instance._lv3_Rock.ToString();
                 _PanelUpgrade_Gold.text = Castle.Instance._lv3_Gold.ToString();
 
-                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
-                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Level.text = txt + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = txt + Castle.Instance._level + " -> " + txt + (Castle.Instance._level + 1);
                 _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv3_MaxHealth;
                 _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv3_MaxSlot;
 
@@ -1229,8 +1303,8 @@ public class GameUI : MonoBehaviour
                 _PanelUpgrade_Rock.text = Castle.Instance._lv4_Rock.ToString();
                 _PanelUpgrade_Gold.text = Castle.Instance._lv4_Gold.ToString();
 
-                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
-                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Level.text = txt + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = txt + Castle.Instance._level + " -> " + txt + (Castle.Instance._level + 1);
                 _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv4_MaxHealth;
                 _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv4_MaxSlot;
 
@@ -1253,8 +1327,8 @@ public class GameUI : MonoBehaviour
                 _PanelUpgrade_Rock.text = Castle.Instance._lv5_Rock.ToString();
                 _PanelUpgrade_Gold.text = Castle.Instance._lv5_Gold.ToString();
 
-                _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
-                _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level + " -> Lv." + (Castle.Instance._level + 1);
+                _PanelUpgrade_Level.text = txt + Castle.Instance._level;
+                _PanelUpgrade_LevelUpgrade.text = txt + Castle.Instance._level + " -> " + txt + (Castle.Instance._level + 1);
                 _PanelUpgrade_Health.text = Castle.Instance._maxHealth + " -> " + Castle.Instance._lv5_MaxHealth;
                 _PanelUpgrade_Slot.text = Castle.Instance._maxSlot + " -> " + Castle.Instance._lv5_MaxSlot;
 
@@ -1277,7 +1351,6 @@ public class GameUI : MonoBehaviour
         if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID < 7) return;
         if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 7)
             TutorialSetUp.Instance.TutorialClosePanelUpgrade();
-        Debug.Log("Đã UpLevel");
         // trừ tài nguyên
         switch (Castle.Instance._level)
         {
@@ -1352,8 +1425,11 @@ public class GameUI : MonoBehaviour
         updateReferent();
         if (level == 5)
         {
-            _PanelUpgrade_Level.text = "Lv." + Castle.Instance._level;
-            _PanelUpgrade_LevelUpgrade.text = "Lv." + Castle.Instance._level;
+            string key = "ui.Level";
+            string txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+
+            _PanelUpgrade_Level.text = txt + Castle.Instance._level;
+            _PanelUpgrade_LevelUpgrade.text = txt + Castle.Instance._level;
             _PanelUpgrade_Health.text = Castle.Instance._lv5_MaxHealth.ToString();
             _PanelUpgrade_Slot.text = Castle.Instance._lv5_MaxSlot.ToString();
             _PanelButtonUpgrade.interactable = false;
@@ -1406,12 +1482,16 @@ public class GameUI : MonoBehaviour
         Color color;
         if (war)
         {
-            content = "Bọn 'Man Rợn' kia đã phát động tấn công. Hãy bảo vệ nhà chính!";
+            string key = "ui.EnemySpawn.TitleWar";
+            string txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+            content = txt;
             color = Color.red;
         }
         else
         {
-            content = "Chúng đã hồi sinh! Lũ quái vật gớm ghiếc đang trỗi dậy — cẩn thận đấy!";
+            string key = "ui.EnemySpawn.Title";
+            string txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+            content = txt;
             color = Color.white;
         }
         _textEnemyRespawn.text = content;
@@ -1422,8 +1502,10 @@ public class GameUI : MonoBehaviour
 
     public void onWarning(EnemyHuoseController house)
     {
-        _textWarning1.text = "Đánh nhanh – thắng nhanh! Bọn quái vật đã đánh hơi thấy bạn!";
-        _textWarning2.text = $"{(int)house._warningTime} giây nữa, bọn chúng sẽ kéo đến.";
+        string key = "ui.Warning.TitleWarning";
+        string txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+
+        _textWarning2.text = $"{(int)house._warningTime} {txt}";
         _warning.SetActive(true);
     }
     #endregion

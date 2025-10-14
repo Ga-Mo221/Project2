@@ -1,0 +1,623 @@
+fileFormatVersion: 2
+guid: f7ac34fbb6d26a546bca8ba9ab584390
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2370939894988042111
+    second: MoveUp_0
+  - first:
+      213: 2489378009113660492
+    second: MoveUp_1
+  - first:
+      213: 8106897979964126758
+    second: MoveUp_2
+  - first:
+      213: -3118701277780897096
+    second: MoveUp_3
+  - first:
+      213: -3260401994508434078
+    second: MoveUp_4
+  - first:
+      213: -5565926766000624638
+    second: MoveUp_5
+  - first:
+      213: 7702430599210048711
+    second: MoveUp_6
+  - first:
+      213: 8159818500751254926
+    second: MoveUp_7
+  - first:
+      213: -7719890850662620472
+    second: MoveUp_8
+  - first:
+      213: -935756742870914231
+    second: MoveUp_9
+  - first:
+      213: -254314525747056333
+    second: MoveUp_10
+  - first:
+      213: 7684219958978982749
+    second: MoveUp_11
+  - first:
+      213: 6540484981682723452
+    second: MoveUp_12
+  - first:
+      213: -7337874850586647186
+    second: MoveUp_13
+  - first:
+      213: 2544000119755182439
+    second: MoveUp_14
+  - first:
+      213: -6047106227605512559
+    second: MoveUp_15
+  - first:
+      213: 7841113916820924694
+    second: MoveUp_16
+  - first:
+      213: 2338275932432419639
+    second: MoveUp_17
+  - first:
+      213: 4595919289056014697
+    second: MoveUp_18
+  - first:
+      213: 5771682674823388409
+    second: MoveUp_19
+  - first:
+      213: 5106764633646396626
+    second: MoveUp_20
+  - first:
+      213: 7772551872875767220
+    second: MoveUp_21
+  - first:
+      213: -5906417898022831510
+    second: MoveUp_22
+  - first:
+      213: 6188253030757202124
+    second: MoveUp_23
+  - first:
+      213: 2400053577478371051
+    second: MoveUp_24
+  - first:
+      213: 5251272071726790829
+    second: MoveUp_25
+  - first:
+      213: -2444863075450368271
+    second: MoveUp_26
+  - first:
+      213: -3503904267137306946
+    second: MoveUp_27
+  - first:
+      213: -6685660296787611594
+    second: MoveUp_28
+  - first:
+      213: 6791663997539390450
+    second: MoveUp_29
+  - first:
+      213: 4248774080605434570
+    second: MoveUp_30
+  - first:
+      213: 6994925074757456661
+    second: MoveUp_31
+  - first:
+      213: -7776331924171246156
+    second: MoveUp_32
+  - first:
+      213: 1193877904150215085
+    second: MoveUp_33
+  - first:
+      213: 384660824740565018
+    second: MoveUp_34
+  - first:
+      213: 9129095961380630142
+    second: MoveUp_35
+  - first:
+      213: -6595918425880421738
+    second: MoveUp_36
+  - first:
+      213: 1880366013282638409
+    second: MoveUp_37
+  - first:
+      213: 5241410367497765286
+    second: MoveUp_38
+  - first:
+      213: 8031040517570510154
+    second: MoveUp_39
+  - first:
+      213: -6783592888808184363
+    second: MoveUp_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MoveUp_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7f6090d54547e020800000000000000
+      internalID: 2370939894988042111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4c83e82c1c0c8220800000000000000
+      internalID: 2489378009113660492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 626f716b2cc718070800000000000000
+      internalID: 8106897979964126758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b2105126b528b4d0800000000000000
+      internalID: -3118701277780897096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 265895c09a9b0c2d0800000000000000
+      internalID: -3260401994508434078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20ca1ba881bd1c2b0800000000000000
+      internalID: -5565926766000624638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_6
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cc930d12d784ea60800000000000000
+      internalID: 7702430599210048711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_7
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 420
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8560f0a1bf7d3170800000000000000
+      internalID: 8159818500751254926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c2677d4c207dd490800000000000000
+      internalID: -7719890850662620472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_9
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94ba00143368303f0800000000000000
+      internalID: -935756742870914231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_10
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 331ff97494e787cf0800000000000000
+      internalID: -254314525747056333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_11
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d53b8e60755d3aa60800000000000000
+      internalID: 7684219958978982749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_12
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7ad9f7107874ca50800000000000000
+      internalID: 6540484981682723452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_13
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e65a28c73b1aa2a90800000000000000
+      internalID: -7337874850586647186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_14
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7611f8651aa1e4320800000000000000
+      internalID: 2544000119755182439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MoveUp_15
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 200
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19e5588ccec541ca0800000000000000
+      internalID: -6047106227605512559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 17577b310b48e1445bd9f002e8381cc7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":200.0,"y":420.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      MoveUp_0: 2370939894988042111
+      MoveUp_1: 2489378009113660492
+      MoveUp_10: -254314525747056333
+      MoveUp_11: 7684219958978982749
+      MoveUp_12: 6540484981682723452
+      MoveUp_13: -7337874850586647186
+      MoveUp_14: 2544000119755182439
+      MoveUp_15: -6047106227605512559
+      MoveUp_2: 8106897979964126758
+      MoveUp_3: -3118701277780897096
+      MoveUp_4: -3260401994508434078
+      MoveUp_5: -5565926766000624638
+      MoveUp_6: 7702430599210048711
+      MoveUp_7: 8159818500751254926
+      MoveUp_8: -7719890850662620472
+      MoveUp_9: -935756742870914231
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

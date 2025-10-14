@@ -30,6 +30,9 @@ public class PlayerSelectBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _meat;
     [SerializeField] private TextMeshProUGUI _gold;
 
+    private string key = "";
+    private string txt = "";
+
 
     void Update()
     {
@@ -68,27 +71,42 @@ public class PlayerSelectBox : MonoBehaviour
         {
             case UnitType.Warrior:
                 _icon.sprite = _warriorSprite;
-                _name.text = "Dũng Sĩ";
+
+                key = "Name.Player.Warrior";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _normal = true;
                 break;
             case UnitType.Archer:
                 _icon.sprite = _archerSprite;
-                _name.text = "Cung Thủ";
+
+                key = "Name.Player.Archer";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _normal = true;
                 break;
             case UnitType.Lancer:
                 _icon.sprite = _lancerSprite;
-                _name.text = "Thương Sĩ";
+
+                key = "Name.Player.Lancer";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _normal = true;
                 break;
             case UnitType.Healer:
                 _icon.sprite = _healerSprite;
-                _name.text = "Pháp Sư Phục Hồi";
+
+                key = "Name.Player.Healer";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _normal = false;
                 break;
             case UnitType.TNT:
                 _icon.sprite = _TNTSprite;
-                _name.text = "Boom Cảm Tử";
+
+                key = "Name.Player.TNT";
+                txt = LocalizationManager.Instance != null ? LocalizationManager.Instance.Get(key) : $"[{key}]";
+                _name.text = txt;
                 _normal = false;
                 break;
         }

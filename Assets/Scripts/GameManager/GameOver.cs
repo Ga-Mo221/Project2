@@ -32,7 +32,6 @@ public class GameOver : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rock;
     [SerializeField] private TextMeshProUGUI _meat;
     [SerializeField] private TextMeshProUGUI _gold;
-    [SerializeField] private TextMeshProUGUI _exitTextButton;
     [SerializeField] private Button _exitButton;
     [SerializeField] private Image _blackImg;
 
@@ -88,9 +87,6 @@ public class GameOver : MonoBehaviour
         _meat.text = GameManager.Instance._meat.ToString();
         _gold.text = GameManager.Instance._gold.ToString();
 
-
-        // button exit
-        _exitTextButton.text = "Thoát";
 
         _content.text = GameManager.Instance._contentGameOver;
 

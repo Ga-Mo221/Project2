@@ -342,6 +342,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6020ed2ca97f4f548bc5c8027f59497e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3457830924544414897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3625954368913118979}
+  - component: {fileID: 1348034883906397642}
+  m_Layer: 6
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3625954368913118979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3457830924544414897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1046954260237384654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1348034883906397642
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3457830924544414897}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.02, y: -1.24}
+  m_Radius: 1.95
 --- !u!1 &5189178214009087246
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +573,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -3.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3625954368913118979}
   m_Father: {fileID: 3390003849460551415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1566715685574358516
@@ -558,6 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ArcherUp: {fileID: 0}
   _ArcherUp_Obj: {fileID: 5838563716410934954}
+  _cache: {fileID: 0}
   _audio: {fileID: 5435359824633416003}
 --- !u!1 &5254991192997559193
 GameObject:
@@ -752,22 +822,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _tutorial: 0
-  _fire: {fileID: 3372721448681757854}
   _canDetec: 0
+  _fire: {fileID: 3372721448681757854}
   _imgLoad: {fileID: 8819435455824178060}
   _inPos: {fileID: 5233913819557827738}
   _inPos1: {fileID: 0}
   _inPos2: {fileID: 0}
   _inPos3: {fileID: 0}
   _rada: {fileID: 2886844667331356717}
+  _house: {fileID: 4511442007061942783}
   _ButtonArcherUP: {fileID: 6914980141317710162}
   _light: {fileID: 5476259088138348868}
   _canvas: {fileID: 7954586051342352286}
   _canCreate: {fileID: 9218680089185298883}
   _HPcanvas: {fileID: 5294076326495381866}
-  _outLine: {fileID: 6075400687741877258}
-  _createTimeSec: 30
+  _outLine: {fileID: 5071970805734256668}
+  _time: 0
 --- !u!114 &4511442007061942783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,6 +857,7 @@ MonoBehaviour:
   _canUpdateHP: 1
   _maxHealth: 170
   _currentHealth: 0
+  _createTimeSec: 30
   _HpImg: {fileID: 8589995550816023072}
   _inTower: {fileID: 5494057496694819821}
   _archer: {fileID: 6146154157526959539}
@@ -910,18 +981,21 @@ MonoBehaviour:
   _Fire_Clip: {fileID: 0}
   ArcherUp: 0
   TreeOrRockOrGold: 0
-  _Die_Clip: {fileID: 0}
+  _Die_Clip: {fileID: 8300000, guid: 99423764123bfb54badf9231fa93ad8e, type: 3}
   Enemy: 0
   Storage: 0
   _Attack_Clip: {fileID: 0}
   Animal: 0
-  _Level_Up_Clip: {fileID: 0}
-  _Archer_Up_Clip: {fileID: 0}
+  _Level_Up_Clip: {fileID: 8300000, guid: 05a7f9fdf6867cf4091246df0cbdb40c, type: 3}
+  _Archer_Up_Clip: {fileID: 8300000, guid: ba72fa23a6c5d804a850942cb66a8f7a, type: 3}
   CanCreate: 1
-  _Creating_Clip: {fileID: 0}
+  _Creating_Clip: {fileID: 8300000, guid: 4b5d156b77362a1418da3288579913fa, type: 3}
   _Warning_Clip: {fileID: 0}
   _MoveTo_Clip: {fileID: 0}
-  volume: 1
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
   spatialBlend: 1
   minDistance: 10
   maxDistance: 50
@@ -1059,7 +1133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344b29ee8a9d1994096649e7f4fc6410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CreateNow: 0
   Tower: 1
   _TowerGFX: {fileID: 7050082066496320473}
   _ArcherUp_GFX: {fileID: 7149911614317327965}
@@ -2353,6 +2426,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 5572122106602078039}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5071970805734256668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 5572122106602078039}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075400687741877258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a7846ca1cfa244a86f78c5afc18c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6075400687741877258 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}

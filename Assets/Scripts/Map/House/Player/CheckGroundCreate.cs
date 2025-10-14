@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CheckGroundCreate : MonoBehaviour
 {
-    [SerializeField] private bool _CreateNow = false;
     [SerializeField] private bool Tower = true;
     [SerializeField] private SpriteRenderer _TowerGFX;
     [ShowIf(nameof(Tower))]
@@ -86,9 +85,8 @@ public class CheckGroundCreate : MonoBehaviour
             _inPos3.SetActive(false);
         }
 
-        if (_CreateNow)
+        if (_houshealth._house._createTimeSec == 0)
         {
-            Debug.Log($"Create {transform.parent.name}");
             StartCoroutine(createNow());
         }
     }

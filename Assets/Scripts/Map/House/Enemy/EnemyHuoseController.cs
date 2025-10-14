@@ -47,6 +47,7 @@ public class EnemyHuoseController : MonoBehaviour
     [Header("Other")]
     [SerializeField] private GameObject _HpBar;
     [SerializeField] private GameObject _Icon;
+    [SerializeField] private OutLine _outLine;
     public UnitAudio _audio;
     public Display _display;
 
@@ -95,6 +96,7 @@ public class EnemyHuoseController : MonoBehaviour
         _Die = true;
         _HpBar.SetActive(false);
         _Icon.SetActive(false);
+        _outLine.Out();
         CameraShake.Instance.ShakeCamera(1f, 0.5f);
         if (IsStorage)
         {
