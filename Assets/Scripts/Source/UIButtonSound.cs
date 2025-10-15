@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, ISelectHandler, 
+public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, ISelectHandler, 
     IDeselectHandler
 {
     [Header("Sound Clips")]
@@ -68,7 +68,7 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickH
         PlaySFX(hoverClip, hoverVolume);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         PlaySFX(clickClip, clickVolume);
     }
@@ -98,7 +98,6 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickH
         if (clip == null) return;
 
         // Lấy volume hệ thống
-        Debug.Log(1);
         float overall = SettingManager.Instance._gameSettings._overall_Volume;
         float sfx = SettingManager.Instance._gameSettings._SFX_volume;
 
