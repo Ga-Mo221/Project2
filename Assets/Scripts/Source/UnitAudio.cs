@@ -12,6 +12,25 @@ public class UnitAudio : MonoBehaviour
     private bool IsMainHome => _type == UnitSound.MainHome;
     private bool IsWeather => _type == UnitSound.Weather;
 
+
+    [Header("Audio Volume")]
+    [Range(0.1f, 1f)][SerializeField] private float _music_Volume = 1f;
+    [Range(0.1f, 1f)][SerializeField] private float _sfx_Volume = 1f;
+
+
+    [Foldout("Audio Settings")]
+    [Range(0f, 1f)] public float spatialBlend = 1f; // 3D sound
+    [Foldout("Audio Settings")]
+    public float minDistance = 10f;
+    [Foldout("Audio Settings")]
+    public float maxDistance = 50f;
+    [Foldout("Audio Settings")]
+    public bool randomizePitch = true;
+    [Foldout("Audio Settings")]
+    [Range(0.8f, 1.2f)] public float pitchVariation = 0.1f;
+
+
+
     [Foldout("AudioClip")]
     [ShowIf(nameof(IsArtor))]
     [SerializeField] private bool TNTOrSheep = false;
@@ -99,12 +118,7 @@ public class UnitAudio : MonoBehaviour
     [SerializeField] private AudioClip _Night_Clip;
 
 
-    [Header("Audio Settings")]
-    [Range(0f, 1f)] public float spatialBlend = 1f; // 3D sound
-    public float minDistance = 10f;
-    public float maxDistance = 50f;
-    public bool randomizePitch = true;
-    [Range(0.8f, 1.2f)] public float pitchVariation = 0.1f;
+    
 
     private AudioSource _audio;
 
@@ -134,10 +148,8 @@ public class UnitAudio : MonoBehaviour
         float sfx = SettingManager.Instance._gameSettings._SFX_volume;
 
         _audio.volume = _audio.loop
-            ? music * overall
-            : sfx * overall;
-
-        Debug.Log(transform.name + " " + _audio.volume);
+            ? _music_Volume * music * overall
+            : _sfx_Volume * sfx * overall;
     }
 
 

@@ -661,7 +661,6 @@ public class GameUI : MonoBehaviour
     public void createWarrior()
     {
         if (GameManager.Instance.Tutorial) return;
-        Debug.Log("Đã Tạo Warrior");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Warrior;
         updateReferent();
         // tao player
@@ -732,7 +731,6 @@ public class GameUI : MonoBehaviour
         if (GameManager.Instance.Tutorial && TutorialSetUp.Instance._CreateArcher) return;
         if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 5)
             TutorialSetUp.Instance.TutorialCreateTimeAddSlotPlayer();
-        Debug.Log("Đã Tạo Archer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Archer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Archer;
         updateReferent();
@@ -799,7 +797,6 @@ public class GameUI : MonoBehaviour
     #region Lancer
     public void createLancer()
     {
-        Debug.Log("Đã Tạo Lancer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Lancer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Lancer;
         Castle.Instance._meat -= GameManager.Instance.Info._meat_Lancer;
@@ -867,7 +864,6 @@ public class GameUI : MonoBehaviour
     #region TNT
     public void createTNT()
     {
-        Debug.Log("Đã Tạo TNT");
         Castle.Instance._rock -= GameManager.Instance.Info._rock_TNT;
         Castle.Instance._meat -= GameManager.Instance.Info._meat_TNT;
         Castle.Instance._gold -= GameManager.Instance.Info._gold_TNT;
@@ -935,7 +931,6 @@ public class GameUI : MonoBehaviour
     #region Healer
     public void createHealer()
     {
-        Debug.Log("Đã Tạo Healer");
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Healer;
         Castle.Instance._rock -= GameManager.Instance.Info._rock_Healer;
         Castle.Instance._meat -= GameManager.Instance.Info._meat_Healer;

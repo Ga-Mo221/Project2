@@ -258,31 +258,32 @@ public class Castle : MonoBehaviour
     #region Check GameOver
     public void CheckGameOver()
     {
+        StartCoroutine(CheckCor());
+    }
+
+
+    private IEnumerator CheckCor()
+    {
+        yield return new WaitForSeconds(4f);
         // Nếu tất cả quân đã chết
         if (AreAllUnitsDead(_level))
         {
+            Debug.LogWarning($"[{_level}] Tất Cả Quân Đoàn Đã Chết");
             // Và không đủ tài nguyên tạo bất kỳ loại nào
             if (NoResourcesToCreateAny(_level))
             {
+                Debug.LogWarning($"[{_level}] Không Đủ Tài Nguyên Để Chiệu Mộ Lính Mới");
                 GameManager.Instance.setWin(false);
                 GameManager.Instance.setGameOver(true);
             }
-        }
-    }
-
-    private IEnumerator Over()
-    {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        if (GameManager.Instance.TutorialWar && !TutorialSetUp.Instance._Win)
-        {
-            TutorialSetUp.Instance.GameLose();
+            else Debug.Log($"[{_level}] Còn Tài Nguyên Để Chiêu Mộ thêm");
         }
         else
         {
-            
+            Debug.Log($"[{_level}] Quân Đoàn Còn Sống");
         }
     }
+
 
     // Check từng list class có còn lính hay không
     private bool AreAllUnitsDead(int level)
@@ -309,8 +310,28 @@ public class Castle : MonoBehaviour
         // Nếu còn bất kỳ lính nào sống, chưa tạo xong, hoặc đang lên tháp → chưa "dead"
         foreach (var p in list)
         {
-            if (p.gameObject.activeSelf || p.getCreating() || p.getUpTower())
+            if (!p.getDie())
+            {
+                Debug.Log($"[{p.transform.name}] Còn Sống 1");
                 return false;
+            }
+            if (p.gameObject.activeSelf)
+            {
+                Debug.Log($"[{p.transform.name}] Còn Sống 2");
+                return false;
+            }
+            if (p.getCreating())
+            {
+                Debug.Log($"[{p.transform.name}] Đang Tạo");
+                return false;
+            }
+            if (p.getUpTower())
+            {
+                Debug.Log($"[{p.transform.name}] Trên Tháp");
+                return false;
+            }
+            // if (!p.getDie() || p.gameObject.activeSelf || p.getCreating() || p.getUpTower())
+            //     return false;
         }
         return true;
     }
