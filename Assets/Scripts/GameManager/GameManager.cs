@@ -68,8 +68,12 @@ public class GameManager : MonoBehaviour
 
     [Foldout("Other")]
     [SerializeField] private GameObject _defen;
+    [Foldout("Other")]
     [SerializeField] private GameObject _GameUI_Obj;
+    [Foldout("Other")]
+    [SerializeField] private MusicGameplay _audio;
     private GameOver _gameOver;
+
 
 
     [Foldout("Prefab")]
@@ -254,4 +258,10 @@ public class GameManager : MonoBehaviour
 
     public void setActiveGameUI(bool amount)
         => _GameUI_Obj.SetActive(amount);
+
+    public void War()
+        => _audio.PlayWarSound();
+
+    public void StopSoundMusic()
+        => _audio.StopAudio();
 } 

@@ -129,8 +129,6 @@ public class UnitAudio : MonoBehaviour
 
     private void ApplyVolumeChange()
     {
-        if (!_audio.isPlaying) return;
-
         float overall = SettingManager.Instance._gameSettings._overall_Volume;
         float music = SettingManager.Instance._gameSettings._music_Volume;
         float sfx = SettingManager.Instance._gameSettings._SFX_volume;
@@ -138,6 +136,8 @@ public class UnitAudio : MonoBehaviour
         _audio.volume = _audio.loop
             ? music * overall
             : sfx * overall;
+
+        Debug.Log(transform.name + " " + _audio.volume);
     }
 
 
@@ -165,7 +165,7 @@ public class UnitAudio : MonoBehaviour
             // Nếu không loop → phát tạm 1 lần
             _audio.loop = false;
             ApplyVolumeChange();
-            _audio.PlayOneShot(clip);
+            _audio.PlayOneShot(clip, _audio.volume);
         }
     }
 
@@ -215,6 +215,16 @@ public class UnitAudio : MonoBehaviour
     {
         if (_audio.isPlaying)
             _audio.Stop();
+    }
+
+    public bool checkPlayingWarSound()
+    {
+        return _audio.clip == _Sun_Clip;
+    }
+
+    public bool checkMusicGameplaySound()
+    {
+        return _audio.clip == _Rain_Clip;
     }
 }
 

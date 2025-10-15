@@ -23,6 +23,8 @@ public class Weather : MonoBehaviour
     private Coroutine lightningCoroutine;
     private Coroutine weatherCycleCoroutine;
 
+    [SerializeField] private UnitAudio _audio;
+
     private void Start()
     {
         _cloudShadow.SetActive(true);
@@ -107,7 +109,7 @@ public class Weather : MonoBehaviour
         {
             float wait = Random.Range(_minLightningDelay, _maxLightningDelay);
             yield return new WaitForSeconds(wait);
-
+            _audio.PlayFarmOrHitDamageSound();
             _light.intensity = _flashIntensity;
             yield return new WaitForSeconds(_flashDuration);
             _light.intensity = 1f;
