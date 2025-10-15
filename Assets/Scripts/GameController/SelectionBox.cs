@@ -41,7 +41,7 @@ public class SelectionBox : MonoBehaviour
                 GameManager.Instance.UIsetActiveButtonUpgrade(false);
                 GameManager.Instance._selectBox.gameObject.SetActive(false);
             }
-            if (!Castle.Instance._V)
+            if (Castle.Instance != null && !Castle.Instance._V)
             {
                 _singleSelected = false;
                 startScreenPos = Input.mousePosition;
@@ -73,7 +73,7 @@ public class SelectionBox : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !CursorManager.Instance.ChoseUI)
         {
-            if (!Castle.Instance._V)
+            if (Castle.Instance != null && !Castle.Instance._V)
             {
                 endScreenPos = Input.mousePosition;
                 UpdateVisual(startScreenPos, endScreenPos);
@@ -82,7 +82,7 @@ public class SelectionBox : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && !CursorManager.Instance.ChoseUI)
         {
-            if (!Castle.Instance._V)
+            if (Castle.Instance != null && !Castle.Instance._V)
             {
                 if (boxVisual) boxVisual.gameObject.SetActive(false);
                 endScreenPos = Input.mousePosition;
@@ -197,6 +197,7 @@ public class SelectionBox : MonoBehaviour
     #region Get For Unit Class
     private GameObject[] getUnitClass()
     {
+        if (Castle.Instance == null) return null;
         List<GameObject> selectable = new List<GameObject>();
 
         if (Castle.Instance._Q)
