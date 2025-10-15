@@ -466,7 +466,7 @@ MonoBehaviour:
   _type: 1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
-  _Fire_Clip: {fileID: 0}
+  _Fire_Clip: {fileID: 8300000, guid: 1ebc24fadef4d91479033dafdb7c53e2, type: 3}
   ArcherUp: 0
   TreeOrRockOrGold: 0
   _Die_Clip: {fileID: 8300000, guid: 99423764123bfb54badf9231fa93ad8e, type: 3}

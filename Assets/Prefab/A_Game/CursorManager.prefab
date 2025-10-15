@@ -79,6 +79,9 @@ MonoBehaviour:
     _isWeather: 1
     _Tutorial: 1
   _playing: 0
+  _button_hover: {fileID: 8300000, guid: 222b40b13c637a64e8c2c5d504414edc, type: 3}
+  _button_click: {fileID: 8300000, guid: 115a8df5b56f2c94687fd9fa1a120786, type: 3}
+  _valuchangeClip: {fileID: 8300000, guid: d5c2c989f12b67f43b646c1ce84e8eea, type: 3}
 --- !u!114 &7090054386118423345
 MonoBehaviour:
   m_ObjectHideFlags: 0

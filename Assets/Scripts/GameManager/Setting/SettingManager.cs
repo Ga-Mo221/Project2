@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using NaughtyAttributes;
 
 public class SettingManager : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class SettingManager : MonoBehaviour
     public event Action _onExitGame;
 
     public bool _playing = false;
+
+    [Foldout("Button Clip")]
+    public AudioClip _button_hover;
+    [Foldout("Button Clip")]
+    public AudioClip _button_click;
+    [Foldout("Button Clip")]
+    public AudioClip _valuchangeClip;
 
     void Awake()
     {

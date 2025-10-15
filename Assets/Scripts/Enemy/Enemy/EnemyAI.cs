@@ -361,6 +361,11 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator attackSpawn(float delay)
     {
         _anim.SetTrigger("Attack");
+        if (target != null)
+        {
+            if (target.CompareTag("House") || PlayerTag.checkTag(target.tag))
+                GameManager.Instance.War();
+        }
         yield return new WaitForSeconds(delay);
         _attackSpawn = null;
     }

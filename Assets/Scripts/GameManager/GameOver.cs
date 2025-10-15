@@ -140,7 +140,7 @@ public class GameOver : MonoBehaviour
     private IEnumerator BackToHome()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("Back Home");
+        GameScene.Instance.OpenSceneMainMenu();
     }
     #endregion
 
