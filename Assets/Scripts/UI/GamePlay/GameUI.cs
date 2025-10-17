@@ -755,6 +755,7 @@ public class GameUI : MonoBehaviour
                 _obj = player.gameObject;
                 _scripPlayer = player;
                 player.setCreating(true);
+                player.respawn(Castle.Instance._In_Castle_Pos);
                 _isHas = true;
                 break;
             }
@@ -823,6 +824,7 @@ public class GameUI : MonoBehaviour
                 _obj = player.gameObject;
                 _scripPlayer = player;
                 player.setCreating(true);
+                player.respawn(Castle.Instance._In_Castle_Pos);
                 _isHas = true;
                 break;
             }
@@ -891,6 +893,7 @@ public class GameUI : MonoBehaviour
                 _obj = player.gameObject;
                 _scripPlayer = player;
                 player.setCreating(true);
+                player.respawn(Castle.Instance._In_Castle_Pos);
                 _isHas = true;
                 break;
             }
@@ -960,6 +963,7 @@ public class GameUI : MonoBehaviour
                 _obj = player.gameObject;
                 _scripPlayer = player;
                 player.setCreating(true);
+                player.respawn(Castle.Instance._In_Castle_Pos);
                 _isHas = true;
                 break;
             }

@@ -246,6 +246,7 @@ public class PlayerAI : MonoBehaviour
     #region New Status
     private void newStatus()
     {
+        Debug.Log("New State");
         _canUpdateHP = true;
         _level = 1;
         _health = _maxHealth;
@@ -276,11 +277,10 @@ public class PlayerAI : MonoBehaviour
     */
     public void respawn(Transform pos)
     {
-        IsDie = false;
         newStatus();
+        IsDie = false;
         path.setDie(false);
         path.setCanMove(true);
-        transform.position = pos.position;
         _MiniMapIcon.SetActive(true);
         _OutLine.SetActive(true);
         _GFX.SetActive(true);
@@ -288,7 +288,6 @@ public class PlayerAI : MonoBehaviour
         if (!IsHealerOrTNT)
             _healEffect.SetActive(false);
         _selet.SetActive(false);
-        setDie(false);
         _rada.setDie(false);
 
         if (_cor_NewlySpawned != null)
@@ -296,6 +295,8 @@ public class PlayerAI : MonoBehaviour
 
         if (gameObject.activeInHierarchy)
             _cor_NewlySpawned = StartCoroutine(reset_isNewlySpawned());
+        transform.position = pos.position;
+        Debug.Log("respawn");
     }
     #endregion
 

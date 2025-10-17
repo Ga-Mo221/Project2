@@ -18,8 +18,14 @@ public class SettingManager : MonoBehaviour
     public event Action _onRightMousePanCamera;
     public event Action _onRightMouseSpeed;
     public event Action _onExitGame;
+    
 
     public bool _playing = false;
+
+    [Header("Online")]
+    [SerializeField] private bool _Online = false;
+    [SerializeField] private bool _InRoom = false;
+    [SerializeField] private int _maxPlayer = 4;
 
     [Foldout("Button Clip")]
     public AudioClip _button_hover;
@@ -124,4 +130,27 @@ public class SettingManager : MonoBehaviour
     {
         _onExitGame?.Invoke();
     }
+
+    public void setOnline(bool amount)
+    {
+        _Online = amount;
+    }
+
+    public bool getOnline()
+    {
+        return _Online;
+    }
+
+    public void setInRoom(bool amount)
+    {
+        _InRoom = amount;
+    }
+
+    public bool getInRoom()
+    {
+        return _InRoom;
+    }
+
+    public int getPlayerValue() => _maxPlayer;
+    public void setPlayerValue(int value) => _maxPlayer = value;
 }
