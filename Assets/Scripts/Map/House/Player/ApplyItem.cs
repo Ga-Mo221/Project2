@@ -16,30 +16,30 @@ public class ApplyItem : MonoBehaviour
             var _script = collision.GetComponent<PlayerAI>();
             if (_script.getUpTower()) return;
             bool _aply = false;
-            if (_script._rock > 0 && Castle.Instance._rock < Castle.Instance._maxRock)
+            if (_script._rock > 0 && CastleManager.Instance.Castle._rock < CastleManager.Instance.Castle._maxRock)
             {
-                Castle.Instance._rock += _script._rock;
+                CastleManager.Instance.Castle._rock += _script._rock;
                 GameManager.Instance._rock += _script._rock;
                 _script._rock = 0;
                 _aply = true;
             }
-            if (_script._wood > 0 && Castle.Instance._wood < Castle.Instance._maxWood)
+            if (_script._wood > 0 && CastleManager.Instance.Castle._wood < CastleManager.Instance.Castle._maxWood)
             {
-                Castle.Instance._wood += _script._wood;
+                CastleManager.Instance.Castle._wood += _script._wood;
                 GameManager.Instance._wood += _script._wood;
                 _script._wood = 0;
                 _aply = true;
             }
-            if (_script._gold > 0 && Castle.Instance._gold < Castle.Instance._maxGold)
+            if (_script._gold > 0 && CastleManager.Instance.Castle._gold < CastleManager.Instance.Castle._maxGold)
             {
-                Castle.Instance._gold += _script._gold;
+                CastleManager.Instance.Castle._gold += _script._gold;
                 GameManager.Instance._gold += _script._gold;
                 _script._gold = 0;
                 _aply = true;
             }
-            if (_script._meat > 0 && Castle.Instance._meat < Castle.Instance._maxMeat)
+            if (_script._meat > 0 && CastleManager.Instance.Castle._meat < CastleManager.Instance.Castle._maxMeat)
             {
-                Castle.Instance._meat += _script._meat;
+                CastleManager.Instance.Castle._meat += _script._meat;
                 GameManager.Instance._meat += _script._meat;
                 _script._meat = 0;
                 _aply = true;

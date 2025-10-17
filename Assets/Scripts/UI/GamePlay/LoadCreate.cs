@@ -70,8 +70,8 @@ public class LoadCreate : MonoBehaviour
             _loadImg.fillAmount = _load;
             if (_load <= 0)
             {
-                _listCreate[0].SetActive(true);
                 var player = _listCreate[0].GetComponent<PlayerAI>();
+                player.setActive(true);
                 player.setCreating(false);
                 GameManager.Instance.UIloadPlayer();
                 GameManager.Instance.UIupdatePlayerValue();

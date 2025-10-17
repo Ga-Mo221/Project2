@@ -1,9 +1,9 @@
 using System.Collections;
 using Pathfinding;
-using Unity.VisualScripting;
+using Photon.Pun;
 using UnityEngine;
 
-public class FindPath : MonoBehaviour
+public class FindPath : MonoBehaviourPun
 {
     [SerializeField] private float _maxSpeed;
     [SerializeField] private float _range;
@@ -29,8 +29,14 @@ public class FindPath : MonoBehaviour
     private int _currentWaypoint = 0;
 
 
+    #region Online
+    private NetworkAnimatorFix _net_Anim_Fix;
+    #endregion
+
+
     void Awake()
     {
+        _net_Anim_Fix = GetComponent<NetworkAnimatorFix>();
         _seeker = GetComponent<Seeker>();
         _rb = GetComponent<Rigidbody2D>();
         
@@ -123,11 +129,11 @@ public class FindPath : MonoBehaviour
         if (_reachedEndOfPath)
         {
             _rb.linearVelocity = Vector2.zero;
-            if (_anim) _anim.SetBool("Moving", false);
+            if (_anim) _net_Anim_Fix.Move(false);
             return;
         }
 
-        if (_anim) _anim.SetBool("Moving", true);
+        if (_anim) _net_Anim_Fix.Move(true);
 
         // Nếu vượt quá waypoint cuối
         if (_currentWaypoint >= _path.vectorPath.Count)

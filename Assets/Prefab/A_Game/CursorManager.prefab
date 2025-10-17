@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 433433321181395220}
   - component: {fileID: 7090054386118423345}
   - component: {fileID: 8378677578297867844}
+  - component: {fileID: 3799139287791972713}
   m_Layer: 0
   m_Name: CursorManager
   m_TagString: Untagged
@@ -79,6 +80,9 @@ MonoBehaviour:
     _isWeather: 1
     _Tutorial: 1
   _playing: 0
+  _Online: 0
+  _InRoom: 0
+  _maxPlayer: 4
   _button_hover: {fileID: 8300000, guid: 222b40b13c637a64e8c2c5d504414edc, type: 3}
   _button_click: {fileID: 8300000, guid: 115a8df5b56f2c94687fd9fa1a120786, type: 3}
   _valuchangeClip: {fileID: 8300000, guid: d5c2c989f12b67f43b646c1ce84e8eea, type: 3}
@@ -110,3 +114,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b66d5be666d4ef4885a287150376880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3799139287791972713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4567654202575403183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff16f1e3d258ea4aa7bfb72d0efe7da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Castle: {fileID: 0}

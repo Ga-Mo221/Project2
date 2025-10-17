@@ -15,7 +15,7 @@ public class TNTGFX : PlayerAI
         if (!_oderSpriterPoint)
             Debug.LogError("[TNTGFX] Chưa gán '_oderSpriterPoint'");
 
-        addCastle(Castle.Instance._ListTNT);
+        addCastle(CastleManager.Instance.Castle._ListTNT);
     }
 
     protected override void Update()

@@ -100,10 +100,10 @@ public class EnemyHuoseController : MonoBehaviour
         CameraShake.Instance.ShakeCamera(1f, 0.5f);
         if (IsStorage)
         {
-            Castle.Instance._wood += _wood;
-            Castle.Instance._rock += _rock;
-            Castle.Instance._meat += _meat;
-            Castle.Instance._gold += _gold;
+            CastleManager.Instance.Castle._wood += _wood;
+            CastleManager.Instance.Castle._rock += _rock;
+            CastleManager.Instance.Castle._meat += _meat;
+            CastleManager.Instance.Castle._gold += _gold;
             GameManager.Instance.UIupdateReferences();
         }
         if (IsCastle)

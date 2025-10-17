@@ -165,18 +165,18 @@ public class CheckGroundCreate : MonoBehaviour
             int _yOder = 0;
             if (Tower)
             {
-                Castle.Instance._wood -= GameManager.Instance.Info._wood_Tower;
-                Castle.Instance._rock -= GameManager.Instance.Info._rock_Tower;
-                Castle.Instance._gold -= GameManager.Instance.Info._gold_Tower;
+                CastleManager.Instance.Castle._wood -= GameManager.Instance.Info._wood_Tower;
+                CastleManager.Instance.Castle._rock -= GameManager.Instance.Info._rock_Tower;
+                CastleManager.Instance.Castle._gold -= GameManager.Instance.Info._gold_Tower;
                 GameManager.Instance.UIupdateReferences();
                 _yOder = -(int)(_inPos.transform.position.y * 100) + 10000;
                 _ArcherUp_GFX.sortingOrder = _yOder + 1;
             }
             else
             {
-                Castle.Instance._wood -= GameManager.Instance.Info._wood_Storage;
-                Castle.Instance._rock -= GameManager.Instance.Info._rock_Storage;
-                Castle.Instance._gold -= GameManager.Instance.Info._gold_Storage;
+                CastleManager.Instance.Castle._wood -= GameManager.Instance.Info._wood_Storage;
+                CastleManager.Instance.Castle._rock -= GameManager.Instance.Info._rock_Storage;
+                CastleManager.Instance.Castle._gold -= GameManager.Instance.Info._gold_Storage;
                 GameManager.Instance.UIupdateReferences();
                 _yOder = -(int)(_inPos1.transform.position.y * 100) + 10000;
                 _RotationL.SetActive(false);
@@ -192,9 +192,9 @@ public class CheckGroundCreate : MonoBehaviour
             _buttonCancel.SetActive(false);
             _ingLoad.SetActive(true);
             if (Tower)
-                Castle.Instance._towerList.Add(transform.parent.gameObject);
+                CastleManager.Instance.Castle._towerList.Add(transform.parent.gameObject);
             else
-                Castle.Instance._storageList.Add(transform.parent.gameObject);
+                CastleManager.Instance.Castle._storageList.Add(transform.parent.gameObject);
 
             AstarPath.active.Scan();
             GameManager.Instance.setCanBuy(true);

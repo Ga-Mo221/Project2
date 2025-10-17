@@ -23,9 +23,9 @@ public class SelectArcherUp : MonoBehaviour
 
     void Update()
     {
-        if (Castle.Instance._level != _currentLevel)
+        if (CastleManager.Instance.Castle != null && CastleManager.Instance.Castle._level != _currentLevel)
         {
-            _currentLevel = Castle.Instance._level;
+            _currentLevel = CastleManager.Instance.Castle._level;
             switch (_currentLevel)
             {
                 case 2:
@@ -45,81 +45,81 @@ public class SelectArcherUp : MonoBehaviour
     public void button_Right()
     {
         if (SelectionBox.Instance.chosen.Count == 1
-            && Castle.Instance._archer_Right == null)
+            && CastleManager.Instance.Castle._archer_Right == null)
         {
             if (!SelectionBox.Instance.chosen[0].CompareTag("Archer")) return;
             _archer_right = true;
             var _scrip = SelectionBox.Instance.chosen[0].GetComponent<ArcherGFX>();
-            _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
+            _scrip.setTarget(CastleManager.Instance.Castle._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Right;
             _scrip._movingToTower = true;
         }
-        else if (Castle.Instance._archer_Right != null)
+        else if (CastleManager.Instance.Castle._archer_Right != null)
         {
-            Castle.Instance._archer_Right_Obj.SetActive(false);
-            var _scrip = Castle.Instance._archer_Right.GetComponent<ArcherGFX>();
+            CastleManager.Instance.Castle._archer_Right_Obj.SetActive(false);
+            var _scrip = CastleManager.Instance.Castle._archer_Right.GetComponent<ArcherGFX>();
             _scrip.target = null;
             _scrip.setTargetPos(transform);
             _scrip._In_Castle = false;
             _scrip.setUpTower(false);
-            Castle.Instance._archer_Right.SetActive(true);
+            CastleManager.Instance.Castle._archer_Right.SetActive(true);
             _scrip.setIsAI(true);
-            Castle.Instance._archer_Right = null;
+            CastleManager.Instance.Castle._archer_Right = null;
         }
     }
 
     public void button_Centter()
     {
         if (SelectionBox.Instance.chosen.Count == 1
-        && Castle.Instance._archer_Center == null)
+        && CastleManager.Instance.Castle._archer_Center == null)
         {
             if (!SelectionBox.Instance.chosen[0].CompareTag("Archer")) return;
             _archer_center = true;
             var _scrip = SelectionBox.Instance.chosen[0].GetComponent<ArcherGFX>();
-            _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
+            _scrip.setTarget(CastleManager.Instance.Castle._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Center;
             _scrip._movingToTower = true;
         }
-        else if (Castle.Instance._archer_Center != null)
+        else if (CastleManager.Instance.Castle._archer_Center != null)
         {
-            Castle.Instance._archer_Center_Obj.SetActive(false);
-            var _scrip = Castle.Instance._archer_Center.GetComponent<ArcherGFX>();
+            CastleManager.Instance.Castle._archer_Center_Obj.SetActive(false);
+            var _scrip = CastleManager.Instance.Castle._archer_Center.GetComponent<ArcherGFX>();
             _scrip.setTargetPos(transform);
             _scrip.target = null;
             _scrip._In_Castle = false;
             _scrip.setUpTower(false);
-            Castle.Instance._archer_Center.SetActive(true);
+            CastleManager.Instance.Castle._archer_Center.SetActive(true);
             _scrip.setIsAI(true);
-            Castle.Instance._archer_Center = null;
+            CastleManager.Instance.Castle._archer_Center = null;
         }
     }
 
     public void button_Left()
     {
         if (SelectionBox.Instance.chosen.Count == 1
-        && Castle.Instance._archer_Left == null)
+        && CastleManager.Instance.Castle._archer_Left == null)
         {
             if (!SelectionBox.Instance.chosen[0].CompareTag("Archer")) return;
             _archer_Left = true;
             var _scrip = SelectionBox.Instance.chosen[0].GetComponent<ArcherGFX>();
-            _scrip.setTarget(Castle.Instance._In_Castle_Pos.position, true);
+            _scrip.setTarget(CastleManager.Instance.Castle._In_Castle_Pos.position, true);
             _scrip._In_Castle = true;
             _scrip._upDirection = UpDirection.Left;
             _scrip._movingToTower = true;
         }
-        else if (Castle.Instance._archer_Left != null)
+        else if (CastleManager.Instance.Castle._archer_Left != null)
         {
-            Castle.Instance._archer_Left_Obj.SetActive(false);
-            var _scrip = Castle.Instance._archer_Left.GetComponent<ArcherGFX>();
+            CastleManager.Instance.Castle._archer_Left_Obj.SetActive(false);
+            var _scrip = CastleManager.Instance.Castle._archer_Left.GetComponent<ArcherGFX>();
             _scrip.setTargetPos(transform);
             _scrip.target = null;
             _scrip._In_Castle = false;
             _scrip.setUpTower(false);
-            Castle.Instance._archer_Left.SetActive(true);
+            CastleManager.Instance.Castle._archer_Left.SetActive(true);
             _scrip.setIsAI(true);
-            Castle.Instance._archer_Left = null;
+            CastleManager.Instance.Castle._archer_Left = null;
         }
     }
 
@@ -139,27 +139,27 @@ public class SelectArcherUp : MonoBehaviour
             {
                 if (_archer_right && _script._upDirection == UpDirection.Right)
                 {
-                    Castle.Instance._archer_Right = collision.gameObject;
-                    Castle.Instance._archer_Right_Obj.SetActive(true);
+                    CastleManager.Instance.Castle._archer_Right = collision.gameObject;
+                    CastleManager.Instance.Castle._archer_Right_Obj.SetActive(true);
                     ok = true;
                 }
                 else if (_archer_center && _script._upDirection == UpDirection.Center)
                 {
-                    Castle.Instance._archer_Center = collision.gameObject;
-                    Castle.Instance._archer_Center_Obj.SetActive(true);
+                    CastleManager.Instance.Castle._archer_Center = collision.gameObject;
+                    CastleManager.Instance.Castle._archer_Center_Obj.SetActive(true);
                     ok = true;
                 }
                 else if (_archer_Left && _script._upDirection == UpDirection.Left)
                 {
-                    Castle.Instance._archer_Left = collision.gameObject;
-                    Castle.Instance._archer_Left_Obj.SetActive(true);
+                    CastleManager.Instance.Castle._archer_Left = collision.gameObject;
+                    CastleManager.Instance.Castle._archer_Left_Obj.SetActive(true);
                     ok = true;
                 }
                 if (ok)
                 {
                     _script.setUpTower(true);
                     collision.gameObject.SetActive(false);
-                    Castle.Instance._audio.PlayArcherUpSound();
+                    CastleManager.Instance.Castle._audio.PlayArcherUpSound();
                 }
             }
         }
@@ -169,52 +169,52 @@ public class SelectArcherUp : MonoBehaviour
     public void Out()
     {
         // right
-        Castle.Instance._archer_Right_Obj.SetActive(false);
-        if (Castle.Instance._archer_Right != null)
+        CastleManager.Instance.Castle._archer_Right_Obj.SetActive(false);
+        if (CastleManager.Instance.Castle._archer_Right != null)
         {
-            var _scrip = Castle.Instance._archer_Right.GetComponent<ArcherGFX>();
+            var _scrip = CastleManager.Instance.Castle._archer_Right.GetComponent<ArcherGFX>();
             if (_scrip != null)
             {
                 _scrip.target = null;
                 _scrip.setTargetPos(transform);
                 _scrip._In_Castle = false;
                 _scrip.setUpTower(false);
-                Castle.Instance._archer_Right.SetActive(true);
+                CastleManager.Instance.Castle._archer_Right.SetActive(true);
                 _scrip.setIsAI(true);
-                Castle.Instance._archer_Right = null;
+                CastleManager.Instance.Castle._archer_Right = null;
             }
         }
 
         // center
-        Castle.Instance._archer_Center_Obj.SetActive(false);
-        if (Castle.Instance._archer_Center != null)
+        CastleManager.Instance.Castle._archer_Center_Obj.SetActive(false);
+        if (CastleManager.Instance.Castle._archer_Center != null)
         {
-            var _scrip = Castle.Instance._archer_Center.GetComponent<ArcherGFX>();
+            var _scrip = CastleManager.Instance.Castle._archer_Center.GetComponent<ArcherGFX>();
             if (_scrip  != null)
             {
                 _scrip.setTargetPos(transform);
                 _scrip.target = null;
                 _scrip._In_Castle = false;
                 _scrip.setUpTower(false);
-                Castle.Instance._archer_Center.SetActive(true);
+                CastleManager.Instance.Castle._archer_Center.SetActive(true);
                 _scrip.setIsAI(true);
-                Castle.Instance._archer_Center = null;
+                CastleManager.Instance.Castle._archer_Center = null;
             }
         }
 
         // left
-        Castle.Instance._archer_Left_Obj.SetActive(false);
-        if (Castle.Instance._archer_Left == null) return;
-        var _script = Castle.Instance._archer_Left.GetComponent<ArcherGFX>();
+        CastleManager.Instance.Castle._archer_Left_Obj.SetActive(false);
+        if (CastleManager.Instance.Castle._archer_Left == null) return;
+        var _script = CastleManager.Instance.Castle._archer_Left.GetComponent<ArcherGFX>();
         if (_script != null)
         {
             _script.setTargetPos(transform);
             _script.target = null;
             _script._In_Castle = false;
             _script.setUpTower(false);
-            Castle.Instance._archer_Left.SetActive(true);
+            CastleManager.Instance.Castle._archer_Left.SetActive(true);
             _script.setIsAI(true);
-            Castle.Instance._archer_Left = null;
+            CastleManager.Instance.Castle._archer_Left = null;
         }
     }
 }

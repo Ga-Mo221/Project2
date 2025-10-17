@@ -68,7 +68,7 @@ public class GameOver : MonoBehaviour
         }
 
 
-        _Lv_Castle.text = $"LV.{Castle.Instance._level}";
+        _Lv_Castle.text = $"LV.{CastleManager.Instance.Castle._level}";
         _playTime.text = $"Thời gian chơi: {GameManager.Instance._playTime.x}:{GameManager.Instance._playTime.y}";
         _totalDay.text = $"Số Ngày: {GameManager.Instance._currentDay}";
 

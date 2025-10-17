@@ -40,7 +40,7 @@ public class ArcherGFX : PlayerAI
         if (!_arrowPrefab)
             Debug.LogError("[ArcherGFX] Chưa gán '_arrowPrefab'");
 
-        addCastle(Castle.Instance._ListArcher);
+        addCastle(CastleManager.Instance.Castle._ListArcher);
     }
 
     protected override void Update()

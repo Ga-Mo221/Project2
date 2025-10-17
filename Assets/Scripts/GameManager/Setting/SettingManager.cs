@@ -26,6 +26,8 @@ public class SettingManager : MonoBehaviour
     [SerializeField] private bool _Online = false;
     [SerializeField] private bool _InRoom = false;
     [SerializeField] private int _maxPlayer = 4;
+    [SerializeField] private bool _co_op = false; // che do 2 nguoi
+    [SerializeField] private bool _hard = true; // game mode
 
     [Foldout("Button Clip")]
     public AudioClip _button_hover;
@@ -153,4 +155,10 @@ public class SettingManager : MonoBehaviour
 
     public int getPlayerValue() => _maxPlayer;
     public void setPlayerValue(int value) => _maxPlayer = value;
+
+    public void setGameMode(bool amount) => _co_op = amount;
+    public bool getGameMode() => _co_op;
+
+    public void setHard(bool amount) => _hard = amount;
+    public bool getHard() => _hard;
 }

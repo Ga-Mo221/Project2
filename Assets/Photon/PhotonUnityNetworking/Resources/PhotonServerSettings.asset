@@ -40,6 +40,18 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - RPC_DoKick
+  - ReceiveSpawnPosition
+  - RPC_ChangeTypeCastle
+  - RPC_PlayAttack
+  - respawn
+  - RPC_Moving
+  - RPC_DetecEnemy
+  - RPC_Die
+  - RPC_FarmType
+  - RPC_respawn
+  - RPC_setActive
+  - RPC_Direction
+  - RPC_Heal
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

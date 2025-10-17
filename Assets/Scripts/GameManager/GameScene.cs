@@ -27,6 +27,8 @@ public class GameScene : MonoBehaviour
 
     public void OpenSceneLoadMap()
     {
-        SceneManager.LoadScene("LoadMap");
+        //SceneManager.LoadScene("LoadMap");
+        // test Multiplayer
+        SceneManager.LoadScene("Multiplayer");
     }
 }

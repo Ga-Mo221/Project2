@@ -179,7 +179,7 @@ public class Moba2DCameraController : MonoBehaviour
 
     private void FocusToCastle()
     {
-        var pos = Castle.Instance.transform.position;
+        var pos = CastleManager.Instance.Castle.transform.position;
         StopAllCoroutines();
         StartCoroutine(SmoothMoveTo(new Vector3(pos.x, pos.y, transform.position.z)));
     }
@@ -272,7 +272,7 @@ public class Moba2DCameraController : MonoBehaviour
     private List<PlayerAI> GetAllAlivePlayers()
     {
         List<PlayerAI> all = new List<PlayerAI>();
-        if (Castle.Instance == null) return all;
+        if (CastleManager.Instance.Castle == null) return all;
 
         void AddAlive(List<PlayerAI> list)
         {
@@ -283,11 +283,11 @@ public class Moba2DCameraController : MonoBehaviour
             }
         }
 
-        AddAlive(Castle.Instance._ListWarrior);
-        AddAlive(Castle.Instance._ListArcher);
-        AddAlive(Castle.Instance._ListLancer);
-        AddAlive(Castle.Instance._ListHealer);
-        AddAlive(Castle.Instance._ListTNT);
+        AddAlive(CastleManager.Instance.Castle._ListWarrior);
+        AddAlive(CastleManager.Instance.Castle._ListArcher);
+        AddAlive(CastleManager.Instance.Castle._ListLancer);
+        AddAlive(CastleManager.Instance.Castle._ListHealer);
+        AddAlive(CastleManager.Instance.Castle._ListTNT);
 
         return all;
     }

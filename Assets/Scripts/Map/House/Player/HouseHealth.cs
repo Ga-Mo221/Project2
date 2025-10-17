@@ -124,10 +124,10 @@ public class HouseHealth : MonoBehaviour
                     _inPos3.SetActive(true);
                 _house.setActive(true);
 
-                Castle.Instance._maxWood += _house._wood;
-                Castle.Instance._maxRock += _house._rock;
-                Castle.Instance._maxMeat += _house._meat;
-                Castle.Instance._maxGold += _house._gold;
+                CastleManager.Instance.Castle._maxWood += _house._wood;
+                CastleManager.Instance.Castle._maxRock += _house._rock;
+                CastleManager.Instance.Castle._maxMeat += _house._meat;
+                CastleManager.Instance.Castle._maxGold += _house._gold;
 
                 _house._new = false;
                 GameManager.Instance.UIupdateReferences();
@@ -165,25 +165,25 @@ public class HouseHealth : MonoBehaviour
                 }
                 if (IsStorage)
                 {
-                    Castle.Instance._maxWood -= _house._wood;
-                    Castle.Instance._maxRock -= _house._rock;
-                    Castle.Instance._maxMeat -= _house._meat;
-                    Castle.Instance._maxGold -= _house._gold;
+                    CastleManager.Instance.Castle._maxWood -= _house._wood;
+                    CastleManager.Instance.Castle._maxRock -= _house._rock;
+                    CastleManager.Instance.Castle._maxMeat -= _house._meat;
+                    CastleManager.Instance.Castle._maxGold -= _house._gold;
 
-                    int wood = Castle.Instance._wood / (Castle.Instance._storageList.Count + 1);
-                    int rock = Castle.Instance._rock / (Castle.Instance._storageList.Count + 1);
-                    int meat = Castle.Instance._meat / (Castle.Instance._storageList.Count + 1);
-                    int gold = Castle.Instance._gold / (Castle.Instance._storageList.Count + 1);
+                    int wood = CastleManager.Instance.Castle._wood / (CastleManager.Instance.Castle._storageList.Count + 1);
+                    int rock = CastleManager.Instance.Castle._rock / (CastleManager.Instance.Castle._storageList.Count + 1);
+                    int meat = CastleManager.Instance.Castle._meat / (CastleManager.Instance.Castle._storageList.Count + 1);
+                    int gold = CastleManager.Instance.Castle._gold / (CastleManager.Instance.Castle._storageList.Count + 1);
 
                     if (wood > _house._wood) wood = _house._wood;
                     if (rock > _house._rock) rock = _house._rock;
                     if (meat > _house._meat) meat = _house._meat;
                     if (gold > _house._gold) gold = _house._gold;
 
-                    Castle.Instance._wood -= wood;
-                    Castle.Instance._rock -= rock;
-                    Castle.Instance._meat -= meat;
-                    Castle.Instance._gold -= gold;
+                    CastleManager.Instance.Castle._wood -= wood;
+                    CastleManager.Instance.Castle._rock -= rock;
+                    CastleManager.Instance.Castle._meat -= meat;
+                    CastleManager.Instance.Castle._gold -= gold;
 
                     GameManager.Instance.UIupdateReferences();
                 }
@@ -200,17 +200,17 @@ public class HouseHealth : MonoBehaviour
         }
         else
         {
-            Castle.Instance._currentHealth -= damage;
+            CastleManager.Instance.Castle._currentHealth -= damage;
             GameManager.Instance.UIupdateHPCastle();
-            if (Castle.Instance._currentHealth <= 0)
+            if (CastleManager.Instance.Castle._currentHealth <= 0)
             {
                 CameraShake.Instance.ShakeCamera(1f, 0.5f);
                 _anim.SetBool("Die", true);
                 setCanDetec(false);
                 StartCoroutine(GameOver());
                 _outLine.Out();
-                Castle.Instance._audio.PlayDieSound();
-                Castle.Instance.Dead();
+                CastleManager.Instance.Castle._audio.PlayDieSound();
+                CastleManager.Instance.Castle.Dead();
             }
         }
     }
@@ -257,18 +257,25 @@ public class HouseHealth : MonoBehaviour
             currentHealth = _house._currentHealth;
             maxHealth = _house._maxHealth;
         }
+        else if (CastleManager.Instance.Castle != null)
+        {
+            currentHealth = CastleManager.Instance.Castle._currentHealth;
+            maxHealth = CastleManager.Instance.Castle._maxHealth;
+        }
         else
         {
-            currentHealth = Castle.Instance._currentHealth;
-            maxHealth = Castle.Instance._maxHealth;
+            currentHealth = 100;
+            maxHealth = 100;
         }
+
+
         if (currentHealth / maxHealth < 0.3)
         {
             _fire.gameObject.SetActive(true);
             if (!IsCastle)
                 _house._audio.PlayFireSound();
             else
-                Castle.Instance._audio.PlayFireSound();
+                CastleManager.Instance.Castle._audio.PlayFireSound();
         }
         else
         {
@@ -276,7 +283,7 @@ public class HouseHealth : MonoBehaviour
             if (!IsCastle)
                 _house._audio.StopFireSound();
             else
-                Castle.Instance._audio.StopFireSound();
+                CastleManager.Instance.Castle._audio.StopFireSound();
         }
     }
     #endregion

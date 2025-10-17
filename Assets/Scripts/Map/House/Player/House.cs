@@ -64,10 +64,10 @@ public class House : MonoBehaviour
 
                 if (!_new)
                 {
-                    Castle.Instance._maxWood += GameManager.Instance.Info._storageBounus;
-                    Castle.Instance._maxRock += GameManager.Instance.Info._storageBounus;
-                    Castle.Instance._maxMeat += GameManager.Instance.Info._storageBounus;
-                    Castle.Instance._maxGold += GameManager.Instance.Info._storageBounus;
+                    CastleManager.Instance.Castle._maxWood += GameManager.Instance.Info._storageBounus;
+                    CastleManager.Instance.Castle._maxRock += GameManager.Instance.Info._storageBounus;
+                    CastleManager.Instance.Castle._maxMeat += GameManager.Instance.Info._storageBounus;
+                    CastleManager.Instance.Castle._maxGold += GameManager.Instance.Info._storageBounus;
                 }
             }
 

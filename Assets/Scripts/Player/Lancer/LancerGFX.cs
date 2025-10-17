@@ -18,7 +18,7 @@ public class LancerGFX : PlayerAI
         if (!_pos)
             Debug.LogError("[LancerGFX] Chưa gán 'Transform _pos'");
 
-        addCastle(Castle.Instance._ListLancer);
+        addCastle(CastleManager.Instance.Castle._ListLancer);
     }
 
     protected override void Update()

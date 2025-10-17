@@ -199,7 +199,7 @@ public class TutorialSetUp : MonoBehaviour
     private IEnumerator start()
     {
         yield return new WaitForSeconds(2f);
-        _camera.Move(Castle.Instance.transform.position, _fadeDuration + 4);
+        _camera.Move(CastleManager.Instance.Castle.transform.position, _fadeDuration + 4);
         Color col = _BG1.color;
         float time = 0f;
         while (time < _fadeDuration)
@@ -612,11 +612,11 @@ public class TutorialSetUp : MonoBehaviour
         yield return StartCoroutine(ShowLine("",0.1f));
         _Mess.SetTrigger("exit");
         _camera.Zoom(15, getSpeedText(content));
-        _camera.Move(Castle.Instance.transform.position, getSpeedText(content));
+        _camera.Move(CastleManager.Instance.Castle.transform.position, getSpeedText(content));
         yield return StartCoroutine(ShowLine("", 0.1f));
         yield return new WaitForSecondsRealtime(getSpeedText(content)+0.1f);
         ID = 6;
-        OnClickIcon(Castle.Instance.transform);
+        OnClickIcon(CastleManager.Instance.Castle.transform);
     }
     #endregion
 
@@ -841,7 +841,7 @@ public class TutorialSetUp : MonoBehaviour
     private IEnumerator displayText19()
     {
         GameManager.Instance.Tutorial = true;
-        _camera.Move(Castle.Instance.transform.position, 2f);
+        _camera.Move(CastleManager.Instance.Castle.transform.position, 2f);
         _camera.Zoom(20, 2f);
         CameraShake.Instance.ShakeCamera(2f);
         yield return new WaitForSecondsRealtime(2.5f);
@@ -888,7 +888,7 @@ public class TutorialSetUp : MonoBehaviour
     private IEnumerator displayText20()
     {
         GameManager.Instance.Tutorial = true;
-        _camera.Move(Castle.Instance.transform.position, 2f);
+        _camera.Move(CastleManager.Instance.Castle.transform.position, 2f);
         _camera.Zoom(20, 2f);
         CameraShake.Instance.ShakeCamera(2f);
         _Baw.gameObject.SetActive(true);

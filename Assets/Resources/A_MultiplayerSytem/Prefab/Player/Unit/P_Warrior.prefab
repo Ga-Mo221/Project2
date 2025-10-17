@@ -102,6 +102,9 @@ GameObject:
   - component: {fileID: 150220348779839181}
   - component: {fileID: 6972559049068153739}
   - component: {fileID: 2596167484009540385}
+  - component: {fileID: 8494216068194119540}
+  - component: {fileID: 3176948844780905281}
+  - component: {fileID: 3004602570056801681}
   m_Layer: 8
   m_Name: WarriorGFX
   m_TagString: Player
@@ -177,7 +180,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!95 &7255897152711031789
 Animator:
@@ -339,6 +342,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -359,11 +369,61 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
+--- !u!114 &8494216068194119540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109896237691892845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3176948844780905281}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3176948844780905281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109896237691892845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bedb85046f23e43b94d4cd5ccf1d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 0
+  scale: 1
+  _targetTransform: {fileID: 8389078528889894975}
+--- !u!114 &3004602570056801681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109896237691892845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71580dd11bf20b0499af6a10078282af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anim: {fileID: 0}
+  _lastMove: 0
+  _lastDetectEnemy: 0
+  _lastTypeFarm: 0
+  _lastTypeCastle: 0
 --- !u!1 &1094120962555759500
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +440,9 @@ GameObject:
   - component: {fileID: 8115716074318572522}
   - component: {fileID: 6362947074359857873}
   - component: {fileID: 1293021993264468765}
+  - component: {fileID: 6857322621837383530}
+  - component: {fileID: 1368408504781215275}
+  - component: {fileID: 1010432644928922125}
   m_Layer: 7
   m_Name: P_Warrior
   m_TagString: Warrior
@@ -582,6 +645,7 @@ MonoBehaviour:
   _GFX: {fileID: 109896237691892845}
   _MiniMapIcon: {fileID: 1627387284613245235}
   _AI: {fileID: 2618211938921617990}
+  _light: {fileID: 7557567352761409}
   _audio: {fileID: 2596167484009540385}
   _rada: {fileID: 2939301152809590225}
   _anim: {fileID: 7255897152711031789}
@@ -626,6 +690,61 @@ MonoBehaviour:
   _unitClass: 0
   Armor: 2
   _HP_obj: {fileID: 4352966296300642256}
+--- !u!114 &6857322621837383530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1010432644928922125}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1368408504781215275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71580dd11bf20b0499af6a10078282af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anim: {fileID: 7255897152711031789}
+  _lastMove: 0
+  _lastDetectEnemy: 0
+  _lastTypeFarm: 0
+  _lastTypeCastle: 0
+--- !u!114 &1010432644928922125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094120962555759500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bedb85046f23e43b94d4cd5ccf1d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 1
+  scale: 0
+  _targetTransform: {fileID: 5628090364594364971}
 --- !u!1 &1627387284613245235
 GameObject:
   m_ObjectHideFlags: 0

@@ -143,9 +143,9 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (gameObject.activeSelf)
                     {
-                        if (target == Castle.Instance.gameObject)
+                        if (target == CastleManager.Instance.Castle.gameObject)
                         {
-                            _path.setTarget(Castle.Instance._In_Castle_Pos.position, target);
+                            _path.setTarget(CastleManager.Instance.Castle._In_Castle_Pos.position, target);
                         }
                         else if (target.CompareTag("House"))
                         {
@@ -163,9 +163,9 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (gameObject.activeSelf)
                     {
-                        if (_currentTarget == Castle.Instance.gameObject)
+                        if (_currentTarget == CastleManager.Instance.Castle.gameObject)
                         {
-                            _path.setTarget(Castle.Instance._In_Castle_Pos.position, _currentTarget);
+                            _path.setTarget(CastleManager.Instance.Castle._In_Castle_Pos.position, _currentTarget);
                         }
                         else if (_currentTarget.CompareTag("House"))
                         {
@@ -335,9 +335,9 @@ public class EnemyAI : MonoBehaviour
         float dist = 0;
         if (target.CompareTag("House"))
         {
-            if (target == Castle.Instance.gameObject)
+            if (target == CastleManager.Instance.Castle.gameObject)
             {
-                dist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+                dist = Vector3.Distance(transform.position, CastleManager.Instance.Castle._In_Castle_Pos.position);
             }
             else
             {

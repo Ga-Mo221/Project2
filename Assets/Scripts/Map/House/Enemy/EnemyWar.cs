@@ -67,7 +67,7 @@ public class EnemyWar : MonoBehaviour
                 if (enemyPrefab._enemy == enemyAi._type && enemyAi.getDie())
                 {
                     enemyAi.respawn(randomPoint(_spawnPoint));
-                    enemyAi.setTarget(Castle.Instance.gameObject);
+                    enemyAi.setTarget(CastleManager.Instance.Castle.gameObject);
                     enemyAi.gameObject.SetActive(true);
                     _IsCreate = false;
                     break;
@@ -80,7 +80,7 @@ public class EnemyWar : MonoBehaviour
                 if (enemyAI != null)
                 {
                     enemyAI.setIsCreate(true);
-                    enemyAI.setTarget(Castle.Instance.gameObject);
+                    enemyAI.setTarget(CastleManager.Instance.Castle.gameObject);
                 }
             }
         }

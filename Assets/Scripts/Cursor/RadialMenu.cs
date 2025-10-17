@@ -40,7 +40,7 @@ public class RadialMenu : MonoBehaviour
     private void Update()
     {
         // Nếu Castle không khả dụng hoặc V == false thì tắt menu
-        if (Castle.Instance == null || !Castle.Instance._V)
+        if (CastleManager.Instance.Castle == null || !CastleManager.Instance.Castle._V)
         {
             gameObject.SetActive(false);
             return;
@@ -60,7 +60,7 @@ public class RadialMenu : MonoBehaviour
     private void HandleCommand()
     {
         _moveto = null;
-        var castle = Castle.Instance;
+        var castle = CastleManager.Instance.Castle;
         if (castle == null) return;
 
         // Gom tất cả danh sách lính
@@ -129,7 +129,7 @@ public class RadialMenu : MonoBehaviour
         {
             if (player == null || !player.gameObject.activeSelf || player.getUpTower() || player._movingToTower) continue;
             Vector3 targetPos = _support
-                ? RandomPoint(Castle.Instance._In_Castle_Pos, 8)
+                ? RandomPoint(CastleManager.Instance.Castle._In_Castle_Pos, 8)
                 : _pos;
 
             player.setTarget(targetPos, true);
@@ -142,7 +142,7 @@ public class RadialMenu : MonoBehaviour
         if (!add)
         {
             if (_support)
-                _pos = Castle.Instance._In_Castle_Pos.position;
+                _pos = CastleManager.Instance.Castle._In_Castle_Pos.position;
             _moveto = MoveToManager.Instance.CreateMovePoint(activePlayers, _pos);
         }
 

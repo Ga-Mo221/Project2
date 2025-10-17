@@ -20,7 +20,7 @@ public class HealerGFX : PlayerAI
         if (!_oderSpriterPoint)
             Debug.LogError("[HealerGFX] Chưa gán '_oderSpriterPoint'");
 
-        addCastle(Castle.Instance._ListHealer);
+        addCastle(CastleManager.Instance.Castle._ListHealer);
     }
 
     protected override void Update()

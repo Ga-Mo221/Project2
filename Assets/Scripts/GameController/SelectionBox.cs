@@ -41,7 +41,7 @@ public class SelectionBox : MonoBehaviour
                 GameManager.Instance.UIsetActiveButtonUpgrade(false);
                 GameManager.Instance._selectBox.gameObject.SetActive(false);
             }
-            if (Castle.Instance != null && !Castle.Instance._V)
+            if (CastleManager.Instance.Castle != null && !CastleManager.Instance.Castle._V)
             {
                 _singleSelected = false;
                 startScreenPos = Input.mousePosition;
@@ -73,7 +73,7 @@ public class SelectionBox : MonoBehaviour
 
         if (Input.GetMouseButton(0) && !CursorManager.Instance.ChoseUI)
         {
-            if (Castle.Instance != null && !Castle.Instance._V)
+            if (CastleManager.Instance.Castle != null && !CastleManager.Instance.Castle._V)
             {
                 endScreenPos = Input.mousePosition;
                 UpdateVisual(startScreenPos, endScreenPos);
@@ -82,7 +82,7 @@ public class SelectionBox : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && !CursorManager.Instance.ChoseUI)
         {
-            if (Castle.Instance != null && !Castle.Instance._V)
+            if (CastleManager.Instance.Castle != null && !CastleManager.Instance.Castle._V)
             {
                 if (boxVisual) boxVisual.gameObject.SetActive(false);
                 endScreenPos = Input.mousePosition;
@@ -197,18 +197,18 @@ public class SelectionBox : MonoBehaviour
     #region Get For Unit Class
     private GameObject[] getUnitClass()
     {
-        if (Castle.Instance == null) return null;
+        if (CastleManager.Instance.Castle == null) return null;
         List<GameObject> selectable = new List<GameObject>();
 
-        if (Castle.Instance._Q)
+        if (CastleManager.Instance.Castle._Q)
             selectable.AddRange(GameObject.FindGameObjectsWithTag("Warrior"));
-        if (Castle.Instance._W)
+        if (CastleManager.Instance.Castle._W)
             selectable.AddRange(GameObject.FindGameObjectsWithTag("Archer"));
-        if (Castle.Instance._E)
+        if (CastleManager.Instance.Castle._E)
             selectable.AddRange(GameObject.FindGameObjectsWithTag("Lancer"));
-        if (Castle.Instance._A)
+        if (CastleManager.Instance.Castle._A)
             selectable.AddRange(GameObject.FindGameObjectsWithTag("Healer"));
-        if (Castle.Instance._S)
+        if (CastleManager.Instance.Castle._S)
             selectable.AddRange(GameObject.FindGameObjectsWithTag("TNT"));
 
         // Nếu không bấm phím nào thì lấy tất cả

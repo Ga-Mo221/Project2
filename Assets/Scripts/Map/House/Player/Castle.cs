@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using Photon.Pun;
 
-public class Castle : MonoBehaviour
+public class Castle : MonoBehaviourPun
 {
-    public static Castle Instance { get; private set; }
-
     [Header("Propety")]
     [SerializeField] private bool _canUpdateHP = true;
     public int _level = 1;
@@ -158,20 +157,34 @@ public class Castle : MonoBehaviour
     #endregion
 
 
+    #region Online
+    private NetworkAnimatorFix _net_Anim_Fix;
+    #endregion
+
+
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        AstarPath.active.Scan();
+        _net_Anim_Fix = GetComponent<NetworkAnimatorFix>();
+        if (SettingManager.Instance.getOnline())
         {
-            Destroy(gameObject);
-            return;
+            CastleManager.Instance.Import(this, PhotonNetwork.LocalPlayer.ActorNumber);
         }
-        Instance = this;
+        else 
+            CastleManager.Instance.Import(this, 1);
     }
 
 
     #region  Start
     void Start()
     {
+        // online
+        if (SettingManager.Instance.getOnline())
+        {
+            _net_Anim_Fix.ChangeTypeCastle(PhotonNetwork.LocalPlayer.ActorNumber);
+        }
+        GameManager.Instance.UIupdateReferences();
+
         if (!_sottingLayer)
             Debug.LogError("[Castle] Chưa gán 'SpriteRender'");
         if (!_point)

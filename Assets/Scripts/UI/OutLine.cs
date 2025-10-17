@@ -1,7 +1,8 @@
 using NaughtyAttributes;
 using UnityEngine;
+using Photon.Pun;
 
-public class OutLine : MonoBehaviour
+public class OutLine : MonoBehaviourPun
 {
     [SerializeField] private NodeType _type;
     private bool _IsStorage => _type == NodeType.Storage;
@@ -156,10 +157,21 @@ public class OutLine : MonoBehaviour
         if (_type != NodeType.Castle) return;
         if (Input.GetMouseButtonDown(0) && _type == NodeType.Castle)
         {
-            GameManager.Instance.UIsetActiveButtonUpgrade(true);
-            if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID > 5)
+            if (SettingManager.Instance.getOnline() && photonView.IsMine)
             {
-                TutorialSetUp.Instance.TutorialOpenPanelUpgrade();
+                GameManager.Instance.UIsetActiveButtonUpgrade(true);
+                if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID > 5)
+                {
+                    TutorialSetUp.Instance.TutorialOpenPanelUpgrade();
+                }
+            }
+            else if (!SettingManager.Instance.getOnline())
+            {
+                GameManager.Instance.UIsetActiveButtonUpgrade(true);
+                if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID > 5)
+                {
+                    TutorialSetUp.Instance.TutorialOpenPanelUpgrade();
+                }
             }
         }
     }

@@ -3,8 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using NaughtyAttributes;
 using System.Collections.Generic;
+using Photon.Pun;
 
-public class PlayerAI : MonoBehaviour
+public class PlayerAI : MonoBehaviourPun
 {
     #region Value
 
@@ -84,6 +85,8 @@ public class PlayerAI : MonoBehaviour
     public GameObject _MiniMapIcon;
     [Foldout("GFX")]
     [SerializeField] private GameObject _AI; // hiển thị đang bật tắt AI
+    [Foldout("GFX")]
+    [SerializeField] private GameObject _light; // Circle nhin xung quanh
 
     [Foldout("Other")]
     [SerializeField] private UnitAudio _audio;
@@ -162,6 +165,21 @@ public class PlayerAI : MonoBehaviour
     private Collider2D[] hits;
 
     #endregion
+
+
+    #region Online
+    private NetworkAnimatorFix _net_Anim_Fix;
+    #endregion
+
+
+    void Awake()
+    {
+        _net_Anim_Fix = GetComponent<NetworkAnimatorFix>();
+        if (SettingManager.Instance.getOnline() && !photonView.IsMine)
+        {
+            _light.SetActive(false);
+        }
+    }
 
 
 
@@ -277,6 +295,14 @@ public class PlayerAI : MonoBehaviour
     */
     public void respawn(Transform pos)
     {
+        RPC_respawn(pos);
+        if (SettingManager.Instance.getOnline() && photonView.IsMine)
+            photonView.RPC(nameof(RPC_respawn), RpcTarget.Others, pos); // call back all client
+    }
+
+    [PunRPC]
+    private void RPC_respawn(Transform pos)
+    {
         newStatus();
         IsDie = false;
         path.setDie(false);
@@ -301,6 +327,7 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
+
     #region Dead
     public void Dead()
     {
@@ -316,11 +343,22 @@ public class PlayerAI : MonoBehaviour
         _selet.SetActive(false);
         setDie(true);
         _farmCoroutine = null;
-        _anim.SetTrigger("Die");
+        _net_Anim_Fix.Die();
         GameManager.Instance.UIPlayerDie(_unitClass);
-        Castle.Instance.CheckGameOver();
+        CastleManager.Instance.Castle.CheckGameOver();
     }
-    public virtual void setActive() => gameObject.SetActive(false);
+    public virtual void setActive(bool amount = false)
+    {
+        gameObject.SetActive(amount);
+        if (SettingManager.Instance.getOnline() && photonView.IsMine)
+            photonView.RPC(nameof(RPC_setActive), RpcTarget.Others, amount);
+    }
+
+    [PunRPC]
+    public void RPC_setActive(bool amount)
+    {
+        gameObject.SetActive(amount);
+    }
     #endregion
 
 
@@ -429,7 +467,11 @@ public class PlayerAI : MonoBehaviour
     private void setHPBar()
     {
         _hpBar.fillAmount = _health / _maxHealth;
-        _AI.SetActive(!_isAI);
+        if (SettingManager.Instance.getOnline() && !photonView.IsMine)
+        {
+            _AI.SetActive(false);
+        }else
+            _AI.SetActive(!_isAI);
     }
     #endregion
 
@@ -498,7 +540,7 @@ public class PlayerAI : MonoBehaviour
     }
     private IEnumerator attackSpeed()
     {
-        _anim.SetTrigger("attack");
+        _net_Anim_Fix.Attack_or_Farm();
 
         if (_cor_Attacking != null)
             StopCoroutine(_cor_Attacking);
@@ -546,8 +588,8 @@ public class PlayerAI : MonoBehaviour
             {
                 if (_wood < _maxWood)
                 {
-                    _anim.SetInteger("TypeFarm", 1);
-                    _anim.SetTrigger("attack");
+                    _net_Anim_Fix.FarmType(1);
+                    _net_Anim_Fix.Attack_or_Farm();
 
                     if (_cor_Harvesting != null)
                         StopCoroutine(_cor_Harvesting);
@@ -560,8 +602,8 @@ public class PlayerAI : MonoBehaviour
             {
                 if (_rock < _maxRock)
                 {
-                    _anim.SetInteger("TypeFarm", 2);
-                    _anim.SetTrigger("attack");
+                    _net_Anim_Fix.FarmType(2);
+                    _net_Anim_Fix.Attack_or_Farm();
 
                     if (_cor_Harvesting != null)
                         StopCoroutine(_cor_Harvesting);
@@ -574,8 +616,8 @@ public class PlayerAI : MonoBehaviour
             {
                 if (_gold < _maxGold)
                 {
-                    _anim.SetInteger("TypeFarm", 2);
-                    _anim.SetTrigger("attack");
+                    _net_Anim_Fix.FarmType(2);
+                    _net_Anim_Fix.Attack_or_Farm();
 
                     if (_cor_Harvesting != null)
                         StopCoroutine(_cor_Harvesting);
@@ -602,12 +644,12 @@ public class PlayerAI : MonoBehaviour
     {
         if (_UpTower) return null;
         GameObject nearest = null;
-        if (Castle.Instance._canFind)
+        if (CastleManager.Instance.Castle._canFind)
         {
             float minDist = Mathf.Infinity;
             if (hits == null) return null;
-            Castle.Instance._canFind = false;
-            foreach (var hit in Castle.Instance._allItems)
+            CastleManager.Instance.Castle._canFind = false;
+            foreach (var hit in CastleManager.Instance.Castle._allItems)
             {
                 if (hit == null) continue;
                 if (hit.CompareTag("Item"))
@@ -655,7 +697,7 @@ public class PlayerAI : MonoBehaviour
         }
         // if (nearest != null)
         //     Debug.Log(transform.name + " || " + nearest.transform.parent.name + " || " + Vector3.Distance(transform.position, nearest.transform.position));
-        Castle.Instance._canFind = true;
+        CastleManager.Instance.Castle._canFind = true;
         return nearest;
     }
     #endregion
@@ -761,11 +803,11 @@ public class PlayerAI : MonoBehaviour
         if (nearest == null && cacheTarget == null && checkInventory())
         {
             setIsTarget(false);
-            float minDist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
-            Vector3 _pos = Castle.Instance._In_Castle_Pos.position;
-            if (Castle.Instance._storageList.Count > 0)
+            float minDist = Vector3.Distance(transform.position, CastleManager.Instance.Castle._In_Castle_Pos.position);
+            Vector3 _pos = CastleManager.Instance.Castle._In_Castle_Pos.position;
+            if (CastleManager.Instance.Castle._storageList.Count > 0)
             {
-                foreach (var i in Castle.Instance._storageList)
+                foreach (var i in CastleManager.Instance.Castle._storageList)
                 {
                     var _storage = i.GetComponent<Storage>();
                     if (_storage.getActive() && !_storage.getDie())
@@ -899,7 +941,7 @@ public class PlayerAI : MonoBehaviour
     {
         _detect = amount;
         path.setDetec(amount);
-        _anim.SetBool("Detectenemy", amount);
+        _net_Anim_Fix.DetecEnemy(amount);
     }
     public bool getDetect() => _detect;
 

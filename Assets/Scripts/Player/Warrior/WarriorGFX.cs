@@ -15,7 +15,7 @@ public class WarriorGFX : PlayerAI
         if (!_oderSpriterPoint)
             Debug.LogError("[WarriorGFX] Chưa gán '_oderSpriterPoint'");
 
-        addCastle(Castle.Instance._ListWarrior);
+        addCastle(CastleManager.Instance.Castle._ListWarrior);
     }
 
     protected override void Update()

@@ -115,7 +115,7 @@ public class EnemyHouse : MonoBehaviour
     #region get War Pos
     public Transform getWarPos()
     {
-        Vector3 castlePos = Castle.Instance.transform.position;
+        Vector3 castlePos = CastleManager.Instance.Castle.transform.position;
         Transform pos = transform;
         float minDist = Mathf.Infinity;
         foreach (var point in _listSpawnPoint)
