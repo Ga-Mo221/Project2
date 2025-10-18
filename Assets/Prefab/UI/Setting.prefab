@@ -1079,7 +1079,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &769902574453345685
 GameObject:
   m_ObjectHideFlags: 0
@@ -4588,7 +4587,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &3630061881444581853
 GameObject:
   m_ObjectHideFlags: 0
@@ -4799,7 +4797,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &3648217025150059078
 GameObject:
   m_ObjectHideFlags: 0
@@ -5152,7 +5149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &3922981260741903926
 GameObject:
   m_ObjectHideFlags: 0
@@ -5925,7 +5921,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &4596973855788693167
 GameObject:
   m_ObjectHideFlags: 0
@@ -6571,7 +6566,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &4887307201826697126
 GameObject:
   m_ObjectHideFlags: 0
@@ -6786,7 +6780,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &5109783410199212053
 GameObject:
   m_ObjectHideFlags: 0
@@ -7182,7 +7175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &5198670312408981425
 GameObject:
   m_ObjectHideFlags: 0
@@ -8889,7 +8881,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &6151255898105425909
 GameObject:
   m_ObjectHideFlags: 0
@@ -9179,7 +9170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &6282098417679163065
 GameObject:
   m_ObjectHideFlags: 0
@@ -9575,7 +9565,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &6454579701105606718
 GameObject:
   m_ObjectHideFlags: 0
@@ -10190,10 +10179,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 0}
   m_HandleRect: {fileID: 5256755405015954082}
   m_Direction: 0
-  m_MinValue: 1
-  m_MaxValue: 2.2
+  m_MinValue: 2
+  m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -10320,7 +10309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &7031341491321520400
 GameObject:
   m_ObjectHideFlags: 0
@@ -10754,7 +10742,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &7297425215135241555
 GameObject:
   m_ObjectHideFlags: 0
@@ -11582,7 +11569,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &7498583468365583091
 GameObject:
   m_ObjectHideFlags: 0
@@ -11872,7 +11858,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &7631910269792501145
 GameObject:
   m_ObjectHideFlags: 0
@@ -12579,7 +12564,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &7957526317147124445
 GameObject:
   m_ObjectHideFlags: 0
@@ -13448,7 +13432,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &8649912446509646839
 GameObject:
   m_ObjectHideFlags: 0
@@ -13893,7 +13876,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &8833738237900840819
 GameObject:
   m_ObjectHideFlags: 0
@@ -14500,7 +14482,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverVolume: 1
   clickVolume: 1
-  valueChangeVolume: 1
 --- !u!1 &9001694664406625952
 GameObject:
   m_ObjectHideFlags: 0

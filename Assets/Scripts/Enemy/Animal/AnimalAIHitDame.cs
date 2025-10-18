@@ -34,5 +34,5 @@ public class AnimalAIHitDame : MonoBehaviour
     public void onCanMove() => animalAi.setCanMove(true);
     public void offCanMove() => animalAi.setCanMove(false);
 
-    public void PlayAttackSound() => animalAi.playAttackSound();
+    public void PlayAttackSoundAnimal() => animalAi.playAttackSound();
 }

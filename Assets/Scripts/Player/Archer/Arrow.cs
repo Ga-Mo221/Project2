@@ -19,13 +19,11 @@ public class Arrow : MonoBehaviour
     [SerializeField] private UnitAudio _audio;
 
     private SpriteRenderer _arrow1;
-    private SpriteRenderer _arrow2;
     private Coroutine _null;
 
     void Awake()
     {
         _arrow1 = _normal.GetComponent<SpriteRenderer>();
-        _arrow2 = _Skill.GetComponent<SpriteRenderer>();
     }
 
     void Start()
@@ -35,10 +33,7 @@ public class Arrow : MonoBehaviour
 
     void Update()
     {
-        int _yoder = -(int)(transform.position.y * 100) + 100000;
-        _arrow1.sortingOrder = _yoder;
-        _arrow2.sortingOrder = _yoder;
-        if (_target == null && _null == null)
+        if ((_target == null || _target.CompareTag("Item")) && _null == null)
         {
             _null = StartCoroutine(setActive(Skill, 1f));
         }
@@ -59,9 +54,6 @@ public class Arrow : MonoBehaviour
                 _hitDamage.attack(_isPlayer, _damage, _target.gameObject);
                 _target = null;
                 _audio.PlayFarmOrHitDamageSound();
-
-                if (gameObject.activeInHierarchy)
-                    StartCoroutine(setActive(false, 0.5f));
             }
         }
     }

@@ -13,8 +13,8 @@ public class ChoseUI : MonoBehaviour
 
     void Update()
     {
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0f;
         if (_collider.OverlapPoint(mouseWorldPos))
         {
             if (!_isHovering)

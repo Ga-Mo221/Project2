@@ -215,8 +215,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _enemy: 0
+  _animEnemy: {fileID: 0}
+  _audio: {fileID: 0}
+  _enemyAI: {fileID: 0}
   _animal: 1
   _sprite: {fileID: 7937726656656371032}
+  _animalAI: {fileID: 4831337518752686108}
   _pickUP: 0
   _maxValueDrop: 20
 --- !u!1 &3519243338417639085
@@ -457,6 +462,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 1
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -477,11 +489,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &7964107023682193468
 GameObject:
   m_ObjectHideFlags: 0
