@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ApplyItem : MonoBehaviour
 {
+    [SerializeField] private UnitAudio _audio;
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         Apply(collision);
@@ -47,6 +49,7 @@ public class ApplyItem : MonoBehaviour
             if (_aply)
             {
                 _aply = false;
+                _audio.PlayFarmOrHitDamageSound();
                 StartCoroutine(ResetPlayer(_script));
                 GameManager.Instance.UIupdateReferences();
                 GameManager.Instance.UIupdateCreateUnitButton();

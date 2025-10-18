@@ -17,8 +17,6 @@ public class DropItem : MonoBehaviour
     [ShowIf(nameof(_enemy))]
     [SerializeField] private Animator _animEnemy;
     [ShowIf(nameof(_enemy))]
-    [SerializeField] private UnitAudio _audio;
-    [ShowIf(nameof(_enemy))]
     [SerializeField] private EnemyAI _enemyAI;
 
 
@@ -28,6 +26,7 @@ public class DropItem : MonoBehaviour
     [ShowIf(nameof(_animal))]
     [SerializeField] private AnimalAI _animalAI;
 
+    [SerializeField] private UnitAudio _audio;
     
     [SerializeField] private bool _pickUP = false;
 
@@ -92,8 +91,7 @@ public class DropItem : MonoBehaviour
     {
         _pickUP = true;
         des = null;
-        if (_enemy)
-            _audio.PlayFarmOrHitDamageSound();
+        _audio.PlayFarmOrHitDamageSound();
         yield return new WaitForSeconds(2f);
         if (_animal)
         {
@@ -104,7 +102,10 @@ public class DropItem : MonoBehaviour
         else if (_enemy)
         {
             if (_enemyAI.getDie())
+            {
                 _animEnemy.SetTrigger("PickUp");
+                Debug.Log("nhat thanh cong");
+            }
             gameObject.SetActive(false);
         }
     }
