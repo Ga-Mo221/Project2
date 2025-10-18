@@ -18,16 +18,37 @@ public class DropItem : MonoBehaviour
     [SerializeField] private Animator _animEnemy;
     [ShowIf(nameof(_enemy))]
     [SerializeField] private UnitAudio _audio;
+    [ShowIf(nameof(_enemy))]
+    [SerializeField] private EnemyAI _enemyAI;
 
 
     [SerializeField] private bool _animal = false;
     [ShowIf(nameof(_animal))]
     [SerializeField] private SpriteRenderer _sprite;
+    [ShowIf(nameof(_animal))]
+    [SerializeField] private AnimalAI _animalAI;
+
+    
     [SerializeField] private bool _pickUP = false;
 
     [SerializeField] private int _maxValueDrop;
     private Coroutine des;
     void OnTriggerEnter2D(Collider2D collision)
+    {
+        Apply(collision);
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        Apply(collision);
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        Apply(collision);
+    }
+
+    private void Apply(Collider2D collision)
     {
         List<string> _tag = new List<string> { "Warrior", "Archer", "Lancer" };
         if (_pickUP) return;
@@ -60,6 +81,7 @@ public class DropItem : MonoBehaviour
             }
         }
     }
+    
     public void ResetPickUp()
     {
         _pickUP = false;
@@ -75,12 +97,14 @@ public class DropItem : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (_animal)
         {
-            _sprite.enabled = false;
+            if (_animalAI.getDie())
+                _sprite.enabled = false;
             gameObject.SetActive(false);
         }
         else if (_enemy)
         {
-            _animEnemy.SetTrigger("PickUp");
+            if (_enemyAI.getDie())
+                _animEnemy.SetTrigger("PickUp");
             gameObject.SetActive(false);
         }
     }

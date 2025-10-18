@@ -347,8 +347,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _enemy: 0
+  _animEnemy: {fileID: 0}
+  _audio: {fileID: 0}
+  _enemyAI: {fileID: 0}
   _animal: 1
   _sprite: {fileID: 7228588684794360364}
+  _animalAI: {fileID: 8550984485975556114}
   _pickUP: 0
   _maxValueDrop: 25
 --- !u!1 &3451778718793737806
