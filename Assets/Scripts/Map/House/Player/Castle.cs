@@ -340,6 +340,7 @@ public class Castle : MonoBehaviour
     #region Dead
     public void Dead()
     {
+        Debug.Log("Castle call die");
         _archerUp.Out();        
 
         foreach (var storage in _storageList)

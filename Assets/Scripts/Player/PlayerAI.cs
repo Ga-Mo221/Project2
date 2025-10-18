@@ -303,6 +303,7 @@ public class PlayerAI : MonoBehaviour
     #region Dead
     public void Dead()
     {
+        Debug.Log($"{transform.name} die");
         _rada.setDie(true);
         path.setDie(true);
         setTarget(transform.position, true);
