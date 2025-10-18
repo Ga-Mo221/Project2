@@ -24,7 +24,7 @@ public class ArowEnemy : MonoBehaviour
 
     void Update()
     {
-        _spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 100000;
+        _spriteRenderer.sortingOrder = 10000;
         if (_target == null) return;
 
         Vector2 direction = ((Vector2)_target.position - _rb.position).normalized;

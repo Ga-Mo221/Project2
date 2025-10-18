@@ -13,6 +13,13 @@ public class DropItem : MonoBehaviour
 {
     [SerializeField] private ItemDropType _type;
 
+    [SerializeField] private bool _enemy = false;
+    [ShowIf(nameof(_enemy))]
+    [SerializeField] private Animator _animEnemy;
+    [ShowIf(nameof(_enemy))]
+    [SerializeField] private UnitAudio _audio;
+
+
     [SerializeField] private bool _animal = false;
     [ShowIf(nameof(_animal))]
     [SerializeField] private SpriteRenderer _sprite;
@@ -53,19 +60,28 @@ public class DropItem : MonoBehaviour
             }
         }
     }
-    public void ResetPickUp() => _pickUP = false;
+    public void ResetPickUp()
+    {
+        _pickUP = false;
+        des = null;
+    }
 
     private IEnumerator destroy()
     {
         _pickUP = true;
         des = null;
+        if (_enemy)
+            _audio.PlayFarmOrHitDamageSound();
         yield return new WaitForSeconds(2f);
         if (_animal)
         {
             _sprite.enabled = false;
             gameObject.SetActive(false);
         }
-        else
-            transform.parent.parent.gameObject.SetActive(false);
+        else if (_enemy)
+        {
+            _animEnemy.SetTrigger("PickUp");
+            gameObject.SetActive(false);
+        }
     }
 }

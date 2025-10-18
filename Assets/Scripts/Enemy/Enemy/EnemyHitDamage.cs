@@ -113,5 +113,5 @@ public class EnemyHitDamage : MonoBehaviour
     public void onCanMove() => enemyAi.setCanMove(true);
     public void offCanMove() => enemyAi.setCanMove(false);
 
-    public void PlayAttackSound() => enemyAi.playAttackSound();
+    public void PlayAttackSoundEnemy() => enemyAi.playAttackSoundEnemy();
 }

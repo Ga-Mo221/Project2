@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 5698340555879720558}
   - component: {fileID: 6219666512168105015}
   - component: {fileID: 8955578299326118630}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RockGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,6 +351,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 8300000, guid: 033ae2467a176a44eac8cb55e636e4f0, type: 3}
   _Fire_Clip: {fileID: 0}
@@ -371,11 +378,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &8055385131801396274
 GameObject:
   m_ObjectHideFlags: 0
