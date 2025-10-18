@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 1621437807758594183}
   - component: {fileID: 872472079137078004}
   - component: {fileID: 6013338496028842881}
-  m_Layer: 20
+  - component: {fileID: 1583801788625621271}
+  - component: {fileID: 640011627670959473}
+  m_Layer: 11
   m_Name: Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,10 +84,152 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _enemy: 1
+  _animEnemy: {fileID: 8626246881234972018}
+  _audio: {fileID: 640011627670959473}
+  _enemyAI: {fileID: 7114177376197230553}
   _animal: 0
   _sprite: {fileID: 0}
+  _animalAI: {fileID: 0}
   _pickUP: 0
   _maxValueDrop: 5
+--- !u!82 &1583801788625621271
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894141374659694652}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &640011627670959473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894141374659694652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 2
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 8300000, guid: 784c0b8e56464794588d165d0480e482, type: 3}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 0
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
 --- !u!1 &5416600081201093134
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +571,9 @@ GameObject:
   - component: {fileID: 2036112168750390816}
   - component: {fileID: 4006744066217984982}
   - component: {fileID: 8487664750673356824}
-  m_Layer: 20
+  - component: {fileID: 8363660224739452693}
+  - component: {fileID: 7779631013705807042}
+  m_Layer: 11
   m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,10 +644,152 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  _enemy: 1
+  _animEnemy: {fileID: 8626246881234972018}
+  _audio: {fileID: 7779631013705807042}
+  _enemyAI: {fileID: 7114177376197230553}
   _animal: 0
   _sprite: {fileID: 0}
+  _animalAI: {fileID: 0}
   _pickUP: 0
   _maxValueDrop: 5
+--- !u!82 &8363660224739452693
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382806257805309765}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &7779631013705807042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382806257805309765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18427094ea7c38a44baa7091d51f3382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 2
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
+  TNTOrSheep: 0
+  _Hit_Damage_Clip: {fileID: 8300000, guid: c7a2f3fda870556478e3a34365c0807e, type: 3}
+  _Fire_Clip: {fileID: 0}
+  ArcherUp: 0
+  TreeOrRockOrGold: 0
+  _Die_Clip: {fileID: 0}
+  Enemy: 0
+  Storage: 0
+  _Attack_Clip: {fileID: 0}
+  Animal: 0
+  _Level_Up_Clip: {fileID: 0}
+  _Archer_Up_Clip: {fileID: 0}
+  CanCreate: 0
+  _Creating_Clip: {fileID: 0}
+  _Warning_Clip: {fileID: 0}
+  _MoveTo_Clip: {fileID: 0}
+  _BackgroundMusic: {fileID: 0}
+  _Sun_Clip: {fileID: 0}
+  _Rain_Clip: {fileID: 0}
+  _Night_Clip: {fileID: 0}
 --- !u!1 &7279323054414687173
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +1067,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -799,11 +1094,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1001 &6064532427625504563
 PrefabInstance:
   m_ObjectHideFlags: 0

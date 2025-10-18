@@ -177,7 +177,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!95 &1122478893686310
 Animator:
@@ -325,6 +325,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -345,11 +352,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &3891552056418275014
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,8 +720,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _enemy: 0
+  _animEnemy: {fileID: 0}
+  _audio: {fileID: 0}
+  _enemyAI: {fileID: 0}
   _animal: 1
   _sprite: {fileID: 1414051499352753602}
+  _animalAI: {fileID: 5656457811996703687}
   _pickUP: 0
   _maxValueDrop: 5
 --- !u!1001 &1155864198151504319
