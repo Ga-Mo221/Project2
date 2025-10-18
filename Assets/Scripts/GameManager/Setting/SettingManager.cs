@@ -53,7 +53,11 @@ public class SettingManager : MonoBehaviour
             Screen.SetResolution(width, height, false);
         }
         else
-            Screen.fullScreen = true;
+        {
+            // Chế độ toàn màn hình: lấy kích thước thật của màn hình
+            Resolution resolution = Screen.currentResolution;
+            Screen.SetResolution(resolution.width, resolution.height, true);
+        }
     }
 
 
