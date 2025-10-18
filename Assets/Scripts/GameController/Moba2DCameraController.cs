@@ -37,6 +37,7 @@ public class Moba2DCameraController : MonoBehaviour
         moveSpeed = SettingManager.Instance._gameSettings._mouseSensitivity;
         canDrag = SettingManager.Instance._gameSettings._panCameraRightMouse;
         dragSpeed = SettingManager.Instance._gameSettings._speedPanCamera;
+        canMove = !canDrag;
     }
 
     void Update()
@@ -81,7 +82,7 @@ public class Moba2DCameraController : MonoBehaviour
         }
 
         // --- Zoom ---
-        if (canZoom)
+        if (canZoom && !CursorManager.Instance.ChoseUI)
         {
             float scroll = Input.mouseScrollDelta.y;
             if (scroll != 0)
@@ -157,6 +158,7 @@ public class Moba2DCameraController : MonoBehaviour
     {
         canDrag = SettingManager.Instance._gameSettings._panCameraRightMouse;
         dragSpeed = SettingManager.Instance._gameSettings._speedPanCamera;
+        canMove = !canDrag;
     }
     
     private void ApplySpeedPanCameraMouseRight()

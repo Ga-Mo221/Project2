@@ -7,7 +7,7 @@ public class EnemyHouseHealth : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     [SerializeField] private EnemyHuoseController _house;
     [SerializeField] private Transform _endPos;
-    [SerializeField] private Image _HPimg;
+    [SerializeField] private HPBar _HPimg;
     public bool _Die = false;
     [SerializeField] private BuidingFire _fire;
     [SerializeField] private GameObject _HP_obj;
@@ -35,7 +35,7 @@ public class EnemyHouseHealth : MonoBehaviour
     public void takeDamage(float damage)
     {
         _house._currentHealth -= damage;
-        _HPimg.fillAmount = _house._currentHealth / _house._maxHealth;
+        _HPimg.SetHealth(_house._currentHealth / _house._maxHealth);
         onfire();
         if (_house._currentHealth <= 0)
         {

@@ -17,7 +17,7 @@ public class House : MonoBehaviour
     public float _maxHealth = 100;
     public float _currentHealth = 0;
     public int _createTimeSec = 30;
-    [SerializeField] private Image _HpImg;
+    [SerializeField] private HPBar _HpImg;
 
     [ShowIf(nameof(_IsTower))]
     public InTower _inTower;
@@ -80,7 +80,7 @@ public class House : MonoBehaviour
         updateHP();
         _level += _count;
     }
-    public void updateHP() => _HpImg.fillAmount = _currentHealth / _maxHealth;
+    public void updateHP() => _HpImg.SetHealth(_currentHealth / _maxHealth);
     public virtual void setActive(bool amount) { }
     public virtual bool getActive() { return false; }
     public int getLevel() => _level;

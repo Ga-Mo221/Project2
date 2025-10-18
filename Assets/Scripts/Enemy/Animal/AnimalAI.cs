@@ -64,7 +64,7 @@ public class AnimalAI : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] private GameObject _OutLine;
     [Foldout("Other")]
-    [SerializeField] private Image _hpBar;
+    [SerializeField] private HPBar _hpBar;
     [Foldout("Other")]
     [SerializeField] private GameObject _MiniMapIcon;
     [Foldout("Other")]
@@ -132,7 +132,7 @@ public class AnimalAI : MonoBehaviour
     private bool _isDead = false;
     protected virtual void Update()
     {
-        _hpBar.fillAmount = _health / _maxHealth;
+        _hpBar.SetHealth(_health / _maxHealth);
 
         if (_Die && !_isDead)
         {

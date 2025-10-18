@@ -75,7 +75,7 @@ public class PlayerAI : MonoBehaviour
     [Foldout("GFX")]
     [SerializeField] private GameObject _OutLine;
     [Foldout("GFX")]
-    [SerializeField] private Image _hpBar; // image thanh máu
+    [SerializeField] private HPBar _hpBar; // image thanh máu
     [Foldout("GFX")]
     [SerializeField] private GameObject _selet; // phát hiện đã được chọn
     [Foldout("GFX")]
@@ -429,7 +429,7 @@ public class PlayerAI : MonoBehaviour
     #region HP Bar Sprite
     private void setHPBar()
     {
-        _hpBar.fillAmount = _health / _maxHealth;
+        _hpBar.SetHealth(_health / _maxHealth);
         _AI.SetActive(!_isAI);
     }
     #endregion

@@ -339,6 +339,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -359,11 +366,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &1094120962555759500
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,7 +579,7 @@ MonoBehaviour:
   _meat: 0
   _HPCanvas: {fileID: 4352966296300642256}
   _OutLine: {fileID: 6915786969079094675}
-  _hpBar: {fileID: 154612118751249562}
+  _hpBar: {fileID: 1173220100199329411}
   _selet: {fileID: 2577642076283397288}
   _GFX: {fileID: 109896237691892845}
   _MiniMapIcon: {fileID: 1627387284613245235}
@@ -1217,6 +1219,10 @@ PrefabInstance:
       propertyPath: _player
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5176453393459185786, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: _isPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6496454969966702490, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -1318,19 +1324,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
---- !u!114 &154612118751249562 stripped
+--- !u!114 &1173220100199329411 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6177570343345529443, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5176453393459185786, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
   m_PrefabInstance: {fileID: 6313599830823970553}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4352966296300642256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fbb5bb07c1dd9f42865e63e3891d830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4025345277128870916 stripped
-RectTransform:
+--- !u!4 &4025345277128870916 stripped
+Transform:
   m_CorrespondingSourceObject: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
   m_PrefabInstance: {fileID: 6313599830823970553}
   m_PrefabAsset: {fileID: 0}

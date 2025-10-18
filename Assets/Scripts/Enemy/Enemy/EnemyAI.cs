@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Componet")]
     [SerializeField] private GameObject _GFX;
     [Foldout("Componet")]
-    [SerializeField] private Image _HPimg;
+    [SerializeField] private HPBar _HPimg;
     [Foldout("Componet")]
     [SerializeField] private Animator _anim;
 
@@ -129,7 +129,7 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void Update()
     {
-        _HPimg.fillAmount = _currentHealth / _maxHealth;
+        _HPimg.SetHealth(_currentHealth / _maxHealth);
     }
 
     #region Create Path
@@ -450,7 +450,6 @@ public class EnemyAI : MonoBehaviour
     {
         if (_display._Detec)
         {
-            Debug.Log("danh");
             _audio.PlayAttackSound();
         }
     }
