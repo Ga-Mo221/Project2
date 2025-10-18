@@ -446,10 +446,13 @@ public class EnemyAI : MonoBehaviour
     }
     #endregion
     #region Play Sound Attack
-    public void playAttackSound()
+    public void playAttackSoundEnemy()
     {
         if (_display._Detec)
+        {
+            Debug.Log("danh");
             _audio.PlayAttackSound();
+        }
     }
     #endregion
 }

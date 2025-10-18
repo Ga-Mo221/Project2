@@ -14,7 +14,7 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerDownHa
     [Header("Volume Settings")]
     [Range(0f, 1f)] public float hoverVolume = 1f;
     [Range(0f, 1f)] public float clickVolume = 1f;
-    [Range(0f, 1f)] public float valueChangeVolume = 1f;
+    private float valueChangeVolume = 0.1f;
 
     [Header("Optional Audio Source (leave empty to auto-create)")]
     private AudioSource audioSource;
