@@ -1,0 +1,1704 @@
+fileFormatVersion: 2
+guid: c3a85e85609198e4ab2850c81d3c6043
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1404028623067837608
+    second: Logo_0
+  - first:
+      213: 6795467416601567747
+    second: Logo_1
+  - first:
+      213: 6875538535012287733
+    second: Logo_2
+  - first:
+      213: 2381070441135384947
+    second: Logo_3
+  - first:
+      213: -3774021269495190454
+    second: Logo_4
+  - first:
+      213: 6893372319333685202
+    second: Logo_5
+  - first:
+      213: 5409054819110567409
+    second: Logo_6
+  - first:
+      213: -5151548511015374267
+    second: Logo_7
+  - first:
+      213: 8618792996653847996
+    second: Logo_8
+  - first:
+      213: -8503305437844106070
+    second: Logo_9
+  - first:
+      213: 9156548432191564253
+    second: Logo_10
+  - first:
+      213: -1306304639851798359
+    second: Logo_11
+  - first:
+      213: -1528687246299850986
+    second: Logo_12
+  - first:
+      213: -1453834278069125553
+    second: Logo_13
+  - first:
+      213: -8074770578077153683
+    second: Logo_14
+  - first:
+      213: -6159489392364382447
+    second: Logo_15
+  - first:
+      213: -4536293588464031748
+    second: Logo_16
+  - first:
+      213: -2080403533957981334
+    second: Logo_17
+  - first:
+      213: 4557605079627867692
+    second: Logo_18
+  - first:
+      213: -59867036688880149
+    second: Logo_19
+  - first:
+      213: -6649400525504886364
+    second: Logo_20
+  - first:
+      213: -1043740112008347349
+    second: Logo_21
+  - first:
+      213: 5013402760517276361
+    second: Logo_22
+  - first:
+      213: -1563498650507532718
+    second: Logo_23
+  - first:
+      213: 489527464863182327
+    second: Logo_24
+  - first:
+      213: 1686525961781880353
+    second: Logo_25
+  - first:
+      213: 5577146951343682445
+    second: Logo_26
+  - first:
+      213: 4532251367885671450
+    second: Logo_27
+  - first:
+      213: 6015085111391179743
+    second: Logo_28
+  - first:
+      213: -6715578492922858091
+    second: Logo_29
+  - first:
+      213: 6744394735244516897
+    second: Logo_30
+  - first:
+      213: 2455651733426305877
+    second: Logo_31
+  - first:
+      213: 2219852219945722203
+    second: Logo_32
+  - first:
+      213: -5797509884298718730
+    second: Logo_33
+  - first:
+      213: 3513587696935577402
+    second: Logo_34
+  - first:
+      213: -2839320760646553706
+    second: Logo_35
+  - first:
+      213: 5623462274162891901
+    second: Logo_36
+  - first:
+      213: -3604985213953041103
+    second: Logo_37
+  - first:
+      213: 8433036691795768141
+    second: Logo_38
+  - first:
+      213: -2970684811835393728
+    second: Logo_39
+  - first:
+      213: -7491248158336958942
+    second: Logo_40
+  - first:
+      213: -2846343384013073878
+    second: Logo_41
+  - first:
+      213: 1823874273584621959
+    second: Logo_42
+  - first:
+      213: -4115272520635916470
+    second: Logo_43
+  - first:
+      213: 8755192818100516191
+    second: Logo_44
+  - first:
+      213: -7457231079683258400
+    second: Logo_45
+  - first:
+      213: -4634297294918540341
+    second: Logo_46
+  - first:
+      213: -8220077377930706756
+    second: Logo_47
+  - first:
+      213: -8802086240787418441
+    second: Logo_48
+  - first:
+      213: -7553715472264418447
+    second: Logo_49
+  - first:
+      213: 6628693018632410536
+    second: Logo_50
+  - first:
+      213: -919838822651704121
+    second: Logo_51
+  - first:
+      213: 6941364479420712588
+    second: Logo_52
+  - first:
+      213: 4291459468313394980
+    second: Logo_53
+  - first:
+      213: -5862114177657543208
+    second: Logo_54
+  - first:
+      213: 92886300653714889
+    second: Logo_55
+  - first:
+      213: -872565930124020525
+    second: Logo_56
+  - first:
+      213: -7653662789630907626
+    second: Logo_57
+  - first:
+      213: -4856420334806623873
+    second: Logo_58
+  - first:
+      213: -9189241639348471000
+    second: Logo_59
+  - first:
+      213: 3334134127824563425
+    second: Logo_60
+  - first:
+      213: -4504240578127617985
+    second: Logo_61
+  - first:
+      213: 9138730655210459070
+    second: Logo_62
+  - first:
+      213: -8690164949695706671
+    second: Logo_63
+  - first:
+      213: 7641612597083126012
+    second: Logo_64
+  - first:
+      213: 1351894332266112724
+    second: Logo_65
+  - first:
+      213: -8227237171861849844
+    second: Logo_66
+  - first:
+      213: 4485942150029355283
+    second: Logo_67
+  - first:
+      213: 9130645360353425139
+    second: Logo_68
+  - first:
+      213: 8418525557792636266
+    second: Logo_69
+  - first:
+      213: 3144208708372436204
+    second: Logo_70
+  - first:
+      213: 8775085857212873115
+    second: Logo_71
+  - first:
+      213: -4670872629765101275
+    second: Logo_72
+  - first:
+      213: -1107693293736535210
+    second: Logo_73
+  - first:
+      213: -4211532128999579800
+    second: Logo_74
+  - first:
+      213: 3813465204234385335
+    second: Logo_75
+  - first:
+      213: -2998423131094799048
+    second: Logo_76
+  - first:
+      213: 1806976383062515713
+    second: Logo_77
+  - first:
+      213: -651340693339209224
+    second: Logo_78
+  - first:
+      213: -4506826866975949032
+    second: Logo_79
+  - first:
+      213: 3320855303209385032
+    second: Logo_80
+  - first:
+      213: 557640184157115071
+    second: Logo_81
+  - first:
+      213: 225970554324492902
+    second: Logo_82
+  - first:
+      213: 6771836695432311806
+    second: Logo_83
+  - first:
+      213: -560641116761184072
+    second: Logo_84
+  - first:
+      213: 733132963810553885
+    second: Logo_85
+  - first:
+      213: 3627325864022049595
+    second: Logo_86
+  - first:
+      213: -3428982438324970083
+    second: Logo_87
+  - first:
+      213: -3911104122322430879
+    second: Logo_88
+  - first:
+      213: -6615012090927678599
+    second: Logo_89
+  - first:
+      213: -1664277179976151361
+    second: Logo_90
+  - first:
+      213: 1267548482796172085
+    second: Logo_91
+  - first:
+      213: -9189356068639504039
+    second: Logo_92
+  - first:
+      213: -1986225608033181999
+    second: Logo_93
+  - first:
+      213: -5404235854012976100
+    second: Logo_94
+  - first:
+      213: -6938412908770054733
+    second: Logo_95
+  - first:
+      213: 825817508931415408
+    second: Logo_96
+  - first:
+      213: 713394641117634007
+    second: Logo_97
+  - first:
+      213: -4644201895705443268
+    second: Logo_98
+  - first:
+      213: 6954022344504316854
+    second: Logo_99
+  - first:
+      213: -7485155362825054973
+    second: Logo_100
+  - first:
+      213: -61586820343590213
+    second: Logo_101
+  - first:
+      213: 7162967900105799946
+    second: Logo_102
+  - first:
+      213: -4449032258196938873
+    second: Logo_103
+  - first:
+      213: 4823513757674645522
+    second: Logo_104
+  - first:
+      213: -5177983025775746583
+    second: Logo_105
+  - first:
+      213: -7329667322870062764
+    second: Logo_106
+  - first:
+      213: 2797799831768579433
+    second: Logo_107
+  - first:
+      213: 5587894312239779526
+    second: Logo_108
+  - first:
+      213: 8559645039496137097
+    second: Logo_109
+  - first:
+      213: 7248393840415010987
+    second: Logo_110
+  - first:
+      213: -7779203340234460003
+    second: Logo_111
+  - first:
+      213: -1042608853786471080
+    second: Logo_112
+  - first:
+      213: -2141432963432191188
+    second: Logo_113
+  - first:
+      213: -9043550956022879006
+    second: Logo_114
+  - first:
+      213: 9214840980304546704
+    second: Logo_115
+  - first:
+      213: 2210337546840123648
+    second: Logo_116
+  - first:
+      213: 4974206756520123876
+    second: Logo_117
+  - first:
+      213: -4809034639253733947
+    second: Logo_118
+  - first:
+      213: 4445039215891957639
+    second: Logo_119
+  - first:
+      213: 4864574263992870516
+    second: Logo_120
+  - first:
+      213: 2230872629910657771
+    second: Logo_121
+  - first:
+      213: -6559314487826398771
+    second: Logo_122
+  - first:
+      213: -6140638210795296220
+    second: Logo_123
+  - first:
+      213: -1355785766694136410
+    second: Logo_124
+  - first:
+      213: -844892761758345448
+    second: Logo_125
+  - first:
+      213: -1790465180074988865
+    second: Logo_126
+  - first:
+      213: -6741680160529557282
+    second: Logo_127
+  - first:
+      213: -5573069756438832532
+    second: Logo_128
+  - first:
+      213: -4910133997155283113
+    second: Logo_129
+  - first:
+      213: -2050268185314953425
+    second: Logo_130
+  - first:
+      213: -8650948195518788514
+    second: Logo_131
+  - first:
+      213: 7905646301529264316
+    second: Logo_132
+  - first:
+      213: 7299741919953569114
+    second: Logo_133
+  - first:
+      213: 5837097981263277951
+    second: Logo_134
+  - first:
+      213: -6197455715536709960
+    second: Logo_135
+  - first:
+      213: 5061842676715613935
+    second: Logo_136
+  - first:
+      213: 2516211572374059320
+    second: Logo_137
+  - first:
+      213: -5574656449831415873
+    second: Logo_138
+  - first:
+      213: 1476093366910123634
+    second: Logo_139
+  - first:
+      213: 7371427646621905213
+    second: Logo_140
+  - first:
+      213: 3632375990127031762
+    second: Logo_141
+  - first:
+      213: 7905098154662578044
+    second: Logo_142
+  - first:
+      213: -7408007237663293304
+    second: Logo_143
+  - first:
+      213: -6445179213533362199
+    second: Logo_144
+  - first:
+      213: -6103941149299937637
+    second: Logo_145
+  - first:
+      213: -679598122906343960
+    second: Logo_146
+  - first:
+      213: -6489322505469454847
+    second: Logo_147
+  - first:
+      213: 3690476570619826973
+    second: Logo_148
+  - first:
+      213: -9215829482641832495
+    second: Logo_149
+  - first:
+      213: -4972523550891981836
+    second: Logo_150
+  - first:
+      213: -7576074145747795488
+    second: Logo_151
+  - first:
+      213: 8963829563448372856
+    second: Logo_152
+  - first:
+      213: -7951831514786771064
+    second: Logo_153
+  - first:
+      213: -4677487015046515257
+    second: Logo_154
+  - first:
+      213: 5387668660317988986
+    second: Logo_155
+  - first:
+      213: -7559279921686264410
+    second: Logo_156
+  - first:
+      213: 7655100370492355642
+    second: Logo_157
+  - first:
+      213: -3069012525255647929
+    second: Logo_158
+  - first:
+      213: 5923390305872395727
+    second: Logo_159
+  - first:
+      213: 2452022336012441001
+    second: Logo_160
+  - first:
+      213: -6174537114942015282
+    second: Logo_161
+  - first:
+      213: -4833137512384328987
+    second: Logo_162
+  - first:
+      213: 4583465736813183943
+    second: Logo_163
+  - first:
+      213: -563662752866014595
+    second: Logo_164
+  - first:
+      213: -5908514312880158619
+    second: Logo_165
+  - first:
+      213: 1162701178972144818
+    second: Logo_166
+  - first:
+      213: 2787459803013038996
+    second: Logo_167
+  - first:
+      213: -3050981076770302038
+    second: Logo_168
+  - first:
+      213: -2594621528759684728
+    second: Logo_169
+  - first:
+      213: -7743133152301765085
+    second: Logo_170
+  - first:
+      213: 693128824454333301
+    second: Logo_171
+  - first:
+      213: -5462931680331738404
+    second: Logo_172
+  - first:
+      213: -86243315621401519
+    second: Logo_173
+  - first:
+      213: -4970566123446041105
+    second: Logo_174
+  - first:
+      213: 8213516404924022894
+    second: Logo_175
+  - first:
+      213: -3818149726605273337
+    second: Logo_176
+  - first:
+      213: -7870607715704136161
+    second: Logo_177
+  - first:
+      213: -1635556477923797048
+    second: Logo_178
+  - first:
+      213: 1972506274971536796
+    second: Logo_179
+  - first:
+      213: 3711416757034862484
+    second: Logo_180
+  - first:
+      213: 8830925308253967259
+    second: Logo_181
+  - first:
+      213: 1079525079838773905
+    second: Logo_182
+  - first:
+      213: -2093904618046579700
+    second: Logo_183
+  - first:
+      213: 7572352509721848762
+    second: Logo_184
+  - first:
+      213: 3120542371302092445
+    second: Logo_185
+  - first:
+      213: -302465274767463472
+    second: Logo_186
+  - first:
+      213: 880580867699151558
+    second: Logo_187
+  - first:
+      213: -771418663231330154
+    second: Logo_188
+  - first:
+      213: 6732707134889165751
+    second: Logo_189
+  - first:
+      213: -5597333405106695655
+    second: Logo_190
+  - first:
+      213: -7598800591843691279
+    second: Logo_191
+  - first:
+      213: -2257403150155661341
+    second: Logo_192
+  - first:
+      213: -1164409124196997223
+    second: Logo_193
+  - first:
+      213: -22331723592410686
+    second: Logo_194
+  - first:
+      213: -4403864991257560977
+    second: Logo_195
+  - first:
+      213: 6292704831887072228
+    second: Logo_196
+  - first:
+      213: -4070046826712732695
+    second: Logo_197
+  - first:
+      213: 4679590407968805538
+    second: Logo_198
+  - first:
+      213: 8105181454431128903
+    second: Logo_199
+  - first:
+      213: -1424921761573160429
+    second: Logo_200
+  - first:
+      213: -4848148495555357498
+    second: Logo_201
+  - first:
+      213: -6993133638629448656
+    second: Logo_202
+  - first:
+      213: 8643424507282961126
+    second: Logo_203
+  - first:
+      213: 1542561431925411795
+    second: Logo_204
+  - first:
+      213: -8302917619519271585
+    second: Logo_205
+  - first:
+      213: 8182323490933654128
+    second: Logo_206
+  - first:
+      213: 5283342460599019411
+    second: Logo_207
+  - first:
+      213: 7566028113109304621
+    second: Logo_208
+  - first:
+      213: -2423317195112534989
+    second: Logo_209
+  - first:
+      213: -7076990713554456170
+    second: Logo_210
+  - first:
+      213: 3460132194194933254
+    second: Logo_211
+  - first:
+      213: 542786819554944674
+    second: Logo_212
+  - first:
+      213: -1403936861217607503
+    second: Logo_213
+  - first:
+      213: 3504121673962541871
+    second: Logo_214
+  - first:
+      213: -7701012395298070951
+    second: Logo_215
+  - first:
+      213: 6947527627109704851
+    second: Logo_216
+  - first:
+      213: -7467085261506526797
+    second: Logo_217
+  - first:
+      213: 8432758269210070761
+    second: Logo_218
+  - first:
+      213: 1080029220236715373
+    second: Logo_219
+  - first:
+      213: -4075110018525561578
+    second: Logo_220
+  - first:
+      213: 7268791229367750264
+    second: Logo_221
+  - first:
+      213: 5505118889544189647
+    second: Logo_222
+  - first:
+      213: -1931676583040703304
+    second: Logo_223
+  - first:
+      213: -5515154993583024717
+    second: Logo_224
+  - first:
+      213: -7923086467381375872
+    second: Logo_225
+  - first:
+      213: -6793437249374659085
+    second: Logo_226
+  - first:
+      213: 8591172477084991753
+    second: Logo_227
+  - first:
+      213: 3829578472262985758
+    second: Logo_228
+  - first:
+      213: -2350795178187163100
+    second: Logo_229
+  - first:
+      213: 6078193985263946426
+    second: Logo_230
+  - first:
+      213: 8723212499133674626
+    second: Logo_231
+  - first:
+      213: 5403148946341041957
+    second: Logo_232
+  - first:
+      213: 410216398276932286
+    second: Logo_233
+  - first:
+      213: -6914235874673307921
+    second: Logo_234
+  - first:
+      213: 1506524467127368128
+    second: Logo_235
+  - first:
+      213: -4903283974660468926
+    second: Logo_236
+  - first:
+      213: 2985460877436211846
+    second: Logo_237
+  - first:
+      213: 2757802062742638121
+    second: Logo_238
+  - first:
+      213: -1673420363889422161
+    second: Logo_239
+  - first:
+      213: -5634203873517101253
+    second: Logo_240
+  - first:
+      213: -767980075283412070
+    second: Logo_241
+  - first:
+      213: -7766384934017210765
+    second: Logo_242
+  - first:
+      213: -7104603068730862493
+    second: Logo_243
+  - first:
+      213: -8451876761372105558
+    second: Logo_244
+  - first:
+      213: 3558871342373973300
+    second: Logo_245
+  - first:
+      213: 5898285294750916047
+    second: Logo_246
+  - first:
+      213: 4767854323899593099
+    second: Logo_247
+  - first:
+      213: 8948516231365060010
+    second: Logo_248
+  - first:
+      213: -8449314700994915530
+    second: Logo_249
+  - first:
+      213: -1721787141903369892
+    second: Logo_250
+  - first:
+      213: 5668686512972892340
+    second: Logo_251
+  - first:
+      213: -6163039831674175031
+    second: Logo_252
+  - first:
+      213: -32472147538637208
+    second: Logo_253
+  - first:
+      213: -8381445558649215702
+    second: Logo_254
+  - first:
+      213: -2038539074450706752
+    second: Logo_255
+  - first:
+      213: -6294319149398642590
+    second: Logo_256
+  - first:
+      213: 1285450497990523274
+    second: Logo_257
+  - first:
+      213: 5308184216375689670
+    second: Logo_258
+  - first:
+      213: 3716078826039391482
+    second: Logo_259
+  - first:
+      213: -6497528084121206992
+    second: Logo_260
+  - first:
+      213: 6853071218279696545
+    second: Logo_261
+  - first:
+      213: -3946124413274766777
+    second: Logo_262
+  - first:
+      213: 5128553403029643393
+    second: Logo_263
+  - first:
+      213: 1877207143408742242
+    second: Logo_264
+  - first:
+      213: 4237885896065681284
+    second: Logo_265
+  - first:
+      213: 6687878043116109267
+    second: Logo_266
+  - first:
+      213: -3636425518052356474
+    second: Logo_267
+  - first:
+      213: 2001691389028783524
+    second: Logo_268
+  - first:
+      213: -3860346339164737662
+    second: Logo_269
+  - first:
+      213: 7827591334265349504
+    second: Logo_270
+  - first:
+      213: -7789207395799242101
+    second: Logo_271
+  - first:
+      213: 8591777894300633355
+    second: Logo_272
+  - first:
+      213: -5892349245349037777
+    second: Logo_273
+  - first:
+      213: 3840169559715298343
+    second: Logo_274
+  - first:
+      213: -286975003965513247
+    second: Logo_275
+  - first:
+      213: -3629745073800026376
+    second: Logo_276
+  - first:
+      213: -3253003168952029771
+    second: Logo_277
+  - first:
+      213: -4541612181466473017
+    second: Logo_278
+  - first:
+      213: 2607809293509459575
+    second: Logo_279
+  - first:
+      213: 1243999132165016521
+    second: Logo_280
+  - first:
+      213: 2076646044323590851
+    second: Logo_281
+  - first:
+      213: 6259839847010089942
+    second: Logo_282
+  - first:
+      213: 3466962633182236276
+    second: Logo_283
+  - first:
+      213: -5770482999164579365
+    second: Logo_284
+  - first:
+      213: 6749919133717178383
+    second: Logo_285
+  - first:
+      213: -232115556680585851
+    second: Logo_286
+  - first:
+      213: 2875489715800620984
+    second: Logo_287
+  - first:
+      213: -952385961819419504
+    second: Logo_288
+  - first:
+      213: -6865536476762641605
+    second: Logo_289
+  - first:
+      213: 5141533249398746604
+    second: Logo_290
+  - first:
+      213: 5198623912429418127
+    second: Logo_291
+  - first:
+      213: 8729795381085644999
+    second: Logo_292
+  - first:
+      213: 8664688442121018175
+    second: Logo_293
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Logo_0
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 1230
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a47074089c1c7310800000000000000
+      internalID: 1404028623067837608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_1
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 1230
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30227498c995e4e50800000000000000
+      internalID: 6795467416601567747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1107
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f4cae29ed1da6f50800000000000000
+      internalID: 6875538535012287733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_3
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 1107
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 379ae0563f24b0120800000000000000
+      internalID: 2381070441135384947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_4
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 1107
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4c68f8a6abff9bc0800000000000000
+      internalID: -3774021269495190454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 984
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d7156e0a9d2aaf50800000000000000
+      internalID: 6893372319333685202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_6
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 984
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fd33b713b2d01b40800000000000000
+      internalID: 5409054819110567409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_7
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 984
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5427cbd5ce50288b0800000000000000
+      internalID: -5151548511015374267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 861
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb55d2ee09a1c9770800000000000000
+      internalID: 8618792996653847996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_9
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 861
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa497a8b1c03ef980800000000000000
+      internalID: -8503305437844106070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_10
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 861
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd9207d1948921f70800000000000000
+      internalID: 9156548432191564253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 738
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a06035e9d21fdde0800000000000000
+      internalID: -1306304639851798359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_12
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 738
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61790af7c0309cae0800000000000000
+      internalID: -1528687246299850986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_13
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 738
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4e37654d61f2dbe0800000000000000
+      internalID: -1453834278069125553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 615
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d668fe2f0f6a0ff80800000000000000
+      internalID: -8074770578077153683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_15
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 615
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11795523809158aa0800000000000000
+      internalID: -6159489392364382447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_16
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 615
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf728bef309db01c0800000000000000
+      internalID: -4536293588464031748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 492
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6b97f0220ce023e0800000000000000
+      internalID: -2080403533957981334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_18
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 492
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c262cb53caddf3f30800000000000000
+      internalID: 4557605079627867692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_19
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 492
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bed67605f3f4b2ff0800000000000000
+      internalID: -59867036688880149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 369
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a94cfbb37598b3a0800000000000000
+      internalID: -6649400525504886364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_21
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 369
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b218ae9e5e3e381f0800000000000000
+      internalID: -1043740112008347349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_22
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 369
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c25890af3f239540800000000000000
+      internalID: 5013402760517276361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 246
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25622b9d2465d4ae0800000000000000
+      internalID: -1563498650507532718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_24
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 246
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fda7fab2a62bc600800000000000000
+      internalID: 489527464863182327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_25
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 246
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126ab783d6eb76710800000000000000
+      internalID: 1686525961781880353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 123
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d833efe6a91066d40800000000000000
+      internalID: 5577146951343682445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_27
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 123
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c8a9f2b9ac5ee30800000000000000
+      internalID: 4532251367885671450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_28
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 123
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd3563e1a00e97350800000000000000
+      internalID: 6015085111391179743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Logo_29
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 637
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 595741cf0f87dc2a0800000000000000
+      internalID: -6715578492922858091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a952b8489fbb77649a306ae82e471ae1
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":637.0,"y":123.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Logo_0: 1404028623067837608
+      Logo_1: 6795467416601567747
+      Logo_10: 9156548432191564253
+      Logo_11: -1306304639851798359
+      Logo_12: -1528687246299850986
+      Logo_13: -1453834278069125553
+      Logo_14: -8074770578077153683
+      Logo_15: -6159489392364382447
+      Logo_16: -4536293588464031748
+      Logo_17: -2080403533957981334
+      Logo_18: 4557605079627867692
+      Logo_19: -59867036688880149
+      Logo_2: 6875538535012287733
+      Logo_20: -6649400525504886364
+      Logo_21: -1043740112008347349
+      Logo_22: 5013402760517276361
+      Logo_23: -1563498650507532718
+      Logo_24: 489527464863182327
+      Logo_25: 1686525961781880353
+      Logo_26: 5577146951343682445
+      Logo_27: 4532251367885671450
+      Logo_28: 6015085111391179743
+      Logo_29: -6715578492922858091
+      Logo_3: 2381070441135384947
+      Logo_4: -3774021269495190454
+      Logo_5: 6893372319333685202
+      Logo_6: 5409054819110567409
+      Logo_7: -5151548511015374267
+      Logo_8: 8618792996653847996
+      Logo_9: -8503305437844106070
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

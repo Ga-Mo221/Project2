@@ -1,5 +1,4 @@
 using NaughtyAttributes;
-using Photon.Pun;
 using TMPro;
 using System;
 using UnityEngine;
@@ -31,7 +30,7 @@ public class MainMenu : MonoBehaviour
 
     private string room_name;
     private string pass;
-    public event Action _onEnterPassJoineRoom;
+    //public event Action _onEnterPassJoineRoom;
 
     private UnitAudio _audio;
 
@@ -90,29 +89,29 @@ public class MainMenu : MonoBehaviour
 
     public void OnOnline()
     {
-        PhotonNetwork.ConnectUsingSettings(); // bắt đầu connect
-        Debug.Log("🔄 Đang kết nối Photon...");
-        _panel_Loadding.SetActive(true);
+        // PhotonNetwork.ConnectUsingSettings(); // bắt đầu connect
+        // Debug.Log("🔄 Đang kết nối Photon...");
+        // _panel_Loadding.SetActive(true);
     }
 
     public void OutOnlineOrRoom()
     {
-        if (SettingManager.Instance.getOnline() && SettingManager.Instance.getInRoom())
-        {
-            if (PhotonNetwork.InRoom)
-            {
-                Debug.Log("Đang rời khỏi phòng...");
-                _panel_Loadding.SetActive(true);
-                PhotonNetwork.LeaveRoom();
-            }
-        }
-        else if (SettingManager.Instance.getOnline() && !SettingManager.Instance.getInRoom())
-        {
-            _button_Mutiplayer.SetActive(true);
-            _button_StartGame.SetActive(true);
-            _panel_Online.SetActive(false);
-            PhotonNetwork.Disconnect();
-        }
+        // if (SettingManager.Instance.getOnline() && SettingManager.Instance.getInRoom())
+        // {
+        //     if (PhotonNetwork.InRoom)
+        //     {
+        //         Debug.Log("Đang rời khỏi phòng...");
+        //         _panel_Loadding.SetActive(true);
+        //         PhotonNetwork.LeaveRoom();
+        //     }
+        // }
+        // else if (SettingManager.Instance.getOnline() && !SettingManager.Instance.getInRoom())
+        // {
+        //     _button_Mutiplayer.SetActive(true);
+        //     _button_StartGame.SetActive(true);
+        //     _panel_Online.SetActive(false);
+        //     PhotonNetwork.Disconnect();
+        // }
     }
 
     public void ReturnToLobby()
@@ -153,17 +152,17 @@ public class MainMenu : MonoBehaviour
 
     public void EnterPass()
     {
-        string input = _InputPassINRoom.text.Trim();
-        string target = pass.Trim();
+        // string input = _InputPassINRoom.text.Trim();
+        // string target = pass.Trim();
 
-        Debug.Log($"[CHECK] Input='{input}' | Pass='{target}'");
+        // Debug.Log($"[CHECK] Input='{input}' | Pass='{target}'");
 
-        if (CheckString.Check(input, pass))
-        {
-            _onEnterPassJoineRoom?.Invoke();
-            Debug.Log("ok");
-        }
-        else Debug.Log("sai");
+        // if (CheckString.Check(input, pass))
+        // {
+        //     _onEnterPassJoineRoom?.Invoke();
+        //     Debug.Log("ok");
+        // }
+        // else Debug.Log("sai");
     }
     public string getNameRoom() => room_name;
 
