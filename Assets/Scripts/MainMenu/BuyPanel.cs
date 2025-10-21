@@ -20,6 +20,8 @@ public class BuyPanel : MonoBehaviour
     [SerializeField] private bool _Buy = false;
     [SerializeField] private bool _onDis = false;
 
+    [SerializeField] private LoadInventoryUnit _load;
+
     private Animator _anim;
 
     void Awake()
@@ -101,6 +103,7 @@ public class BuyPanel : MonoBehaviour
         }
 
         SettingManager.Instance.Save();
+        _load.setUnit(_type);
     }
 
     public void _out() => _anim.SetTrigger("exit");
