@@ -670,6 +670,7 @@ public class GameUI : MonoBehaviour
     {
         if (Castle.Instance == null) return;
         if (GameManager.Instance.Tutorial) return;
+
         Castle.Instance._wood -= GameManager.Instance.Info._wood_Warrior;
         updateReferent();
         // tao player

@@ -27,7 +27,7 @@ public class GameScene : MonoBehaviour
 
     public void OpenSceneLoadMap()
     {
-        //SceneManager.LoadScene("Game");
-        SceneManager.LoadScene("LoadMap");
+        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("LoadMap");
     }
 }

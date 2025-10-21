@@ -127,7 +127,6 @@ public class FindPath : MonoBehaviour
             return;
         }
 
-        if (_anim) _anim.SetBool("Moving", true);
 
         // Nếu vượt quá waypoint cuối
         if (_currentWaypoint >= _path.vectorPath.Count)
@@ -137,6 +136,8 @@ public class FindPath : MonoBehaviour
             _targetPos = _target;
             return;
         }
+        
+        if (_anim) _anim.SetBool("Moving", true);
 
         Vector2 waypoint = (Vector2)_path.vectorPath[_currentWaypoint];
         Vector2 dir = (waypoint - _rb.position).normalized;

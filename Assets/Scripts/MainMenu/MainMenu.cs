@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private Animator _loadGameAnim;
 
+    [SerializeField] private TextMeshProUGUI _coin;
+
     [Foldout("Online")]
     [SerializeField] private GameObject _button_StartGame;
     [Foldout("Online")]
@@ -29,7 +31,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Animator _panel_InputPass;
 
     private string room_name;
-    private string pass;
+    //private string pass;
     //public event Action _onEnterPassJoineRoom;
 
     private UnitAudio _audio;
@@ -50,6 +52,7 @@ public class MainMenu : MonoBehaviour
     {
         CursorManager.Instance.SetNormalCursor();
         _audio.PlayBackgroundSound();
+        UpdateCoin();
     }
 
 
@@ -66,6 +69,11 @@ public class MainMenu : MonoBehaviour
             }
         }
 
+    }
+
+    public void UpdateCoin()
+    {
+        _coin.text = SettingManager.Instance._gameSettings._coin.ToString();
     }
 
     public void OpenSetting()
@@ -145,9 +153,9 @@ public class MainMenu : MonoBehaviour
 
     public void cacheRomPropety(string name, string paSS)
     {
-        room_name = name;
-        pass = paSS;
-        _panel_InputPass.gameObject.SetActive(true);
+        // room_name = name;
+        // pass = paSS;
+        // _panel_InputPass.gameObject.SetActive(true);
     }
 
     public void EnterPass()
