@@ -87,6 +87,20 @@ public class HouseHealth : MonoBehaviour
             _HPcanvas.SetActive(false);
 
         InvokeRepeating(nameof(fireDie), 1f, 1f);
+
+        setSkin();
+    }
+
+    private void setSkin()
+    {
+        int id = 0;
+        if (IsCastle)
+            id = SettingManager.Instance._gameSettings._currentCastle;
+        if (IsStorage)
+            id = SettingManager.Instance._gameSettings._currentStorage;
+        if (IsTower)
+            id = SettingManager.Instance._gameSettings._currentTower;
+        _anim.SetInteger("TypeUnit", id);
     }
 
 

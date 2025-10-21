@@ -271,8 +271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Map:
   - {fileID: 4947422340017731434, guid: 1626bd91e5dc94941ae773e47ffa544a, type: 3}
-  - {fileID: 5912663201972684231, guid: b846aad409fab1b4bb4b5e8011030728, type: 3}
-  - {fileID: 508714006180908250, guid: 16fbf136253b6be468ba811d4b28a089, type: 3}
   TutorialMap: {fileID: 3899800583253803194, guid: c9a00489c1b205449a1564b80ba91d51, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

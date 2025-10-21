@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: b31169716337a144d85ef0559a742cdc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1224601750173388202
+    second: Oura_0
+  - first:
+      213: 8865142862099072123
+    second: Oura_1
+  - first:
+      213: -6612974892230684478
+    second: Oura_2
+  - first:
+      213: 1255455183121787766
+    second: Oura_3
+  - first:
+      213: -3367684519429008076
+    second: Oura_4
+  - first:
+      213: -6404040065768273018
+    second: Oura_5
+  - first:
+      213: 8716016300794361105
+    second: Oura_6
+  - first:
+      213: 2236016676553208373
+    second: Oura_7
+  - first:
+      213: -2375470846225329040
+    second: Oura_8
+  - first:
+      213: 713892332949214288
+    second: Oura_9
+  - first:
+      213: -5548362508127445112
+    second: Oura_10
+  - first:
+      213: 6189071515524827439
+    second: Oura_11
+  - first:
+      213: 8099997819952925616
+    second: Oura_12
+  - first:
+      213: -5992000548252124927
+    second: Oura_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Oura_0
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 2535
+        width: 2215
+        height: 824
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aad0866bdc8aef010800000000000000
+      internalID: 1224601750173388202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_1
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 2598
+        width: 1751
+        height: 1675
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b74418aa670570b70800000000000000
+      internalID: 8865142862099072123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_2
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 2648
+        width: 1139
+        height: 2106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c053006f5ef934a0800000000000000
+      internalID: -6612974892230684478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_3
+      rect:
+        serializedVersion: 2
+        x: 2186
+        y: 2660
+        width: 334
+        height: 2290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67ba56d56d54c6110800000000000000
+      internalID: 1255455183121787766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_4
+      rect:
+        serializedVersion: 2
+        x: 2572
+        y: 2649
+        width: 820
+        height: 2222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4351ad7b5c49341d0800000000000000
+      internalID: -3367684519429008076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_5
+      rect:
+        serializedVersion: 2
+        x: 2630
+        y: 2579
+        width: 2134
+        height: 1784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68b43808d774027a0800000000000000
+      internalID: -6404040065768273018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_6
+      rect:
+        serializedVersion: 2
+        x: 2677
+        y: 6
+        width: 2383
+        height: 5025
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 115bc5965a285f870800000000000000
+      internalID: 8716016300794361105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_7
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 2194
+        width: 2281
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 532bdc5025de70f10800000000000000
+      internalID: 2236016676553208373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_8
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 668
+        width: 2134
+        height: 1784
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0745174e9d1a80fd0800000000000000
+      internalID: -2375470846225329040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_9
+      rect:
+        serializedVersion: 2
+        x: 1667
+        y: 161
+        width: 820
+        height: 2222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05410516b4148e900800000000000000
+      internalID: 713892332949214288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_10
+      rect:
+        serializedVersion: 2
+        x: 2539
+        y: 82
+        width: 334
+        height: 2289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88fd7f102b14003b0800000000000000
+      internalID: -5548362508127445112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_11
+      rect:
+        serializedVersion: 2
+        x: 2571
+        y: 278
+        width: 1138
+        height: 2106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f29885490cff3e550800000000000000
+      internalID: 6189071515524827439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_12
+      rect:
+        serializedVersion: 2
+        x: 2636
+        y: 759
+        width: 1752
+        height: 1675
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bb8bb30a19f86070800000000000000
+      internalID: 8099997819952925616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oura_13
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 1673
+        width: 2215
+        height: 824
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1097c739f3328dca0800000000000000
+      internalID: -5992000548252124927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Oura_0: 1224601750173388202
+      Oura_1: 8865142862099072123
+      Oura_10: -5548362508127445112
+      Oura_11: 6189071515524827439
+      Oura_12: 8099997819952925616
+      Oura_13: -5992000548252124927
+      Oura_2: -6612974892230684478
+      Oura_3: 1255455183121787766
+      Oura_4: -3367684519429008076
+      Oura_5: -6404040065768273018
+      Oura_6: 8716016300794361105
+      Oura_7: 2236016676553208373
+      Oura_8: -2375470846225329040
+      Oura_9: 713892332949214288
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

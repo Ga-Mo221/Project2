@@ -136,6 +136,8 @@ public class PlayerAI : MonoBehaviour
     public bool _canAction = false;
     [Foldout("Status")]
     public bool _movingToTower = false;
+    [Foldout("Status")]
+    [SerializeField] private bool _updateSkin = false;
 
 
     [Foldout("Priority")]
@@ -189,6 +191,8 @@ public class PlayerAI : MonoBehaviour
 
         if (gameObject.activeInHierarchy)
             _cor_NewlySpawned = StartCoroutine(reset_isNewlySpawned());
+
+        SetSkin();
     }
 
 
@@ -201,6 +205,7 @@ public class PlayerAI : MonoBehaviour
             Dead();
             return;
         }
+        hits = Physics2D.OverlapCircleAll(transform.position, _radius);
     }
 
 
@@ -208,10 +213,14 @@ public class PlayerAI : MonoBehaviour
     protected virtual void Update()
     {
         if (_Die) return;
-        hits = null;
-        hits = Physics2D.OverlapCircleAll(transform.position, _radius);
         setHPBar();
         flip(target, _canAction);
+
+        if (!_updateSkin)
+        {
+            SetSkin();
+            _updateSkin = true;
+        }
     }
     #endregion
 
@@ -246,7 +255,6 @@ public class PlayerAI : MonoBehaviour
     #region New Status
     private void newStatus()
     {
-        Debug.Log("New State");
         _canUpdateHP = true;
         _level = 1;
         _health = _maxHealth;
@@ -267,6 +275,7 @@ public class PlayerAI : MonoBehaviour
         setDie(false);
         setIsTarget(false);
         path.setCurrentWaypoint(0);
+        _updateSkin = false;
     }
     #endregion
 
@@ -296,7 +305,6 @@ public class PlayerAI : MonoBehaviour
         if (gameObject.activeInHierarchy)
             _cor_NewlySpawned = StartCoroutine(reset_isNewlySpawned());
         transform.position = pos.position;
-        Debug.Log("respawn");
     }
     #endregion
 
@@ -304,7 +312,6 @@ public class PlayerAI : MonoBehaviour
     #region Dead
     public void Dead()
     {
-        Debug.Log($"{transform.name} die");
         _rada.setDie(true);
         path.setDie(true);
         setTarget(transform.position, true);
@@ -489,7 +496,8 @@ public class PlayerAI : MonoBehaviour
                 {
                     _canAction = true;
                     if (_attackSpeed == null)
-                        _attackSpeed = StartCoroutine(attackSpeed());
+                        if (gameObject.activeInHierarchy)
+                            _attackSpeed = StartCoroutine(attackSpeed());
                 }
             }
             else
@@ -531,7 +539,8 @@ public class PlayerAI : MonoBehaviour
                 var _script = _nearest.GetComponent<Item>();
                 if (_script != null && _farmCoroutine == null)
                 {
-                    _farmCoroutine = StartCoroutine(farmTrigger(_script));
+                    if (gameObject.activeInHierarchy)
+                        _farmCoroutine = StartCoroutine(farmTrigger(_script));
                 }
             }
             else
@@ -917,7 +926,10 @@ public class PlayerAI : MonoBehaviour
 
     // Creating
     public void setCreating(bool amount)
-        => _creating = amount;
+    {
+        
+        _creating = amount;
+    }
     public bool getCreating() => _creating;
 
     // path can move
@@ -929,6 +941,30 @@ public class PlayerAI : MonoBehaviour
     public bool getUpTower() => _UpTower;
 
     public virtual int getOderInLayer() => 0;
+
+    public void SetSkin()
+    {
+        int id = 0;
+        switch (_unitClass)
+        {
+            case UnitType.Warrior:
+                id = SettingManager.Instance._gameSettings._currentWarrior;
+                break;
+            case UnitType.Archer:
+                id = SettingManager.Instance._gameSettings._currentArcher;
+                break;
+            case UnitType.Lancer:
+                id = SettingManager.Instance._gameSettings._currentLancer;
+                break;
+            case UnitType.Healer:
+                id = SettingManager.Instance._gameSettings._currentHealer;
+                break;
+            case UnitType.TNT:
+                id = SettingManager.Instance._gameSettings._currentTNT;
+                break;
+        }
+        _anim.SetInteger("TypeUnit", id);
+    }
     #endregion
 
 
