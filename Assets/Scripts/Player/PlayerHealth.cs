@@ -35,7 +35,6 @@ public class PlayerHealth : MonoBehaviour
         _playerAI._health -= _damage;
         if (_playerAI._health <= 0)
         {
-            GameManager.Instance.UIupdatePlayerValue();
             _playerAI.Dead();
         }
 

@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1340047751
-  m_SortingLayer: 4
+  m_SortingLayerID: 418685729
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -443,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6642116441936742969}
   - component: {fileID: 8584622584002907894}
-  - component: {fileID: 8221971140685883720}
+  - component: {fileID: 6683106481153843533}
   - component: {fileID: 2917849283360312881}
   - component: {fileID: 1914722072580922791}
   - component: {fileID: 5273374660752975106}
@@ -464,7 +464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8308106257862273322}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.05987, y: -2.07609, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -501,9 +501,9 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!70 &8221971140685883720
-CapsuleCollider2D:
+  m_Constraints: 4
+--- !u!58 &6683106481153843533
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -536,9 +536,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.013677312, y: 0.4034902}
-  m_Size: {x: 1.547107, y: 0.8495519}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.3
 --- !u!114 &2917849283360312881
 MonoBehaviour:
   m_ObjectHideFlags: 0

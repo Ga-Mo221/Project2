@@ -397,9 +397,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -942469059
-  m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingLayerID: 418685729
+  m_SortingLayer: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: a0b73478c2293ab4a815873d44beccff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -491,7 +491,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -1824874913
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 5
+  m_FrontSortingLayer: 6
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 1
   m_BackSortingOrder: 0
@@ -508,7 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7560415923998112990}
   - component: {fileID: 4618718576067403608}
-  - component: {fileID: 6652922931559125680}
+  - component: {fileID: 7584049141608712185}
   - component: {fileID: 5935265447120690550}
   - component: {fileID: 7188117328976991693}
   - component: {fileID: 6439628497108050428}
@@ -573,8 +573,8 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!70 &6652922931559125680
-CapsuleCollider2D:
+--- !u!58 &7584049141608712185
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -607,9 +607,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.017023623, y: -0.51921695}
-  m_Size: {x: 1.2213103, y: 0.98297966}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.3
 --- !u!50 &5935265447120690550
 Rigidbody2D:
   serializedVersion: 5
@@ -713,6 +712,7 @@ MonoBehaviour:
   _attackSpeedd: 1.5
   _slot: 3
   _createTime_sec: 13
+  _radiusCallSupport: 18.1
   _radius: 9
   _radius_farm: 3
   _farmSpeed: 1
@@ -743,6 +743,7 @@ MonoBehaviour:
   _creating: 0
   _UpTower: 0
   _Die: 0
+  _callSupport: 0
   _detect: 0
   _isLock: 0
   _isAI: 1
@@ -753,6 +754,7 @@ MonoBehaviour:
   _AOEHeal: 0
   _canAction: 0
   _movingToTower: 0
+  _updateSkin: 0
   _isUnderAttack: 0
   _isAttacking: 0
   _isHarvesting: 0

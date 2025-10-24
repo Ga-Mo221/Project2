@@ -32,6 +32,12 @@ public class DropItem : MonoBehaviour
 
     [SerializeField] private int _maxValueDrop;
     private Coroutine des;
+
+    void Awake()
+    {
+        if (_audio == null)
+            _audio = GetComponent<UnitAudio>();
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         Apply(collision);

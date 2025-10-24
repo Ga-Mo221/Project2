@@ -65,6 +65,7 @@
         "ui.Level": "LV.",
         "ui.NewDay.Day": "Day ",
         "ui.minimap.Day": "Day ",
+        "ui.minimap.Autotrain": "Auto Train",
         "ui.TutorialVideo.ButtonSelect5Unit": "Select Unit Type",
         "ui.TutorialVideo.radialmenu": "Commands",
         "ui.TutorialVideo.Select5UnitTitle": "Tutorial: Selecting Unit Types",

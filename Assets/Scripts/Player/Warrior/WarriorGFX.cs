@@ -33,6 +33,9 @@ public class WarriorGFX : PlayerAI
     {
         base.Ai();
         if (!getIsAI()) return;
+
+        if (getCallSupport()) return;
+
         target = findEnemys();
         if (target == null)
         {
