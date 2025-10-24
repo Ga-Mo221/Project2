@@ -346,6 +346,7 @@ public class AnimalAI : MonoBehaviour
         StartCoroutine(Respawm(_respawmTime));
 
         //Debug.Log("die r");
+        GameManager.Instance.addCoin(1);
     }
     #endregion
 

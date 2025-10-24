@@ -84,7 +84,7 @@ public class EnemyHouse : MonoBehaviour
         {
             if (enemy.getDie())
             {
-                enemy.respawn(getMinDirection(enemy));
+                enemy.respawn(getMinDirection(enemy), false);
                 enemy.gameObject.SetActive(true);
             }
         }

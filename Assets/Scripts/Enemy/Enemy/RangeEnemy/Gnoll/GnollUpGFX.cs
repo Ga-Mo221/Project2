@@ -112,7 +112,7 @@ public class GnollUpGFX : MonoBehaviour
         {
             if (!obj.activeSelf && _target != null)
             {
-                var script = obj.GetComponent<ArowEnemy>();
+                var script = obj.GetComponent<ArrowEnemy>();
                 script.setProperties(_target.transform, _damage, 2f, transform.localScale);
                 obj.transform.position = _spawnPoint.position;
                 obj.SetActive(true);
@@ -123,7 +123,7 @@ public class GnollUpGFX : MonoBehaviour
         if (!isSpawn && _target != null)
         {
             GameObject obj = Instantiate(_bonePrefab, _spawnPoint.position, Quaternion.identity, _spawnPoint);
-            var script = obj.GetComponent<ArowEnemy>();
+            var script = obj.GetComponent<ArrowEnemy>();
             script.setProperties(_target.transform, _damage, 2f, transform.localScale);
             _listPrefeb.Add(obj);
         }

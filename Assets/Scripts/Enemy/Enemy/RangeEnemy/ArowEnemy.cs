@@ -1,20 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ArowEnemy : MonoBehaviour
+public class ArrowEnemy : MonoBehaviour
 {
-    [SerializeField] private float _maxSpeed = 10;
-    [SerializeField] private float _speed = 0;
+    [SerializeField] private float _maxSpeed = 10f;
+    private float _speed;
     private float _damage;
-    [SerializeField] private Transform _target;
-    private Coroutine _setActive;
-
+    private Transform _target;
+    private Coroutine _autoDisable;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
     [SerializeField] private UnitAudio _audio;
-
-    private Coroutine _fix;
+    private bool _hasHit; // ← THÊM flag này
+    private bool _on = true;
 
     void Awake()
     {
@@ -25,92 +23,92 @@ public class ArowEnemy : MonoBehaviour
 
     void Update()
     {
-        if (_fix == null && gameObject.activeInHierarchy)
-            _fix = StartCoroutine(FixActive());
-
-        if (_target == null && _setActive == null && gameObject.activeInHierarchy)
+        if (_on)
         {
-            StopCoroutine(_fix);
-            _setActive = StartCoroutine(setActive());
+            _on = false;
+            if (_autoDisable != null)
+                StopCoroutine(_autoDisable);
+            if (gameObject.activeInHierarchy)
+                _autoDisable = StartCoroutine(AutoDisableAfter(3f));
         }
-        if (_setActive != null) return;
+        
+        if (_target == null || _hasHit) // ← Kiểm tra thêm flag
+            return;
 
         Vector2 direction = ((Vector2)_target.position - _rb.position).normalized;
-
-        // Gán vận tốc cho Rigidbody2D
         _rb.linearVelocity = direction * _speed;
-
-        // Xoay mũi tên theo hướng bay (để mũi tên trông tự nhiên hơn)
+        
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        float dis = Vector3.Distance(transform.position, _target.position);
-        if (dis <= 0.2)
+        if (Vector3.Distance(transform.position, _target.position) <= 0.3f)
         {
-            bool IsHit = false;
-
-            if (_target != null && PlayerTag.checkTag(_target.gameObject.tag))
-            {
-                var health = _target.gameObject.GetComponent<PlayerHealth>();
-                if (health != null)
-                {
-                    health.takeDamage(_damage);
-                    IsHit = true;
-                    _target = null;
-                }
-            }
-            if (_target != null && checkTagHouse(_target.gameObject))
-            {
-                var health = _target.gameObject.GetComponent<HouseHealth>();
-                if (health != null && health.getCanDetec())
-                {
-                    health.takeDamage(_damage);
-                    IsHit = true;
-                    _target = null;
-                }
-            }
-            if (_target != null && checkTagAnimal(_target.gameObject))
-            {
-                var animalHealth = _target.gameObject.GetComponent<AnimalHealth>();
-                if (animalHealth != null && !animalHealth._animalAi.getDie())
-                {
-                    animalHealth.takeDamage(_damage, gameObject);
-                    IsHit = true;
-                    _target = null;
-                }
-            }
-
-            if (IsHit)
-                _audio.PlayFarmOrHitDamageSound();
+            TryHitTarget();
         }
     }
 
-    private IEnumerator setActive()
+    public void setProperties(Transform target, float damage, float Xspeed, Vector3 scale)
     {
-        _spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(1f);
-        gameObject.SetActive(false);
-    }
-
-    private IEnumerator FixActive()
-    {
-        yield return new WaitForSeconds(3f);
-        gameObject.SetActive(false);
-    }
-
-    public void setProperties(Transform target, float damage, float Xspeed, Vector3 scele)
-    {
-        _setActive = null;
-        _fix = null;
+        _on = true;
         _spriteRenderer.enabled = true;
         _target = target;
         _damage = damage;
         _speed = _maxSpeed * Xspeed;
-        transform.localScale = scele;
+        transform.localScale = scale;
+        _hasHit = false; // ← Reset flag
     }
 
-    private bool checkTagHouse(GameObject collision)
-        => collision.CompareTag("House");
-    private bool checkTagAnimal(GameObject collision)
-        => collision.CompareTag("Animal");
+    private void TryHitTarget()
+    {
+        if (_target == null || _hasHit) return; // ← Tránh hit 2 lần
+        
+        bool isHit = false;
+
+        if (PlayerTag.checkTag(_target.tag))
+        {
+            var h = _target.GetComponent<PlayerHealth>();
+            if (h != null) { h.takeDamage(_damage); isHit = true; }
+        }
+        else if (_target.CompareTag("House"))
+        {
+            var h = _target.GetComponent<HouseHealth>();
+            if (h != null && h.getCanDetec()) { h.takeDamage(_damage); isHit = true; }
+        }
+        else if (_target.CompareTag("Animal"))
+        {
+            var a = _target.GetComponent<AnimalHealth>();
+            if (a != null && !a._animalAi.getDie()) { a.takeDamage(_damage, gameObject); isHit = true; }
+        }
+
+        if (isHit)
+        {
+            _hasHit = true; // ← Set flag
+            _rb.linearVelocity = Vector2.zero; // ← Dừng ngay lập tức
+            _audio.PlayFarmOrHitDamageSound();
+            _target = null;
+
+            if (_autoDisable != null)
+                StopCoroutine(_autoDisable);
+            if (gameObject.activeInHierarchy)
+                _autoDisable = StartCoroutine(AutoDisableAfter(0.1f)); // ← Tắt nhanh hơn
+        }
+    }
+
+    private IEnumerator AutoDisableAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _spriteRenderer.enabled = false;
+        gameObject.SetActive(false);
+        _autoDisable = null;
+    }
+
+    private void OnDisable() // ← THÊM cleanup
+    {
+        if (_autoDisable != null)
+        {
+            StopCoroutine(_autoDisable);
+            _autoDisable = null;
+        }
+        _rb.linearVelocity = Vector2.zero;
+    }
 }

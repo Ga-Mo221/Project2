@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int _timeRTS = 0;
     public Vector2 _playTime = Vector2.zero;
 
-    public string _contentGameOver { get; set; }
+    [SerializeField] private int _coint = 0;
 
     [Foldout("Status")]
     public bool Tutorial = false;
@@ -167,6 +167,10 @@ public class GameManager : MonoBehaviour
 
     public void UIupdateCreateUnitButton()
         => _ui.CheckLevel();
+
+    public void addCoin(int value)
+        => _coint += value;
+    public int getCoin() => _coint;
 
     private Coroutine _offDefen;
     public void onDefen()

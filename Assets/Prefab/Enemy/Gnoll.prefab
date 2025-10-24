@@ -354,6 +354,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5056460676613357470}
+  - {fileID: 4299834743051945519}
   - {fileID: 1676940654992073106}
   - {fileID: 3777116797981832654}
   - {fileID: 8560880021196752999}
@@ -375,7 +376,7 @@ Rigidbody2D:
   m_LinearDamping: 1.5
   m_AngularDamping: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 743d9da391134bd499475f4f5cd5c016, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -396,7 +397,7 @@ CircleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 743d9da391134bd499475f4f5cd5c016, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -814,11 +815,11 @@ Transform:
   m_GameObject: {fileID: 7279323054414687173}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.43, y: 0.81, z: 0}
+  m_LocalPosition: {x: 1.4300003, y: 1.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5056460676613357470}
+  m_Father: {fileID: 6622075730006341072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7445748888465163246
 GameObject:
@@ -856,7 +857,6 @@ Transform:
   m_Children:
   - {fileID: 1621437807758594183}
   - {fileID: 2036112168750390816}
-  - {fileID: 4299834743051945519}
   m_Father: {fileID: 6622075730006341072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3547518405877449291
@@ -1289,7 +1289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4541919497658435670, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.size

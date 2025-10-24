@@ -231,7 +231,7 @@ public class UnitAudio : MonoBehaviour
 
     public bool checkPlayingWarSound()
     {
-        return _audio.clip == _Sun_Clip;
+        return _audio.clip == _Rain_Clip;
     }
 
     public bool checkMusicGameplaySound()

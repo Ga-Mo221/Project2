@@ -91,6 +91,7 @@ public class Item : MonoBehaviour
                 _spriteRender.enabled = false;
             }
             _audio.PlayDieSound();
+            GameManager.Instance.addCoin(1);
         }
     }
     #endregion

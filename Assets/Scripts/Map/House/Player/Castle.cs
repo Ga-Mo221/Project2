@@ -394,33 +394,6 @@ public class Castle : MonoBehaviour
             5 => noWarrior && noArcher && noLancer && noTNT && noHealer,
             _ => false
         };
-
-        // Gắn thông báo cụ thể
-        if (result)
-        {
-            string msg = level switch
-            {
-                1 => "Không đủ tài nguyên để tạo lính Warrior.",
-                2 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
-                    "Không đủ tài nguyên để tạo lính Archer.",
-                3 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
-                    !noArcher ? "Không đủ tài nguyên để tạo lính Archer." :
-                    "Không đủ tài nguyên để tạo lính Lancer.",
-                4 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
-                    !noArcher ? "Không đủ tài nguyên để tạo lính Archer." :
-                    !noLancer ? "Không đủ tài nguyên để tạo lính Lancer." :
-                    "Không đủ tài nguyên để tạo lính TNT.",
-                5 => !noWarrior ? "Không đủ tài nguyên để tạo lính Warrior." :
-                    !noArcher ? "Không đủ tài nguyên để tạo lính Archer." :
-                    !noLancer ? "Không đủ tài nguyên để tạo lính Lancer." :
-                    !noTNT ? "Không đủ tài nguyên để tạo lính TNT." :
-                    "Không đủ tài nguyên để tạo lính Healer.",
-                _ => "Không đủ tài nguyên để tạo lính."
-            };
-
-            GameManager.Instance._contentGameOver = msg;
-        }
-
         return result;
     }
 

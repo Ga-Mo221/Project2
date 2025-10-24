@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class EnemyPatrol : MonoBehaviour
     [ShowIf(nameof(_isFire))]
     [SerializeField] private GameObject _fire;
     [SerializeField] private List<EnemyAI> _listEnemy;
+    private bool _on = false;
 
     void Start()
     {
@@ -31,10 +33,18 @@ public class EnemyPatrol : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance._timeRTS >= 18 && _isFire)
-            _fire.SetActive(true);
-        else if (GameManager.Instance._timeRTS >= 6 && _isFire)
-            _fire.SetActive(false);
+        if (GameManager.Instance._timeRTS == 18 && _isFire && !_on)
+        {
+            _on = !_on;
+            float delay = Random.Range(0, 1.5f);
+            StartCoroutine(setActive(delay, _on));
+        }
+        else if (GameManager.Instance._timeRTS == 6 && _isFire && _on)
+        {
+            _on = !_on;
+            float delay = Random.Range(0, 1.5f);
+            StartCoroutine(setActive(delay, _on));
+        }
     }
 
     public float getRadius() => _radius;
@@ -42,6 +52,12 @@ public class EnemyPatrol : MonoBehaviour
 
     public int getMaxEnemy() => _maxEnemy;
     public void setMaxEnemy(int value) => _maxEnemy = value;
+
+    private IEnumerator setActive(float delay, bool amount)
+    {
+        yield return new WaitForSeconds(delay);
+        _fire.SetActive(amount);
+    }
 
     public bool checkInEnemy(EnemyAI enemy)
     {
