@@ -19,7 +19,6 @@ public class GameOver : MonoBehaviour
     [SerializeField] private Sprite _VN_Lose;
 
     [Header("Text")]
-    [SerializeField] private TextMeshProUGUI _content;
     [SerializeField] private TextMeshProUGUI _Lv_Castle;
     [SerializeField] private TextMeshProUGUI _playTime;
     [SerializeField] private TextMeshProUGUI _totalDay;
@@ -86,9 +85,6 @@ public class GameOver : MonoBehaviour
         _rock.text = GameManager.Instance._rock.ToString();
         _meat.text = GameManager.Instance._meat.ToString();
         _gold.text = GameManager.Instance._gold.ToString();
-
-
-        _content.text = GameManager.Instance._contentGameOver;
 
 
         // display game over panel

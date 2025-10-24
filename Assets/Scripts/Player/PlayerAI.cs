@@ -323,7 +323,6 @@ public class PlayerAI : MonoBehaviour
                 {
                     script.setTarget(target);
                     script._callSupport = true;
-                    Debug.Log(p.name);
                 }
             }
         }

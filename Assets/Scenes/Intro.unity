@@ -336,7 +336,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The New Age
+  m_text: The New Era
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 35400cdebe8ba214cbc6e7e8dea293e9, type: 2}
   m_sharedMaterial: {fileID: 4608891545721839352, guid: 35400cdebe8ba214cbc6e7e8dea293e9, type: 2}

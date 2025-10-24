@@ -16,6 +16,7 @@ public class EnemyHuoseController : MonoBehaviour
     [SerializeField] private bool _Detec = false;
     public float _maxHealth = 100f;
     public float _currentHealth = 0f;
+    [SerializeField] private int _coin = 10;
 
     [Header("Assitst")]
     [HideIf(nameof(IsTower))]
@@ -110,6 +111,7 @@ public class EnemyHuoseController : MonoBehaviour
         {
             StartCoroutine(GameOver());
         }
+        GameManager.Instance.addCoin(_coin);
     }
 
 

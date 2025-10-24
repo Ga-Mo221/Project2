@@ -9996,7 +9996,7 @@ MonoBehaviour:
   canZoom: 1
   zoomSpeed: 2.5
   minZoom: 10
-  maxZoom: 25
+  maxZoom: 30
   canDrag: 1
   dragSpeed: 0.1
   _cameraLimit: {fileID: 5792058217175851284}

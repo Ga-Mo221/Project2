@@ -1579,7 +1579,6 @@ public class GameUI : MonoBehaviour
         if (GameManager.Instance.Tutorial) return;
 
         _isAutoTraining = true;
-        Debug.Log(1);
 
         try
         {
@@ -1590,7 +1589,6 @@ public class GameUI : MonoBehaviour
 
             if (totalSlotAvailable <= 0) return;
 
-            Debug.Log(2);
 
             Dictionary<int, float[]> levelRatio = new Dictionary<int, float[]>
             {
@@ -1635,7 +1633,6 @@ public class GameUI : MonoBehaviour
 
             foreach (var (index, targetCount, unitSlot) in trainPlan)
             {
-                Debug.Log(3);
                 var u = units[index];
                 
                 for (int j = 0; j < targetCount; j++)

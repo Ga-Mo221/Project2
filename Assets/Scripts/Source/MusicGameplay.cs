@@ -4,6 +4,7 @@ using UnityEngine;
 public class MusicGameplay : MonoBehaviour
 {
     [SerializeField] private UnitAudio _audio;
+    private Coroutine _onWarSound;
 
     void Start()
     {
@@ -15,11 +16,17 @@ public class MusicGameplay : MonoBehaviour
 
     public void PlayWarSound()
     {
-        if (_audio.checkPlayingWarSound()) return;
+        Debug.Log("Play War sound");
+        if (_audio.checkPlayingWarSound())
+        {
+            StopCoroutine(_onWarSound);
+            _onWarSound = StartCoroutine(ChangeSound());
+            return;
+        }
         _audio.StopWeatherSound();
         _audio.PlayRainSound();
 
-        StartCoroutine(ChangeSound());
+        _onWarSound = StartCoroutine(ChangeSound());
     }
 
     private IEnumerator ChangeSound()

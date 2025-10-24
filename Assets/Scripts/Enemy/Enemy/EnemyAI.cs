@@ -24,6 +24,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _attackspeed = 2f;
     [Foldout("Stats")]
     [SerializeField] private float _radius = 10f;
+    [Foldout("Stats")]
+    [SerializeField] private int _coin = 1;
 
     [Foldout("Die")]
     [SerializeField] private bool _Die = false;
@@ -87,12 +89,18 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Update Time")]
     [SerializeField] private float _Rate;
 
+    private Vector3 _originPos;
+
     private Rigidbody2D _rb;
+
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _originPos = transform.position;
+    }
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-
         if (_canUpdateHP)
             _currentHealth = _maxHealth;
 
@@ -190,13 +198,14 @@ public class EnemyAI : MonoBehaviour
 
 
     #region Respawn
-    public void respawn(Vector3 pos)
+    public void respawn(Vector3 pos, bool war = true)
     {
-        Debug.Log($"{transform.name} Respawn");
         _canUpdateHP = true;
         _path.setDie(false);
         _path.setCanMove(true);
-        transform.position = pos;
+        if (war)
+            transform.position = pos;
+        else transform.position = _originPos;
         setCanPatrol(true);
         if (!IsTNTRed)
         {
@@ -253,6 +262,7 @@ public class EnemyAI : MonoBehaviour
         if (_type != EnemyType.TNT)
             playDieSound();
         _anim.SetBool("Die", true);
+        GameManager.Instance.addCoin(_coin);
     }
     #endregion
 
@@ -364,7 +374,10 @@ public class EnemyAI : MonoBehaviour
         if (target != null)
         {
             if (target.CompareTag("House") || PlayerTag.checkTag(target.tag))
+            {
                 GameManager.Instance.War();
+                Debug.Log("player");
+            }
         }
         yield return new WaitForSeconds(delay);
         _attackSpawn = null;

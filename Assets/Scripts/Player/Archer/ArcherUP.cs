@@ -24,10 +24,12 @@ public class ArcherUP : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        _anim.SetInteger("TypeUnit", SettingManager.Instance._gameSettings._currentArcher);
         if (!_shootPos)
             Debug.LogError($"[{transform.name}] [ArcherUP] Chưa gán 'shoot pos'");
         if (!_arowPrefab)
             Debug.LogError($"[{transform.name}] [ArcherUP] Chưa gán 'ArowPrefab'");
+        transform.localScale = new Vector3(1.3f, 1.3f, 1);
     }
 
     void Update()
@@ -41,9 +43,9 @@ public class ArcherUP : MonoBehaviour
             float _targetX = _target.transform.position.x;
             float _X = transform.position.x;
             if (_targetX > _X)
-                transform.localScale = new Vector3(1, 1, 1);
+                transform.localScale = new Vector3(1.3f, 1.3f, 1);
             else if (_targetX < _X)
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(-1.3f, 1.3f, 1);
         }
 
         attack(_target);
