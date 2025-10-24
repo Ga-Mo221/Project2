@@ -4,6 +4,8 @@ public class ChoseUI : MonoBehaviour
 {
     private Collider2D _collider;
 
+    [SerializeField] private int ID = 1;
+
     private bool _isHovering = false;
 
     void Start()
@@ -20,6 +22,7 @@ public class ChoseUI : MonoBehaviour
             if (!_isHovering)
             {
                 CursorManager.Instance.ChoseUI = true;
+                CursorManager.Instance.ID = ID;
                 _isHovering = true;
             }
         }
@@ -28,6 +31,7 @@ public class ChoseUI : MonoBehaviour
             if (_isHovering) 
             {
                 CursorManager.Instance.ChoseUI = false;
+                CursorManager.Instance.ID = 1;
                 _isHovering = false;
             }
         }

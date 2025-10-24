@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7965756436897150454}
   - component: {fileID: 5816419295402537439}
-  - component: {fileID: 4745355031821240330}
+  - component: {fileID: 1350728321871204826}
   - component: {fileID: 9001916421924405697}
   - component: {fileID: 3808187255373097384}
   - component: {fileID: 5155689033394126757}
@@ -68,9 +68,9 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!70 &4745355031821240330
-CapsuleCollider2D:
+  m_Constraints: 4
+--- !u!58 &1350728321871204826
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,9 +103,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.10268937, y: 0.2}
-  m_Size: {x: 1.330892, y: 0.8288585}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.3
 --- !u!114 &9001916421924405697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,11 +601,11 @@ MonoBehaviour:
   _type: 1
   _enemy: 1
   _animEnemy: {fileID: 5400552443678427513}
-  _audio: {fileID: 2873726808141503243}
   _enemyAI: {fileID: 6972410120915692553}
   _animal: 0
   _sprite: {fileID: 0}
   _animalAI: {fileID: 0}
+  _audio: {fileID: 2873726808141503243}
   _pickUP: 0
   _maxValueDrop: 5
 --- !u!82 &5050242474948620820
@@ -819,8 +818,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1340047751
-  m_SortingLayer: 4
+  m_SortingLayerID: 418685729
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -950,11 +949,11 @@ MonoBehaviour:
   _type: 0
   _enemy: 1
   _animEnemy: {fileID: 5400552443678427513}
-  _audio: {fileID: 7955794140336648385}
   _enemyAI: {fileID: 6972410120915692553}
   _animal: 0
   _sprite: {fileID: 0}
   _animalAI: {fileID: 0}
+  _audio: {fileID: 7955794140336648385}
   _pickUP: 0
   _maxValueDrop: 5
 --- !u!82 &2685114848806195264

@@ -90,7 +90,7 @@ MonoBehaviour:
   _animal: 0
   _sprite: {fileID: 0}
   _animalAI: {fileID: 0}
-  _audio: {fileID: 274139785407927551}
+  _audio: {fileID: 8924148013833727934}
   _pickUP: 0
   _maxValueDrop: 5
 --- !u!82 &7210283165772239056
@@ -830,7 +830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7959856245690335049}
   - component: {fileID: 9212013200313158856}
-  - component: {fileID: 1223119542570754143}
+  - component: {fileID: 2419464258401575127}
   - component: {fileID: 2195611199720696203}
   - component: {fileID: 234181298573305030}
   - component: {fileID: 2820226669578216616}
@@ -888,9 +888,9 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!70 &1223119542570754143
-CapsuleCollider2D:
+  m_Constraints: 4
+--- !u!58 &2419464258401575127
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -924,8 +924,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
-  m_Direction: 1
+  m_Radius: 0.3
 --- !u!114 &2195611199720696203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1136,8 +1135,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1340047751
-  m_SortingLayer: 4
+  m_SortingLayerID: 418685729
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d8aef7747bcd2b349a656164b7788fbd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 33045327
-  m_SortingLayer: 8
+  m_SortingLayerID: 418685729
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d5ab2006a1b469a4a941fa15147ec5de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4886,7 +4886,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -989748827
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4920,6 +4920,90 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &999414829421286558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1862749756761927676}
+  - component: {fileID: 3245101329970464364}
+  m_Layer: 0
+  m_Name: LightMiniMapIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1862749756761927676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999414829421286558}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3753513659506240475}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3245101329970464364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999414829421286558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 21a3f418
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.00024998188, y: -0.000100016594, z: 0}
+    m_Extent: {x: 1.00045, y: 1.0009, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &1991556176581892883
 GameObject:
   m_ObjectHideFlags: 0
@@ -9719,7 +9803,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -989748827
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -14732,7 +14816,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -989748827
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_RenderMode: 1
   m_MeshDistribution: 0
@@ -14909,6 +14993,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 5
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -14929,11 +15020,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 8300000, guid: e566761b01220fb4187eb632bf1ecf2d, type: 3}
   _Rain_Clip: {fileID: 8300000, guid: 0850b19ab38a9314199bd459f9ef9aa2, type: 3}
   _Night_Clip: {fileID: 8300000, guid: c2549915380b1644f9f98b0cde1a2576, type: 3}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &4489677196151805191
 GameObject:
   m_ObjectHideFlags: 0
@@ -15036,7 +15122,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000658dab2329ae60202599bb94457ea0350931cea53d10d3c78781df4f4f3bf801a5a101c5
+  m_ApplyToSortingLayers: 00000000658dab2329ae60202599bb94457ea0350931cea53d10d3c78781df4f4f3bf801a5a101c521a3f418
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -15121,6 +15207,7 @@ Transform:
   m_Children:
   - {fileID: 100694107534812101}
   - {fileID: 944833745178596130}
+  - {fileID: 1862749756761927676}
   - {fileID: 914297265158785165}
   - {fileID: 2551369890581191905}
   m_Father: {fileID: 0}
@@ -15341,6 +15428,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 0
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 8300000, guid: da4953ea1d56ca14f8dd186a219504fb, type: 3}
   _Fire_Clip: {fileID: 0}
@@ -15361,11 +15455,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 0
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1001 &7949681096648854391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15432,7 +15521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8062214968696770789, guid: dd7feff067350d445884855782beeb06, type: 3}
       propertyPath: m_SortingLayer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8062214968696770789, guid: dd7feff067350d445884855782beeb06, type: 3}
       propertyPath: m_SortingLayerID

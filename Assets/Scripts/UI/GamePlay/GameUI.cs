@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -47,6 +48,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject _Night;
     private float _timeAccumulator = 0f; // tích lũy thời gian để tăng giờ RTS
     private int _hours = 0; // bắt đầu 8h sáng
+
+    // aotu train
+    private bool _isAutoTraining = false;
     #endregion
 
 
@@ -250,6 +254,9 @@ public class GameUI : MonoBehaviour
         _hours = GameManager.Instance._startTimeRTS;
         updateBuidingReference();
         updateHP();
+
+        InvokeRepeating(nameof(updatePlayerValue), 0f, 1f);
+        InvokeRepeating(nameof(autoTrain), 0f, 3f);
     }
 
 
@@ -394,7 +401,7 @@ public class GameUI : MonoBehaviour
 
 
     #region Update Player Value
-    public void updatePlayerValue()
+    private void updatePlayerValue()
     {
         int WarriorVulue = 0;
         int ArcherVulue = 0;
@@ -513,6 +520,8 @@ public class GameUI : MonoBehaviour
         updateSlot();
         CheckLevel();
         loadPlayer();
+
+        GameManager.Instance.setAutoTrain(false);
     }
     #endregion
 
@@ -693,6 +702,7 @@ public class GameUI : MonoBehaviour
         {
             _obj = Instantiate(GameManager.Instance._warriorPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
             _obj.SetActive(false);
+            _obj.name = $"Warrior {Castle.Instance._ListWarrior.Count}";
             _scripPlayer = _obj.GetComponent<PlayerAI>();
             _scripPlayer.setCreating(true);
             Castle.Instance._ListWarrior.Add(_scripPlayer);
@@ -765,6 +775,7 @@ public class GameUI : MonoBehaviour
         {
             _obj = Instantiate(GameManager.Instance._ArcherPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
             _obj.SetActive(false);
+            _obj.name = $"Archer {Castle.Instance._ListWarrior.Count}";
             _scripPlayer = _obj.GetComponent<PlayerAI>();
             _scripPlayer.setCreating(true);
             Castle.Instance._ListArcher.Add(_scripPlayer);
@@ -834,6 +845,7 @@ public class GameUI : MonoBehaviour
         {
             _obj = Instantiate(GameManager.Instance._LancerPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
             _obj.SetActive(false);
+            _obj.name = $"Lancer {Castle.Instance._ListWarrior.Count}";
             _scripPlayer = _obj.GetComponent<PlayerAI>();
             _scripPlayer.setCreating(true);
             Castle.Instance._ListLancer.Add(_scripPlayer);
@@ -903,6 +915,7 @@ public class GameUI : MonoBehaviour
         {
             _obj = Instantiate(GameManager.Instance._TNTPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
             _obj.SetActive(false);
+            _obj.name = $"TNT {Castle.Instance._ListWarrior.Count}";
             _scripPlayer = _obj.GetComponent<PlayerAI>();
             _scripPlayer.setCreating(true);
             Castle.Instance._ListTNT.Add(_scripPlayer);
@@ -973,6 +986,7 @@ public class GameUI : MonoBehaviour
         {
             _obj = Instantiate(GameManager.Instance._HealerPrefab, Castle.Instance._In_Castle_Pos.position, Quaternion.identity, Castle.Instance._PlayerFolder);
             _obj.SetActive(false);
+            _obj.name = $"Healer {Castle.Instance._ListWarrior.Count}";
             _scripPlayer = _obj.GetComponent<PlayerAI>();
             _scripPlayer.setCreating(true);
             Castle.Instance._ListHealer.Add(_scripPlayer);
@@ -1552,6 +1566,94 @@ public class GameUI : MonoBehaviour
         && TutorialSetUp.Instance.ID == 2
         && !TutorialSetUp.Instance._TutorialNhatKy)
             TutorialSetUp.Instance.TutorialBuilding();
+    }
+    #endregion
+
+
+    #region Auto Train
+    private void autoTrain()
+    {
+        if (_isAutoTraining) return;
+        if (!GameManager.Instance.getAutoTrain()) return;
+        if (Castle.Instance == null) return;
+        if (GameManager.Instance.Tutorial) return;
+
+        _isAutoTraining = true;
+        Debug.Log(1);
+
+        try
+        {
+            int castleLevel = Castle.Instance._level;
+            int maxSlot = Castle.Instance._maxSlot;
+            int currentSlot = Castle.Instance._currentSlot;
+            int totalSlotAvailable = maxSlot - currentSlot;
+
+            if (totalSlotAvailable <= 0) return;
+
+            Debug.Log(2);
+
+            Dictionary<int, float[]> levelRatio = new Dictionary<int, float[]>
+            {
+                {1, new float[]{1f, 0f, 0f, 0f, 0f}},
+                {2, new float[]{0.7f, 0.3f, 0f, 0f, 0f}},
+                {3, new float[]{0.5f, 0.3f, 0.2f, 0f, 0f}},
+                {4, new float[]{0.4f, 0.25f, 0.2f, 0.15f, 0f}},
+                {5, new float[]{0.35f, 0.25f, 0.2f, 0.1f, 0.1f}}
+            };
+
+            float[] ratios = levelRatio[Mathf.Clamp(castleLevel, 1, 5)];
+
+            var units = new List<(string name, int unlockLevel, int slot, Button btn, Action create)>
+            {
+                ("Warrior", 1, GameManager.Instance._warriorPrefab.GetComponent<PlayerAI>()._slot, _WarriorButton, createWarrior),
+                ("Archer", 2, GameManager.Instance._ArcherPrefab.GetComponent<PlayerAI>()._slot, _ArcherButton, createArcher),
+                ("Lancer", 3, GameManager.Instance._LancerPrefab.GetComponent<PlayerAI>()._slot, _LancerButton, createLancer),
+                ("Healer", 4, GameManager.Instance._HealerPrefab.GetComponent<PlayerAI>()._slot, _HealerButton, createHealer),
+                ("TNT", 5, GameManager.Instance._TNTPrefab.GetComponent<PlayerAI>()._slot, _TNTButton, createTNT)
+            };
+
+            units.Sort((a, b) => a.slot.CompareTo(b.slot));
+
+            var trainPlan = new List<(int index, int count, int slot)>();
+            
+            for (int i = 0; i < units.Count; i++)
+            {
+                var u = units[i];
+                if (castleLevel < u.unlockLevel) continue;
+                if (u.btn == null || !u.btn.interactable) continue;
+
+                int targetSlot = Mathf.FloorToInt(totalSlotAvailable * ratios[i]);
+                int count = targetSlot / u.slot;
+                
+                if (count > 0)
+                {
+                    trainPlan.Add((i, count, u.slot));
+                }
+            }
+
+            if (trainPlan.Count == 0) return;
+
+            foreach (var (index, targetCount, unitSlot) in trainPlan)
+            {
+                Debug.Log(3);
+                var u = units[index];
+                
+                for (int j = 0; j < targetCount; j++)
+                {
+                    currentSlot = Castle.Instance._currentSlot;
+                    
+                    if (currentSlot + unitSlot > maxSlot) return;
+                    if (u.btn == null || !u.btn.interactable) break;
+                    
+                    u.create.Invoke();
+                    // KHÔNG gọi updateSlot() và CheckLevel() ở đây nữa!
+                }
+            }
+        }
+        finally
+        {
+            _isAutoTraining = false;
+        }
     }
     #endregion
 }

@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using NaughtyAttributes;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class PlayerAI : MonoBehaviour
 {
@@ -34,6 +36,8 @@ public class PlayerAI : MonoBehaviour
     [Foldout("Stats")]
     public int _createTime_sec = 5;
 
+    [Foldout("AI Find")]
+    [SerializeField] private float _radiusCallSupport = 20f;
     [Foldout("AI Find")]
     [SerializeField] private float _radius = 10f; // bán kính phát hiện Items, Enemys, Animals
     [HideIf(nameof(IsHealerOrTNT))]
@@ -112,6 +116,8 @@ public class PlayerAI : MonoBehaviour
     [SerializeField] private bool _UpTower = false;
     [Foldout("Status")]
     [SerializeField] private bool _Die = false;
+    [Foldout("Status")]
+    [SerializeField] private bool _callSupport = false;
     [Foldout("Status")]
     [SerializeField] private bool _detect = false; // phát hiện kẻ địch
     [Foldout("Status")]
@@ -205,6 +211,58 @@ public class PlayerAI : MonoBehaviour
             Dead();
             return;
         }
+
+        if (_isUnderAttack)
+            callSupport();
+
+        if (_callSupport)
+        {
+            if (target == null) _callSupport = false;
+            else
+            {
+                float dist = Vector2.Distance(target.transform.position, transform.position);
+                if (dist < _radius)
+                {
+                    _callSupport = false;
+                    return;
+                }
+                //Debug.Log(dist + " || " + _radius);
+
+                if (target.CompareTag("Item"))
+                {
+                    _callSupport = false;
+                    return;
+                }
+                if (target.CompareTag("Enemy"))
+                {
+                    var script = target.GetComponent<EnemyAI>();
+                    if (script.getDie())
+                    {
+                        _callSupport = false;
+                        return;
+                    }
+                }
+                if (target.CompareTag("EnemyHouse"))
+                {
+                    var script = target.GetComponent<EnemyHuoseController>();
+                    if (script.getDie())
+                    {
+                        _callSupport = false;
+                        return;
+                    }
+                }
+                if (target.CompareTag("Animal"))
+                {
+                    var script = target.GetComponent<AnimalAI>();
+                    if (script.getDie())
+                    {
+                        _callSupport = false;
+                        return;
+                    }
+                }
+            }
+            return;
+        }
         hits = Physics2D.OverlapCircleAll(transform.position, _radius);
     }
 
@@ -220,6 +278,54 @@ public class PlayerAI : MonoBehaviour
         {
             SetSkin();
             _updateSkin = true;
+        }
+    }
+    #endregion
+
+
+    #region Call Support
+    public void callSupport()
+    {
+        if (target == null) return;
+        if (target.CompareTag("Item")) return;
+        if (target.CompareTag("Enemy"))
+        {
+            var script = target.GetComponent<EnemyAI>();
+            if (script.getDie()) return;
+        }
+        if (target.CompareTag("EnemyHouse"))
+        {
+            var script = target.GetComponent<EnemyHuoseController>();
+            if (script.getDie()) return;
+        }
+        if (target.CompareTag("Animal"))
+        {
+            var script = target.GetComponent<AnimalAI>();
+            if (script.getDie()) return;
+        }
+
+        Collider2D[] player = Physics2D.OverlapCircleAll(transform.position, _radius * 2f);
+        foreach (var p in player)
+        {
+            if (PlayerTag.checkTag(p.tag) && p.gameObject.activeSelf && p.gameObject != gameObject)
+            {
+                var script = p.GetComponent<PlayerAI>();
+                float dist = Vector2.Distance(target.transform.position, p.transform.position);
+                if (target != null
+                    && !script.getIsLock()
+                    && script.getIsAI()
+                    && dist > script._radius
+                    && script != this
+                    && script != null
+                    && !script.getCallSupport()
+                    && (script.target == null
+                    || script.target.CompareTag("Item")))
+                {
+                    script.setTarget(target);
+                    script._callSupport = true;
+                    Debug.Log(p.name);
+                }
+            }
         }
     }
     #endregion
@@ -276,6 +382,7 @@ public class PlayerAI : MonoBehaviour
         setIsTarget(false);
         path.setCurrentWaypoint(0);
         _updateSkin = false;
+        _callSupport = false;
     }
     #endregion
 
@@ -355,7 +462,9 @@ public class PlayerAI : MonoBehaviour
             {
                 path.setTarget(target.transform.position, target);
             }
-            else
+
+            // test
+            if (target == null || (target != null && target.CompareTag("Item")))
                 setDetect(false);
             path.UpdatePath();
         }
@@ -611,6 +720,10 @@ public class PlayerAI : MonoBehaviour
     public GameObject findItems()
     {
         if (_UpTower) return null;
+
+        //test
+        if (getDetect()) return null;
+
         GameObject nearest = null;
         if (Castle.Instance._canFind)
         {
@@ -883,6 +996,10 @@ public class PlayerAI : MonoBehaviour
         // attack
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _range);
+
+        // call support
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _radiusCallSupport);
     }
     #endregion
 
@@ -893,6 +1010,10 @@ public class PlayerAI : MonoBehaviour
     public void setIsTarget(bool amount)
     {
         _isTarget = amount;
+        if (amount && gameObject.activeInHierarchy)
+            StartCoroutine(reset_IsLock());
+        else
+            setIsLock(true);
     }
     public bool getIsTarget() => _isTarget;
 
@@ -942,6 +1063,17 @@ public class PlayerAI : MonoBehaviour
 
     public virtual int getOderInLayer() => 0;
 
+    // test
+    public bool getCallSupport() => _callSupport;
+
+
+    // test
+    public void setTarget(GameObject _taget)
+    {
+        target = _taget;
+        setTarget(target.transform.position, false);
+    }
+
     public void SetSkin()
     {
         int id = 0;
@@ -969,6 +1101,12 @@ public class PlayerAI : MonoBehaviour
 
 
     #region IEnumerator
+    private IEnumerator reset_IsLock()
+    {
+        yield return new WaitForSeconds(3f);
+        setIsLock(false);
+    }
+
     private IEnumerator reset_isNewlySpawned()
     {
         if (_cor_Attacking != null)
@@ -1000,7 +1138,7 @@ public class PlayerAI : MonoBehaviour
         _isIdle = false;
         _isUnderAttack = true;
         _isHarvesting = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         _isUnderAttack = false;
         _isIdle = true;
     }

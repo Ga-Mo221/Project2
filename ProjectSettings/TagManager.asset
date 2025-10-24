@@ -66,6 +66,9 @@ TagManager:
   - name: Select
     uniqueID: 1340047751
     locked: 0
+  - name: MiniMapIcon
+    uniqueID: 418685729
+    locked: 0
   - name: FogOfWar
     uniqueID: 2470092383
     locked: 0

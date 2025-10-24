@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public bool Tutorial = false;
     public bool TutorialWar = false;
     [Foldout("Status")]
+    [SerializeField] private bool _autoTrain = false;
+    [Foldout("Status")]
     [SerializeField] private bool _canBuy = true;
     [Foldout("Status")]
     [Header("Game Play")]
@@ -122,17 +124,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         UIupdateReferences();
-        UIupdatePlayerValue();
     }
+
+    public void setAutoTrain(bool amount) => _autoTrain = amount;
+    public bool getAutoTrain() => _autoTrain;
 
     public void setHourRTS(int house)
         => _ui.setHouseRTS(house);
 
     public void UIupdateReferences()
         => _ui.updateReferent();
-
-    public void UIupdatePlayerValue()
-        => _ui.updatePlayerValue();
 
     public void UIloadPlayer()
         => _ui.loadPlayer();

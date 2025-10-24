@@ -17,6 +17,7 @@ public class LoadInventoryUnit : MonoBehaviour
         public GameObject lockMark;
         public EquiUnit equipUnit;
         public TextMeshProUGUI price;
+        public Button _button;
     }
 
     [SerializeField] private List<UnitSlot> _slots = new List<UnitSlot>(); // Gồm Unit1–4
@@ -79,6 +80,7 @@ public class LoadInventoryUnit : MonoBehaviour
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -101,13 +103,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.Tower, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_tower(id).ToString();
             slot.unitImage.sprite = _sprite.GetTowerUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -130,13 +133,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.Storage, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_storage(id).ToString();
             slot.unitImage.sprite = _sprite.GetStorageUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -159,13 +163,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.Warrior, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_warrior(id).ToString();
             slot.unitImage.sprite = _sprite.GetWarriorUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -188,13 +193,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.Archer, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_archer(id).ToString();
             slot.unitImage.sprite = _sprite.GetArcherUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -217,13 +223,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.Lancer, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_lancer(id).ToString();
             slot.unitImage.sprite = _sprite.GetLancerUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -246,13 +253,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.Healer, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_healer(id).ToString();
             slot.unitImage.sprite = _sprite.GetHealerUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion
@@ -275,13 +283,14 @@ public class LoadInventoryUnit : MonoBehaviour
             bool isEquipped = (id == current);
 
             var slot = _slots[i];
-            slot.equipUnit.setButton(UnitInventory.Castle, id, isUnlocked, this, _manager.getPrice_castle(id));
+            slot.equipUnit.setButton(UnitInventory.TNT, id, isUnlocked, this, _manager.getPrice_castle(id));
             slot.price.gameObject.SetActive(!isUnlocked);
             slot.price.text = _manager.getPrice_TNT(id).ToString();
             slot.unitImage.sprite = _sprite.GetTNTUnitSprite(id);
             if (slot.lockMark != null)
                 slot.lockMark.SetActive(!isUnlocked);
             slot.equipMark.SetActive(isUnlocked && isEquipped);
+            slot._button.interactable = !(isUnlocked && isEquipped);
         }
     }
     #endregion

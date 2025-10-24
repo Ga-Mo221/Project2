@@ -9,6 +9,7 @@ public class CursorManager : MonoBehaviour
     public Vector2 _hotPot = new Vector2(32, 32);
 
     public bool ChoseUI = false;
+    public int ID = 1;
     public bool Select = false;
 
     public GameObject _hoverGameobject;
