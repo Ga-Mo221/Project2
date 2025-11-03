@@ -10,13 +10,13 @@ public class AutoTrain : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.Tutorial) return;
-        if (CursorManager.Instance.ID == 2 && CursorManager.Instance.ChoseUI && !_hover)
+        if (GameManager.Instance != null && GameManager.Instance.Tutorial) return;
+        if (CursorManager.Instance != null && CursorManager.Instance.ID == 2 && CursorManager.Instance.ChoseUI && !_hover)
         {
             _text.SetActive(true);
             _hover = true;
         }
-        else if (CursorManager.Instance.ID != 2 && !CursorManager.Instance.ChoseUI && _hover)
+        else if (CursorManager.Instance != null && CursorManager.Instance.ID != 2 && !CursorManager.Instance.ChoseUI && _hover)
         {
             _text.SetActive(false);
             _hover = false;
@@ -29,7 +29,7 @@ public class AutoTrain : MonoBehaviour
             _anim.SetBool("On", ON);
         }
 
-        if (GameManager.Instance.getAutoTrain() != ON)
+        if (GameManager.Instance != null && GameManager.Instance.getAutoTrain() != ON)
         {
             ON = GameManager.Instance.getAutoTrain();
             _anim.SetBool("On", ON);

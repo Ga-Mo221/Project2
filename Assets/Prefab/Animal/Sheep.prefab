@@ -797,19 +797,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
-  _Die: 0
-  _MiniMapIcon: {fileID: 11218283690189912}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 3
+  miniMapIcon: {fileID: 11218283690189912}
+  outLine: {fileID: 2860140966254151479}
   _light: {fileID: 0}
-  _animal: {fileID: 4831337518752686108}
-  _enemy: {fileID: 0}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 2860140966254151479}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 4831337518752686108}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &7841877529150638004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,19 +850,17 @@ MonoBehaviour:
   _canPatrol: 1
   _canAction: 0
   detec: 0
+  _respawning: 0
   _gfx: {fileID: 3519243338417639085}
   _HPCanvas: {fileID: 1446847699096658644}
   _OutLine: {fileID: 2860140966254151479}
   _hpBar: {fileID: 4050133469344994183}
   _MiniMapIcon: {fileID: 11218283690189912}
-  _centerTransform: {fileID: 9168957731800431330}
+  _centerPatrol: {x: 0, y: 0}
   _anim: {fileID: 2074410760104160228}
   _MeatOBJ: {fileID: 1182947352422448395}
   _audio: {fileID: 7063214331281983257}
-  _display: {fileID: 6972055537954536054}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
+  _rb: {fileID: 0}
   _spriteRender: {fileID: 7937726656656371032}
 --- !u!1001 &4518601613413549162
 PrefabInstance:
@@ -1225,6 +1219,10 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.544
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.543
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x

@@ -73,6 +73,11 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _HP_TNT_Value;
     #endregion
 
+    #region Buff
+    [Foldout("Buff")]
+    [SerializeField] private GameObject _Buff;
+    #endregion
+
 
     #region Shop
     [Foldout("Shop")]
@@ -136,6 +141,10 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _tntSlot;
     [Foldout("Shop")]
     [SerializeField] private TextMeshProUGUI _healerSlot;
+    [Foldout("Shop")]
+    [SerializeField] private List<GameObject> _createList = new List<GameObject>();
+    [Foldout("Shop")]
+    [SerializeField] private List<GameObject> _PlayerCreate = new List<GameObject>();
     #endregion
 
 
@@ -227,9 +236,7 @@ public class GameUI : MonoBehaviour
     [Foldout("In Game")]
     [SerializeField] private GameObject _inGame;
 
-
-    [SerializeField] private List<GameObject> _createList = new List<GameObject>();
-    [SerializeField] private List<GameObject> _PlayerCreate = new List<GameObject>();
+    
     private Dictionary<string, Button> _unitButtons;
 
 
@@ -250,6 +257,7 @@ public class GameUI : MonoBehaviour
         if (!GameManager.Instance.Tutorial)
         {
             _inGame.SetActive(true);
+            StartCoroutine(startGameDelay());
         }
         _hours = GameManager.Instance._startTimeRTS;
         updateBuidingReference();
@@ -259,14 +267,23 @@ public class GameUI : MonoBehaviour
         InvokeRepeating(nameof(autoTrain), 0f, 3f);
     }
 
+    private IEnumerator startGameDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        if (LoadingSceneController.Instance != null)
+        {
+            LoadingSceneController.Instance.NotifyGameReadyComplete();
+        }
+    }
 
     #region Update
     void Update()
     {
+        if (GameManager.Instance == null) return;
         string key = "";
         string txt = "";
         // Tăng thời gian chơi
-        if (!GameManager.Instance.Tutorial)
+        if (GameManager.Instance != null && !GameManager.Instance.Tutorial)
             _timeAccumulator += Time.deltaTime;
 
         _playTime += Time.deltaTime;
@@ -276,7 +293,7 @@ public class GameUI : MonoBehaviour
         int playSeconds = Mathf.FloorToInt(_playTime % 60f);
         _Time.text = string.Format("{0:00}:{1:00}", playMinutes, playSeconds);
 
-
+        
         GameManager.Instance._playTime = new Vector2(playMinutes, playSeconds);
         // Mỗi 120 giây playtime = tăng 4 giờ RTS
         if (_timeAccumulator >= GameManager.Instance._2Hours_Sec)
@@ -332,7 +349,7 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator displayNewDay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         _newday.SetActive(true);
     }
 
@@ -351,6 +368,7 @@ public class GameUI : MonoBehaviour
         _Buiding_Obj.SetActive(true);
         _Tutorial_Obj.SetActive(true);
         _HPBar_Obj.SetActive(true);
+        _Buff.SetActive(true);
         GameManager.Instance.setCanOpenWindowan(true);
     }
     #endregion
@@ -366,6 +384,7 @@ public class GameUI : MonoBehaviour
         _MiniMap_Obj.SetActive(false);
         _Buiding_Obj.SetActive(false);
         _Tutorial_Obj.SetActive(false);
+        _Buff.SetActive(false);
         _HPBar_Obj.SetActive(false);
         GameManager.Instance.setCanOpenWindowan(false);
     }
@@ -569,6 +588,7 @@ public class GameUI : MonoBehaviour
     #region Open Setting
     public void OpenSetting()
     {
+        if (SettingManager.Instance == null) return;
         OffAllWinDown();
         SettingManager.Instance.OpenSetting();
     }
@@ -1223,13 +1243,16 @@ public class GameUI : MonoBehaviour
 
     private Vector3 wordSpace()
     {
+        // canvas render mode Screen Space - Camera
         // Lấy vị trí giữa màn hình
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         // Vì ScreenToWorldPoint cần z theo khoảng cách tới camera
         // nên phải truyền vào giá trị z (thường là khoảng cách từ camera đến mặt phẳng bạn muốn tính)
-        screenCenter.z = Mathf.Abs(Camera.main.transform.position.z);
+        screenCenter.z = 0;
         // Chuyển sang tọa độ world
-        return Camera.main.ScreenToWorldPoint(screenCenter);
+        Vector3 worldPosition = CameraInfo.Instance.cameraMain.ScreenToWorldPoint(screenCenter);
+        worldPosition.z = 0f; // Đặt z về 0 nếu cần thiết
+        return worldPosition;
     }
 
 
@@ -1255,7 +1278,7 @@ public class GameUI : MonoBehaviour
         if (Castle.Instance == null) return;
         if (Castle.Instance._level >= 5) return;
         bool _on = _ButtonUpgrade.activeSelf;
-        if (!CursorManager.Instance.ChoseUI && _on && !amount)
+        if (CursorManager.Instance != null && !CursorManager.Instance.ChoseUI && _on && !amount)
         {
             _ButtonUpgrade.SetActive(amount);
             return;

@@ -31,6 +31,7 @@ public class GameOver : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _rock;
     [SerializeField] private TextMeshProUGUI _meat;
     [SerializeField] private TextMeshProUGUI _gold;
+    [SerializeField] private TextMeshProUGUI _coins;
     [SerializeField] private Button _exitButton;
     [SerializeField] private Image _blackImg;
 
@@ -49,6 +50,7 @@ public class GameOver : MonoBehaviour
     public void display()
     {
         // hiện panel win lose
+        if (GameManager.Instance == null) return;
         bool win = GameManager.Instance.getWin();
         _Win.SetActive(win);
         _Lose.SetActive(!win);
@@ -86,8 +88,13 @@ public class GameOver : MonoBehaviour
         _meat.text = GameManager.Instance._meat.ToString();
         _gold.text = GameManager.Instance._gold.ToString();
 
+        // coins
+        _coins.text = $"+{GameManager.Instance.getCoin()}";
+
 
         // display game over panel
+        if (SettingManager.Instance != null)
+            SettingManager.Instance._gameSettings._coin += GameManager.Instance.getCoin();
         _gameOver.SetActive(true);
         if (_fadeIn == null)
             _fadeIn = StartCoroutine(FadeIn());
@@ -136,8 +143,10 @@ public class GameOver : MonoBehaviour
     private IEnumerator BackToHome()
     {
         yield return new WaitForSeconds(1f);
-        SettingManager.Instance._playing = false;
-        GameScene.Instance.OpenSceneMainMenu();
+        if (SettingManager.Instance != null)
+            SettingManager.Instance._playing = false;
+        if (GameManager.Instance != null)
+            GameScene.Instance.OpenSceneMainMenu();
     }
     #endregion
 
@@ -145,8 +154,8 @@ public class GameOver : MonoBehaviour
     #region Button Exit Click
     public void exit()
     {
-        // pause game
-        //Time.timeScale = 1f; // Dừng mọi hoạt động dựa theo Time.deltaTime
+        if (SettingManager.Instance != null)
+            SettingManager.Instance.Save();
 
         StartCoroutine(FadeOut());
         _exitButton.interactable = false;

@@ -21,15 +21,25 @@ public class ArcherUP : MonoBehaviour
     [SerializeField] private Collider2D[] _hits;
     [SerializeField] private List<GameObject> _listArrow = new List<GameObject>();
 
-    void Start()
+    void Awake()
     {
         _anim = GetComponent<Animator>();
-        _anim.SetInteger("TypeUnit", SettingManager.Instance._gameSettings._currentArcher);
+    }
+
+    void Start()
+    {
+        setSkin();
         if (!_shootPos)
             Debug.LogError($"[{transform.name}] [ArcherUP] Chưa gán 'shoot pos'");
         if (!_arowPrefab)
             Debug.LogError($"[{transform.name}] [ArcherUP] Chưa gán 'ArowPrefab'");
         transform.localScale = new Vector3(1.3f, 1.3f, 1);
+    }
+
+    public void setSkin()
+    {
+        if (_anim != null && SettingManager.Instance != null)
+            _anim.SetInteger("TypeUnit", SettingManager.Instance._gameSettings._currentArcher);
     }
 
     void Update()

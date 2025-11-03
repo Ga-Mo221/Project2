@@ -23,7 +23,7 @@ public class SelectArcherUp : MonoBehaviour
 
     void Update()
     {
-        if (Castle.Instance._level != _currentLevel)
+        if (GameManager.Instance != null && Castle.Instance._level != _currentLevel)
         {
             _currentLevel = Castle.Instance._level;
             switch (_currentLevel)
@@ -66,6 +66,7 @@ public class SelectArcherUp : MonoBehaviour
             Castle.Instance._archer_Right.SetActive(true);
             _scrip.setIsAI(true);
             Castle.Instance._archer_Right = null;
+            _scrip.SetSkin();
         }
     }
 
@@ -93,6 +94,7 @@ public class SelectArcherUp : MonoBehaviour
             Castle.Instance._archer_Center.SetActive(true);
             _scrip.setIsAI(true);
             Castle.Instance._archer_Center = null;
+            _scrip.SetSkin();
         }
     }
 
@@ -120,10 +122,21 @@ public class SelectArcherUp : MonoBehaviour
             Castle.Instance._archer_Left.SetActive(true);
             _scrip.setIsAI(true);
             Castle.Instance._archer_Left = null;
+            _scrip.SetSkin();
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
+    {
+        Aply(collision);
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        Aply(collision);
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
     {
         Aply(collision);
     }
@@ -141,18 +154,24 @@ public class SelectArcherUp : MonoBehaviour
                 {
                     Castle.Instance._archer_Right = collision.gameObject;
                     Castle.Instance._archer_Right_Obj.SetActive(true);
+                    var s = Castle.Instance._archer_Right_Obj.GetComponent<ArcherUP>();
+                    s.setSkin();
                     ok = true;
                 }
                 else if (_archer_center && _script._upDirection == UpDirection.Center)
                 {
                     Castle.Instance._archer_Center = collision.gameObject;
                     Castle.Instance._archer_Center_Obj.SetActive(true);
+                    var s = Castle.Instance._archer_Center_Obj.GetComponent<ArcherUP>();
+                    s.setSkin();
                     ok = true;
                 }
                 else if (_archer_Left && _script._upDirection == UpDirection.Left)
                 {
                     Castle.Instance._archer_Left = collision.gameObject;
                     Castle.Instance._archer_Left_Obj.SetActive(true);
+                    var s = Castle.Instance._archer_Left_Obj.GetComponent<ArcherUP>();
+                    s.setSkin();
                     ok = true;
                 }
                 if (ok)
@@ -182,6 +201,7 @@ public class SelectArcherUp : MonoBehaviour
                 Castle.Instance._archer_Right.SetActive(true);
                 _scrip.setIsAI(true);
                 Castle.Instance._archer_Right = null;
+                _scrip.SetSkin();
             }
         }
 
@@ -199,6 +219,7 @@ public class SelectArcherUp : MonoBehaviour
                 Castle.Instance._archer_Center.SetActive(true);
                 _scrip.setIsAI(true);
                 Castle.Instance._archer_Center = null;
+                _scrip.SetSkin();
             }
         }
 
@@ -215,6 +236,7 @@ public class SelectArcherUp : MonoBehaviour
             Castle.Instance._archer_Left.SetActive(true);
             _script.setIsAI(true);
             Castle.Instance._archer_Left = null;
+            _script.SetSkin();
         }
     }
 }

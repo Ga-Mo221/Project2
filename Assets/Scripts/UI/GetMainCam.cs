@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GetMainCam : MonoBehaviour
 {
@@ -9,12 +10,17 @@ public class GetMainCam : MonoBehaviour
 
     public void setupCamera()
     {
-        GameObject mainCamObj = Camera.main?.gameObject;
-
         Canvas canvas = transform.GetComponent<Canvas>();
-        if (canvas != null && mainCamObj != null)
+        if (canvas != null)
         {
-            Camera cam = mainCamObj.GetComponent<Camera>();
+            Camera cam = null;
+            if (GameScene.Instance != null
+                && (SceneManager.GetActiveScene().name == GameScene.Instance._mainMenuScene
+                || SceneManager.GetActiveScene().name == GameScene.Instance._loadGenerateMapScene))
+                cam = Camera.main;
+            else if (CameraInfo.Instance != null)
+                cam = CameraInfo.Instance.cameraMain;
+
             if (cam != null)
             {
                 canvas.worldCamera = cam;

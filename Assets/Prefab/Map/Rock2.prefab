@@ -50,19 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 1
-  _Die: 0
-  _MiniMapIcon: {fileID: 0}
-  _item: {fileID: 5424085374242663375}
-  _check: {fileID: 0}
+  modelType: 1
+  miniMapIcon: {fileID: 0}
+  outLine: {fileID: 2642300205362376417}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 0}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 2642300205362376417}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 5424085374242663375}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
 --- !u!58 &335932139889422512
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -488,6 +483,7 @@ MonoBehaviour:
   _maxFarmers: 2
   _seleted: {fileID: 0}
   _detec: 0
+  _respawning: 0
   _spriteRender: {fileID: 3751358352210878373}
   _anim: {fileID: 0}
   _OderPoin: {fileID: 6407582959383233683}

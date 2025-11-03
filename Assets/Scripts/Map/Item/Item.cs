@@ -33,6 +33,7 @@ public class Item : MonoBehaviour
     [HideIf(nameof(_IsGold))]
     [SerializeField] private PlayerAI _seleted;
     public bool _detec = false;
+    public bool _respawning = false;
 
     [Header("Reference")]
     public SpriteRenderer _spriteRender;
@@ -53,6 +54,10 @@ public class Item : MonoBehaviour
     #region Start
     protected virtual void Start()
     {
+        if (Castle.Instance != null)
+        {
+            Castle.Instance._allItems.Add(transform.gameObject);
+        }
         _value = _maxValue;
         _stack = _maxStack;
         _spriteRender.sortingOrder = -(int)(_OderPoin.position.y * 100) + 10000;
@@ -82,14 +87,13 @@ public class Item : MonoBehaviour
             _animDie.SetBool("Die", true);
             if (_IsTree)
             {
-                _outLine.Out();
                 _anim.SetBool("Die", true);
             }
             if (_IsRock)
             {
-                _outLine.Out();
                 _spriteRender.enabled = false;
             }
+            _outLine.Out();
             _audio.PlayDieSound();
             GameManager.Instance.addCoin(1);
         }
@@ -100,6 +104,7 @@ public class Item : MonoBehaviour
     #region Respawn
     private IEnumerator resPawn()
     {
+        _respawning = true;
         yield return new WaitForSeconds(_spawnTime);
         _Die = false;
         if (_IsTree)
@@ -117,6 +122,9 @@ public class Item : MonoBehaviour
             _anim.SetBool("Die", false);
         if (_IsRock)
             _spriteRender.enabled = true;
+
+        _respawning = false;
+        _outLine.Out(true);
     }
     #endregion
 

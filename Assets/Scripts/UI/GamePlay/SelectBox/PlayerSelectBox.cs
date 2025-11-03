@@ -60,7 +60,8 @@ public class PlayerSelectBox : MonoBehaviour
 
         _Lv.text = $"LV.{_player._level}";
 
-        _damge.text = _player._damage.ToString();
+        _damge.text = _player.getDamage().ToString();
+
         _speed.text = _player._maxSpeed.ToString();
         _slot.text = _player._slot.ToString();
     }

@@ -146,19 +146,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
-  _Die: 0
-  _MiniMapIcon: {fileID: 3917638414227011866}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 4
+  miniMapIcon: {fileID: 3917638414227011866}
+  outLine: {fileID: 1602728148419603112}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 6972410120915692553}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 1602728148419603112}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 6972410120915692553}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &5155689033394126757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +198,9 @@ MonoBehaviour:
   _range: 7
   _attackspeed: 3
   _radius: 13
+  _coin: 1
   _Die: 0
+  _typeDie: 0
   critDropGold: 10
   critDropMeat: 20
   MeatDropObj: {fileID: 7371797566655180017}
@@ -216,18 +214,15 @@ MonoBehaviour:
   _Detec: 0
   target: {fileID: 0}
   _currentTarget: {fileID: 0}
-  _path: {fileID: 5155689033394126757}
   _GFX: {fileID: 2642795089640361049}
   _HPimg: {fileID: 1971720084048984158}
   _anim: {fileID: 5400552443678427513}
+  _path: {fileID: 5155689033394126757}
+  _rb: {fileID: 0}
   _outLine: {fileID: 1602728148419603112}
   _HPBar: {fileID: 3998139047212730637}
   _MinimapIcon: {fileID: 3917638414227011866}
   _audio: {fileID: 9202776193231432757}
-  _display: {fileID: 3808187255373097384}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
   _spriteRender: {fileID: 6871030508359076257}
 --- !u!114 &7481632550545816098
 MonoBehaviour:
@@ -1313,6 +1308,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.18
       objectReference: {fileID: 0}

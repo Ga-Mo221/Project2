@@ -15,8 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadMap.unity
     guid: 4b8cc4ce22860bd4994fe09d37a89cda
   - enabled: 1
+    path: Assets/Scenes/LoadMap_RenderMap.unity
+    guid: b3ed3e239ffd9d84d8896a7ffe916de5
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Game_RenderMap.unity
+    guid: a20ed64d1d728774a8c6a4b5394ac4ee
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

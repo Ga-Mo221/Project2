@@ -133,16 +133,19 @@ public class UnitAudio : MonoBehaviour
 
     void OnEnable()
     {
-        SettingManager.Instance._onVolumeChanged += ApplyVolumeChange;
+        if (SettingManager.Instance != null)
+            SettingManager.Instance._onVolumeChanged += ApplyVolumeChange;
     }
 
     void OnDisable()
     {
-        SettingManager.Instance._onVolumeChanged -= ApplyVolumeChange;
+        if (SettingManager.Instance != null)
+            SettingManager.Instance._onVolumeChanged -= ApplyVolumeChange;
     }
 
     private void ApplyVolumeChange()
     {
+        if (SettingManager.Instance == null) return;
         float overall = SettingManager.Instance._gameSettings._overall_Volume;
         float music = SettingManager.Instance._gameSettings._music_Volume;
         float sfx = SettingManager.Instance._gameSettings._SFX_volume;

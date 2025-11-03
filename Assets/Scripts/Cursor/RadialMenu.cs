@@ -18,6 +18,14 @@ public class RadialMenu : MonoBehaviour
             _anim = GetComponent<Animator>();
     }
 
+    private void OnEnable()
+    {
+        // Reset các flag khi mở menu
+        _war = false;
+        _support = false;
+        _rally = false;
+    }
+
     /// <summary>
     /// Kích hoạt hoặc tắt animation state
     /// </summary>
@@ -29,9 +37,9 @@ public class RadialMenu : MonoBehaviour
         // Cập nhật cờ logic
         switch (name)
         {
-            case "war": _war = active; break;
-            case "support": _support = active; break;
-            case "rally": _rally = active; break;
+            case "War": _war = active; break;
+            case "Support": _support = active; break;
+            case "Rally": _rally = active; break;
         }
     }
 
@@ -43,6 +51,7 @@ public class RadialMenu : MonoBehaviour
         if (Castle.Instance == null || !Castle.Instance._V)
         {
             gameObject.SetActive(false);
+            CursorManager.Instance.ChoseUI = false;
             return;
         }
 
@@ -51,6 +60,7 @@ public class RadialMenu : MonoBehaviour
         {
             HandleCommand();
             gameObject.SetActive(false);
+            CursorManager.Instance.ChoseUI = false;
         }
     }
 

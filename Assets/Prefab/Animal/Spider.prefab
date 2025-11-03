@@ -205,19 +205,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
-  _Die: 0
-  _MiniMapIcon: {fileID: 712102184399680218}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 3
+  miniMapIcon: {fileID: 712102184399680218}
+  outLine: {fileID: 3563146343261747473}
   _light: {fileID: 0}
-  _animal: {fileID: 6194686548813192028}
-  _enemy: {fileID: 0}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 3563146343261747473}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 6194686548813192028}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
 --- !u!114 &4713674498090310569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +308,7 @@ MonoBehaviour:
   _canPatrol: 1
   _canAction: 0
   detec: 0
+  _respawning: 0
   _gfx: {fileID: 3959329072556678441}
   _HPCanvas: {fileID: 1201309649080037991}
   _OutLine: {fileID: 3563146343261747473}
@@ -322,10 +318,6 @@ MonoBehaviour:
   _anim: {fileID: 8857089252291914122}
   _MeatOBJ: {fileID: 3441818050998879131}
   _audio: {fileID: 4968763823680787947}
-  _display: {fileID: 4011518117632548897}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
   _spriteRender: {fileID: 6287486149944449987}
 --- !u!1 &3614332820089817402
 GameObject:
@@ -340,7 +332,7 @@ GameObject:
   - component: {fileID: 3441818050998879131}
   - component: {fileID: 6803016054412776759}
   - component: {fileID: 6557454742309498764}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Meat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalAi: {fileID: 6194686548813192028}
-  MeatOBJ: {fileID: 3959329072556678441}
+  MeatOBJ: {fileID: 3614332820089817402}
 --- !u!82 &2731459702570204417
 AudioSource:
   m_ObjectHideFlags: 0

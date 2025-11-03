@@ -55,6 +55,11 @@ public class MainMenu : MonoBehaviour
         UpdateCoin();
     }
 
+    void OnEnable()
+    {
+        UpdateCoin();
+    }
+
 
     void Update()
     {
@@ -73,7 +78,8 @@ public class MainMenu : MonoBehaviour
 
     public void UpdateCoin()
     {
-        _coin.text = SettingManager.Instance._gameSettings._coin.ToString();
+        if (SettingManager.Instance != null)
+            _coin.text = SettingManager.Instance._gameSettings._coin.ToString();
     }
 
     public void OpenSetting()
@@ -85,14 +91,6 @@ public class MainMenu : MonoBehaviour
     public void OpenMenu()
     {
         _anim.gameObject.SetActive(true);
-    }
-
-
-    public void NewGame()
-    {
-        _anim.SetTrigger("exit");
-        _loadGameAnim.SetTrigger("Load");
-        SettingManager.Instance._playing = true;
     }
 
     public void OnOnline()
@@ -177,5 +175,36 @@ public class MainMenu : MonoBehaviour
     public void JoinRoom()
     {
         _panel_InputPass.SetTrigger("exit");
+    }
+
+    public void Tutorial()
+    {
+        if (SettingManager.Instance == null) return;
+        SettingManager.Instance._gameSettings._Tutorial = true;
+        StartGameWithMapSelection();
+    }
+
+    public void StartGameWithMapSelection()
+    {
+        // Gọi hàm này thay vì NewGame() hiện tại
+        _anim.SetTrigger("exit");
+        _loadGameAnim.SetTrigger("Load");
+
+        SettingManager.Instance._playing = true;
+        
+        // Random chọn loại map
+        if (MapSelectionManager.Instance != null)
+        {
+            MapSelectionManager.Instance.SelectRandomMap();
+            string loadingScene = MapSelectionManager.Instance.GetLoadingSceneName();
+
+            Debug.Log($"[MainMenu] Loading scene: {loadingScene}");
+            var script = _loadGameAnim.GetComponent<SceneController>();
+            script.OpenSceneLoadMap(loadingScene);
+        }
+        else
+        {
+            Debug.LogError("[MainMenu] MapSelectionManager not found!");
+        }
     }
 }

@@ -50,19 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 0
-  _Die: 0
-  _MiniMapIcon: {fileID: 0}
-  _item: {fileID: 1683808347939484114}
-  _check: {fileID: 0}
+  modelType: 0
+  miniMapIcon: {fileID: 0}
+  outLine: {fileID: 7911217406362074595}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 0}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 7911217406362074595}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 1683808347939484114}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
 --- !u!58 &8864256510117456343
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -337,6 +332,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 8300000, guid: 2bd7cafe4a35d1e4493bead6a58671d1, type: 3}
   _Fire_Clip: {fileID: 0}
@@ -357,11 +359,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &6131885613189011582
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +451,7 @@ MonoBehaviour:
   _maxFarmers: 2
   _seleted: {fileID: 0}
   _detec: 0
+  _respawning: 0
   _spriteRender: {fileID: 2649244880087975529}
   _anim: {fileID: 5778257445860767759}
   _OderPoin: {fileID: 8278292204841198005}
@@ -554,6 +552,10 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _treeRada
+      value: 
+      objectReference: {fileID: 7036572890934817030}
+    - target: {fileID: 808225828330475339, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: _spriteRender
       value: 
       objectReference: {fileID: 2649244880087975529}
@@ -561,6 +563,10 @@ PrefabInstance:
       propertyPath: _normalMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 1c7d1e1391880dd4e8f9eb9e65cec9bb, type: 2}
+    - target: {fileID: 1542668310059126712, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1802582467070821213, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_Name
       value: OutLine
@@ -617,6 +623,14 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].y
       value: -2.327947
       objectReference: {fileID: 0}
+    - target: {fileID: 6014588824115821595, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712561981578406612, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+      propertyPath: _range
+      value: 2.98
+      objectReference: {fileID: 0}
     - target: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -665,6 +679,11 @@ PrefabInstance:
 --- !u!4 &679023574655176560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9052839102788121038, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
+  m_PrefabInstance: {fileID: 8416741052672884414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7036572890934817030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1542668310059126712, guid: 23f45d0ab7208ff4381d64d9543062ab, type: 3}
   m_PrefabInstance: {fileID: 8416741052672884414}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7911217406362074595 stripped

@@ -515,10 +515,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7549e9945fabe6c44b89c04b609c7e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 20
-  hits: []
-  _on: 1
-  _Die: 0
+  displayRadius: 18.7
+  detectionRadius: 30
+  isActive: 1
+  isDead: 0
 --- !u!114 &8115716074318572522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,7 +585,6 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 1627387284613245235}
   _AI: {fileID: 2618211938921617990}
   _audio: {fileID: 2596167484009540385}
-  _rada: {fileID: 2939301152809590225}
   _anim: {fileID: 7255897152711031789}
   _healEffect: {fileID: 1103703179019586960}
   path: {fileID: 8115716074318572522}

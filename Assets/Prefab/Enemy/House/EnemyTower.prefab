@@ -380,19 +380,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 7
-  _Die: 0
-  _MiniMapIcon: {fileID: 157157017772184325}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 5
+  miniMapIcon: {fileID: 157157017772184325}
+  outLine: {fileID: 8128939584759546783}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 0}
-  _house: {fileID: 1864634508761206114}
-  _fire: {fileID: 8609426416298919333}
-  _outLine: {fileID: 8128939584759546783}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  house: {fileID: 1864634508761206114}
+  rada: {fileID: 0}
 --- !u!114 &1864634508761206114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +425,7 @@ MonoBehaviour:
   _Detec: 0
   _maxHealth: 100
   _currentHealth: 0
+  _coin: 10
   _alarmRadius: 15
   _playerCountAssist: 5
   _warningTime: 10
@@ -737,6 +734,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.3251536
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.24049434
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0009
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 4.04
       objectReference: {fileID: 0}

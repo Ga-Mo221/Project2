@@ -6,50 +6,21 @@ public enum ChosenType
     Support,
     Rally
 }
+
 public class RadialChose : MonoBehaviour
 {
     [SerializeField] private ChosenType _type;
     [SerializeField] private RadialMenu _menu;
-    private Collider2D col;
-
-    void Awake()
-    {
-        col = GetComponent<Collider2D>();
-    }
+    [SerializeField] private ChoseUI _choseUI;
 
     void Update()
     {
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // ✅ Kiểm tra chuột có nằm trong RectTransform không
+        if (CursorManager.Instance == null) return;
+        bool isInside = CursorManager.Instance.ChoseUI && CursorManager.Instance.ID == _choseUI.getID();
 
-        if (col != null && col.OverlapPoint(mouseWorld))
-        {
-            if (_type == ChosenType.War)
-            {
-                _menu.OnAnimation("war", true);
-            }
-            else if (_type == ChosenType.Support)
-            {
-                _menu.OnAnimation("support", true);
-            }
-            else if (_type == ChosenType.Rally)
-            {
-                _menu.OnAnimation("rally", true);
-            }
-        }
-        else
-        {
-            if (_type == ChosenType.War)
-            {
-                _menu.OnAnimation("war", false);
-            }
-            else if (_type == ChosenType.Support)
-            {
-                _menu.OnAnimation("support", false);
-            }
-            else if (_type == ChosenType.Rally)
-            {
-                _menu.OnAnimation("rally", false);
-            }
-        }
+        // ✅ Kích hoạt animation tương ứng
+        string animName = _type.ToString();
+        _menu.OnAnimation(animName, isInside);
     }
 }

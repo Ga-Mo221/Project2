@@ -1,4 +1,3 @@
-using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 using NaughtyAttributes;
@@ -55,6 +54,8 @@ public class AnimalAI : MonoBehaviour
     public bool _canAction = false;
     [Foldout("Status")]
     [SerializeField] private bool detec = false;
+    [Foldout("Status")]
+    public bool _respawning = false;
 
 
     [Foldout("Other")]
@@ -68,7 +69,7 @@ public class AnimalAI : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] private GameObject _MiniMapIcon;
     [Foldout("Other")]
-    [SerializeField] private Transform _centerTransform;
+    [SerializeField] private Vector2 _centerPatrol;
     [Foldout("Other")]
     [SerializeField] private Animator _anim; // animation của đối tượng
     [Foldout("Other")]
@@ -76,17 +77,14 @@ public class AnimalAI : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] private UnitAudio _audio;
     [Foldout("Other")]
-    [SerializeField] private Display _display;
-
-    [Foldout("Update Time")]
-    [SerializeField] private float visibleUpdateRate = 0.3f;
-    [Foldout("Update Time")]
-    [SerializeField] private float invisibleUpdateRate = 0.8f;
-    [Foldout("Update Time")]
-    [SerializeField] private float _Rate;
-
-    private Rigidbody2D _rb;
+    [SerializeField] private Rigidbody2D _rb;
     #endregion
+
+    void Awake()
+    {
+        if (_rb == null)
+            _rb = GetComponent<Rigidbody2D>();
+    }
 
     protected virtual void Start()
     {
@@ -95,25 +93,18 @@ public class AnimalAI : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, _repathRate);
         _health = _maxHealth;
 
+        InvokeRepeating(nameof(AI), 0f, 0.2f);
 
-        //seeker = GetComponent<Seeker>();
-        _Rate = visibleUpdateRate;
-        InvokeRepeating(nameof(AI), 0f, _Rate);
-
-        _rb = GetComponent<Rigidbody2D>();
         if (target == null && !_Die)
         {
             SetNewPatrol(Vector2.zero);
         }
+
+        _centerPatrol = transform.position;
     }
 
     protected virtual void AI()
     {
-        if (_display._Detec)
-            _Rate = visibleUpdateRate;
-        else
-            _Rate = invisibleUpdateRate + Random.Range(0f, visibleUpdateRate);
-
         flip(target, _canAction);
 
         target = findEnemyorPlayer();
@@ -157,12 +148,13 @@ public class AnimalAI : MonoBehaviour
             {
                 _canAction = false;
                 path.setTarget(_patrolTarget, target);
-                float dist = Vector3.Distance(transform.position, _patrolTarget);
+                float dist = Vector2.Distance(transform.position, _patrolTarget);
                 if (dist < 3)
                 {
                     if (_delay == null)
                     {
-                        _delay = StartCoroutine(setDelayPatrol());
+                        if (gameObject.activeInHierarchy)
+                            _delay = StartCoroutine(setDelayPatrol());
                     }
                 }
             }
@@ -303,7 +295,7 @@ public class AnimalAI : MonoBehaviour
         do
         {
             // random 1 điểm trong phạm vi patrol
-            randomPoint = (Random.insideUnitCircle * _PatrolRadius) + (Vector2)_centerTransform.position;
+            randomPoint = (Random.insideUnitCircle * _PatrolRadius) + _centerPatrol;
             if (dir != Vector2.zero)
             {
                 // vector hướng từ vị trí hiện tại đến điểm random
@@ -343,10 +335,12 @@ public class AnimalAI : MonoBehaviour
         _OutLine.SetActive(false);
 
         playDieSound();
+        gameObject.SetActive(true);
         StartCoroutine(Respawm(_respawmTime));
 
         //Debug.Log("die r");
-        GameManager.Instance.addCoin(1);
+        if (GameManager.Instance != null)
+            GameManager.Instance.addCoin(1);
     }
     #endregion
 
@@ -361,6 +355,7 @@ public class AnimalAI : MonoBehaviour
     #region Respawm
     private IEnumerator Respawm(int delay)
     {
+        _respawning = true;
         yield return new WaitForSeconds(delay);
         transform.position = transform.parent.position;
         _Die = false;
@@ -373,6 +368,7 @@ public class AnimalAI : MonoBehaviour
         SetNewPatrol(Vector2.zero);
         _MeatOBJ.gameObject.SetActive(false);
         _MeatOBJ.ResetPickUp();
+        _respawning = false;
     }
     #endregion
 
@@ -383,15 +379,13 @@ public class AnimalAI : MonoBehaviour
     #region Play Sound Die
     public void playDieSound()
     {
-        if (_display._Detec)
-            _audio.PlayDieSound();
+        _audio.PlayDieSound();
     }
     #endregion
     #region Play Sound Attack
     public void playAttackSound()
     {
-        if (_display._Detec)
-            _audio.PlayAttackSound();
+        _audio.PlayAttackSound();
     }
     #endregion
 }

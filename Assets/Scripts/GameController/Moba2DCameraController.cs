@@ -33,7 +33,9 @@ public class Moba2DCameraController : MonoBehaviour
 
     void Start()
     {
-        cam = Camera.main;
+        if (CameraInfo.Instance != null)
+            cam = CameraInfo.Instance.cameraMain;
+        if (SettingManager.Instance == null) return;
         moveSpeed = SettingManager.Instance._gameSettings._mouseSensitivity;
         canDrag = SettingManager.Instance._gameSettings._panCameraRightMouse;
         dragSpeed = SettingManager.Instance._gameSettings._speedPanCamera;
@@ -42,14 +44,14 @@ public class Moba2DCameraController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.getGameOver()) return;
-        if (GameManager.Instance.Tutorial) return;
+        if (GameManager.Instance != null && GameManager.Instance.getGameOver()) return;
+        if (GameManager.Instance != null && GameManager.Instance.Tutorial) return;
 
 
         Vector3 pos = transform.position;
 
         // --- Di chuyển ---
-        if (canMove && !CursorManager.Instance.ChoseUI)
+        if (canMove && CursorManager.Instance != null && !CursorManager.Instance.ChoseUI)
         {
             bool moved = false;
 
@@ -82,7 +84,7 @@ public class Moba2DCameraController : MonoBehaviour
         }
 
         // --- Zoom ---
-        if (canZoom && !CursorManager.Instance.ChoseUI)
+        if (canZoom && CursorManager.Instance != null && !CursorManager.Instance.ChoseUI)
         {
             float scroll = Input.mouseScrollDelta.y;
             if (scroll != 0)
@@ -137,16 +139,39 @@ public class Moba2DCameraController : MonoBehaviour
 
     void OnEnable()
     {
-        SettingManager.Instance._onMouseChanged += ApplyMouseSensitivityChanged;
-        SettingManager.Instance._onRightMousePanCamera += ApplyCanPanCameraMouseRight;
-        SettingManager.Instance._onRightMouseSpeed += ApplySpeedPanCameraMouseRight;
+        if (SettingManager.Instance != null)
+        {
+            SettingManager.Instance._onMouseChanged += ApplyMouseSensitivityChanged;
+            SettingManager.Instance._onRightMousePanCamera += ApplyCanPanCameraMouseRight;
+            SettingManager.Instance._onRightMouseSpeed += ApplySpeedPanCameraMouseRight;
+        }
+        if (GameManager.Instance != null)
+        {
+            Debug.Log($"[Subscriber] Registered event on {GameManager.Instance.gameObject.name} ({GameManager.Instance.GetInstanceID()})");
+            GameManager.Instance.On_RenderMap += StartGameTargetPlayerCastle;
+        }
     }
 
     void OnDisable()
     {
-        SettingManager.Instance._onMouseChanged += ApplyMouseSensitivityChanged;
-        SettingManager.Instance._onRightMousePanCamera += ApplyCanPanCameraMouseRight;
-        SettingManager.Instance._onRightMouseSpeed -= ApplySpeedPanCameraMouseRight;
+        if (SettingManager.Instance != null)
+        {
+            SettingManager.Instance._onMouseChanged -= ApplyMouseSensitivityChanged;
+            SettingManager.Instance._onRightMousePanCamera -= ApplyCanPanCameraMouseRight;
+            SettingManager.Instance._onRightMouseSpeed -= ApplySpeedPanCameraMouseRight;
+        }
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.On_RenderMap -= StartGameTargetPlayerCastle;
+        }
+    }
+
+    private void StartGameTargetPlayerCastle()
+    {
+        if (Castle.Instance != null)
+        {
+            transform.position = new Vector3(Castle.Instance.transform.position.x, Castle.Instance.transform.position.y, transform.position.z);
+        }
     }
 
     private void ApplyMouseSensitivityChanged()

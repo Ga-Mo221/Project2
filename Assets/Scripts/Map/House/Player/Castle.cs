@@ -78,6 +78,12 @@ public class Castle : MonoBehaviour
     public bool _S = false; // tnt
     [Foldout("Key Down")]
     public bool _V = false;
+    [Foldout("Key Down")]
+    public bool _buff_1 = false;
+    [Foldout("Key Down")]
+    public bool _buff_2 = false;
+    [Foldout("Key Down")]
+    public bool _buff_3 = false;
     #endregion
 
 
@@ -85,7 +91,7 @@ public class Castle : MonoBehaviour
     [Foldout("All Item")]
     public bool _canFind = true;
     [Foldout("All Item")]
-    public GameObject[] _allItems;
+    public List<GameObject> _allItems;
 
     [Foldout("Storage")]
     public Transform _StorgeFolder;
@@ -196,19 +202,37 @@ public class Castle : MonoBehaviour
         _archer_Left_Obj.SetActive(false);
         _archer_Right_Obj.SetActive(false);
 
-        _allItems = GameObject.FindGameObjectsWithTag("Item");
-
         if (_canUpdateHP)
             _currentHealth = _maxHealth;
-        GameManager.Instance.UIupdateHPCastle();
+        if (GameManager.Instance != null)
+            GameManager.Instance.UIupdateHPCastle();
     }
     #endregion
 
+    void OnEnable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.On_RenderMap += startGame;
+    }
+
+    void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.On_RenderMap -= startGame;
+    }
+
+    private void startGame()
+    {
+        if (_canUpdateHP)
+            _currentHealth = _maxHealth;
+        if (GameManager.Instance != null)
+            GameManager.Instance.UIupdateHPCastle();
+    }
 
     #region  Update
     void Update()
     {
-        if (GameManager.Instance.getGameOver()) return;
+        if (GameManager.Instance != null && GameManager.Instance.getGameOver()) return;
         buttonEnter();
         buttonTab();
         OpenWindown();
@@ -249,7 +273,13 @@ public class Castle : MonoBehaviour
                 _maxSlot = _lv5_MaxSlot;
                 break;
         }
-
+        if (GameManager.Instance != null)
+        {
+            _maxRock += GameManager.Instance.Info._storageBounus * 2;
+            _maxWood += GameManager.Instance.Info._storageBounus * 2;
+            _maxMeat += GameManager.Instance.Info._storageBounus * 2;
+            _maxGold += GameManager.Instance.Info._storageBounus * 2;
+        }
         _audio.PlayLevelUpSound();
     }
     #endregion

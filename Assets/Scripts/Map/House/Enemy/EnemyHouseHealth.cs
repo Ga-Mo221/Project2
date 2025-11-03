@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 public class EnemyHouseHealth : MonoBehaviour
 {
@@ -45,8 +44,7 @@ public class EnemyHouseHealth : MonoBehaviour
             _Die = true;
             _fire.gameObject.SetActive(false);
             _house.die();
-            if (_house._display._Detec)
-                _house._audio.PlayDieSound();
+            _house._audio.PlayDieSound();
         }
 
         _HP_obj.SetActive(true);
@@ -70,8 +68,7 @@ public class EnemyHouseHealth : MonoBehaviour
         if (_house._currentHealth / _house._maxHealth < 0.3f)
         {
             _fire.gameObject.SetActive(true);
-            if (_house._display._Detec)
-                _house._audio.PlayFireSound();
+            _house._audio.PlayFireSound();
         }
     }
 }

@@ -49,6 +49,7 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerDownHa
 
     void Start()
     {
+        if (SettingManager.Instance == null) return;
         hoverClip = SettingManager.Instance._button_hover;
         clickClip = SettingManager.Instance._button_click;
         valueChangeClip = SettingManager.Instance._valuchangeClip;
@@ -65,17 +66,20 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerDownHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        PlaySFX(hoverClip, hoverVolume);
+        if (hoverClip != null)
+            PlaySFX(hoverClip, hoverVolume);
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        PlaySFX(clickClip, clickVolume);
+        if (clickClip != null)
+            PlaySFX(clickClip, clickVolume);
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        PlaySFX(hoverClip, hoverVolume);
+        if (hoverClip != null)
+            PlaySFX(hoverClip, hoverVolume);
     }
 
     public void OnDeselect(BaseEventData eventData)
@@ -85,12 +89,14 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerDownHa
 
     private void OnToggleValueChanged(bool value)
     {
-        PlaySFX(valueChangeClip != null ? valueChangeClip : clickClip, valueChangeVolume);
+        if (clickClip != null)
+            PlaySFX(valueChangeClip != null ? valueChangeClip : clickClip, valueChangeVolume);
     }
 
     private void OnSliderValueChanged(float value)
     {
-        PlaySFX(valueChangeClip != null ? valueChangeClip : clickClip, valueChangeVolume);
+        if (clickClip != null)
+            PlaySFX(valueChangeClip != null ? valueChangeClip : clickClip, valueChangeVolume);
     }
 
     private void PlaySFX(AudioClip clip, float volume)

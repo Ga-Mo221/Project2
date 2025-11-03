@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1194050918057046127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7809065702662885241}
+  - component: {fileID: 2149788730068992561}
+  m_Layer: 0
+  m_Name: Case Rock 1
+  m_TagString: Item+
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7809065702662885241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194050918057046127}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4466042464587897414}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2149788730068992561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194050918057046127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4bf02c9738211d408f1b2d807a5debc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelType: 1
+  chillEffect: {fileID: 2938385929456950084}
+  item: {fileID: 2367327528420944485}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  count: 0
+--- !u!1001 &5866772827831033209
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7809065702662885241}
+    m_Modifications:
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767884651671963197, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+      propertyPath: m_Name
+      value: Rock1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+--- !u!114 &2367327528420944485 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8192216039845590812, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+  m_PrefabInstance: {fileID: 5866772827831033209}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8b785b4d1630045b50411ac0a2820d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2938385929456950084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8767884651671963197, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+  m_PrefabInstance: {fileID: 5866772827831033209}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4466042464587897414 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7822866043786364735, guid: 4e5e62931b10dee48b09431b44796d93, type: 3}
+  m_PrefabInstance: {fileID: 5866772827831033209}
+  m_PrefabAsset: {fileID: 0}

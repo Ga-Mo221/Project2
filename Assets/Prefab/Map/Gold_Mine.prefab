@@ -142,6 +142,7 @@ MonoBehaviour:
   _maxFarmers: 3
   _seleted: {fileID: 0}
   _detec: 0
+  _respawning: 0
   _spriteRender: {fileID: 3791499043775884485}
   _anim: {fileID: 5828999588693371778}
   _OderPoin: {fileID: 1440442551158257980}
@@ -156,6 +157,8 @@ MonoBehaviour:
   - {fileID: 7936941790292500975}
   - {fileID: 4708823448663812023}
   - {fileID: 3517141601721846449}
+  _small: 0
+  _die: 0
 --- !u!1 &2164182168763940066
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,19 +293,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 2
-  _Die: 0
-  _MiniMapIcon: {fileID: 0}
-  _item: {fileID: 4571797421337770883}
-  _check: {fileID: 0}
+  modelType: 2
+  miniMapIcon: {fileID: 0}
+  outLine: {fileID: 2991709533211408206}
   _light: {fileID: 2164182168763940066}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 0}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 2991709533211408206}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 4571797421337770883}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
 --- !u!58 &847845377325894174
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -617,6 +615,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 8300000, guid: 033ae2467a176a44eac8cb55e636e4f0, type: 3}
   _Fire_Clip: {fileID: 0}
@@ -637,11 +642,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1001 &291557585944961920
 PrefabInstance:
   m_ObjectHideFlags: 0

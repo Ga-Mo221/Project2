@@ -11,40 +11,68 @@ public class EnemyPatrol : MonoBehaviour
     [ShowIf(nameof(_isFire))]
     [SerializeField] private GameObject _fire;
     [SerializeField] private List<EnemyAI> _listEnemy;
-    private bool _on = false;
+
+    private CircleCollider2D _col;
+
+    void Awake()
+    {
+        _col = GetComponent<CircleCollider2D>();
+    }
 
     void Start()
     {
+        if (_isFire)
+            _fire.SetActive(false);
+
         EnemyHouse.Instance._listPatrol.Add(this);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
-        foreach (var hit in hits)
+        // Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
+        // foreach (var hit in hits)
+        // {
+        //     if (hit.CompareTag("Enemy"))
+        //     {
+        //         EnemyAI enemy = hit.GetComponent<EnemyAI>();
+        //         if (enemy != null)
+        //         {
+        //             if (checkInEnemy(enemy))
+        //                 enemy.setPatrol(this);
+        //         }
+        //     }
+        // }
+    }
+
+    void OnEnable()
+    {
+        if (GameManager.Instance != null)
         {
-            if (hit.CompareTag("Enemy"))
-            {
-                EnemyAI enemy = hit.GetComponent<EnemyAI>();
-                if (enemy != null)
-                {
-                    if (checkInEnemy(enemy))
-                        enemy.setPatrol(this);
-                }
-            }
+            Debug.Log("Dang Ky Su Kien Thanh Cong", this);
+            GameManager.Instance.On_onLight += onLight;
+            GameManager.Instance.On_offLight += offLight;
+        }
+        else
+        {
+            Debug.LogWarning("Dang Ky Su Kien Khong Thanh Cong", this);
         }
     }
 
-    void Update()
+    void OnDisable()
     {
-        if (GameManager.Instance._timeRTS == 18 && _isFire && !_on)
+        if (GameManager.Instance != null)
         {
-            _on = !_on;
-            float delay = Random.Range(0, 1.5f);
-            StartCoroutine(setActive(delay, _on));
+            GameManager.Instance.On_onLight -= onLight;
+            GameManager.Instance.On_offLight -= offLight;
         }
-        else if (GameManager.Instance._timeRTS == 6 && _isFire && _on)
-        {
-            _on = !_on;
-            float delay = Random.Range(0, 1.5f);
-            StartCoroutine(setActive(delay, _on));
-        }
+    }
+
+    private void onLight()
+    {
+        float delay = Random.Range(0, 1.5f);
+        StartCoroutine(setActive(delay, true));
+    }
+
+    private void offLight()
+    {
+        float delay = Random.Range(0, 1.5f);
+        StartCoroutine(setActive(delay, false));
     }
 
     public float getRadius() => _radius;
@@ -56,12 +84,13 @@ public class EnemyPatrol : MonoBehaviour
     private IEnumerator setActive(float delay, bool amount)
     {
         yield return new WaitForSeconds(delay);
-        _fire.SetActive(amount);
+        if (_isFire)
+            _fire.SetActive(amount);
     }
 
     public bool checkInEnemy(EnemyAI enemy)
     {
-        if (_listEnemy.Count >= _maxEnemy) return false;
+        if (_listEnemy.Count >= _maxEnemy || !_listEnemy.Contains(enemy)) return false;
         _listEnemy.Add(enemy);
         return true;
     }
@@ -89,5 +118,12 @@ public class EnemyPatrol : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _radius);
+    }
+
+    public float set(float radius, int maxEnemy)
+    {
+        _radius = radius;
+        _maxEnemy = maxEnemy;
+        return _col.radius;
     }
 }

@@ -23,14 +23,14 @@ public class TNTExp : MonoBehaviour
             CameraShake.Instance.ShakeCamera();
             var animal = collision.GetComponent<AnimalHealth>();
             if (animal != null && _player != null)
-                animal.takeDamage(_player._damage, gameObject);
+                animal.takeDamage(_player.getDamage(), gameObject);
         }
         else if (collision.CompareTag("Enemy"))
         {
             CameraShake.Instance.ShakeCamera();
             var enemy = collision.GetComponent<EnemyHealth>();
             if (enemy != null && _player != null)
-                enemy.takeDamage(_player._damage);
+                enemy.takeDamage(_player.getDamage());
         }
     }
 }

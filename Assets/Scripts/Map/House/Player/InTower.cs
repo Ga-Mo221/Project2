@@ -44,9 +44,26 @@ public class InTower : MonoBehaviour
         _ArcherUp.SetActive(true);
         _scrip.setIsAI(true);
         _ArcherUp = null;
+        _scrip.SetSkin();
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
+    {
+        Apply(collision);
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        Apply(collision);
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        Apply(collision);
+    }
+
+    private void Apply(Collider2D collision)
     {
         if (collision == null) return;
         if (collision.CompareTag("Archer"))
@@ -58,6 +75,8 @@ public class InTower : MonoBehaviour
                 {
                     _ArcherUp = collision.gameObject;
                     _ArcherUp_Obj.SetActive(true);
+                    var s = _ArcherUp_Obj.GetComponent<ArcherUP>();
+                    s.setSkin();
                     _script.setUpTower(true);
                     collision.gameObject.SetActive(false);
                     _audio.PlayArcherUpSound();

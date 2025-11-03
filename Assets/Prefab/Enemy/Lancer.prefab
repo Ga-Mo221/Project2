@@ -692,19 +692,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
-  _Die: 0
-  _MiniMapIcon: {fileID: 5348556490727620835}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 4
+  miniMapIcon: {fileID: 5348556490727620835}
+  outLine: {fileID: 9215751582265390688}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 7485663439101274931}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 9215751582265390688}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 7485663439101274931}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &8500543870998682163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +758,9 @@ MonoBehaviour:
   _range: 4
   _attackspeed: 1.5
   _radius: 13
+  _coin: 1
   _Die: 0
+  _typeDie: 0
   critDropGold: 10
   critDropMeat: 20
   MeatDropObj: {fileID: 7998817571858747286}
@@ -776,18 +774,15 @@ MonoBehaviour:
   _Detec: 0
   target: {fileID: 0}
   _currentTarget: {fileID: 0}
-  _path: {fileID: 8500543870998682163}
   _GFX: {fileID: 7600200783451448183}
   _HPimg: {fileID: 3475394184537907434}
   _anim: {fileID: 855007078621467126}
+  _path: {fileID: 8500543870998682163}
+  _rb: {fileID: 0}
   _outLine: {fileID: 9215751582265390688}
   _HPBar: {fileID: 2025456718369182137}
   _MinimapIcon: {fileID: 5348556490727620835}
   _audio: {fileID: 6190119656473437411}
-  _display: {fileID: 3442320853167403099}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
   _spriteRender: {fileID: 2753871742320555816}
 --- !u!1 &7600200783451448183
 GameObject:
@@ -1235,6 +1230,10 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.838
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.837
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x

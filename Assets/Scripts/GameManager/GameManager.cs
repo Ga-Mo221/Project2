@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
@@ -74,6 +75,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _GameUI_Obj;
     [Foldout("Other")]
     [SerializeField] private MusicGameplay _audio;
+    [Foldout("Other")]
+    [SerializeField] private GetMainCam _UIgame_setupCamera;
+    [Foldout("Other")]
+    [SerializeField] private GetMainCam _UIselectBox_setupCamera;
+    [Foldout("Other")]
+    public Camera _cameraMiniMap;
     private GameOver _gameOver;
 
 
@@ -108,6 +115,21 @@ public class GameManager : MonoBehaviour
     public GameObject _enemy_MinotaurPrefab;
     [Foldout("Prefab")]
     public GameObject _enemy_ShamanPrefab;
+    [Foldout("Prefab")]
+    public GameObject _healing_Buff_Brefab;
+    [Foldout("Prefab")]
+    public GameObject _farm_Buff_Brefab;
+    [Foldout("Prefab")]
+    public GameObject _fury_Buff_Brefab;
+
+    public event Action On_RenderMap;
+    public event Action On_onLight;
+    public event Action On_offLight;
+    public event Action On_onNight;
+    public event Action On_offNight;
+
+    private bool _changeLight = false;
+    private bool _changeNight = false;
 
     void Awake()
     {
@@ -123,6 +145,47 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        UIupdateReferences();
+
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(setupcamera());
+    }
+
+    private IEnumerator setupcamera()
+    {
+        yield return new WaitForSeconds(5f);
+        _UIgame_setupCamera.setupCamera();
+        if (_UIselectBox_setupCamera != null)
+            _UIselectBox_setupCamera.setupCamera();
+    }
+
+    void Update()
+    {
+        if (_timeRTS == 16 && !_changeNight)
+        {
+            _changeNight = !_changeNight;
+            On_onNight?.Invoke();
+        }
+        else if (_timeRTS == 18 && !_changeLight)
+        {
+            _changeLight = !_changeLight;
+            On_onLight?.Invoke();
+        }
+        else if (_timeRTS == 4 && _changeNight)
+        {
+            _changeNight = !_changeNight;
+            On_offNight?.Invoke();
+        }
+        else if (_timeRTS == 6 && _changeLight)
+        {
+            _changeLight = !_changeLight;
+            On_offLight?.Invoke();
+        }
+    }
+
+    public void renderMap()
+    {
+        On_RenderMap?.Invoke();
         UIupdateReferences();
     }
 

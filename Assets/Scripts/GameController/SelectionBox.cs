@@ -32,9 +32,9 @@ public class SelectionBox : MonoBehaviour
     #region Update
     void Update()
     {
-        if (GameManager.Instance.getGameOver()) return;
+        if (GameManager.Instance != null && GameManager.Instance.getGameOver()) return;
 
-        if (Input.GetMouseButtonDown(0) && !CursorManager.Instance.ChoseUI)
+        if (Input.GetMouseButtonDown(0) && CursorManager.Instance != null && !CursorManager.Instance.ChoseUI)
         {
             if (!CursorManager.Instance.Select)
             {
@@ -55,23 +55,30 @@ public class SelectionBox : MonoBehaviour
             }
             else
             {
-                Vector3 worldPos;
+                RectTransform canvasRect = _radialMenu.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
                 RectTransform rect = _radialMenu.GetComponent<RectTransform>();
-                RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                    rect,
+
+                Vector2 localPos;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvasRect,
                     Input.mousePosition,
-                    Camera.main,
-                    out worldPos
+                    canvasRect.GetComponent<Canvas>().worldCamera,
+                    out localPos
                 );
 
-                _radialMenu.transform.position = worldPos;
-                var radial = _radialMenu.GetComponent<RadialMenu>();
-                radial.SetPos(worldPos);
+                Vector3 mousePos = Input.mousePosition;
+                Vector3 worldPos = CameraInfo.Instance.cameraMain.ScreenToWorldPoint(mousePos);
+                worldPos.z = 0; // nếu bạn muốn ở mặt phẳng 2D (z=0)
+                
+                _radialMenu.GetComponent<RadialMenu>().SetPos(worldPos);
+
+                rect.anchoredPosition = localPos;
+
                 _radialMenu.SetActive(true);
             }
         }
 
-        if (Input.GetMouseButton(0) && !CursorManager.Instance.ChoseUI)
+        if (Input.GetMouseButton(0) && CursorManager.Instance != null && !CursorManager.Instance.ChoseUI)
         {
             if (Castle.Instance != null && !Castle.Instance._V)
             {
@@ -80,7 +87,7 @@ public class SelectionBox : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && !CursorManager.Instance.ChoseUI)
+        if (Input.GetMouseButtonUp(0) && CursorManager.Instance != null && !CursorManager.Instance.ChoseUI)
         {
             if (Castle.Instance != null && !Castle.Instance._V)
             {
@@ -94,9 +101,11 @@ public class SelectionBox : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Vector3 mousePos = Input.mousePosition;
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector3 worldPos = Vector3.zero;
+            if (CameraInfo.Instance != null)
+                worldPos = CameraInfo.Instance.cameraMain.ScreenToWorldPoint(mousePos);
             worldPos.z = 0; // nếu bạn muốn ở mặt phẳng 2D (z=0)
-            if (chosen.Count != 0)
+            if (worldPos != Vector3.zero && chosen.Count != 0)
             {
                 MoveToManager.Instance.CreateMovePoint(chosen, worldPos);
                 if (GameManager.Instance.Tutorial && CursorManager.Instance.ChoseUI && TutorialSetUp.Instance.ID == 1)
@@ -111,9 +120,13 @@ public class SelectionBox : MonoBehaviour
                         obj.GetComponent<PlayerAI>().setTarget(worldPos, true);
                 }
             }
+            else if (worldPos == Vector3.zero)
+            {
+                Debug.LogWarning($"WordPos [{worldPos}] || Chosen Count [{chosen.Count}]");
+            }
         }
 
-        if (GameManager.Instance.Tutorial && TutorialSetUp.Instance._StarSelectUnit)
+        if (GameManager.Instance != null && GameManager.Instance.Tutorial && TutorialSetUp.Instance != null && TutorialSetUp.Instance._StarSelectUnit)
         {
             if (chosen.Count > 0)
                 TutorialSetUp.Instance._isSelect = true;
@@ -168,7 +181,7 @@ public class SelectionBox : MonoBehaviour
     {
         if (CursorManager.Instance.ChoseUI) return;
         Rect screenRect = GetScreenRect(screenStart, screenEnd);
-        Camera cam = Camera.main;
+        Camera cam = CameraInfo.Instance.cameraMain;
         if (cam == null) { Debug.LogWarning("No Main Camera found for selection."); return; }
 
         GameObject[] selectable = getUnitClass();

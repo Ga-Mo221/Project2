@@ -92,13 +92,13 @@ GameObject:
   - component: {fileID: 1858726289337762750}
   - component: {fileID: 3789521476540593560}
   - component: {fileID: 4632434519313262754}
+  - component: {fileID: 8372347336992342789}
+  - component: {fileID: 6622652187061841322}
   - component: {fileID: 4157316575791534723}
   - component: {fileID: 6690728082838050056}
   - component: {fileID: 521201914367946652}
   - component: {fileID: 4547883194290217941}
   - component: {fileID: 7183346957051983319}
-  - component: {fileID: 8372347336992342789}
-  - component: {fileID: 6622652187061841322}
   m_Layer: 6
   m_Name: EnemyHouse
   m_TagString: EnemyHouse
@@ -241,119 +241,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4157316575791534723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587727915529407964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 7
-  _Die: 0
-  _MiniMapIcon: {fileID: 8513273932317693376}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
-  _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 0}
-  _house: {fileID: 521201914367946652}
-  _fire: {fileID: 525429425749910509}
-  _outLine: {fileID: 2136989536554870137}
-  _seemer: []
-  _Detec: 0
---- !u!114 &6690728082838050056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587727915529407964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab4f92c9d3140d04aae1f9b7ab1cdf8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _listPatrol: []
-  _listEnemy: []
-  _listEnemyCreate: []
-  _listSpawnPoint: []
---- !u!114 &521201914367946652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587727915529407964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3490441ea014cb04eabbd2bb3349c508, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _house: {fileID: 4547883194290217941}
-  _endPos: {fileID: 6286318585434760079}
-  _HPimg: {fileID: 2912351996827023795}
-  _Die: 0
-  _fire: {fileID: 525429425749910509}
-  _HP_obj: {fileID: 309070564478404832}
---- !u!114 &4547883194290217941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587727915529407964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82834540c838db149baa6d4902ecc79f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 2
-  _canUpdateHP: 1
-  _Die: 0
-  _Detec: 0
-  _maxHealth: 2000
-  _currentHealth: 0
-  _alarmRadius: 20
-  _playerCountAssist: 5
-  _warningTime: 10
-  _assistRadius: 50
-  _wood: 10
-  _rock: 10
-  _meat: 10
-  _gold: 10
-  _GnollUp: {fileID: 0}
-  _GnollPrefab: {fileID: 0}
-  _HpBar: {fileID: 309070564478404832}
-  _Icon: {fileID: 8513273932317693376}
-  _outLine: {fileID: 1124622852421708143}
-  _audio: {fileID: 6622652187061841322}
-  _display: {fileID: 4157316575791534723}
---- !u!114 &7183346957051983319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587727915529407964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41fca9268441b6848b7efaf4f005539c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyWar:
-  - _startDay: 0
-    _endDay: 0
-    _listWave:
-    - _delay: 0
-      _listEnemy:
-      - _count: {x: 0, y: 0}
-        _delay: 0
-        _enemy: 0
 --- !u!82 &8372347336992342789
 AudioSource:
   m_ObjectHideFlags: 0
@@ -491,6 +378,112 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
+--- !u!114 &4157316575791534723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587727915529407964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelType: 5
+  miniMapIcon: {fileID: 8513273932317693376}
+  outLine: {fileID: 2136989536554870137}
+  _light: {fileID: 0}
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  house: {fileID: 521201914367946652}
+  rada: {fileID: 0}
+--- !u!114 &6690728082838050056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587727915529407964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4f92c9d3140d04aae1f9b7ab1cdf8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _listPatrol: []
+  _listEnemy: []
+  _listEnemyCreate: []
+  _listSpawnPoint: []
+--- !u!114 &521201914367946652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587727915529407964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3490441ea014cb04eabbd2bb3349c508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _house: {fileID: 4547883194290217941}
+  _endPos: {fileID: 6286318585434760079}
+  _HPimg: {fileID: 2912351996827023795}
+  _Die: 0
+  _fire: {fileID: 525429425749910509}
+  _HP_obj: {fileID: 309070564478404832}
+--- !u!114 &4547883194290217941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587727915529407964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82834540c838db149baa6d4902ecc79f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 2
+  _canUpdateHP: 1
+  _Die: 0
+  _Detec: 0
+  _maxHealth: 2000
+  _currentHealth: 0
+  _coin: 10
+  _alarmRadius: 20
+  _playerCountAssist: 5
+  _warningTime: 10
+  _assistRadius: 50
+  _wood: 10
+  _rock: 10
+  _meat: 10
+  _gold: 10
+  _GnollUp: {fileID: 0}
+  _GnollPrefab: {fileID: 0}
+  _HpBar: {fileID: 309070564478404832}
+  _Icon: {fileID: 8513273932317693376}
+  _outLine: {fileID: 1124622852421708143}
+  _audio: {fileID: 6622652187061841322}
+  _display: {fileID: 4157316575791534723}
+--- !u!114 &7183346957051983319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587727915529407964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fca9268441b6848b7efaf4f005539c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainWar: []
+  _sideWar: []
+  _specialWar: []
+  _enemySpawnRadius: 2
+  _logSpawnActivity: 1
 --- !u!1 &8032062152000574950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,6 +1251,22 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 4.092
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1029363
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.30404952
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0093
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.097
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_SizeDelta.x

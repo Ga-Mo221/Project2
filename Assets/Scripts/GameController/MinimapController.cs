@@ -16,8 +16,7 @@ public class MinimapController : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     void Start()
     {
-        GameObject mainCamObj = Camera.main?.gameObject;
-        mainCamera = mainCamObj.GetComponent<Camera>();
+        mainCamera = CameraInfo.Instance.cameraMain;
     }
 
     public void OnPointerDown(PointerEventData eventData)

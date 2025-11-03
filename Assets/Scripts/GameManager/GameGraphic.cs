@@ -7,6 +7,7 @@ public class GameGraphic : MonoBehaviour
 
     void Start()
     {
+        if (SettingManager.Instance == null) return;
         _Bloom.SetActive(SettingManager.Instance._gameSettings._isBloom);
         _Weather.SetActive(SettingManager.Instance._gameSettings._isWeather);
     }

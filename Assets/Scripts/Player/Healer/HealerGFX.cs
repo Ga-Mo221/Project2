@@ -77,7 +77,7 @@ public class HealerGFX : PlayerAI
     {
         if (target == null) return;
         _scripTarget = target.GetComponent<PlayerAI>();
-        _scripTarget._healPlus = _damage;
+        _scripTarget._healPlus = getDamage();
         if (_attackCount == _heal_count_SKILL)
         {
             _scripTarget._AOEHeal = true;

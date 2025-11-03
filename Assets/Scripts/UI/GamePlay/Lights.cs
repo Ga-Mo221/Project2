@@ -18,46 +18,69 @@ public class Lights : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private Color targetColor;
 
-    private void Start()
+    private void Awake()
     {
         _light = GetComponent<Light2D>();
+    }
+
+    private void Start()
+    {
         _light.color = _defaultColor;
         transitionTime = GameManager.Instance._2Hours_Sec * 2;
     }
-
-    private void Update()
+    
+    void OnEnable()
     {
-        int timeRTS = GameManager.Instance._timeRTS; // giá trị: 4, 8, 12, 16, 20, 24
-
-        // Khi tới 16h → bắt đầu chuyển sang night
-        if (timeRTS == 16 && !isTransitioning)
+        if (GameManager.Instance != null)
         {
-            StartTransition(_defaultColor, _nightColor);
-        }
-
-        // Khi tới 4h → bắt đầu chuyển sang default
-        if (timeRTS == 4 && !isTransitioning)
-        {
-            StartTransition(_nightColor, _defaultColor);
-        }
-
-        // Nếu đang chuyển màu
-        if (isTransitioning)
-        {
-            timer += Time.deltaTime;
-            float t = Mathf.Clamp01(timer / transitionTime);
-            _light.color = Color.Lerp(startColor, targetColor, t);
-
-            if (t >= 1f)
-                isTransitioning = false;
+            GameManager.Instance.On_onNight += OnNightStart;
+            GameManager.Instance.On_offNight += OnNightEnd;
         }
     }
 
+    void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.On_onNight -= OnNightStart;
+            GameManager.Instance.On_offNight -= OnNightEnd;
+        }
+    }
+
+    // ✅ Khi vào ban đêm
+    private void OnNightStart()
+    {
+        StartTransition(_defaultColor, _nightColor);
+    }
+
+    // ✅ Khi trở lại ban ngày
+    private void OnNightEnd()
+    {
+        StartTransition(_nightColor, _defaultColor);
+    }
+
+    // ✅ Bắt đầu chuyển màu — không cần Update nữa
     private void StartTransition(Color from, Color to)
     {
+        if (isTransitioning) return;
         startColor = from;
         targetColor = to;
         timer = 0f;
         isTransitioning = true;
+        StartCoroutine(DoTransition());
+    }
+
+    private System.Collections.IEnumerator DoTransition()
+    {
+        while (timer < transitionTime)
+        {
+            timer += Time.deltaTime;
+            float t = Mathf.Clamp01(timer / transitionTime);
+            _light.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+
+        _light.color = targetColor;
+        isTransitioning = false;
     }
 }

@@ -17,7 +17,9 @@ public class WeatherAudioManager : MonoBehaviour
     void Update()
     {
         bool newIsSnow = _weather.isSnow;
-        bool newIsNight = GameManager.Instance._timeRTS >= 18 || GameManager.Instance._timeRTS < 6;
+        bool newIsNight = false; 
+        if (GameManager.Instance != null)
+            newIsNight = GameManager.Instance._timeRTS >= 18 || GameManager.Instance._timeRTS < 6;
 
         if (newIsSnow != isSnow || newIsNight != isNight)
         {

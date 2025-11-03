@@ -10,10 +10,12 @@ public class LoadMap : MonoBehaviour
     void Awake()
     {
         bool ok = false;
-        if (SettingManager.Instance._gameSettings._Tutorial)
+        if (SettingManager.Instance != null && SettingManager.Instance._gameSettings._Tutorial)
         {
             Instantiate(TutorialMap, transform.position, Quaternion.identity);
             ok = true;
+            SettingManager.Instance._gameSettings._Tutorial = !ok;
+            SettingManager.Instance.Save();
         }
         else
         {

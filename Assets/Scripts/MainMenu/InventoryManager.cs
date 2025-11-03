@@ -13,6 +13,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject _buttonInventory;
     [SerializeField] private GameObject _buttonStart;
     [SerializeField] private GameObject _buttonMultiplayer;
+    [SerializeField] private GameObject _buttonTutorial;
 
     [SerializeField] private Animator _anim;
 
@@ -103,6 +104,7 @@ public class InventoryManager : MonoBehaviour
             _buttonMultiplayer.SetActive(true);
             _buttonSetting.SetActive(true);
             _buttonStart.SetActive(true);
+            _buttonTutorial.SetActive(true);
             _anim.SetTrigger("exit");
         }
     }

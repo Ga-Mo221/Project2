@@ -965,19 +965,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
-  _Die: 0
-  _MiniMapIcon: {fileID: 7582648135567740800}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 0
+  miniMapIcon: {fileID: 7582648135567740800}
+  outLine: {fileID: 2473123039405155524}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 5070159884121745876}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 2473123039405155524}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 5070159884121745876}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &2820226669578216616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,7 +1031,9 @@ MonoBehaviour:
   _range: 9
   _attackspeed: 6
   _radius: 13
+  _coin: 1
   _Die: 0
+  _typeDie: 0
   critDropGold: 5
   critDropMeat: 10
   MeatDropObj: {fileID: 2498588738947707289}
@@ -1049,18 +1047,15 @@ MonoBehaviour:
   _Detec: 0
   target: {fileID: 0}
   _currentTarget: {fileID: 0}
-  _path: {fileID: 2820226669578216616}
   _GFX: {fileID: 5645205361640903114}
   _HPimg: {fileID: 8157231133731047032}
   _anim: {fileID: 5801490203395602349}
+  _path: {fileID: 2820226669578216616}
+  _rb: {fileID: 0}
   _outLine: {fileID: 2473123039405155524}
   _HPBar: {fileID: 6707131708674553643}
   _MinimapIcon: {fileID: 7582648135567740800}
   _audio: {fileID: 2349103863463546723}
-  _display: {fileID: 234181298573305030}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
   _spriteRender: {fileID: 7159550999280298707}
 --- !u!1 &7582648135567740800
 GameObject:
@@ -1207,6 +1202,22 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.1147056
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2154817
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0003
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.8503
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_SizeDelta.x

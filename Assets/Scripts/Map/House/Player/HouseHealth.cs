@@ -1,7 +1,6 @@
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum HouseType
 {
@@ -23,7 +22,7 @@ public class HouseHealth : MonoBehaviour
     [SerializeField] private BuidingFire _fire;
     [Foldout("Other")]
     [HideIf(nameof(IsCastle))]
-    [SerializeField] private Image _imgLoad;
+    [SerializeField] private SpriteRadialFill _imgLoad;
     [Foldout("Other")]
     [ShowIf(nameof(IsTower))]
     [SerializeField] private GameObject _inPos;
@@ -37,8 +36,8 @@ public class HouseHealth : MonoBehaviour
     [ShowIf(nameof(IsStorage))]
     [SerializeField] private GameObject _inPos3;
     [Foldout("Other")]
-    [HideIf(nameof(IsCastle))]
-    [SerializeField] private Rada _rada;
+    // [HideIf(nameof(IsCastle))]
+    // [SerializeField] private Rada _rada;
     [HideIf(nameof(IsCastle))]
     public House _house;
 
@@ -61,6 +60,8 @@ public class HouseHealth : MonoBehaviour
 
     [Foldout("Other")]
     [SerializeField] private OutLine _outLine;
+    [Foldout("Other")]
+    [SerializeField] private Rada _rada;
 
 
 
@@ -76,7 +77,6 @@ public class HouseHealth : MonoBehaviour
         {
             if (_house == null)
                 _house = GetComponent<House>();
-            _rada.setOn(false);
             _time = _house._createTimeSec;
         }
         else _canDetec = true;
@@ -93,12 +93,12 @@ public class HouseHealth : MonoBehaviour
 
     private void setSkin()
     {
-        int id = 0;
-        if (IsCastle)
+        int id = 1;
+        if (IsCastle && SettingManager.Instance != null)
             id = SettingManager.Instance._gameSettings._currentCastle;
-        if (IsStorage)
+        if (IsStorage && SettingManager.Instance != null)
             id = SettingManager.Instance._gameSettings._currentStorage;
-        if (IsTower)
+        if (IsTower && SettingManager.Instance != null)
             id = SettingManager.Instance._gameSettings._currentTower;
         _anim.SetInteger("TypeUnit", id);
     }
@@ -116,12 +116,12 @@ public class HouseHealth : MonoBehaviour
         if (_time <= 0)
         {
             _anim.SetBool("Idle", false);
-            _rada.setOn(true);
             _light.SetActive(true);
             _imgLoad.fillAmount = 0f; // chắc chắn thanh load về 0
             _canvas.SetActive(false);
             _canCreate.SetActive(false);
             _house._audio.StopCreatingSound();
+            _rada.enabled = true;
             if (IsTower)
             {
                 _ButtonArcherUP.SetActive(true);
@@ -162,11 +162,12 @@ public class HouseHealth : MonoBehaviour
             if (_house._currentHealth <= 0)
             {
                 _house.setDie(true);
-                _rada.setDie(true);
                 _house._currentHealth = 0;
                 CameraShake.Instance.ShakeCamera(0.5f, 0.3f);
                 _anim.SetBool("Die", true);
                 setCanDetec(false);
+                if (_rada != null)
+                    _rada.enabled = false;
                 if (IsTower)
                 {
                     _house._inTower._ArcherUp_Obj.SetActive(false);
@@ -259,8 +260,8 @@ public class HouseHealth : MonoBehaviour
     #region Display Fire Die
     private void fireDie()
     {
-        float currentHealth;
-        float maxHealth;
+        float currentHealth = 0;
+        float maxHealth = 0;
         if (!_canDetec)
         {
             _fire.gameObject.SetActive(false);
@@ -273,8 +274,11 @@ public class HouseHealth : MonoBehaviour
         }
         else
         {
-            currentHealth = Castle.Instance._currentHealth;
-            maxHealth = Castle.Instance._maxHealth;
+            if (Castle.Instance != null)
+            {
+                currentHealth = Castle.Instance._currentHealth;
+                maxHealth = Castle.Instance._maxHealth;
+            }
         }
         if (currentHealth / maxHealth < 0.3)
         {
@@ -289,7 +293,7 @@ public class HouseHealth : MonoBehaviour
             _fire.gameObject.SetActive(false);
             if (!IsCastle)
                 _house._audio.StopFireSound();
-            else
+            else if (Castle.Instance != null)
                 Castle.Instance._audio.StopFireSound();
         }
     }

@@ -1,92 +1,224 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Rada : MonoBehaviour
 {
-    public float _radius = 20f;
-    [SerializeField] private Collider2D[] hits;
-    [SerializeField] private bool _on = true;
-    [SerializeField] private bool _Die = false;
+    [Header("Detection Radii")]
+    [Tooltip("Bán kính hiển thị outline/minimap")]
+    public float displayRadius = 20f;
+    
+    [Tooltip("Bán kính phát hiện chill effect")]
+    public float detectionRadius = 30f;
+
+    [Header("State")]
+    [SerializeField] private bool isActive = true;
+    [SerializeField] private bool isDead = false;
+
+    // Properties for manager
+    public Vector2 Position => transform.position;
+    public float DisplayRadius => displayRadius;
+    public float DetectionRadius => detectionRadius;
+    public bool IsActive => isActive && !isDead;
+    public bool IsDead => isDead;
+
+    // Cached position for optimization
+    private Vector2 lastPosition;
+    private float positionCheckInterval = 0.1f;
+    private float positionCheckTimer = 0f;
+    
+    // Registration flag
+    private bool isRegistered = false;
 
     void Start()
     {
-        InvokeRepeating(nameof(display), 0.2f, 0.2f);
+        RegisterWithManager();
+        lastPosition = transform.position;
+    }
+
+    void OnEnable()
+    {
+        // Đợi 1 frame để đảm bảo DetectionManager đã sẵn sàng
+        if (Application.isPlaying && !isRegistered)
+        {
+            Invoke(nameof(RegisterWithManager), 0.1f);
+        }
+        
+        lastPosition = transform.position;
     }
 
     void OnDisable()
     {
-        CleanupSeemer();
+        UnregisterFromManager();
     }
 
     void OnDestroy()
     {
-        CleanupSeemer();
+        UnregisterFromManager();
     }
 
-    private void CleanupSeemer()
+    private void RegisterWithManager()
     {
-        if (hits == null) return;
-
-        foreach (var hit in hits)
+        if (isRegistered) return;
+        
+        if (DetectionManager.Instance != null)
         {
-            if (hit == null) continue; // collider đã destroy thì bỏ qua
-            if (!checkTag(hit)) continue;
+            DetectionManager.Instance.RegisterRadar(this);
+            isRegistered = true;
+            //Debug.Log($"[Rada] {gameObject.name} registered successfully");
+        }
+        else
+        {
+            Debug.LogWarning($"[Rada] {gameObject.name} - DetectionManager not found! Retrying...");
+            // Thử lại sau 0.5s
+            Invoke(nameof(RegisterWithManager), 0.5f);
+        }
+    }
 
-            var script = hit.GetComponent<Display>();
-            if (script == null) continue;
+    private void UnregisterFromManager()
+    {
+        if (!isRegistered) return;
+        
+        if (DetectionManager.Instance != null)
+        {
+            DetectionManager.Instance.UnregisterRadar(this);
+            isRegistered = false;
+            Debug.Log($"[Rada] {gameObject.name} unregistered");
+        }
+    }
 
-            if (script.checkSeemer(this))
+    void Update()
+    {
+        // Đảm bảo đã đăng ký
+        if (!isRegistered && DetectionManager.Instance != null)
+        {
+            RegisterWithManager();
+        }
+
+        // Chỉ check position thay đổi mỗi 0.1s
+        positionCheckTimer += Time.deltaTime;
+        if (positionCheckTimer >= positionCheckInterval)
+        {
+            positionCheckTimer = 0f;
+            
+            Vector2 currentPos = transform.position;
+            if (Vector2.Distance(currentPos, lastPosition) > 0.1f)
             {
-                script.removeSeemer(this);
+                lastPosition = currentPos;
             }
         }
     }
 
-
-    private void display()
+    public void SetActive(bool active)
     {
-        if (!_on) return;
-        hits = Physics2D.OverlapCircleAll(transform.position, _radius + 3);
-
-        foreach (var hit in hits)
-        {
-            if (!checkTag(hit)) continue;
-
-            var script = hit.GetComponent<Display>();
-            if (script == null) continue;
-
-            float dist = Vector2.Distance(transform.position, hit.transform.position);
-            bool isSeeing = script.checkSeemer(this);
-
-            if (dist < _radius)
-            {
-                if (!isSeeing)
-                    script.addSeemer(this);
-            }
-            else
-            {
-                if (isSeeing)
-                {
-                    script.removeSeemer(this);
-                }
-            }
-        }
+        isActive = active;
+        Debug.Log($"[Rada] {gameObject.name} active state: {isActive}");
     }
-
-    private bool checkTag(Collider2D hit)
+    
+    public void SetDead(bool dead)
     {
-        List<string> tags = new List<string> { "Item+", "Animal", "Enemy", "Buiding", "Deco", "EnemyHouse" };
-        return tags.Contains(hit.tag);
+        isDead = dead;
+        if (isDead)
+        {
+            Debug.Log($"[Rada] {gameObject.name} is now dead");
+        }
     }
 
     void OnDrawGizmosSelected()
     {
+        // Display radius (đỏ)
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _radius);
+        Gizmos.DrawWireSphere(transform.position, displayRadius);
+
+        // Detection radius (xanh)
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
-
-    public void setOn(bool amount) => _on = amount;
-
-    public void setDie(bool amount) => _Die = amount;
-    public bool getDie() => _Die;
 }
+
+// using UnityEngine;
+
+// public class Rada : MonoBehaviour
+// {
+//     [Header("Detection Radii")]
+//     [Tooltip("Bán kính hiển thị outline/minimap")]
+//     public float displayRadius = 20f;
+    
+//     [Tooltip("Bán kính phát hiện chill effect")]
+//     public float detectionRadius = 30f;
+
+//     [Header("State")]
+//     [SerializeField] private bool isActive = true;
+//     [SerializeField] private bool isDead = false;
+
+//     // Properties for manager
+//     public Vector2 Position => transform.position;
+//     public float DisplayRadius => displayRadius;
+//     public float DetectionRadius => detectionRadius;
+//     public bool IsActive => isActive && !isDead;
+//     public bool IsDead => isDead;
+
+//     // Cached position for optimization
+//     private Vector2 lastPosition;
+//     private float positionCheckInterval = 0.1f;
+//     private float positionCheckTimer = 0f;
+
+//     void Start()
+//     {
+//         // Đăng ký với manager
+//         if (DetectionManager.Instance != null)
+//         {
+//             DetectionManager.Instance.RegisterRadar(this);
+//         }
+        
+//         lastPosition = transform.position;
+//     }
+
+//     void OnEnable()
+//     {
+//         // Đăng ký với manager
+//         if (DetectionManager.Instance != null)
+//         {
+//             DetectionManager.Instance.RegisterRadar(this);
+//         }
+        
+//         lastPosition = transform.position;
+//     }
+
+//     void OnDisable()
+//     {
+//         // Hủy đăng ký
+//         if (DetectionManager.Instance != null)
+//         {
+//             DetectionManager.Instance.UnregisterRadar(this);
+//         }
+//     }
+
+//     void Update()
+//     {
+//         // Chỉ check position thay đổi mỗi 0.1s
+//         positionCheckTimer += Time.deltaTime;
+//         if (positionCheckTimer >= positionCheckInterval)
+//         {
+//             positionCheckTimer = 0f;
+            
+//             Vector2 currentPos = transform.position;
+//             if (Vector2.Distance(currentPos, lastPosition) > 0.1f)
+//             {
+//                 lastPosition = currentPos;
+//             }
+//         }
+//     }
+
+//     public void SetActive(bool active) => isActive = active;
+//     public void SetDead(bool dead) => isDead = dead;
+
+//     void OnDrawGizmosSelected()
+//     {
+//         // Display radius (đỏ)
+//         Gizmos.color = Color.red;
+//         Gizmos.DrawWireSphere(transform.position, displayRadius);
+
+//         // Detection radius (xanh)
+//         Gizmos.color = Color.green;
+//         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+//     }
+// }

@@ -36,6 +36,7 @@ public class CheckGroundCreate : MonoBehaviour
 
     [SerializeField] private bool _canCreate = true;
     [SerializeField] private BuidingFire _fire;
+    [SerializeField] private Display _display;
     public bool _see = false;
     private Camera _cam;
     private GameObject _selectedObj;
@@ -43,7 +44,7 @@ public class CheckGroundCreate : MonoBehaviour
 
     void Start()
     {
-        _cam = Camera.main;
+        _cam = CameraInfo.Instance.cameraMain;
         if (!_anim)
             Debug.LogError($"[{transform.parent.name}] [CheckGroundCreate] Chưa gán 'Animator'");
         if (!_houshealth)
@@ -99,6 +100,11 @@ public class CheckGroundCreate : MonoBehaviour
 
     void Update()
     {
+        if (_display != null)
+            _see = _display.checkDetec();
+
+        _anim.SetBool("Red", !(_see && _canCreate));
+
         // Nhấn chuột trái
         if (Input.GetMouseButtonDown(0))
         {
@@ -136,7 +142,6 @@ public class CheckGroundCreate : MonoBehaviour
     {
         if (collision == null) return;
         if (collision.CompareTag("Buiding")) return;
-        _anim.SetBool("Red", true);
         _canCreate = false;
     }
 
@@ -144,7 +149,6 @@ public class CheckGroundCreate : MonoBehaviour
     {
         if (collision == null) return;
         if (collision.CompareTag("Buiding")) return;
-        _anim.SetBool("Red", true);
         _canCreate = false;
     }
 
@@ -152,7 +156,6 @@ public class CheckGroundCreate : MonoBehaviour
     {
         if (collision == null) return;
         if (collision.CompareTag("Buiding")) return;
-        _anim.SetBool("Red", false);
         _canCreate = true;
     }
 
@@ -200,6 +203,7 @@ public class CheckGroundCreate : MonoBehaviour
             GameManager.Instance.setCanBuy(true);
             gameObject.SetActive(false);
             _houshealth.PlayCreatingSound();
+            CursorManager.Instance.ChoseUI = false;
 
             if (GameManager.Instance.Tutorial && TutorialSetUp.Instance.ID == 2)
             {
@@ -216,6 +220,7 @@ public class CheckGroundCreate : MonoBehaviour
         }
         
         GameManager.Instance.setCanBuy(true);
+        CursorManager.Instance.ChoseUI = false;
         Destroy(transform.parent.gameObject);
     }
 

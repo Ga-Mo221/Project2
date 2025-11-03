@@ -110,7 +110,7 @@ public class DropItem : MonoBehaviour
             if (_enemyAI.getDie())
             {
                 _animEnemy.SetTrigger("PickUp");
-                Debug.Log("nhat thanh cong");
+                _enemyAI.setTypeDie(3);
             }
             gameObject.SetActive(false);
         }

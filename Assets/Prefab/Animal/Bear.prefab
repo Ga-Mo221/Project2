@@ -746,19 +746,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
-  _Die: 0
-  _MiniMapIcon: {fileID: 4473457145054236802}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 3
+  miniMapIcon: {fileID: 4473457145054236802}
+  outLine: {fileID: 3762215744532196183}
   _light: {fileID: 0}
-  _animal: {fileID: 8550984485975556114}
-  _enemy: {fileID: 0}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 3762215744532196183}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 8550984485975556114}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &6308543700104369663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,19 +850,17 @@ MonoBehaviour:
   _canPatrol: 1
   _canAction: 0
   detec: 0
+  _respawning: 0
   _gfx: {fileID: 1664460665962412873}
   _HPCanvas: {fileID: 5251481799950296449}
   _OutLine: {fileID: 3762215744532196183}
   _hpBar: {fileID: 7260304389476357330}
   _MiniMapIcon: {fileID: 4473457145054236802}
-  _centerTransform: {fileID: 897440408711027409}
+  _centerPatrol: {x: 0, y: 0}
   _anim: {fileID: 4841031992915369599}
   _MeatOBJ: {fileID: 8377702842049377160}
   _audio: {fileID: 1597863159944926104}
-  _display: {fileID: 5512425815357841558}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
+  _rb: {fileID: 0}
   _spriteRender: {fileID: 7228588684794360364}
 --- !u!1001 &2528697040011173032
 PrefabInstance:
@@ -883,6 +877,10 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.077
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.076
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x

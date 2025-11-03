@@ -163,16 +163,22 @@ public class EnemyHuoseController : MonoBehaviour
         {
             if (!IsCastle)
             {
-                Collider2D[] Hits = Physics2D.OverlapCircleAll(transform.position, _assistRadius);
-                foreach (var hit in Hits)
+                foreach (var hit in EnemyHouse.Instance._listPatrol)
                 {
+                    float dist = Vector2.Distance(transform.position, hit.transform.position);
+                    if (dist > _assistRadius) continue;
                     var enemyPatrol = hit.GetComponent<EnemyPatrol>();
+                    int count = 0;
                     if (enemyPatrol != null)
                         foreach (var enemy in EnemyHouse.Instance._listEnemy)
-                            if (enemy.getPatrol() == enemyPatrol)
+                            if (enemy.getPatrol() == enemyPatrol && count < 3)
                             {
-                                enemy.setTarget(gameObject);
+                                count++;
+                                enemy.transform.parent.GetComponent<FindPath>().enabled = true;
+                                enemy.gameObject.SetActive(true);
+                                enemy.setTarget(gameObject, false);
                                 _enemyAssitList.Add(enemy);
+                                Debug.Log($"<color=#FF4444>[Warning]</color> [{enemy.transform.name}] đã điều động đến [{transform.name}]", enemy);
                             }
                 }
             }

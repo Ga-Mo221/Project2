@@ -53,6 +53,8 @@ public class OutLine : MonoBehaviour
     public float fade = 0.5f;
     [ShowIf(nameof(_IsTree))]
     public float seeThroughAlpha = 0.1f; // 0 = trong suốt, 1 = bình thường
+    [ShowIf(nameof(_IsTree))]
+    [SerializeField] private GameObject _treeRada;
 
     private bool _isHovering = false;
 
@@ -68,16 +70,19 @@ public class OutLine : MonoBehaviour
         _startMaterial = _normalMaterial;
         _normalMaterial = Instantiate(_normalMaterial);
         _spriteRender.GetComponent<SpriteRenderer>().material = _normalMaterial;
+        if (_treeRada != null)
+            _treeRada.SetActive(true);
     }
     #endregion
 
     public void setPlayer(Transform target) => player = target;
 
-
     #region Update
     void Update()
     {
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseWorldPos = Vector2.zero;
+        if (CameraInfo.Instance != null)
+            mouseWorldPos = CameraInfo.Instance.cameraMain.ScreenToWorldPoint(Input.mousePosition);
 
         if (_collider.OverlapPoint(mouseWorldPos))
         {
@@ -97,7 +102,6 @@ public class OutLine : MonoBehaviour
 
             if (_type == NodeType.Tree && player != null)
             {
-
                 _normalMaterial.SetVector("_PlayerPos", player.position);
                 _normalMaterial.SetFloat("_Radius", radius);
                 _normalMaterial.SetFloat("_Fade", fade);
@@ -113,7 +117,7 @@ public class OutLine : MonoBehaviour
         }
 
         if (!_isHovering) return;
-        if (GameManager.Instance.getCanOpenWindown())
+        if (GameManager.Instance != null && GameManager.Instance.getCanOpenWindown())
         {
             CastleClick();
             clickOther();
@@ -135,7 +139,8 @@ public class OutLine : MonoBehaviour
         }
 
         _spriteRender.material = _outLineMateral;
-        CursorManager.Instance.SetSelectCursor(transform.parent.gameObject);
+        if (CursorManager.Instance != null)
+            CursorManager.Instance.SetSelectCursor(transform.parent.gameObject);
     }
     #endregion
 
@@ -145,7 +150,8 @@ public class OutLine : MonoBehaviour
     {
         if (_spriteRender.enabled == false) return;
         _spriteRender.material = _normalMaterial;
-        CursorManager.Instance.SetNormalCursor();
+        if (CursorManager.Instance != null)
+            CursorManager.Instance.SetNormalCursor();
     }
     #endregion
 
@@ -225,13 +231,13 @@ public class OutLine : MonoBehaviour
         }
     }
 
-    public void Out()
+    public void Out(bool amount = false)
     {
         ResetMaterial();
         player = null;
         if (_IsTree)
             _spriteRender.material = _startMaterial;
-        gameObject.SetActive(false);
+        gameObject.SetActive(amount);
     }
 
 }

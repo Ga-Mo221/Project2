@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using NaughtyAttributes;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 
 public class PlayerAI : MonoBehaviour
 {
@@ -23,7 +20,9 @@ public class PlayerAI : MonoBehaviour
     [Foldout("Stats")]
     public float _health; // máu
     [Foldout("Stats")]
-    public float _damage = 10; // sát thương
+    [SerializeField] private float _damage = 10; // sát thương
+    [Foldout("Stats")]
+    [SerializeField] private float _bounusDamage = 1f; // sát thương
     [Foldout("Stats")]
     public float _maxSpeed = 6f; // tốc độ tối đa
     [Foldout("Stats")]
@@ -31,6 +30,8 @@ public class PlayerAI : MonoBehaviour
     [HideIf(nameof(IsTNT))]
     [Foldout("Stats")]
     public float _attackSpeedd = 2.5f; // thời gian sau mỗi đồn đánh.
+    [Foldout("Stats")]
+    [SerializeField] private float _bounus_Attack_Speed = 1f; // giảm thời gian đánh của mỗi đòn đi.
     [Foldout("Stats")]
     public int _slot = 1;
     [Foldout("Stats")]
@@ -91,8 +92,8 @@ public class PlayerAI : MonoBehaviour
 
     [Foldout("Other")]
     [SerializeField] private UnitAudio _audio;
-    [Foldout("Other")]
-    [SerializeField] private Rada _rada;
+    // [Foldout("Other")]
+    // [SerializeField] private Rada _rada;
     [Foldout("Other")]
     [Header("Component")]
     public Animator _anim; // animation của đối tượng
@@ -168,8 +169,16 @@ public class PlayerAI : MonoBehaviour
     private Rigidbody2D _rb;
 
     private Collider2D[] hits;
+    private PlayerHealth _playerHealth;
 
     #endregion
+
+    void Awake()
+    {
+        _playerHealth = GetComponent<PlayerHealth>();
+        if (_playerHealth == null)
+            Debug.LogWarning($"[{transform.name}] Không lấy được PlayerHealth", this);
+    }
 
 
 
@@ -363,6 +372,8 @@ public class PlayerAI : MonoBehaviour
         _canUpdateHP = true;
         _level = 1;
         _health = _maxHealth;
+        _bounusDamage = 1f;
+        _bounus_Attack_Speed = 1f;
         _rock = 0;
         _gold = 0;
         _meat = 0;
@@ -399,11 +410,10 @@ public class PlayerAI : MonoBehaviour
         _MiniMapIcon.SetActive(true);
         _OutLine.SetActive(true);
         _GFX.SetActive(true);
-        _HPCanvas.SetActive(true);
+        _HPCanvas.SetActive(false);
         if (!IsHealerOrTNT)
             _healEffect.SetActive(false);
         _selet.SetActive(false);
-        _rada.setDie(false);
 
         if (_cor_NewlySpawned != null)
             StopCoroutine(_cor_NewlySpawned);
@@ -418,7 +428,6 @@ public class PlayerAI : MonoBehaviour
     #region Dead
     public void Dead()
     {
-        _rada.setDie(true);
         path.setDie(true);
         setTarget(transform.position, true);
         resetItemSelect();
@@ -622,8 +631,9 @@ public class PlayerAI : MonoBehaviour
 
         if (gameObject.activeInHierarchy)
             _cor_Attacking = StartCoroutine(reset_isAttacking());
-
-        yield return new WaitForSeconds(_attackSpeedd);
+        float delay = _attackSpeedd / _bounus_Attack_Speed;
+        if (delay < 1.3) delay = 1.3f;
+        yield return new WaitForSeconds(delay);
         _attackSpeed = null;
     }
     #endregion
@@ -963,6 +973,15 @@ public class PlayerAI : MonoBehaviour
     #endregion
 
 
+    #region Heal Effect
+    public void Health(int value)
+    {
+        _health += value;
+        _playerHealth.HideHP_Cor();
+    }
+    #endregion
+
+
     #region  Get Player Priority
     public float GetPlayerPriority()
     {
@@ -1073,26 +1092,43 @@ public class PlayerAI : MonoBehaviour
         setTarget(target.transform.position, false);
     }
 
+    // damage
+    public float getDamage() => _damage * _bounusDamage;
+    public void setDamage(float value) => _damage = value;
+    public void setBounusDamage(float value) => _bounusDamage = value;
+
+    // attack Speed
+    public float getBounusAttackSpeed() => _bounus_Attack_Speed;
+    public void setBounusAttackSpeed(float value)
+    {
+        if (IsTNT) return;
+        _bounus_Attack_Speed = value;
+        _anim.SetFloat("AttackSpeed", 1 * value);
+    }
+
     public void SetSkin()
     {
-        int id = 0;
-        switch (_unitClass)
+        int id = 1;
+        if (SettingManager.Instance != null)
         {
-            case UnitType.Warrior:
-                id = SettingManager.Instance._gameSettings._currentWarrior;
-                break;
-            case UnitType.Archer:
-                id = SettingManager.Instance._gameSettings._currentArcher;
-                break;
-            case UnitType.Lancer:
-                id = SettingManager.Instance._gameSettings._currentLancer;
-                break;
-            case UnitType.Healer:
-                id = SettingManager.Instance._gameSettings._currentHealer;
-                break;
-            case UnitType.TNT:
-                id = SettingManager.Instance._gameSettings._currentTNT;
-                break;
+            switch (_unitClass)
+            {
+                case UnitType.Warrior:
+                    id = SettingManager.Instance._gameSettings._currentWarrior;
+                    break;
+                case UnitType.Archer:
+                    id = SettingManager.Instance._gameSettings._currentArcher;
+                    break;
+                case UnitType.Lancer:
+                    id = SettingManager.Instance._gameSettings._currentLancer;
+                    break;
+                case UnitType.Healer:
+                    id = SettingManager.Instance._gameSettings._currentHealer;
+                    break;
+                case UnitType.TNT:
+                    id = SettingManager.Instance._gameSettings._currentTNT;
+                    break;
+            }
         }
         _anim.SetInteger("TypeUnit", id);
     }

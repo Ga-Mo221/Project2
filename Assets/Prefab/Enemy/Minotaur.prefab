@@ -375,19 +375,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
-  _Die: 0
-  _MiniMapIcon: {fileID: 3814148309622223578}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 0
+  miniMapIcon: {fileID: 3814148309622223578}
+  outLine: {fileID: 3488690456950136520}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 4904664617741834541}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 3488690456950136520}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 4904664617741834541}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &8722014607091077051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,7 +441,9 @@ MonoBehaviour:
   _range: 4.5
   _attackspeed: 6
   _radius: 13
+  _coin: 1
   _Die: 0
+  _typeDie: 0
   critDropGold: 5
   critDropMeat: 5
   MeatDropObj: {fileID: 4351506826751174570}
@@ -459,18 +457,15 @@ MonoBehaviour:
   _Detec: 0
   target: {fileID: 0}
   _currentTarget: {fileID: 0}
-  _path: {fileID: 8722014607091077051}
   _GFX: {fileID: 3383233013237360834}
   _HPimg: {fileID: 3649413546411142767}
   _anim: {fileID: 3718300335381008067}
+  _path: {fileID: 8722014607091077051}
+  _rb: {fileID: 0}
   _outLine: {fileID: 3488690456950136520}
   _HPBar: {fileID: 2199332181708398396}
   _MinimapIcon: {fileID: 3814148309622223578}
   _audio: {fileID: 2879357650664050859}
-  _display: {fileID: 7532318715208445112}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
   _spriteRender: {fileID: 7094314309141008626}
 --- !u!1 &3383233013237360834
 GameObject:
@@ -1486,6 +1481,22 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.099248
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3294267
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0009
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.6288
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_SizeDelta.x

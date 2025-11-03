@@ -97,7 +97,7 @@ public class FindPath : MonoBehaviour
     #region Pathfinding
     public void UpdatePath()
     {
-        if (_seeker.IsDone())
+        if (_seeker != null && _seeker.IsDone())
             _seeker.StartPath(_rb.position, _target, OnPathComplete);
     }
 

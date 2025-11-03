@@ -26,7 +26,8 @@ public class EnemyHouse : MonoBehaviour
     #region Update
     void Update()
     {
-        if (GameManager.Instance._timeRTS == _currentSTRTime
+        if (GameManager.Instance != null
+            && GameManager.Instance._timeRTS == _currentSTRTime
             && GameManager.Instance._currentDay != _currentDay)
         {
             _currentDay = GameManager.Instance._currentDay;
@@ -83,10 +84,7 @@ public class EnemyHouse : MonoBehaviour
         foreach (var enemy in _listEnemy)
         {
             if (enemy.getDie())
-            {
                 enemy.respawn(getMinDirection(enemy), false);
-                enemy.gameObject.SetActive(true);
-            }
         }
     }
     #endregion
@@ -100,6 +98,8 @@ public class EnemyHouse : MonoBehaviour
         float minDist = Mathf.Infinity;
         foreach (var point in _listSpawnPoint)
         {
+            if (point == null) continue;
+            if (_patrol == null) continue;
             float dist = Vector3.Distance(point.position, _patrol.transform.position);
             if (dist < minDist)
             {
@@ -113,25 +113,31 @@ public class EnemyHouse : MonoBehaviour
 
 
     #region get War Pos
-    public Transform getWarPos()
+    public List<Transform> getWarPos()
     {
         Vector3 castlePos = Castle.Instance.transform.position;
-        Transform pos = transform;
-        float minDist = Mathf.Infinity;
+
+        // Tạo danh sách tạm chứa các điểm spawn còn sống
+        List<Transform> validPoints = new List<Transform>();
         foreach (var point in _listSpawnPoint)
         {
             var _script = point.GetComponent<EnemyHuoseController>();
-            if (!_script.getDie())
+            if (_script != null && !_script.getDie())
             {
-                float dist = Vector3.Distance(point.position, castlePos);
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    pos = point;
-                }
+                validPoints.Add(point);
             }
         }
-        return pos;
+
+        // Sắp xếp danh sách theo khoảng cách đến lâu đài (Castle)
+        validPoints.Sort((a, b) =>
+        {
+            float distA = Vector3.Distance(a.position, castlePos);
+            float distB = Vector3.Distance(b.position, castlePos);
+            return distA.CompareTo(distB); // <0 nếu A gần hơn B
+        });
+
+        validPoints.Add(transform);
+        return validPoints;
     }
     #endregion
 }

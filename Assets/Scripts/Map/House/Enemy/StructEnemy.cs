@@ -19,7 +19,9 @@ public class Wave
 [System.Serializable]
 public class War
 {
+    public string _name;
     public int _startDay;
     public int _endDay;
+    public int _spawnIndex = -1; // -1 = auto, 0+ = chỉ định cụ thể
     public List<Wave> _listWave;
 }

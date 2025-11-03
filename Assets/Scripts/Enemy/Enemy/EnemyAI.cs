@@ -1,7 +1,6 @@
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -30,6 +29,8 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Die")]
     [SerializeField] private bool _Die = false;
     [Foldout("Die")]
+    [SerializeField] private int _typeDie = 0;
+    [Foldout("Die")]
     [HideIf(nameof(IsTNTRed))]
     [Range(0, 100)][SerializeField] private int critDropGold = 25;
     [Foldout("Die")]
@@ -42,6 +43,8 @@ public class EnemyAI : MonoBehaviour
     [HideIf(nameof(IsTNTRed))]
     [SerializeField] private DropItem GoldDropObj; // respawn thi tat
 
+    [Foldout("Patrol")]
+    public bool _inPatrol = true;
     [Foldout("Patrol")]
     [SerializeField] private bool _canPatrol = true;
     [Foldout("Patrol")]
@@ -63,13 +66,16 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] GameObject _currentTarget;
 
     [Foldout("Componet")]
-    [SerializeField] private FindPath _path;
-    [Foldout("Componet")]
     [SerializeField] private GameObject _GFX;
     [Foldout("Componet")]
     [SerializeField] private HPBar _HPimg;
     [Foldout("Componet")]
     [SerializeField] private Animator _anim;
+    [Foldout("Componet")]
+    [SerializeField] private FindPath _path;
+    [Foldout("Componet")]
+    [SerializeField] private Rigidbody2D _rb;
+
 
     [Foldout("Other")]
     [SerializeField] private GameObject _outLine;
@@ -80,23 +86,19 @@ public class EnemyAI : MonoBehaviour
     [Foldout("Other")]
     [SerializeField] private UnitAudio _audio;
     [Foldout("Other")]
-    [SerializeField] private Display _display;
-
-    [Foldout("Update Time")]
-    [SerializeField] private float visibleUpdateRate = 0.3f;
-    [Foldout("Update Time")]
-    [SerializeField] private float invisibleUpdateRate = 0.8f;
-    [Foldout("Update Time")]
-    [SerializeField] private float _Rate;
+    [SerializeField] private IsDetecOBJ _isDectec;
 
     private Vector3 _originPos;
 
-    private Rigidbody2D _rb;
 
     void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
+            _rb = GetComponent<Rigidbody2D>();
         _originPos = transform.position;
+
+        if (_isDectec == null)
+            _isDectec = transform.parent.GetComponent<IsDetecOBJ>();
     }
 
     void Start()
@@ -106,23 +108,21 @@ public class EnemyAI : MonoBehaviour
 
         _path.setPropety(_speed, _range);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
-        //_Rate = invisibleUpdateRate + Random.Range(0f, visibleUpdateRate);
-        _Rate = visibleUpdateRate;
-        InvokeRepeating(nameof(AI), 0f, _Rate);
 
-        if (!_IsCreate)
-            EnemyHouse.Instance._listEnemy.Add(this);
-        else
-            EnemyHouse.Instance._listEnemyCreate.Add(this);
+        InvokeRepeating(nameof(AI), 0f, 0.2f);
+    }
+
+    void OnEnable()
+    {
+        _attackSpawn = null;
+        _newPaltro = null;
+        _anim.SetBool("Die", _Die);
+        if (!IsTNTRed)
+            _anim.SetInteger("Type", _typeDie);
     }
 
     protected virtual void AI()
     {
-        if (_display._Detec)
-            _Rate = visibleUpdateRate;
-        else
-            _Rate = invisibleUpdateRate + Random.Range(0f, visibleUpdateRate);
-
         flip(target);
         if (getDie()) return;
         target = Find();
@@ -143,6 +143,12 @@ public class EnemyAI : MonoBehaviour
     #region Create Path
     private void UpdatePath()
     {
+        if (_currentTarget != null)
+        {
+            float dist = Vector2.Distance(transform.position, _currentTarget.transform.position);
+            if (dist < 5) _currentTarget = null;
+        }
+
         if (_path._seeker.IsDone())
         {
             if (target != null || _currentTarget != null)
@@ -200,12 +206,14 @@ public class EnemyAI : MonoBehaviour
     #region Respawn
     public void respawn(Vector3 pos, bool war = true)
     {
+        if (_isDectec != null) _isDectec.isChillActive = false;
         _canUpdateHP = true;
         _path.setDie(false);
         _path.setCanMove(true);
-        if (war)
-            transform.position = pos;
-        else transform.position = _originPos;
+        Vector3 SpawnPoint = pos;
+        if (!war) SpawnPoint = _originPos;
+        transform.parent.position = SpawnPoint;
+        Debug.Log($"[{transform.name}] <color=#FF4444>[Respawn]</color> Spawn Point [{transform.position}] Origin Point [{_originPos}] War [{war}]", this);
         setCanPatrol(true);
         if (!IsTNTRed)
         {
@@ -224,11 +232,11 @@ public class EnemyAI : MonoBehaviour
 
 
     #region Set Target
-    public void setTarget(GameObject obj)
+    public void setTarget(GameObject obj, bool amount = true)
     {
         target = obj;
         _currentTarget = obj;
-        setCanPatrol(false);
+        setCanPatrol(!amount);
     }
     public void resetCurrentTarget() => _currentTarget = null;
     #endregion
@@ -249,11 +257,20 @@ public class EnemyAI : MonoBehaviour
         {
             int roll = Random.Range(0, 100);
             if (roll >= 100 - critDropGold)
-                _anim.SetInteger("Type", 1);
+            {
+                _typeDie = 1;
+                _anim.SetInteger("Type", _typeDie);
+            }
             else if (roll >= 100 - critDropGold - critDropMeat)
-                _anim.SetInteger("Type", 2);
+            {
+                _typeDie = 2;
+                _anim.SetInteger("Type", _typeDie);
+            }
             else
-                _anim.SetInteger("Type", 3);
+            {
+                _typeDie = 3;
+                _anim.SetInteger("Type", _typeDie);
+            }
         }
         else
         {
@@ -269,23 +286,39 @@ public class EnemyAI : MonoBehaviour
 
     #region Pantrol
     private Coroutine _newPaltro;
+    private bool _lastInPatrol = true;
     public void pantrol()
     {
         if (!_canPatrol) return;
+
+        if (_patrol != null && _isDectec != null)
+        {
+            float dist = Vector2.Distance(transform.position, _patrol.transform.position);
+            _inPatrol = dist < _patrol.getRadius();
+            if (_inPatrol != _lastInPatrol)
+            {
+                _lastInPatrol = _inPatrol;
+                if (_inPatrol)
+                    _isDectec.UpdateChillEffect(_inPatrol);
+            }
+        }
+
         if (target != null) return;
-        if (_patrol == null)
+        if (_patrol == null && EnemyHouse.Instance != null)
             _patrol = EnemyHouse.Instance.getTargetPatrol(this);
 
-        if (_patrol != null)
+        if (_patrol != null&& _newPaltro == null)
         {
-            if (_path.getTargetPos() == _path.getTarget() && _newPaltro == null)
-                _newPaltro = StartCoroutine(setTargetPatrol());
+            if (_path.getTargetPos() == _path.getTarget())
+                if (gameObject.activeInHierarchy)
+                    _newPaltro = StartCoroutine(setTargetPatrol());
         }
     }
     private IEnumerator setTargetPatrol()
     {
         yield return new WaitForSeconds(_changeTargetPatrolDelay);
         Vector3 _point = _patrol.GetRandomPoint();
+        Debug.Log($"[{transform.name}] <color=green>Patrol Point</color> [{_point}]", this);
         _path.setTarget(_point, target);
         _newPaltro = null;
     }
@@ -347,24 +380,26 @@ public class EnemyAI : MonoBehaviour
         {
             if (target == Castle.Instance.gameObject)
             {
-                dist = Vector3.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
+                dist = Vector2.Distance(transform.position, Castle.Instance._In_Castle_Pos.position);
             }
             else
             {
                 var house = target.GetComponent<House>();
                 if (house._type == HouseType.Tower)
-                    dist = Vector3.Distance(house._inTower.transform.position, target.transform.position);
+                    dist = Vector2.Distance(house._inTower.transform.position, target.transform.position);
                 else if (house._type == HouseType.Storage)
-                    dist = Vector3.Distance(house.getInPos(), target.transform.position);
+                    dist = Vector2.Distance(house.getInPos(), target.transform.position);
             }
         }
-        else dist = Vector3.Distance(transform.position, target.transform.position);
-        if (dist <= _range)
+        else dist = Vector2.Distance(transform.position, target.transform.position);
+        //Debug.Log($"[{transform.name}] Attack dist = {dist}, range = {_range}");
+        if (dist <= _range && _attackSpawn == null)
         {
+            //Debug.Log("In Range");
             _canAction = true;
-            if (_attackSpawn == null)
-                if (gameObject.activeInHierarchy)
-                    _attackSpawn = StartCoroutine(attackSpawn(_attackspeed));
+            Debug.Log($"[{transform.name}] <color=#FF4444>[Attack]</color>", this);
+            if (gameObject.activeInHierarchy)
+                _attackSpawn = StartCoroutine(attackSpawn(_attackspeed));
         }
         else _canAction = false;
     }
@@ -376,7 +411,6 @@ public class EnemyAI : MonoBehaviour
             if (target.CompareTag("House") || PlayerTag.checkTag(target.tag))
             {
                 GameManager.Instance.War();
-                Debug.Log("player");
             }
         }
         yield return new WaitForSeconds(delay);
@@ -436,6 +470,9 @@ public class EnemyAI : MonoBehaviour
 
     // path can move
     public void setCanMove(bool amount) => _path.setCanMove(amount);
+
+    // Type Die
+    public void setTypeDie(int value) => _typeDie = value;
     #endregion
 
     #region Draw
@@ -454,17 +491,13 @@ public class EnemyAI : MonoBehaviour
     #region Play Sound Die
     public void playDieSound()
     {
-        if (_display._Detec)
-            _audio.PlayDieSound();
+        _audio.PlayDieSound();
     }
     #endregion
     #region Play Sound Attack
     public void playAttackSoundEnemy()
     {
-        if (_display._Detec)
-        {
-            _audio.PlayAttackSound();
-        }
+        _audio.PlayAttackSound();
     }
     #endregion
 }

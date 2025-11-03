@@ -160,7 +160,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 2
   m_SortingOrder: 10
   m_Sprite: {fileID: -855298285791758126, guid: 0cea0b2aeec040a45afbdf8e5929f2f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -273,7 +273,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -942469059
-  m_SortingLayer: 5
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c7ef5f7d348aec84192de7f93995cf30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -334,14 +334,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 3
-  _MiniMapIcon: {fileID: 0}
-  _HpBar: {fileID: 0}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 6
+  miniMapIcon: {fileID: 0}
+  outLine: {fileID: 0}
   _light: {fileID: 1054420792913474272}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 0}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &4799999308616923232
 MonoBehaviour:
   m_ObjectHideFlags: 0

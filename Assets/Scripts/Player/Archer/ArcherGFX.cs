@@ -139,11 +139,11 @@ public class ArcherGFX : PlayerAI
                 var _script = arrow.GetComponent<Arrow>();
                 if (_attackCount == _attack_count_SKILL)
                 {
-                    _script.setTarget(true, this, true, _damage, 0, transform.localScale);
+                    _script.setTarget(true, this, true, getDamage(), 0, transform.localScale);
                     _attackCount = 0;
                 }
                 else
-                    _script.setTarget(true, this, false, _damage, 0, transform.localScale);
+                    _script.setTarget(true, this, false, getDamage(), 0, transform.localScale);
 
                 arrow.transform.position = _shootPos.position;
                 arrow.SetActive(true);
@@ -159,11 +159,11 @@ public class ArcherGFX : PlayerAI
             var _script = _arrow.GetComponent<Arrow>();
             if (_attackCount == _attack_count_SKILL)
             {
-                _script.setTarget(true, this, true, _damage, 0, transform.localScale);
+                _script.setTarget(true, this, true, getDamage(), 0, transform.localScale);
                 _attackCount = 0;
             }
             else
-                _script.setTarget(true, this, false, _damage, 0, transform.localScale);
+                _script.setTarget(true, this, false, getDamage(), 0, transform.localScale);
         }
     }
 }

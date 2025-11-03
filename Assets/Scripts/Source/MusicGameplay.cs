@@ -16,7 +16,6 @@ public class MusicGameplay : MonoBehaviour
 
     public void PlayWarSound()
     {
-        Debug.Log("Play War sound");
         if (_audio.checkPlayingWarSound())
         {
             StopCoroutine(_onWarSound);

@@ -663,10 +663,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7549e9945fabe6c44b89c04b609c7e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 20
-  hits: []
-  _on: 1
-  _Die: 0
+  displayRadius: 18.7
+  detectionRadius: 30
+  isActive: 1
+  isDead: 0
 --- !u!114 &3447614152607286350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,7 +706,7 @@ MonoBehaviour:
   _level: 1
   _maxHealth: 45
   _health: 0
-  _damage: 17
+  _bounusdamage: 0
   _maxSpeed: 4
   _range: 7
   _attackSpeedd: 1.5
@@ -733,7 +733,6 @@ MonoBehaviour:
   _MiniMapIcon: {fileID: 3367389795178246259}
   _AI: {fileID: 1252773213491358990}
   _audio: {fileID: 3123266946296100341}
-  _rada: {fileID: 6439628497108050428}
   _anim: {fileID: 3183734772337768840}
   _healEffect: {fileID: 6158406815071283477}
   path: {fileID: 3447614152607286350}
@@ -1273,6 +1272,10 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.367
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.366
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x

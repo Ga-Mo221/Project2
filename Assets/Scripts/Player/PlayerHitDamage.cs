@@ -26,7 +26,7 @@ public class PlayerHitDamage : MonoBehaviour
             var enemyHealth = target.GetComponent<EnemyHealth>();
 
             if (_isPlayerAi)
-                enemyHealth.takeDamage(_script._damage);
+                enemyHealth.takeDamage(_script.getDamage());
             else
                 enemyHealth.takeDamage(damage);
 
@@ -41,7 +41,7 @@ public class PlayerHitDamage : MonoBehaviour
             var houseHealth = target.GetComponent<EnemyHouseHealth>();
             if (houseHealth != null && !houseHealth._Die)
             {
-                houseHealth.takeDamage(_script._damage);
+                houseHealth.takeDamage(_script.getDamage());
             }
         }
         if (checkAnimal(target))
@@ -50,7 +50,7 @@ public class PlayerHitDamage : MonoBehaviour
             if (animalhealth != null)
             {
                 if (_isPlayerAi)
-                    animalhealth.takeDamage(_script._damage, gameObject);
+                    animalhealth.takeDamage(_script.getDamage(), gameObject);
                 else 
                     animalhealth.takeDamage(damage, gameObject);
 
@@ -72,7 +72,7 @@ public class PlayerHitDamage : MonoBehaviour
         {
             var enemyHealth = target.GetComponent<EnemyHealth>();
 
-            enemyHealth.takeDamage(_script._damage);
+            enemyHealth.takeDamage(_script.getDamage());
 
             if (enemyHealth._enemyAI.getDie())
             {
@@ -85,7 +85,7 @@ public class PlayerHitDamage : MonoBehaviour
             var houseHealth = target.GetComponent<EnemyHouseHealth>();
             if (houseHealth != null && !houseHealth._Die)
             {
-                houseHealth.takeDamage(_script._damage);
+                houseHealth.takeDamage(_script.getDamage());
             }
         }
         if (checkAnimal(target))
@@ -93,7 +93,7 @@ public class PlayerHitDamage : MonoBehaviour
             var animalhealth = target.GetComponent<AnimalHealth>();
             if (animalhealth != null)
             {
-                animalhealth.takeDamage(_script._damage, gameObject);
+                animalhealth.takeDamage(_script.getDamage(), gameObject);
                 if (animalhealth._animalAi.getDie())
                 {
                     _script.target = null;

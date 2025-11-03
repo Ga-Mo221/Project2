@@ -964,19 +964,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a4cdb18efc5d44d8a972a971e1b635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 5
-  _Die: 0
-  _MiniMapIcon: {fileID: 2368085877868858783}
-  _item: {fileID: 0}
-  _check: {fileID: 0}
+  modelType: 0
+  miniMapIcon: {fileID: 2368085877868858783}
+  outLine: {fileID: 1615977414374713874}
   _light: {fileID: 0}
-  _animal: {fileID: 0}
-  _enemy: {fileID: 2097222573746056455}
-  _house: {fileID: 0}
-  _fire: {fileID: 0}
-  _outLine: {fileID: 1615977414374713874}
-  _seemer: []
-  _Detec: 0
+  item: {fileID: 0}
+  animal: {fileID: 0}
+  enemy: {fileID: 2097222573746056455}
+  house: {fileID: 0}
+  rada: {fileID: 0}
 --- !u!114 &6599974004539328562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,7 +1030,9 @@ MonoBehaviour:
   _range: 4.2
   _attackspeed: 5
   _radius: 13
+  _coin: 1
   _Die: 0
+  _typeDie: 0
   critDropGold: 5
   critDropMeat: 30
   MeatDropObj: {fileID: 7228849875844165110}
@@ -1048,18 +1046,15 @@ MonoBehaviour:
   _Detec: 0
   target: {fileID: 0}
   _currentTarget: {fileID: 0}
-  _path: {fileID: 6599974004539328562}
   _GFX: {fileID: 1055501062307698713}
   _HPimg: {fileID: 5015062115914841810}
   _anim: {fileID: 6962605858572499835}
+  _path: {fileID: 6599974004539328562}
+  _rb: {fileID: 0}
   _outLine: {fileID: 1615977414374713874}
   _HPBar: {fileID: 7618365246387425153}
   _MinimapIcon: {fileID: 2368085877868858783}
   _audio: {fileID: 6662897664948285196}
-  _display: {fileID: 7974778954594328307}
-  visibleUpdateRate: 0.3
-  invisibleUpdateRate: 0.8
-  _Rate: 0
   _spriteRenderer: {fileID: 5882671461501390267}
 --- !u!1001 &166457827397695144
 PrefabInstance:
@@ -1076,6 +1071,10 @@ PrefabInstance:
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
       value: 4.153
+      objectReference: {fileID: 0}
+    - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.154
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x

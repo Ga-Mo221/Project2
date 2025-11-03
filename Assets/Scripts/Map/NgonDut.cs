@@ -16,13 +16,13 @@ public class NgonDut : MonoBehaviour
 
     private void Onfire()
     {
-        if (GameManager.Instance._timeRTS == 18 && !_on)
+        if (GameManager.Instance != null && GameManager.Instance._timeRTS == 18 && !_on)
         {
             _on = !_on;
             float delay = Random.Range(0, 1.5f);
             StartCoroutine(setActive(delay, true));
         }
-        else if (GameManager.Instance._timeRTS == 6 && _on)
+        else if (GameManager.Instance != null && GameManager.Instance._timeRTS == 6 && _on)
         {
             _on = !_on;
             float delay = Random.Range(0, 1.5f);
