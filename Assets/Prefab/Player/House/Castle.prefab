@@ -160,7 +160,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.26, y: 0.56}
+    oldSize: {x: 5.04, y: 2.24}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -233,7 +233,7 @@ SpriteRenderer:
   m_SortingLayerID: -989748827
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 496de3542fe14944aba4187c15897577, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6eb885376563cb24a8ab25cf1374f817, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCastle: 1
   direction: 1
-  normalSprite: {fileID: 21300000, guid: 496de3542fe14944aba4187c15897577, type: 3}
+  normalSprite: {fileID: 21300000, guid: 6eb885376563cb24a8ab25cf1374f817, type: 3}
   hoverSprite: {fileID: 21300000, guid: 517d70f0822808e4589f8ad343fe3ae7, type: 3}
   pressedSprite: {fileID: 21300000, guid: f5fd97919013e4e4585e8396c0350425, type: 3}
   archerUpCastle: {fileID: 1599324780184899269}
@@ -738,6 +738,7 @@ MonoBehaviour:
   _canCreate: {fileID: 0}
   _HPcanvas: {fileID: 0}
   _outLine: {fileID: 6297650747066956658}
+  _rada: {fileID: 0}
   _time: 0
 --- !u!82 &7061340492252060705
 AudioSource:
@@ -992,7 +993,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.26, y: 0.56}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1067,7 +1068,7 @@ SpriteRenderer:
   m_SortingLayerID: -989748827
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 496de3542fe14944aba4187c15897577, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a299b5f22a92da744b2a971f91cdac05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1092,7 +1093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCastle: 1
   direction: 2
-  normalSprite: {fileID: 21300000, guid: 496de3542fe14944aba4187c15897577, type: 3}
+  normalSprite: {fileID: 21300000, guid: a299b5f22a92da744b2a971f91cdac05, type: 3}
   hoverSprite: {fileID: 21300000, guid: b842f2c27507e1847992be7137c91b09, type: 3}
   pressedSprite: {fileID: 21300000, guid: a09821826bdea144a8d1713ca7ea0933, type: 3}
   archerUpCastle: {fileID: 1599324780184899269}
@@ -1174,7 +1175,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.26, y: 0.56}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1203,7 +1204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6020ed2ca97f4f548bc5c8027f59497e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 1
+  ID: 11
 --- !u!212 &5602419806674463831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1248,7 +1249,7 @@ SpriteRenderer:
   m_SortingLayerID: -989748827
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 496de3542fe14944aba4187c15897577, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f13f768498cb4c44b009bad4d8aef63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1273,7 +1274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCastle: 1
   direction: 0
-  normalSprite: {fileID: 21300000, guid: 496de3542fe14944aba4187c15897577, type: 3}
+  normalSprite: {fileID: 21300000, guid: 2f13f768498cb4c44b009bad4d8aef63, type: 3}
   hoverSprite: {fileID: 21300000, guid: ef782fa5065d8f349ac14abb2af6c332, type: 3}
   pressedSprite: {fileID: 21300000, guid: 0252e0809011ffd4dbde2cfd32cea5c1, type: 3}
   archerUpCastle: {fileID: 1599324780184899269}

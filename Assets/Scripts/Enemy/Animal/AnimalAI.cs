@@ -336,7 +336,8 @@ public class AnimalAI : MonoBehaviour
 
         playDieSound();
         gameObject.SetActive(true);
-        StartCoroutine(Respawm(_respawmTime));
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(Respawm(_respawmTime));
 
         //Debug.Log("die r");
         if (GameManager.Instance != null)

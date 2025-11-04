@@ -19,6 +19,7 @@ public class ButtonRaycaster2D : MonoBehaviour
 
     void Update()
     {
+        if (_mainCam == null && CameraInfo.Instance != null) _mainCam = CameraInfo.Instance.cameraMain;
         Vector2 mouseWorldPos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
         _hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
         _hasHit = _hit.collider != null;
