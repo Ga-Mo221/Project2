@@ -13114,7 +13114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae1c26dde9f16a4ebcd598ce452fbbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generatedMapChance: 0
+  generatedMapChance: 99
   allowManualSelection: 0
   customMapScene: LoadMap
   generatedMapScene: LoadMap_RenderMap

@@ -688,8 +688,8 @@ MonoBehaviour:
   - {fileID: 7436018241964083657, guid: 0f773565581d841469339806ff952392, type: 3}
   - {fileID: 2373135228288310985, guid: b1489205e066ce84bbca57f8fca79364, type: 3}
   - {fileID: 1085381133846957695, guid: cd935398466848f488e03148ea82c69b, type: 3}
-  treeEdgeCount: 300
-  treeRandomCount: 150
+  treeEdgeCount: 450
+  treeRandomCount: 200
   edgeDepth: 10
   treeMinSpacing: 2
   rocks:
@@ -709,9 +709,9 @@ MonoBehaviour:
   animalGrassSpawnChance: 0.6
   ngonDut: {fileID: 6065743050439020395, guid: 2502c29a92b7c8c40afb7b39e3ae12db, type: 3}
   ngonDutSettings:
-    minCount: 80
-    maxCount: 100
-    minDistance: 8
+    minCount: 90
+    maxCount: 120
+    minDistance: 7
     maxDistance: 150
   decorationPrefabs:
   - {fileID: 8092541016483089478, guid: 61ba41ecdd089944d8ffb9e01ae821a5, type: 3}
@@ -1971,7 +1971,7 @@ PrefabInstance:
       objectReference: {fileID: 1831514232286966179}
     - target: {fileID: 6234378673106644915, guid: acf3d0edf260a5e4c9b54c4b48fc1ac8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -310.16998
+      value: -310.17004
       objectReference: {fileID: 0}
     - target: {fileID: 6641455485963334713, guid: acf3d0edf260a5e4c9b54c4b48fc1ac8, type: 3}
       propertyPath: m_IsActive
