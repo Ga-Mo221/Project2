@@ -256,11 +256,11 @@ Transform:
   m_GameObject: {fileID: 1529857464502236550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03600025, y: 4.259, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.044337433, y: 1.944515, z: 0}
+  m_LocalScale: {x: 1.0559919, y: 1.0559919, z: 1.0559919}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6242188351007450367}
+  m_Father: {fileID: 5538619963152723359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6203212089065323846
 SpriteRenderer:
@@ -303,8 +303,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1513213687
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 28228338cd312c749a2d85710cffe09e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -315,7 +315,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1 &3868642800222077936
 GameObject:
@@ -1038,6 +1038,7 @@ MonoBehaviour:
   critDropMeat: 10
   MeatDropObj: {fileID: 2498588738947707289}
   GoldDropObj: {fileID: 8151812317891196703}
+  _inPatrol: 1
   _canPatrol: 1
   _patrol: {fileID: 0}
   _changeTargetPatrolDelay: 30
@@ -1056,6 +1057,7 @@ MonoBehaviour:
   _HPBar: {fileID: 6707131708674553643}
   _MinimapIcon: {fileID: 7582648135567740800}
   _audio: {fileID: 2349103863463546723}
+  _isDectec: {fileID: 0}
   _spriteRender: {fileID: 7159550999280298707}
 --- !u!1 &7582648135567740800
 GameObject:
@@ -1086,7 +1088,8 @@ Transform:
   m_LocalPosition: {x: 0.059999943, y: 1.37, z: 0}
   m_LocalScale: {x: 1.5788, y: 1.5788, z: 1.5788}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4994926004386073513}
   m_Father: {fileID: 7959856245690335049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5173668848806830110
@@ -1355,16 +1358,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP_Bar
       objectReference: {fileID: 0}
+    - target: {fileID: 7779614661162694953, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8210208794616260288, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_SortingLayerID
       value: -1513213687
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4994926004386073513}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
 --- !u!4 &6242188351007450367 stripped

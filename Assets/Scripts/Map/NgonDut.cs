@@ -13,6 +13,19 @@ public class NgonDut : MonoBehaviour
         InvokeRepeating(nameof(Onfire), 1f, 1f);
     }
 
+    void OnEnable()
+    {
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance._timeRTS> 18 || GameManager.Instance._timeRTS < 6)
+            {
+                _on = !_on;
+                float delay = Random.Range(0, 1.5f);
+                StartCoroutine(setActive(delay, true));
+            }
+        }
+    }
+
 
     private void Onfire()
     {

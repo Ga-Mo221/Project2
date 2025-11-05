@@ -133,11 +133,12 @@ public class EnemyWar : MonoBehaviour
     {
         // Tìm enemy đã chết để tái sử dụng
         EnemyAI reusableEnemy = FindReusableEnemy(type);
-
+        Vector3 spawnPos = RandomPointAround(spawnPoint);
         if (reusableEnemy != null)
         {
             // Respawn enemy cũ
-            reusableEnemy.respawn(RandomPointAround(spawnPoint));
+            reusableEnemy.respawn(spawnPos);
+            Debug.Log($"<color=#FF4444>[War]</color> [{reusableEnemy.name}] for [{spawnPos}] In [{spawnPoint.name}]", spawnPoint);
             reusableEnemy.setTarget(Castle.Instance.gameObject);
             reusableEnemy.gameObject.SetActive(true);
 
@@ -154,9 +155,8 @@ public class EnemyWar : MonoBehaviour
                 return;
             }
 
-            Vector3 spawnPos = RandomPointAround(spawnPoint);
             GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity, spawnPoint);
-            Debug.Log($"<color=#FF4444>[War]</color> [{enemy.name}] for [{spawnPos}]", enemy);
+            Debug.Log($"<color=#FF4444>[War]</color> [{enemy.name}] for [{spawnPos}] In [{spawnPoint.name}]", spawnPoint);
             var enemyAI = enemy.GetComponent<EnemyAI>();
             if (enemyAI != null)
             {

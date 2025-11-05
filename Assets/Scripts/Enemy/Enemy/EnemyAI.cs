@@ -206,14 +206,15 @@ public class EnemyAI : MonoBehaviour
     #region Respawn
     public void respawn(Vector3 pos, bool war = true)
     {
-        if (_isDectec != null) _isDectec.isChillActive = false;
+        _inPatrol = true;
         _canUpdateHP = true;
         _path.setDie(false);
         _path.setCanMove(true);
         Vector3 SpawnPoint = pos;
         if (!war) SpawnPoint = _originPos;
-        transform.parent.position = SpawnPoint;
-        Debug.Log($"[{transform.name}] <color=#FF4444>[Respawn]</color> Spawn Point [{transform.position}] Origin Point [{_originPos}] War [{war}]", this);
+        if (war) transform.position = SpawnPoint;
+        else transform.parent.position = SpawnPoint;
+        Debug.Log($"[{transform.name}] <color=#FF4444>[Respawn]</color> Spawn Point [{pos}] Origin Point [{_originPos}] War [{war}]", this);
         setCanPatrol(true);
         if (!IsTNTRed)
         {
@@ -227,6 +228,11 @@ public class EnemyAI : MonoBehaviour
         _canAction = false;
         _Detec = false;
         _anim.SetBool("Die", false);
+        if (_isDectec != null)
+        {
+            _isDectec.isChillActive = false;
+            _isDectec.UpdateChillEffect();
+        }
     }
     #endregion
 
@@ -245,7 +251,8 @@ public class EnemyAI : MonoBehaviour
     #region Die
     public void dead()
     {
-        setDie(true);
+        if (!IsTNTRed)
+            setDie(true);
         _outLine.SetActive(false);
         _MinimapIcon.SetActive(false);
         _HPBar.SetActive(false);

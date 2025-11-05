@@ -133,7 +133,9 @@ MonoBehaviour:
   item: {fileID: 0}
   animal: {fileID: 0}
   enemy: {fileID: 2370424355920134622}
-  count: 0
+  isChillActive: 0
+  SeemerCount: 0
+  shouldShowChill: 0
 --- !u!1001 &7402127686804367370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,6 +152,10 @@ PrefabInstance:
       propertyPath: _path
       value: 
       objectReference: {fileID: 8493991664537036390}
+    - target: {fileID: 5070159884121745876, guid: ce64d003eceb6124aa0ee560b8bb6833, type: 3}
+      propertyPath: _maxHealth
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 6014549478580385976, guid: ce64d003eceb6124aa0ee560b8bb6833, type: 3}
       propertyPath: m_Name
       value: Shaman

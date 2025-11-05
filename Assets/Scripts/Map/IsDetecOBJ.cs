@@ -24,6 +24,8 @@ public class IsDetecOBJ : MonoBehaviour, IDetectable
     public bool IsValid => gameObject.activeInHierarchy;
 
     public bool HasSeemer(Rada seemer) => seers.Contains(seemer);
+    public int SeemerCount = 0;
+    [SerializeField] private bool shouldShowChill = false;
 
     void Start()
     {
@@ -43,6 +45,7 @@ public class IsDetecOBJ : MonoBehaviour, IDetectable
     {
         if (seers.Add(seemer))
         {
+            SeemerCount++;
             UpdateChillEffect();
         }
     }
@@ -51,6 +54,7 @@ public class IsDetecOBJ : MonoBehaviour, IDetectable
     {
         if (seers.Remove(seemer))
         {
+            SeemerCount--;
             UpdateChillEffect();
         }
     }
@@ -59,6 +63,7 @@ public class IsDetecOBJ : MonoBehaviour, IDetectable
     {
         if (DetectionManager.Instance != null)
         {
+            SeemerCount = seers.Count;
             DetectionManager.Instance.RegisterDetectable(this);
         }
 
@@ -104,15 +109,15 @@ public class IsDetecOBJ : MonoBehaviour, IDetectable
                 if (_findPath != null)
                     _findPath.enabled = false;
             }
-            Debug.Log($"[{transform.name}] <color=red>[Not Active]</color>", this);
+            //Debug.Log($"[{transform.name}] <color=red>[Not Active]</color>", this);
             return;
         }
 
         if (API)
             isChillActive = true;
 
-        bool shouldShowChill = seers.Count > 0 && CanShowChill();
-        Debug.Log($"[{transform.name}] <color=yellow>Can Show</color> [<color=green>{shouldShowChill} Count {seers.Count}</color> : <color=red>{isChillActive}</color>]", this);
+        shouldShowChill = seers.Count > 0 && CanShowChill();
+        //Debug.Log($"[{transform.name}] <color=yellow>Can Show</color> [<color=green>{shouldShowChill} Count {seers.Count}</color> : <color=red>{isChillActive}</color>]", this);
         if (shouldShowChill != isChillActive)
         {
             isChillActive = shouldShowChill;

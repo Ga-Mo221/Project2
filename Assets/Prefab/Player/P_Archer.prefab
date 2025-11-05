@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1182664853529555795}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.805, z: 0}
+  m_LocalPosition: {x: 0, y: 1.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -706,10 +706,12 @@ MonoBehaviour:
   _level: 1
   _maxHealth: 45
   _health: 0
-  _bounusdamage: 0
+  _damage: 10
+  _bounusDamage: 1
   _maxSpeed: 4
   _range: 7
   _attackSpeedd: 1.5
+  _bounus_Attack_Speed: 1
   _slot: 3
   _createTime_sec: 13
   _radiusCallSupport: 18.1
@@ -717,8 +719,8 @@ MonoBehaviour:
   _radius_farm: 3
   _farmSpeed: 1
   _itemScript: {fileID: 0}
-  _maxRock: 6
-  _maxGold: 10
+  _maxRock: 8
+  _maxGold: 15
   _maxWood: 15
   _maxMeat: 5
   _rock: 0
@@ -1271,11 +1273,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 709613286416890426, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.367
+      value: 2.381
       objectReference: {fileID: 0}
     - target: {fileID: 954491346985611089, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.366
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 3021258128147678853, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1291,7 +1293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3242469905124881003, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.367001
+      value: 2.381001
       objectReference: {fileID: 0}
     - target: {fileID: 4531822266390242258, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1351,7 +1353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.95
       objectReference: {fileID: 0}
     - target: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
       propertyPath: m_LocalPosition.z

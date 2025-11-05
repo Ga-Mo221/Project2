@@ -48,6 +48,27 @@ public class GameSettings
     public List<int> _listTNT = new List<int>{1};
     public int _currentTNT = 1;
 
+    [Header("Autotrain LV1")]
+    public int _lv1_WarriorCount;
+    [Header("AutoTrain LV2")]
+    public int _lv2_WarriorCount;
+    public int _lv2_ArcherCount;
+    [Header("AutoTrain LV3")]
+    public int _lv3_WarriorCount;
+    public int _lv3_ArcherCount;
+    public int _lv3_LancerCount;
+    [Header("AutoTrain LV4")]
+    public int _lv4_WarriorCount;
+    public int _lv4_ArcherCount;
+    public int _lv4_LancerCount;
+    public int _lv4_TNTCount;
+    [Header("AutoTrain LV5")]
+    public int _lv5_WarriorCount;
+    public int _lv5_ArcherCount;
+    public int _lv5_LancerCount;
+    public int _lv5_TNTCount;
+    public int _lv5_HealerCount;
+
     public static GameSettings Default()
     {
         return new GameSettings();

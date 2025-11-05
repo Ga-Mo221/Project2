@@ -448,6 +448,7 @@ MonoBehaviour:
   critDropMeat: 5
   MeatDropObj: {fileID: 4351506826751174570}
   GoldDropObj: {fileID: 8020191331099066207}
+  _inPatrol: 1
   _canPatrol: 1
   _patrol: {fileID: 0}
   _changeTargetPatrolDelay: 30
@@ -466,6 +467,7 @@ MonoBehaviour:
   _HPBar: {fileID: 2199332181708398396}
   _MinimapIcon: {fileID: 3814148309622223578}
   _audio: {fileID: 2879357650664050859}
+  _isDectec: {fileID: 0}
   _spriteRender: {fileID: 7094314309141008626}
 --- !u!1 &3383233013237360834
 GameObject:
@@ -999,7 +1001,8 @@ Transform:
   m_LocalPosition: {x: 0.06, y: 2.65, z: 0}
   m_LocalScale: {x: 1.5788, y: 1.5788, z: 1.5788}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7262369961611786988}
   m_Father: {fileID: 6929598521417819781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8120586776835036360
@@ -1186,11 +1189,11 @@ Transform:
   m_GameObject: {fileID: 8418577928651198957}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.020000458, y: 6.13, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.0287, y: 2.3773, z: 0}
+  m_LocalScale: {x: 1.4496369, y: 1.4496369, z: 1.4496369}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1527187618305871080}
+  m_Father: {fileID: 1708204519155925232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5706124117818487829
 SpriteRenderer:
@@ -1245,7 +1248,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1001 &2985427268837596565
 PrefabInstance:
@@ -1640,10 +1643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6936264343653362429, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7262369961611786988}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41c6b8eb6a4fdb94eac8ef2490b8ba70, type: 3}
 --- !u!4 &1527187618305871080 stripped

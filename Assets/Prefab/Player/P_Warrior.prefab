@@ -559,9 +559,11 @@ MonoBehaviour:
   _maxHealth: 100
   _health: 0
   _damage: 7
+  _bounusDamage: 1
   _maxSpeed: 4
   _range: 3.5
   _attackSpeedd: 2
+  _bounus_Attack_Speed: 1
   _slot: 2
   _createTime_sec: 8
   _radiusCallSupport: 18.1
@@ -569,7 +571,7 @@ MonoBehaviour:
   _radius_farm: 3
   _farmSpeed: 1
   _itemScript: {fileID: 0}
-  _maxRock: 8
+  _maxRock: 10
   _maxGold: 10
   _maxWood: 20
   _maxMeat: 10

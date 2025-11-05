@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6389757403963275004, guid: 996ebcf45d2e3a94daee12c23eb6d00c, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8690795710370385092, guid: 996ebcf45d2e3a94daee12c23eb6d00c, type: 3}
       propertyPath: m_Name
       value: Patrol

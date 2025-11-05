@@ -2359,7 +2359,6 @@ MonoBehaviour:
   _coint: 0
   Tutorial: 0
   TutorialWar: 0
-  _autoTrain: 0
   _canBuy: 1
   _GameOver: 0
   _Win: 0
@@ -2386,6 +2385,7 @@ MonoBehaviour:
   _audio: {fileID: 2857659270297748419}
   _UIgame_setupCamera: {fileID: 2872403587917414504}
   _UIselectBox_setupCamera: {fileID: 0}
+  _autoTrain: {fileID: 7001983302165719559}
   _cameraMiniMap: {fileID: 233293818657210878}
   _warriorPrefab: {fileID: 1094120962555759500, guid: 6982341a03cfccc45bd08c41e02c9bd9, type: 3}
   _ArcherPrefab: {fileID: 4786281004219764415, guid: ab68149a2b111b141bccb6f95930349c, type: 3}
@@ -16741,6 +16741,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _anim: {fileID: 1838955417806294357}
   _text: {fileID: 3115028365135173788}
+  _choseUI: {fileID: 4420568847736335473}
+  _lv1:
+    Level: 0
+    slot: 0
+    WarriorCount: 0
+    ArcherCount: 0
+    LancerCount: 0
+    TNTCount: 0
+    HealerCount: 0
+  _lv2:
+    Level: 0
+    slot: 0
+    WarriorCount: 0
+    ArcherCount: 0
+    LancerCount: 0
+    TNTCount: 0
+    HealerCount: 0
+  _lv3:
+    Level: 0
+    slot: 0
+    WarriorCount: 0
+    ArcherCount: 0
+    LancerCount: 0
+    TNTCount: 0
+    HealerCount: 0
+  _lv4:
+    Level: 0
+    slot: 0
+    WarriorCount: 0
+    ArcherCount: 0
+    LancerCount: 0
+    TNTCount: 0
+    HealerCount: 0
+  _lv5:
+    Level: 0
+    slot: 0
+    WarriorCount: 0
+    ArcherCount: 0
+    LancerCount: 0
+    TNTCount: 0
+    HealerCount: 0
   _hover: 0
   ON: 0
 --- !u!1 &3812254198223969421

@@ -986,12 +986,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitClass: 4
   _level: 1
-  _maxHealth: 250
+  _maxHealth: 50
   _health: 0
-  _bounusdamage: 0
+  _damage: 30
+  _bounusDamage: 1
   _maxSpeed: 5
   _range: 2.61
   _attackSpeedd: 2.5
+  _bounus_Attack_Speed: 1
   _slot: 7
   _createTime_sec: 30
   _radiusCallSupport: 18.1

@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
     public bool Tutorial = false;
     public bool TutorialWar = false;
     [Foldout("Status")]
-    [SerializeField] private bool _autoTrain = false;
-    [Foldout("Status")]
     [SerializeField] private bool _canBuy = true;
     [Foldout("Status")]
     [Header("Game Play")]
@@ -79,6 +77,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GetMainCam _UIgame_setupCamera;
     [Foldout("Other")]
     [SerializeField] private GetMainCam _UIselectBox_setupCamera;
+    [Foldout("Other")]
+    public AutoTrain _autoTrain;
     [Foldout("Other")]
     public Camera _cameraMiniMap;
     private GameOver _gameOver;
@@ -189,11 +189,23 @@ public class GameManager : MonoBehaviour
         UIupdateReferences();
     }
 
-    public void setAutoTrain(bool amount) => _autoTrain = amount;
-    public bool getAutoTrain() => _autoTrain;
-
     public void setHourRTS(int house)
         => _ui.setHouseRTS(house);
+
+    public void createWarrior()
+        => _ui.createWarrior();
+
+    public void createArcher()
+        => _ui.createArcher();
+
+    public void createLancer()
+        => _ui.createLancer();
+
+    public void createTNT()
+        => _ui.createTNT();
+
+    public void createHealer()
+        => _ui.createHealer();
 
     public void UIupdateReferences()
         => _ui.updateReferent();

@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radius: 25
-  _damage: 15
-  _attackSpeedd: 0.5
+  _damage: 10
+  _attackSpeedd: 0.8
   _arowPrefab: {fileID: 5006367590817628768, guid: 4eb4608d7e7551b41b2b4f21c3a13286, type: 3}
   _shootPos: {fileID: 3417887763861736761}
   _target: {fileID: 0}
@@ -254,6 +254,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _music_Volume: 1
+  _sfx_Volume: 1
+  spatialBlend: 1
+  minDistance: 10
+  maxDistance: 50
+  randomizePitch: 1
+  pitchVariation: 0.1
   TNTOrSheep: 0
   _Hit_Damage_Clip: {fileID: 0}
   _Fire_Clip: {fileID: 0}
@@ -274,11 +281,6 @@ MonoBehaviour:
   _Sun_Clip: {fileID: 0}
   _Rain_Clip: {fileID: 0}
   _Night_Clip: {fileID: 0}
-  spatialBlend: 1
-  minDistance: 10
-  maxDistance: 50
-  randomizePitch: 1
-  pitchVariation: 0.1
 --- !u!1 &8384024787739423871
 GameObject:
   m_ObjectHideFlags: 0

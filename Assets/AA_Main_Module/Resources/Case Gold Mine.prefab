@@ -47,10 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelType: 2
   chillEffect: {fileID: 4467757042232956874}
+  _rb: {fileID: 0}
+  _findPath: {fileID: 0}
   item: {fileID: 7445233425005236847}
   animal: {fileID: 0}
   enemy: {fileID: 0}
-  count: 0
+  isChillActive: 0
+  SeemerCount: 0
+  shouldShowChill: 0
 --- !u!1001 &6350218214553627116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4571797421337770883, guid: 84716a18c2c8ba74e8d7b7c7ba878018, type: 3}
       propertyPath: _maxValue
-      value: 500
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 7358926363918908966, guid: 84716a18c2c8ba74e8d7b7c7ba878018, type: 3}
       propertyPath: m_Name

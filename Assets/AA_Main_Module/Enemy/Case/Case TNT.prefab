@@ -133,7 +133,9 @@ MonoBehaviour:
   item: {fileID: 0}
   animal: {fileID: 0}
   enemy: {fileID: 5804911894334087147}
-  count: 0
+  isChillActive: 0
+  SeemerCount: 0
+  shouldShowChill: 0
 --- !u!1001 &2594901764722118924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -181,6 +183,10 @@ PrefabInstance:
     - target: {fileID: 6642116441936742969, guid: a436c1d9e5dcc604baaa2d374c143efa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6739796166725704768, guid: a436c1d9e5dcc604baaa2d374c143efa, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8308106257862273322, guid: a436c1d9e5dcc604baaa2d374c143efa, type: 3}
       propertyPath: m_Name

@@ -133,7 +133,9 @@ MonoBehaviour:
   item: {fileID: 0}
   animal: {fileID: 0}
   enemy: {fileID: 6632987574713632060}
-  count: 0
+  isChillActive: 0
+  SeemerCount: 0
+  shouldShowChill: 0
 --- !u!1001 &1737762139760696337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -154,6 +156,18 @@ PrefabInstance:
       propertyPath: _path
       value: 
       objectReference: {fileID: 4900463914478037656}
+    - target: {fileID: 4904664617741834541, guid: cc67047e21e5adb4b89c8377c57535b6, type: 3}
+      propertyPath: _speed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904664617741834541, guid: cc67047e21e5adb4b89c8377c57535b6, type: 3}
+      propertyPath: _damage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904664617741834541, guid: cc67047e21e5adb4b89c8377c57535b6, type: 3}
+      propertyPath: _maxHealth
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 6929598521417819781, guid: cc67047e21e5adb4b89c8377c57535b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -5,6 +5,7 @@ public class TNTRedActive : MonoBehaviour
     [SerializeField] private EnemyAI _enemyAI;
     public void setActive()
     {
+        _enemyAI.setDie(true);
         transform.parent.gameObject.SetActive(false);
     }
 

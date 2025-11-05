@@ -50,7 +50,7 @@ public class GameUI : MonoBehaviour
     private int _hours = 0; // bắt đầu 8h sáng
 
     // aotu train
-    private bool _isAutoTraining = false;
+    //private bool _isAutoTraining = false;
     #endregion
 
 
@@ -264,7 +264,7 @@ public class GameUI : MonoBehaviour
         updateHP();
 
         InvokeRepeating(nameof(updatePlayerValue), 0f, 1f);
-        InvokeRepeating(nameof(autoTrain), 0f, 3f);
+        //InvokeRepeating(nameof(autoTrain), 0f, 3f);
     }
 
     private IEnumerator startGameDelay()
@@ -539,8 +539,7 @@ public class GameUI : MonoBehaviour
         updateSlot();
         CheckLevel();
         loadPlayer();
-
-        GameManager.Instance.setAutoTrain(false);
+        GameManager.Instance._autoTrain.changemode(false);
     }
     #endregion
 
@@ -569,6 +568,7 @@ public class GameUI : MonoBehaviour
         GameManager.Instance._selectBox.gameObject.SetActive(false);
         updateInfoUpgrade();
         _UpgradePanel.SetActive(true);
+        GameManager.Instance._autoTrain.changemode(false);
     }
     #endregion
 
@@ -1593,87 +1593,87 @@ public class GameUI : MonoBehaviour
     #endregion
 
 
-    #region Auto Train
-    private void autoTrain()
-    {
-        if (_isAutoTraining) return;
-        if (!GameManager.Instance.getAutoTrain()) return;
-        if (Castle.Instance == null) return;
-        if (GameManager.Instance.Tutorial) return;
+    // #region Auto Train
+    // private void autoTrain()
+    // {
+    //     if (_isAutoTraining) return;
+    //     if (!GameManager.Instance.getAutoTrain()) return;
+    //     if (Castle.Instance == null) return;
+    //     if (GameManager.Instance.Tutorial) return;
 
-        _isAutoTraining = true;
+    //     _isAutoTraining = true;
 
-        try
-        {
-            int castleLevel = Castle.Instance._level;
-            int maxSlot = Castle.Instance._maxSlot;
-            int currentSlot = Castle.Instance._currentSlot;
-            int totalSlotAvailable = maxSlot - currentSlot;
+    //     try
+    //     {
+    //         int castleLevel = Castle.Instance._level;
+    //         int maxSlot = Castle.Instance._maxSlot;
+    //         int currentSlot = Castle.Instance._currentSlot;
+    //         int totalSlotAvailable = maxSlot - currentSlot;
 
-            if (totalSlotAvailable <= 0) return;
+    //         if (totalSlotAvailable <= 0) return;
 
 
-            Dictionary<int, float[]> levelRatio = new Dictionary<int, float[]>
-            {
-                {1, new float[]{1f, 0f, 0f, 0f, 0f}},
-                {2, new float[]{0.7f, 0.3f, 0f, 0f, 0f}},
-                {3, new float[]{0.5f, 0.3f, 0.2f, 0f, 0f}},
-                {4, new float[]{0.4f, 0.25f, 0.2f, 0.15f, 0f}},
-                {5, new float[]{0.35f, 0.25f, 0.2f, 0.1f, 0.1f}}
-            };
+    //         Dictionary<int, float[]> levelRatio = new Dictionary<int, float[]>
+    //         {
+    //             {1, new float[]{1f, 0f, 0f, 0f, 0f}},
+    //             {2, new float[]{0.7f, 0.3f, 0f, 0f, 0f}},
+    //             {3, new float[]{0.5f, 0.3f, 0.2f, 0f, 0f}},
+    //             {4, new float[]{0.4f, 0.25f, 0.2f, 0.15f, 0f}},
+    //             {5, new float[]{0.35f, 0.25f, 0.2f, 0.1f, 0.1f}}
+    //         };
 
-            float[] ratios = levelRatio[Mathf.Clamp(castleLevel, 1, 5)];
+    //         float[] ratios = levelRatio[Mathf.Clamp(castleLevel, 1, 5)];
 
-            var units = new List<(string name, int unlockLevel, int slot, Button btn, Action create)>
-            {
-                ("Warrior", 1, GameManager.Instance._warriorPrefab.GetComponent<PlayerAI>()._slot, _WarriorButton, createWarrior),
-                ("Archer", 2, GameManager.Instance._ArcherPrefab.GetComponent<PlayerAI>()._slot, _ArcherButton, createArcher),
-                ("Lancer", 3, GameManager.Instance._LancerPrefab.GetComponent<PlayerAI>()._slot, _LancerButton, createLancer),
-                ("Healer", 4, GameManager.Instance._HealerPrefab.GetComponent<PlayerAI>()._slot, _HealerButton, createHealer),
-                ("TNT", 5, GameManager.Instance._TNTPrefab.GetComponent<PlayerAI>()._slot, _TNTButton, createTNT)
-            };
+    //         var units = new List<(string name, int unlockLevel, int slot, Button btn, Action create)>
+    //         {
+    //             ("Warrior", 1, GameManager.Instance._warriorPrefab.GetComponent<PlayerAI>()._slot, _WarriorButton, createWarrior),
+    //             ("Archer", 2, GameManager.Instance._ArcherPrefab.GetComponent<PlayerAI>()._slot, _ArcherButton, createArcher),
+    //             ("Lancer", 3, GameManager.Instance._LancerPrefab.GetComponent<PlayerAI>()._slot, _LancerButton, createLancer),
+    //             ("Healer", 4, GameManager.Instance._HealerPrefab.GetComponent<PlayerAI>()._slot, _HealerButton, createHealer),
+    //             ("TNT", 5, GameManager.Instance._TNTPrefab.GetComponent<PlayerAI>()._slot, _TNTButton, createTNT)
+    //         };
 
-            units.Sort((a, b) => a.slot.CompareTo(b.slot));
+    //         units.Sort((a, b) => a.slot.CompareTo(b.slot));
 
-            var trainPlan = new List<(int index, int count, int slot)>();
+    //         var trainPlan = new List<(int index, int count, int slot)>();
             
-            for (int i = 0; i < units.Count; i++)
-            {
-                var u = units[i];
-                if (castleLevel < u.unlockLevel) continue;
-                if (u.btn == null || !u.btn.interactable) continue;
+    //         for (int i = 0; i < units.Count; i++)
+    //         {
+    //             var u = units[i];
+    //             if (castleLevel < u.unlockLevel) continue;
+    //             if (u.btn == null || !u.btn.interactable) continue;
 
-                int targetSlot = Mathf.FloorToInt(totalSlotAvailable * ratios[i]);
-                int count = targetSlot / u.slot;
+    //             int targetSlot = Mathf.FloorToInt(totalSlotAvailable * ratios[i]);
+    //             int count = targetSlot / u.slot;
                 
-                if (count > 0)
-                {
-                    trainPlan.Add((i, count, u.slot));
-                }
-            }
+    //             if (count > 0)
+    //             {
+    //                 trainPlan.Add((i, count, u.slot));
+    //             }
+    //         }
 
-            if (trainPlan.Count == 0) return;
+    //         if (trainPlan.Count == 0) return;
 
-            foreach (var (index, targetCount, unitSlot) in trainPlan)
-            {
-                var u = units[index];
+    //         foreach (var (index, targetCount, unitSlot) in trainPlan)
+    //         {
+    //             var u = units[index];
                 
-                for (int j = 0; j < targetCount; j++)
-                {
-                    currentSlot = Castle.Instance._currentSlot;
+    //             for (int j = 0; j < targetCount; j++)
+    //             {
+    //                 currentSlot = Castle.Instance._currentSlot;
                     
-                    if (currentSlot + unitSlot > maxSlot) return;
-                    if (u.btn == null || !u.btn.interactable) break;
+    //                 if (currentSlot + unitSlot > maxSlot) return;
+    //                 if (u.btn == null || !u.btn.interactable) break;
                     
-                    u.create.Invoke();
-                    // KHÔNG gọi updateSlot() và CheckLevel() ở đây nữa!
-                }
-            }
-        }
-        finally
-        {
-            _isAutoTraining = false;
-        }
-    }
-    #endregion
+    //                 u.create.Invoke();
+    //                 // KHÔNG gọi updateSlot() và CheckLevel() ở đây nữa!
+    //             }
+    //         }
+    //     }
+    //     finally
+    //     {
+    //         _isAutoTraining = false;
+    //     }
+    // }
+    // #endregion
 }

@@ -7,6 +7,7 @@ public class HideUI : MonoBehaviour
     [SerializeField] private Vector2 _startPos;
     [SerializeField] private Vector2 _endPos;
     [SerializeField] private float _timeMove = 0.3f;
+    private GameManager gameManager;
 
     private bool isOut = false;
     private Coroutine _moveCoroutine;
@@ -14,6 +15,14 @@ public class HideUI : MonoBehaviour
     void Start()
     {
         _rectTransform.anchoredPosition = _startPos;
+        if (GameManager.Instance != null)
+            gameManager = GameManager.Instance;
+    }
+
+    void Update()
+    {
+        if (!isOut) return;
+        gameManager.UIcheckButtonBuyBuiding();
     }
 
     public void move()

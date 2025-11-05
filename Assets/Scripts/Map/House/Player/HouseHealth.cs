@@ -62,6 +62,8 @@ public class HouseHealth : MonoBehaviour
     [SerializeField] private OutLine _outLine;
     [Foldout("Other")]
     [SerializeField] private Rada _rada;
+    [Foldout("Other")]
+    [SerializeField] private GameObject _NgonDut;
 
 
 
@@ -122,6 +124,8 @@ public class HouseHealth : MonoBehaviour
             _canCreate.SetActive(false);
             _house._audio.StopCreatingSound();
             _rada.enabled = true;
+            if (_NgonDut != null)
+                _NgonDut.SetActive(true);
             if (IsTower)
             {
                 _ButtonArcherUP.SetActive(true);
