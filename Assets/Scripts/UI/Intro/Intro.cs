@@ -8,21 +8,20 @@ public class Intro : MonoBehaviour
     [SerializeField] private bool _start;
     [ShowIf(nameof(_start))]
     [SerializeField] private GameObject _intro;
+    [SerializeField] private UnitAudio _audio;
 
     void Start()
     {
         if (_start)
         {
-            Debug.Log(1);
             StartCoroutine(startIntro());
         }
     }
 
     private IEnumerator startIntro()
     {
-        Debug.Log(2);
         yield return new WaitForSeconds(2f);
-        Debug.Log(3);
+        _audio.PlaySunSound();
         _intro.SetActive(true);
     }
 

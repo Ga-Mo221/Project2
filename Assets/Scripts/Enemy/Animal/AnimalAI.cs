@@ -120,14 +120,12 @@ public class AnimalAI : MonoBehaviour
         }
     }
 
-    private bool _isDead = false;
     protected virtual void Update()
     {
         _hpBar.SetHealth(_health / _maxHealth);
 
-        if (_Die && !_isDead)
+        if (_Die && Cor_respwan == null)
         {
-            _isDead = true;  // đánh dấu là đã chết
             Die();
         }
     }
@@ -321,6 +319,7 @@ public class AnimalAI : MonoBehaviour
     #endregion
 
     #region Die
+    private Coroutine Cor_respwan;
     public void Die()
     {
         _Die = true;
@@ -337,7 +336,7 @@ public class AnimalAI : MonoBehaviour
         playDieSound();
         gameObject.SetActive(true);
         if (gameObject.activeInHierarchy)
-            StartCoroutine(Respawm(_respawmTime));
+            Cor_respwan = StartCoroutine(Respawm(_respawmTime));
 
         //Debug.Log("die r");
         if (GameManager.Instance != null)
@@ -370,6 +369,7 @@ public class AnimalAI : MonoBehaviour
         _MeatOBJ.gameObject.SetActive(false);
         _MeatOBJ.ResetPickUp();
         _respawning = false;
+        Cor_respwan = null;
     }
     #endregion
 

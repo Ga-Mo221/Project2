@@ -48,6 +48,7 @@ public class TutorialSetUp : MonoBehaviour
 
     [SerializeField] private CameraTutorial _camera;
     [SerializeField] private GameObject _MoveCamera;
+    [SerializeField] private UnitAudio _audio;
 
     private TypewriterEffect _typewriter;
     private bool _isTyping = false;
@@ -226,6 +227,7 @@ public class TutorialSetUp : MonoBehaviour
     #region text 1
     private IEnumerator displayText1()
     {
+        _audio.StopWeatherSound();
         _Baw.SetBool("noi", true);
 
         key = "Tutorial.displaytext1.text1";
@@ -265,6 +267,7 @@ public class TutorialSetUp : MonoBehaviour
     #region SelectBox
     private IEnumerator SelectBox()
     {
+        _audio.StopWeatherSound();
         Time.timeScale = 0f;
         OffBlackBox();
         OffClickIcon();
@@ -284,10 +287,13 @@ public class TutorialSetUp : MonoBehaviour
     // hướng dẫn điều khiển lính đến mục tiêu
     private IEnumerator displayText2()
     {
+        _audio.StopWeatherSound();
         Time.timeScale = 1f;
         _selectBox.SetActive(false);
         _Baw.SetBool("khen", true);
+        _audio.PlayRainSound();
         yield return new WaitForSecondsRealtime(1.5f);
+        _audio.StopWeatherSound();
         _Baw.SetBool("khen", false);
 
         _Mess.gameObject.SetActive(true);
@@ -320,11 +326,14 @@ public class TutorialSetUp : MonoBehaviour
     // mở ui lên
     private IEnumerator displayText3()
     {
+        _audio.StopWeatherSound();
         _selectBox.SetActive(false);
         _StarSelectUnit = false;
         _Baw.gameObject.SetActive(true);
         _Baw.SetBool("khen", true);
+        _audio.PlayRainSound();
         yield return new WaitForSecondsRealtime(1.5f);
+        _audio.StopWeatherSound();
         _Baw.SetBool("khen", false);
 
 
@@ -359,6 +368,7 @@ public class TutorialSetUp : MonoBehaviour
     // hướng dẫn chọn vào "Nhật ký của Baw"
     private IEnumerator displayText4()
     {
+        _audio.StopWeatherSound();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
@@ -384,6 +394,7 @@ public class TutorialSetUp : MonoBehaviour
     // giới thiệu và cho lời khuyên khi xem "nhật ký của Baw"
     private IEnumerator displayText5()
     {
+        _audio.StopWeatherSound();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
@@ -411,6 +422,7 @@ public class TutorialSetUp : MonoBehaviour
     // giới thiệu về cách tạo Tower
     private IEnumerator displayText6()
     {
+        _audio.StopWeatherSound();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
@@ -465,6 +477,7 @@ public class TutorialSetUp : MonoBehaviour
     // giới thiệu về Tower và cách đặt tower
     private IEnumerator displayText8()
     {
+        _audio.StopWeatherSound();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
@@ -492,6 +505,7 @@ public class TutorialSetUp : MonoBehaviour
     // gioi thieu ve shop tạo lính
     private IEnumerator displayText9()
     {
+        _audio.StopWeatherSound();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
         _Mess.gameObject.SetActive(true);
@@ -529,6 +543,7 @@ public class TutorialSetUp : MonoBehaviour
     // hướng dẫn tạo archer
     private IEnumerator displayText10()
     {
+        _audio.StopWeatherSound();
         _C_Button.SetActive(false);
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
@@ -558,6 +573,7 @@ public class TutorialSetUp : MonoBehaviour
     // Giải thích Về thời gian spawn và Slot
     private IEnumerator displayText11()
     {
+        _audio.StopWeatherSound();
         OffClickIcon();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
@@ -596,6 +612,7 @@ public class TutorialSetUp : MonoBehaviour
     // Hướng Dẫn mở nut Upgrade
     private IEnumerator displayText12()
     {
+        _audio.StopWeatherSound();
         OffClickIcon();
         _Baw.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(1f);
@@ -638,6 +655,7 @@ public class TutorialSetUp : MonoBehaviour
     // Giải thích về nguyên lý hoạt động của upgrade
     private IEnumerator displayText14()
     {
+        _audio.StopWeatherSound();
         _U_Button.SetActive(false);
         OffClickIcon();
         yield return new WaitForSecondsRealtime(1f);
@@ -675,6 +693,7 @@ public class TutorialSetUp : MonoBehaviour
     // Thả cho người chơi tự kiếm tài nguyên
     private IEnumerator displayText15()
     {
+        _audio.StopWeatherSound();
         OffClickIcon();
         yield return new WaitForSecondsRealtime(1f);
         _Baw.gameObject.SetActive(true);
@@ -721,6 +740,7 @@ public class TutorialSetUp : MonoBehaviour
     // Cảnh báo chiến tranh sắp diễn ra
     private IEnumerator displayText16()
     {
+        _audio.StopWeatherSound();
         yield return new WaitForSecondsRealtime(5f);
         GameManager.Instance.Tutorial = true;
         _enemyList.SetActive(true);
@@ -754,6 +774,7 @@ public class TutorialSetUp : MonoBehaviour
     // Cảnh báo chiến tranh sắp diễn ra
     private IEnumerator displayText17()
     {
+        _audio.StopWeatherSound();
         Time.timeScale = 0;
         _Baw.gameObject.SetActive(true);
         _camera.Move(_enemy.position, 1f);
@@ -803,6 +824,7 @@ public class TutorialSetUp : MonoBehaviour
     // on off công tắt
     private IEnumerator displayText18()
     {
+        _audio.StopWeatherSound();
         _camera.Move(_buttonArcherInCastle1.position, 1f);
         yield return new WaitForSecondsRealtime(1.5f);
         OnClickIcon(_buttonArcherInCastle1);
@@ -840,6 +862,7 @@ public class TutorialSetUp : MonoBehaviour
     // Sống sót qua một đêm
     private IEnumerator displayText19()
     {
+        _audio.StopWeatherSound();
         GameManager.Instance.Tutorial = true;
         _camera.Move(Castle.Instance.transform.position, 2f);
         _camera.Zoom(20, 2f);
@@ -887,6 +910,7 @@ public class TutorialSetUp : MonoBehaviour
     // Sống sót qua một đêm
     private IEnumerator displayText20()
     {
+        _audio.StopWeatherSound();
         GameManager.Instance.Tutorial = true;
         _camera.Move(Castle.Instance.transform.position, 2f);
         _camera.Zoom(20, 2f);
